@@ -1588,15 +1588,14 @@ The Hardness column is not included because it is the value we want to predict.
 
 Therefore,
 
-\[
-X=
+
+$$X=
 \begin{bmatrix}
 7.85 & 0.00\\
 2.70 & 0.00\\
 2.33 & 1.12\\
 8.96 & 0.00
-\end{bmatrix}
-\]
+\end{bmatrix}$$
 
 Every row corresponds to one sample.
 
@@ -1621,17 +1620,16 @@ the target is
 
 The target is represented mathematically by
 
-\[
-y
-\]
+
+$$y$$
 
 This is often called the **target vector**.
 
 The objective of supervised learning is to learn the relationship
 
-\[
-X \rightarrow y
-\]
+
+$$X \rightarrow y$$
+
 
 ---
 
