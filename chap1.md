@@ -1061,9 +1061,7 @@ f(X)=y
 
 where:
 
-\[
-y \in \mathbb{R}
-\]
+$$y \in \mathbb{R}$$
 
 meaning the output can be any real number.
 
@@ -1104,9 +1102,9 @@ Semiconductor
 
 Mathematically:
 
-\[
-y \in \{Class_1,Class_2,...,Class_n\}
-\]
+
+$$y \in \{Class_1,Class_2,...,Class_n\}$$
+
 
 ---
 
