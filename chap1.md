@@ -1102,9 +1102,9 @@ Semiconductor
 
 Mathematically:
 
-
-$$y \in \{Class_1,Class_2,...,Class_n\}$$
-
+\[
+y \in \{Class_1,Class_2,...,Class_n\}
+\]
 
 ---
 
@@ -1588,7 +1588,6 @@ The Hardness column is not included because it is the value we want to predict.
 
 Therefore,
 
-
 $$X=
 \begin{bmatrix}
 7.85 & 0.00\\
@@ -1619,7 +1618,6 @@ the target is
 | 369 |
 
 The target is represented mathematically by
-
 
 $$y$$
 
@@ -4619,9 +4617,8 @@ Prediction error is simply the difference between the actual value and the predi
 
 Mathematically,
 
-\[
-\text{Error} = \text{Actual Value} - \text{Predicted Value}
-\]
+$$\text{Error} = \text{Actual Value} - \text{Predicted Value}$$
+
 
 For the first sample,
 
@@ -4631,9 +4628,9 @@ Predicted = 215
 
 Therefore,
 
-\[
-210 - 215 = -5
-\]
+
+$$210 - 215 = -5$$
+
 
 The negative sign tells us the prediction is slightly higher than the true value.
 
@@ -4692,13 +4689,15 @@ For example,
 
 The MAE is simply the average of these absolute errors.
 
-\[
-\text{MAE}
+
+$$
+4\text{MAE}
 =
 \frac{5+8+8+6}{4}
 =
 6.75
-\]
+$$
+
 
 This means that, on average, the model's predictions differ from the true values by **6.75 HV**.
 
@@ -4773,13 +4772,13 @@ Instead of taking the absolute value,
 
 MSE squares each error.
 
-\[
+$$
 \text{MSE}
 =
 \frac{1}{n}
 \sum_{i=1}^{n}
 (y_i-\hat{y}_i)^2
-\]
+$$
 
 Squaring has an important effect.
 
@@ -4831,11 +4830,11 @@ This is difficult to interpret.
 
 Taking the square root returns the error to the original units.
 
-\[
+$$
 \text{RMSE}
 =
 \sqrt{\text{MSE}}
-\]
+$$
 
 If hardness is measured in HV,
 
