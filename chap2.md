@@ -767,9 +767,9 @@ In materials science examples, the feature could be:
 
 For example:
 
-\[
+$$
 x = \text{Carbon content}
-\]
+$$
 
 ---
 
@@ -787,9 +787,9 @@ Examples:
 
 For example:
 
-\[
+$$
 y = \text{Hardness}
-\]
+$$
 
 ---
 
@@ -873,21 +873,21 @@ Here:
 
 Feature:
 
-\[
+$$
 x=\text{Carbon percentage}
-\]
+$$
 
 Target:
 
-\[
+$$
 y=\text{Hardness}
-\]
+$$
 
 The machine learning model searches for the best equation:
 
-\[
+$$
 \text{Hardness}=m(\text{Carbon})+b
-\]
+$$
 
 ---
 
@@ -931,9 +931,9 @@ The difference between the actual value and the predicted value is called the **
 
 Mathematically:
 
-\[
+$$
 \text{Residual}=y_i-\hat{y_i}
-\]
+$$
 
 where:
 
@@ -1042,15 +1042,15 @@ Instead of adding errors directly,
 
 we square them:
 
-\[
+$$
 (y_i-\hat{y_i})^2
-\]
+$$
 
 Then we add all squared errors:
 
-\[
+$$
 \sum_{i=1}^{n}(y_i-\hat{y_i})^2
-\]
+$$
 
 This quantity is called the:
 
@@ -1110,17 +1110,17 @@ The average squared error is called the:
 
 The equation is:
 
-\[
+$$
 MSE=
 \frac{1}{n}
 \sum_{i=1}^{n}(y_i-\hat{y_i})^2
-\]
+$$
 
 The goal of Linear Regression training is:
 
-\[
+$_
 \text{Minimize MSE}
-\]
+$$
 
 The algorithm searches for the values of
 
