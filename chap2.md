@@ -430,13 +430,13 @@ We do **not** choose them ourselves.
 
 Suppose the trained model produces
 
-$$
-\text{Hardness}
+
+$$\text{Hardness}
 =
 450 \times \text{Density}
 -
-3190
-$$
+3190$$
+
 
 This equation has physical meaning.
 
