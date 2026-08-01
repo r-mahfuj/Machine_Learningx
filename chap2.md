@@ -4025,9 +4025,7 @@ Substituting the regression equation,
 we obtain
 
 $$
-e_i
-=
-y_i-(mx_i+b)
+e_i=y_i-(mx_i+b)
 $$
 
 This expression tells us exactly how far the prediction is from the experimental measurement.
