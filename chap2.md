@@ -718,21 +718,21 @@ Mathematically,
 
 there is only one input variable:
 
-\[
+$$
 x
-\]
+$$
 
 and one output variable:
 
-\[
+$$
 y
-\]
+$$
 
 The relationship is represented as:
 
-\[
+$$
 y = mx+b
-\]
+$$
 
 where
 
@@ -793,9 +793,9 @@ The slope represents how much the output changes when the input changes by one u
 
 For example:
 
-\[
+$$
 m=50
-\]
+$$
 
 means:
 
@@ -811,9 +811,9 @@ For example,
 
 if
 
-\[
+$$
 m=120
-\]
+$$
 
 for a model predicting hardness from carbon content,
 
@@ -827,15 +827,15 @@ The intercept is the predicted value of \(y\) when \(x=0\).
 
 Mathematically:
 
-\[
+$$
 y=b
-\]
+$$
 
 when
 
-\[
+$$
 x=0
-\]
+$$
 
 In many physical systems,
 
@@ -891,21 +891,21 @@ Many possible lines can be drawn through the data.
 
 For example:
 
-\[
+$$
 y=200x+100
-\]
+$$
 
 or
 
-\[
+$$
 y=400x+120
-\]
+$$
 
 or
 
-\[
+$$
 y=350x+115
-\]
+$$
 
 Some lines will make better predictions than others.
 
@@ -938,21 +938,21 @@ Example:
 
 Actual hardness:
 
-\[
+$$
 250
-\]
+$$
 
 Predicted hardness:
 
-\[
+$$
 240
-\]
+$$
 
 Residual:
 
-\[
+$$
 250-240=10
-\]
+$$
 
 The model underestimated the hardness by 10 HV.
 
@@ -1008,15 +1008,15 @@ Example:
 
 Prediction errors:
 
-\[
+$$
 +10,-10,+5,-5
-\]
+$$
 
 Sum:
 
-\[
+$$
 10-10+5-5=0
-\]
+$$
 
 The total error appears to be zero,
 
@@ -1062,13 +1062,13 @@ Squaring has two important effects.
 
 Example:
 
-\[
+$$
 (-5)^2=25
-\]
+$$
 
-\[
+$$
 5^2=25
-\]
+$$
 
 Both contribute equally.
 
@@ -1080,15 +1080,15 @@ Compare:
 
 Error = 2
 
-\[
+$$
 2^2=4
-\]
+$$
 
 Error = 10
 
-\[
+$$
 10^2=100
-\]
+$$
 
 A large prediction mistake becomes much more important.
 
@@ -1118,15 +1118,15 @@ $$
 
 The algorithm searches for the values of
 
-\[
+$$
 m
-\]
+$$
 
 and
 
-\[
+$$
 b
-\]
+$$
 
 that give the lowest possible error.
 
@@ -2292,9 +2292,9 @@ This motivates the use of **Multiple Linear Regression**.
 
 In Simple Linear Regression, we used
 
-\[
+$$
 y = mx + b
-\]
+$$
 
 There was only one feature.
 
@@ -2896,9 +2896,9 @@ returns the volume of the unit cell.
 
 The unit is typically
 
-\[
+$$
 \text{Å}^3
-\]
+$$
 
 The calculation is performed automatically by Pymatgen using the lattice vectors.
 
@@ -2918,9 +2918,9 @@ print(density)
 
 The returned value is usually expressed in
 
-\[
+$$
 \text{g/cm}^3
-\]
+$$
 
 Pymatgen calculates the density from
 
@@ -2929,7 +2929,6 @@ Pymatgen calculates the density from
 - and the unit cell volume.
 
 Again,
-
 all calculations are handled internally.
 
 ---
@@ -2951,7 +2950,6 @@ Fe2
 ```
 
 For a more complex material,
-
 the output might be
 
 ```text
@@ -2965,7 +2963,6 @@ BaTiO3
 ```
 
 The composition object contains much more information than a simple chemical formula.
-
 Later, we will use it to generate many compositional descriptors.
 
 ---
@@ -2973,7 +2970,6 @@ Later, we will use it to generate many compositional descriptors.
 # 2.81 Extracting Lattice Parameters
 
 The lattice constants are often useful machine learning features.
-
 For example,
 
 ```python
@@ -2991,13 +2987,9 @@ print(c)
 ```
 
 For cubic crystals,
-
 the values are identical.
-
 For lower-symmetry crystals,
-
 they may differ.
-
 These lattice parameters frequently appear in materials informatics datasets.
 
 ---
@@ -3005,7 +2997,6 @@ These lattice parameters frequently appear in materials informatics datasets.
 # 2.82 Combining Multiple Features
 
 Instead of extracting only one property,
-
 we usually collect several descriptors.
 
 ```python
@@ -3021,9 +3012,7 @@ c = structure.lattice.c
 ```
 
 These quantities now become candidate features.
-
 Conceptually,
-
 our machine learning dataset begins to take shape.
 
 | Volume | Density | a | b | c |
@@ -3031,7 +3020,6 @@ our machine learning dataset begins to take shape.
 |11.78|7.86|2.87|2.87|2.87|
 
 Notice that we have transformed a crystal structure into numerical data.
-
 This is exactly what machine learning algorithms require.
 
 ---
@@ -3039,9 +3027,7 @@ This is exactly what machine learning algorithms require.
 # 2.83 Building a Dataset from Many Structures
 
 Real research rarely involves a single material.
-
 Suppose you have calculated 500 crystal structures.
-
 Your project directory might look like
 
 ```text
@@ -3062,10 +3048,7 @@ Materials/
     └── POSCAR
 ```
 
-Rather than extracting features manually,
-
-we automate the process.
-
+Rather than extracting features manually,we automate the process.
 For each structure,
 
 we
@@ -3081,9 +3064,7 @@ The final output becomes a machine learning dataset containing hundreds of rows.
 # 2.84 The Complete Workflow So Far
 
 We have now expanded our understanding of the machine learning pipeline.
-
 Instead of beginning with a manually created DataFrame,
-
 our workflow is now
 
 ```text
@@ -3117,11 +3098,8 @@ This is much closer to how modern materials informatics research is performed.
 # 2.85 Looking Ahead
 
 The descriptors we extracted in this section were obtained one at a time.
-
 In practice,
-
 we often need dozens or even hundreds of descriptors for each material.
-
 Writing code to compute every descriptor manually would be tedious and error-prone.
 
 Fortunately, the Python ecosystem provides tools that automate descriptor generation.
@@ -3132,7 +3110,6 @@ In the next section, we will introduce **Matminer**, a library built on top of P
 # 2.73 From Crystal Structures to Machine Learning Features
 
 Up to this point, we have manually created our datasets.
-
 For example,
 
 ```python
@@ -3144,9 +3121,7 @@ data = {
 ```
 
 This approach is useful for learning machine learning concepts.
-
 However, **real materials informatics research almost never begins with manually typed datasets.**
-
 Instead, researchers start with
 
 - crystal structures,
@@ -3155,11 +3130,8 @@ Instead, researchers start with
 - or materials databases.
 
 The first task is to convert this scientific information into numerical features that a machine learning algorithm can understand.
-
 This process is called **feature extraction**.
-
 Feature extraction is one of the most important steps in the entire machine learning pipeline.
-
 In many research projects, choosing good features has a greater impact on model performance than choosing the machine learning algorithm itself.
 
 ---
@@ -3167,7 +3139,6 @@ In many research projects, choosing good features has a greater impact on model 
 # 2.74 Why Can't We Train Directly on a Crystal Structure?
 
 Suppose you have a POSCAR file from Quantum ESPRESSO or VASP.
-
 A portion of the file may look like
 
 ```text
@@ -3340,9 +3311,9 @@ returns the volume of the unit cell.
 
 The unit is typically
 
-\[
+$$
 \text{Å}^3
-\]
+$$
 
 The calculation is performed automatically by Pymatgen using the lattice vectors.
 
@@ -3639,9 +3610,9 @@ $$
 
 instead of
 
-\[
+$$
 y.
-\]
+$$
 
 The symbol
 
@@ -3653,9 +3624,9 @@ $$
 
 The symbol
 
-\[
+$$
 y
-\]
+$$
 
 represents the **actual value** measured experimentally.
 
@@ -3665,8 +3636,8 @@ Throughout machine learning,
 
 we will always use
 
-$$ \(y\) $$ for the true value,
-$$ \(\hat{y}\) $$ for the predicted value.
+$ (y) $ for the true value,
+$(\hat{y}) $ for the predicted value.
 
 ---
 
@@ -3695,15 +3666,15 @@ Everything else in Linear Regression is designed to accomplish this single objec
 
 Suppose we guess
 
-\[
+$$
 m=450
-\]
+$$
 
 and
 
-\[
+$$
 b=105.
-\]
+$$
 
 Our model becomes
 
@@ -3713,23 +3684,23 @@ $$
 
 If the carbon content is
 
-\[
+$$
 x=0.40,
-\]
+$$
 
 then the predicted hardness is
 
-\[
+$$
 \hat{y}=450(0.40)+105
-\]
+$$
 
-\[
+$$
 =180+105
-\]
+$$
 
-\[
+$$
 =285.
-\]
+$$
 
 The model predicts
 
@@ -3763,15 +3734,22 @@ $$
 
 where
 
-- \(e\) is the residual,
-- \(y\) is the actual value,
-- \(\hat{y}\) is the predicted value.
+$$(e)$$
+ is the residual,
+$$
+(y)
+$$ 
+ is the actual value,
+$$
+(\hat{y})
+$$
+ is the predicted value.
 
 For the previous example,
 
-\[
+$$
 e=280-285=-5.
-\]
+$$
 
 The negative sign indicates that the model predicted a value slightly larger than the experimental measurement.
 
@@ -3805,15 +3783,15 @@ However, simply adding the residuals creates a problem.
 
 Suppose the residuals are
 
-\[
+$$
 -5,\quad +5,\quad -10,\quad +10.
-\]
+$$
 
 Their sum is
 
-\[
+$$
 -5+5-10+10=0.
-\]
+$$
 
 The total error appears to be zero,
 
@@ -3837,15 +3815,15 @@ we square each residual.
 
 Instead of
 
-\[
+$$
 e,
-\]
+$$
 
 we calculate
 
-\[
+$$
 e^2.
-\]
+$$
 
 For example,
 
@@ -3872,21 +3850,26 @@ we add all squared residuals together.
 
 This quantity is called the **Sum of Squared Errors (SSE)**.
 
-\[
+$$
 SSE=\sum_{i=1}^{n}(y_i-\hat{y}_i)^2
-\]
+$$
 
 where
 
-- \(n\) is the number of observations,
-- \(y_i\) is the actual value,
-- \(\hat{y}_i\) is the predicted value.
+$$(n)$$
+is the number of observations,
+$$(y_i) 
+$$
+is the actual value,
+$$(\hat{y}_i) 
+$$
+is the predicted value.
 
 The symbol
 
-\[
+$$
 \sum
-\]
+$$
 
 (Greek capital sigma) means
 
@@ -3952,10 +3935,10 @@ model.fit(X, y)
 
 Scikit-learn is effectively solving the optimization problem
 
-\[
+$$
 \min_{m,b}
 \sum_{i=1}^{n}(y_i-\hat{y}_i)^2.
-\]
+$$
 
 The library performs all of the mathematics internally,
 
@@ -3998,16 +3981,17 @@ We will derive them one small step at a time, explaining the reasoning behind ev
 
 For Simple Linear Regression, the model predicts
 
-\[
+$$
 \hat{y}=mx+b
-\]
+$$
 
 where
 
 - \(m\) is the slope,
 - \(b\) is the intercept,
 - \(x\) is the feature,
-- \(\hat{y}\) is the predicted value.
+- $(\hat{y})$
+ is the predicted value.
 
 Suppose we have \(n\) experimental observations.
 
@@ -4015,21 +3999,21 @@ For the first material,
 
 the prediction is
 
-\[
+$$
 \hat{y}_1=mx_1+b
-\]
+$$
 
 For the second material,
 
-\[
+$$
 \hat{y}_2=mx_2+b
-\]
+$$
 
 For the third material,
 
-\[
+$$
 \hat{y}_3=mx_3+b
-\]
+$$
 
 The same equation is applied to every material in the dataset.
 
@@ -4039,19 +4023,19 @@ The same equation is applied to every material in the dataset.
 
 The residual for each observation is
 
-\[
+$$
 e_i=y_i-\hat{y}_i
-\]
+$$
 
 Substituting the regression equation,
 
 we obtain
 
-\[
+$$
 e_i
 =
 y_i-(mx_i+b)
-\]
+$$
 
 This expression tells us exactly how far the prediction is from the experimental measurement.
 
@@ -4065,14 +4049,14 @@ Instead, we square them.
 
 The Sum of Squared Errors becomes
 
-\[
+$$
 SSE
 =
 \sum_{i=1}^{n}
 \left(
 y_i-(mx_i+b)
 \right)^2
-\]
+$$
 
 This equation is called the **cost function** or **objective function**.
 
@@ -4084,9 +4068,9 @@ Small values indicate a good fit.
 
 Our goal is therefore
 
-\[
+$$
 \boxed{\text{Minimize }SSE}
-\]
+$$
 
 Everything in Linear Regression revolves around minimizing this equation.
 
@@ -4120,9 +4104,9 @@ Although no actual money is involved, the mathematical idea is identical.
 
 Think about a simple parabola.
 
-\[
+$$
 y=x^2
-\]
+$$
 
 If we draw its graph,
 
@@ -4161,27 +4145,27 @@ Since the SSE depends on two unknown quantities,
 
 we calculate two derivatives.
 
-\[
+$$
 \frac{\partial SSE}{\partial m}=0
-\]
+$$
 
 and
 
-\[
+$$
 \frac{\partial SSE}{\partial b}=0
-\]
+$$
 
 Notice that we use the symbol
 
-\[
+$$
 \partial
-\]
+$$
 
 instead of
 
-\[
+$$
 d.
-\]
+$$
 
 This is because the SSE depends on **more than one variable**.
 
@@ -4220,7 +4204,7 @@ After carrying out the differentiation and simplifying the algebra, we obtain a 
 
 The optimal slope is
 
-\[
+$$
 m
 =
 \frac{
@@ -4232,22 +4216,22 @@ m
 \sum
 (x_i-\bar{x})^2
 }
-\]
+$$
 
 where
 
-- \(\bar{x}\) is the average of all feature values,
-- \(\bar{y}\) is the average of all target values.
+- $(\bar{x})$ is the average of all feature values,
+- $(\bar{y})$ is the average of all target values.
 
 Once the slope has been calculated, the intercept is
 
-\[
+$$
 b
 =
 \bar{y}
 -
 m\bar{x}
-\]
+$$
 
 These two equations provide the exact regression line that minimizes the Sum of Squared Errors.
 
@@ -4259,11 +4243,11 @@ Although the equation may appear complicated, its meaning is intuitive.
 
 The numerator
 
-\[
+$$
 \sum
 (x_i-\bar{x})
 (y_i-\bar{y})
-\]
+$$
 
 measures how the feature and target vary together.
 
@@ -4277,10 +4261,10 @@ the numerator becomes negative.
 
 The denominator
 
-\[
+$$
 \sum
 (x_i-\bar{x})^2
-\]
+$$
 
 measures how much the feature itself varies.
 
@@ -4374,7 +4358,7 @@ Suppose we want to predict hardness using three features.
 
 The regression equation is
 
-\[
+$$
 \hat{y}
 =
 b
@@ -4384,7 +4368,7 @@ m_1x_1
 m_2x_2
 +
 m_3x_3
-\]
+$$
 
 Now imagine we increase the number of features.
 
@@ -4419,7 +4403,7 @@ Instead of writing the table,
 
 we represent it mathematically as
 
-\[
+$$
 X=
 \begin{bmatrix}
 7.82 & 0.20 & 24\\
@@ -4427,7 +4411,7 @@ X=
 7.90 & 0.42 & 18\\
 7.71 & 0.28 & 25
 \end{bmatrix}
-\]
+$$
 
 This matrix is called the **feature matrix** or **design matrix**.
 
@@ -4455,7 +4439,7 @@ Suppose the hardness values are
 
 Mathematically,
 
-\[
+$$
 y=
 \begin{bmatrix}
 218\\
@@ -4463,7 +4447,7 @@ y=
 287\\
 231
 \end{bmatrix}
-\]
+$$
 
 Again,
 
@@ -4475,7 +4459,7 @@ each row corresponds to one material.
 
 The regression coefficients are also stored as a vector.
 
-\[
+$$
 \beta=
 \begin{bmatrix}
 b\\
@@ -4483,7 +4467,7 @@ m_1\\
 m_2\\
 m_3
 \end{bmatrix}
-\]
+$$
 
 Notice something interesting.
 
@@ -4501,13 +4485,13 @@ You might wonder,
 
 We create an additional feature whose value is always
 
-\[
+$$
 1
-\]
+$$
 
 The feature matrix becomes
 
-\[
+$$
 X=
 \begin{bmatrix}
 1&7.82&0.20&24\\
@@ -4515,7 +4499,7 @@ X=
 1&7.90&0.42&18\\
 1&7.71&0.28&25
 \end{bmatrix}
-\]
+$$
 
 The first column consists entirely of ones.
 
@@ -4523,9 +4507,9 @@ When multiplied by the intercept,
 
 it contributes
 
-\[
+$$
 1\times b=b
-\]
+$$
 
 for every material.
 
@@ -4537,7 +4521,7 @@ This elegant trick allows us to treat the intercept exactly like every other coe
 
 Instead of writing
 
-\[
+$$
 \hat{y}
 =
 b
@@ -4547,13 +4531,13 @@ m_1x_1
 m_2x_2
 +
 m_3x_3
-\]
+$$
 
 we simply write
 
-\[
+$$
 \boxed{\hat{y}=X\beta}
-\]
+$$
 
 This compact equation represents every prediction for every material simultaneously.
 
@@ -4569,7 +4553,7 @@ This is why machine learning relies so heavily on linear algebra.
 
 Let us examine each symbol carefully.
 
-### \(\hat{y}\)
+### $(\hat{y})$
 
 The vector of predicted values.
 
@@ -4585,7 +4569,7 @@ Contains all descriptors for all materials.
 
 ---
 
-### \(\beta\)
+### \(beta\)
 
 The coefficient vector.
 
@@ -4601,9 +4585,9 @@ Contains
 
 When we multiply
 
-\[
+$$
 X\beta,
-\]
+$$
 
 every row of the feature matrix is multiplied by the coefficient vector,
 
@@ -4617,23 +4601,23 @@ Earlier,
 
 we wrote the Sum of Squared Errors as
 
-\[
+$$
 SSE
 =
 \sum_{i=1}^{n}
 (y_i-\hat{y}_i)^2.
-\]
+$$
 
 Using matrices,
 
 the same idea becomes
 
-\[
+$$
 SSE
 =
 (y-X\beta)^T
 (y-X\beta)
-\]
+$$
 
 This expression may appear intimidating,
 
@@ -4641,9 +4625,9 @@ but it is simply another way of writing the sum of squared residuals.
 
 The superscript
 
-\[
+$$
 T
-\]
+$$
 
 means **transpose**.
 
@@ -4667,23 +4651,23 @@ By differentiating the matrix cost function with respect to the coefficient vect
 
 we obtain the celebrated **Normal Equation**.
 
-\[
+$$
 \boxed{
 \beta
 =
 (X^TX)^{-1}
 X^Ty
 }
-\]
+$$
 
 This equation directly computes the optimal regression coefficients.
 
 Every term has a specific meaning.
 
-- \(X^T\) is the transpose of the feature matrix.
-- \(X^TX\) summarizes relationships among the features.
-- \((X^TX)^{-1}\) is the matrix inverse.
-- \(X^Ty\) connects the features with the target values.
+- $(X^T)$ is the transpose of the feature matrix.
+- $(X^TX)$ summarizes relationships among the features.
+- $((X^TX)^{-1})$ is the matrix inverse.
+- $(X^Ty)$ connects the features with the target values.
 
 Together,
 
@@ -4719,9 +4703,9 @@ Understanding this equation will make later topics such as Ridge Regression and 
 
 An interesting question is whether Scikit-learn literally computes
 
-\[
+$$
 (X^TX)^{-1}X^Ty.
-\]
+$$
 
 The answer is:
 
@@ -4854,15 +4838,15 @@ For every material,
 
 the prediction error is
 
-\[
+$$
 Error = Actual - Predicted
-\]
+$$
 
 or mathematically,
 
-\[
+$$
 e_i=y_i-\hat{y_i}
-\]
+$$
 
 Example:
 
@@ -4919,21 +4903,21 @@ Instead of using positive and negative errors,
 
 we take the absolute value.
 
-\[
+$$
 |e|
 =
 |y-\hat{y}|
-\]
+$$
 
 The MAE is
 
-\[
+$$
 MAE
 =
 \frac{1}{n}
 \sum_{i=1}^{n}
 |y_i-\hat{y_i}|
-\]
+$$
 
 ---
 
@@ -5025,13 +5009,13 @@ Instead of taking absolute values,
 
 we square every error.
 
-\[
+$$
 MSE
 =
 \frac{1}{n}
 \sum
 (y_i-\hat{y_i})^2
-\]
+$$
 
 This is the same quantity minimized by Linear Regression during training.
 
@@ -5069,9 +5053,9 @@ if hardness is measured in HV,
 
 the MSE is measured in
 
-\[
+$$
 HV^2
-\]
+$$
 
 This makes interpretation less intuitive.
 
@@ -5083,11 +5067,11 @@ To solve the unit problem,
 
 we take the square root of the MSE.
 
-\[
+$$
 RMSE
 =
 \sqrt{MSE}
-\]
+$$
 
 Now the units return to the original target units.
 
@@ -5121,7 +5105,7 @@ RMSE is one of the most frequently reported regression metrics in scientific pub
 
 ---
 
-# 2.151 Coefficient of Determination (\(R^2\))
+# 2.151 Coefficient of Determination ($(R^2)$)
 
 The final metric is the
 
@@ -5129,13 +5113,13 @@ The final metric is the
 
 or simply
 
-\[
+$$
 R^2
-\]
+$$
 
 Unlike MAE or RMSE,
 
-\(R^2\) does **not** measure prediction error directly.
+$(R^2)$ does **not** measure prediction error directly.
 
 Instead,
 
@@ -5143,26 +5127,26 @@ it measures how much of the variation in the data is explained by the model.
 
 Mathematically,
 
-\[
+$$
 R^2
 =
 1-
 \frac
 {\sum(y_i-\hat{y_i})^2}
 {\sum(y_i-\bar{y})^2}
-\]
+$$
 
 where
 
-\[
+$$
 \bar{y}
-\]
+$$
 
 is the average of all target values.
 
 ---
 
-# 2.152 Understanding \(R^2\)
+# 2.152 Understanding $(R^2)$
 
 Suppose
 
@@ -6062,9 +6046,9 @@ The dataset is divided into **K equal parts**, called **folds**.
 
 Suppose
 
-\[
+$$
 K = 5
-\]
+$$
 
 The dataset is divided like this.
 
@@ -6205,9 +6189,9 @@ the evaluation metrics are averaged.
 
 The value of
 
-\[
+$$
 K
-\]
+$$
 
 is chosen by the researcher.
 
@@ -6350,9 +6334,9 @@ Example output
 
 These values represent the
 
-\[
+$$
 R^2
-\]
+$$
 
 score obtained during each fold.
 
@@ -6414,9 +6398,9 @@ By default,
 
 Cross-Validation returns the
 
-\[
+$$
 R^2
-\]
+$$
 
 score.
 
@@ -6663,7 +6647,7 @@ Linear Regression assumes that the relationship between the features and the tar
 
 Mathematically,
 
-\[
+$$
 \hat{y}
 =
 b
@@ -6674,7 +6658,7 @@ m_2x_2
 +\cdots
 +
 m_nx_n
-\]
+$$
 
 The contribution of each feature is assumed to be linear.
 
@@ -7061,11 +7045,11 @@ Suppose our dataset contains
 
 Since
 
-\[
+$$
 Density
 =
 \frac{Mass}{Volume},
-\]
+$$
 
 these variables are mathematically related.
 
@@ -8622,9 +8606,9 @@ Recall that
 
 The IQR is defined as
 
-\[
+$$
 IQR = Q_3 - Q_1
-\]
+$$
 
 The IQR measures the spread of the middle 50% of the data.
 
@@ -8642,15 +8626,15 @@ we define two limits.
 
 The lower limit is
 
-\[
+$$
 Q_1 - 1.5 \times IQR
-\]
+$$
 
 The upper limit is
 
-\[
+$$
 Q_3 + 1.5 \times IQR
-\]
+$$
 
 Any observation outside these limits is considered a potential outlier.
 
@@ -8945,10 +8929,10 @@ The transformed value is called the **standard score** or **Z-score**.
 
 The formula is
 
-\[
+$$
 z =
 \frac{x-\mu}{\sigma}
-\]
+$$
 
 where
 
@@ -8990,12 +8974,12 @@ Now consider a material with a density of
 
 The standardized value becomes
 
-\[
+$$
 z=
 \frac{7.95-7.80}{0.10}
 =
 1.5
-\]
+$$
 
 This means the material's density is
 
@@ -9127,24 +9111,24 @@ normalization rescales every value into a fixed range.
 
 The most common range is
 
-\[
+$$
 0
-\]
+$$
 
 to
 
-\[
+$$
 1.
-\]
+$$
 
 The formula is
 
-\[
+$$
 x_{new}
 =
 \frac{x-x_{min}}
 {x_{max}-x_{min}}
-\]
+$$
 
 where
 
@@ -9187,11 +9171,11 @@ A grain size of
 
 becomes
 
-\[
+$$
 \frac{20-10}{30-10}
 =
 0.5
-\]
+$$
 
 The original value
 
