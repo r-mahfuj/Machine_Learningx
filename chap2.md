@@ -430,13 +430,7 @@ We do **not** choose them ourselves.
 
 Suppose the trained model produces
 
-
-$$\text{Hardness}
-=
-450 \times \text{Density}
--
-3190$$
-
+$$\text{Hardness}=450 \times \text{Density}-3190$$
 
 This equation has physical meaning.
 
@@ -937,8 +931,8 @@ $$
 
 where:
 
-- \(y_i\) = actual value,
-- \(\hat{y_i}\) = predicted value.
+$$- \(y_i\) = actual value,$$
+$$- \(\hat{y_i}\) = predicted value.$$
 
 Example:
 
