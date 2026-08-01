@@ -1112,7 +1112,7 @@ $$
 
 The goal of Linear Regression training is:
 
-$_
+$$
 \text{Minimize MSE}
 $$
 
@@ -1513,18 +1513,18 @@ After training,
 
 the model has discovered an equation of the form
 
-\[
+$$
 \text{Hardness}
 =
 m(\text{Carbon})+b
-\]
+$$
 
 Unlike before,
 
 the values of
 
-- \(m\),
-- \(b\),
+$$\(m\),
+$$ \(b\),
 
 are no longer unknown.
 
@@ -1608,14 +1608,14 @@ Intercept = 105
 
 The regression equation becomes
 
-\[
+$$
 \text{Hardness}
 =
 450\times
 \text{Carbon}
 +
 105
-\]
+$_
 
 Now we can make predictions without using Python.
 
@@ -1627,21 +1627,21 @@ Carbon = 0.40%
 
 then
 
-\[
+$$
 \text{Hardness}
 =
 450(0.40)+105
-\]
+$$
 
-\[
+$$
 =
 180+105
-\]
+$$
 
-\[
+$$
 =
 285
-\]
+$$
 
 The model predicts
 
@@ -2317,9 +2317,9 @@ Now suppose we have three features.
 
 The model becomes
 
-\[
+$$
 y=b+m_1x_1+m_2x_2+m_3x_3
-\]
+$$
 
 Instead of learning one slope,
 
@@ -2337,9 +2337,9 @@ For a dataset containing many features,
 
 the Linear Regression equation becomes
 
-\[
+$$
 y=b+m_1x_1+m_2x_2+\cdots+m_nx_n
-\]
+$$
 
 where
 
@@ -3447,9 +3447,9 @@ print(density)
 
 The returned value is usually expressed in
 
-\[
+$$
 \text{g/cm}^3
-\]
+$$
 
 Pymatgen calculates the density from
 
@@ -3712,15 +3712,15 @@ For Simple Linear Regression, we assume that the relationship between the featur
 
 The model is written as
 
-\[
+$$
 \hat{y}=mx+b
-\]
+$$
 
 Notice that we use
 
-\[
+$$
 \hat{y}
-\]
+$$
 
 instead of
 
@@ -3730,9 +3730,9 @@ y.
 
 The symbol
 
-\[
+$$
 \hat{y}
-\]
+$$
 
 (pronounced *"y hat"*) represents the **predicted value** produced by the model.
 
@@ -3750,8 +3750,8 @@ Throughout machine learning,
 
 we will always use
 
-- \(y\) for the true value,
-- \(\hat{y}\) for the predicted value.
+$$ \(y\) $$ for the true value,
+$$ \(\hat{y}\) $$ for the predicted value.
 
 ---
 
@@ -3761,9 +3761,9 @@ At first,
 
 the equation
 
-\[
+$$
 \hat{y}=mx+b
-\]
+$$
 
 contains two unknown quantities.
 
@@ -3792,9 +3792,9 @@ b=105.
 
 Our model becomes
 
-\[
+$$
 \hat{y}=450x+105.
-\]
+$$
 
 If the carbon content is
 
@@ -3842,9 +3842,9 @@ The prediction error for a single observation is called the **residual**.
 
 It is calculated as
 
-\[
+$$
 e=y-\hat{y}
-\]
+$$
 
 where
 
