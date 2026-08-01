@@ -396,9 +396,9 @@ we will learn exactly how the algorithm determines this line mathematically.
 
 Every straight line can be written using a simple equation.
 
-\[
+$$
 y = mx + b
-\]
+$$
 
 This equation may already be familiar from school mathematics.
 
@@ -430,13 +430,13 @@ We do **not** choose them ourselves.
 
 Suppose the trained model produces
 
-\[
+$$
 \text{Hardness}
 =
 450 \times \text{Density}
 -
 3190
-\]
+$$
 
 This equation has physical meaning.
 
@@ -470,17 +470,17 @@ we will study the physical interpretation of coefficients in much greater detail
 
 Suppose the algorithm initially guesses
 
-\[
+$$
 y = 100x + 5
-\]
+$$
 
 The predictions are poor.
 
 It then tries another equation.
 
-\[
+$$
 y = 250x - 900
-\]
+$$
 
 The predictions improve,
 
