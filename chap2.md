@@ -1514,17 +1514,15 @@ After training,
 the model has discovered an equation of the form
 
 $$
-\text{Hardness}
-=
-m(\text{Carbon})+b
+\text{Hardness}=m(\text{Carbon})+b
 $$
 
 Unlike before,
 
 the values of
 
-$$\(m\),
-$$ \(b\),
+\(m\),
+\(b\),
 
 are no longer unknown.
 
@@ -1628,19 +1626,15 @@ Carbon = 0.40%
 then
 
 $$
-\text{Hardness}
-=
-450(0.40)+105
+\text{Hardness}=450(0.40)+105
 $$
 
 $$
-=
-180+105
+=180+105
 $$
 
 $$
-=
-285
+=285
 $$
 
 The model predicts
@@ -2343,9 +2337,9 @@ $$
 
 where
 
-- \(x_1,x_2,\ldots,x_n\) are the features,
-- \(m_1,m_2,\ldots,m_n\) are the coefficients,
-- \(b\) is the intercept.
+-$$ \(x_1,x_2,\ldots,x_n\)$$ are the features,
+- $$\(m_1,m_2,\ldots,m_n\)$$ are the coefficients,
+- $$\(b\)$$is the intercept.
 
 Although the equation looks more complicated,
 
