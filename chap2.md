@@ -1607,13 +1607,8 @@ Intercept = 105
 The regression equation becomes
 
 $$
-\text{Hardness}
-=
-450\times
-\text{Carbon}
-+
-105
-$_
+\text{Hardness}=450\times\text{Carbon}+105
+$$
 
 Now we can make predictions without using Python.
 
@@ -2327,9 +2322,7 @@ The intercept remains only one number.
 
 # 2.61 General Equation
 
-For a dataset containing many features,
-
-the Linear Regression equation becomes
+For a dataset containing many features,the Linear Regression equation becomes
 
 $$
 y=b+m_1x_1+m_2x_2+\cdots+m_nx_n
@@ -2337,25 +2330,16 @@ $$
 
 where
 
--$$ \(x_1,x_2,\ldots,x_n\)$$ are the features,
-- $$\(m_1,m_2,\ldots,m_n\)$$ are the coefficients,
-- $$\(b\)$$is the intercept.
+$(x_1, x_2, \ldots, x_n)$ are the features, $(m_1, m_2, \ldots, m_n)$ are the coefficients, and $b$ is the intercept.
 
-Although the equation looks more complicated,
-
-the underlying idea is exactly the same.
-
+Although the equation looks more complicated, the underlying idea is exactly the same.
 The algorithm still tries to find the coefficients that minimize the prediction error.
 
 ---
 
 # 2.62 A Materials Science Example
 
-Suppose we wish to predict the hardness of steel.
-
-Instead of using only carbon percentage,
-
-we include additional information.
+Suppose we wish to predict the hardness of steel.Instead of using only carbon percentage, we include additional information.
 
 | Density | Carbon | Grain Size | Hardness |
 |---------:|--------:|-----------:|---------:|
@@ -2365,26 +2349,16 @@ we include additional information.
 |7.71|0.28|25|231|
 |7.95|0.50|16|322|
 
-Notice something important.
-
-Every row still represents **one material**.
-
-However,
-
+Notice something important.Every row still represents **one material**. However,
 each material now contains **three input variables** instead of one.
-
 This is the most common type of dataset encountered in engineering research.
 
 ---
 
 # 2.63 Why Multiple Features Improve Predictions
 
-Imagine trying to predict the weight of a person.
-
-Would you use only height?
-
+Imagine trying to predict the weight of a person. Would you use only height?
 Probably not.
-
 Weight also depends on
 
 - age,
@@ -2393,31 +2367,17 @@ Weight also depends on
 - body composition.
 
 Similarly,
-
-the hardness of a material rarely depends on only one descriptor.
-
-By combining several meaningful descriptors,
-
-the model usually becomes more accurate.
-
-However,
-
-adding features blindly is **not** always beneficial.
-
-Later in this book,
-
-we will learn how to choose useful features and remove unnecessary ones.
-
-This process is called **feature selection**.
+the hardness of a material rarely depends on only one descriptor.By combining several meaningful descriptors,
+the model usually becomes more accurate.However,
+ adding features blindly is **not** always beneficial.
+Later in this book, we will learn how to choose useful features and remove unnecessary ones. This process is called **feature selection**.
 
 ---
 
 # 2.64 Preparing Multiple Features in Python
 
 The only major difference in the code is how we select the feature matrix.
-
 Previously,
-
 we wrote
 
 ```python
@@ -2425,7 +2385,6 @@ X = df[["Carbon"]]
 ```
 
 Now,
-
 we include several columns.
 
 ```python
@@ -2445,7 +2404,6 @@ y = df["Hardness"]
 ```
 
 Notice that nothing else changes.
-
 Scikit-learn automatically recognizes that the dataset now contains three features.
 
 ---
@@ -2484,7 +2442,6 @@ model.fit(X,y)
 ```
 
 Although this program looks almost identical to the previous one,
-
 it now learns the relationship between **three features** and hardness.
 
 ---
@@ -2498,9 +2455,7 @@ data = {...}
 ```
 
 Stores four columns.
-
 Three are features.
-
 One is the target.
 
 ---
@@ -2518,13 +2473,9 @@ X = df[
 ```
 
 This creates a feature matrix.
-
 Each row corresponds to one alloy.
-
 Each column corresponds to one descriptor.
-
 Conceptually,
-
 the matrix looks like
 
 | Density | Carbon | Grain Size |
@@ -2566,7 +2517,6 @@ model.fit(X,y)
 ```
 
 The algorithm analyzes all three descriptors simultaneously.
-
 It determines how each descriptor contributes to the predicted hardness.
 
 ---
@@ -2588,7 +2538,6 @@ Example output
 ```
 
 Your numbers will depend on the dataset.
-
 Each value corresponds to one feature.
 
 ```text
@@ -2638,7 +2587,6 @@ The negative coefficient for grain size suggests that larger grains are associat
 This observation is consistent with the Hall–Petch relationship, which states that decreasing grain size generally increases the strength and hardness of many polycrystalline materials.
 
 This illustrates an important advantage of Linear Regression.
-
 The coefficients are often physically interpretable.
 
 ---
@@ -2658,7 +2606,6 @@ Example
 ```
 
 Together,
-
 the coefficients and intercept define the complete regression equation.
 
 ---
@@ -2716,11 +2663,8 @@ new_alloy
 ```
 
 The outer list represents the dataset.
-
 The inner list represents one material.
-
 The feature order must **exactly match** the order used during training.
-
 If the model was trained using
 
 ```text
@@ -2732,7 +2676,6 @@ Grain Size
 ```
 
 then every future prediction must follow the same order.
-
 Changing the order can produce completely incorrect predictions.
 
 ---
@@ -2742,7 +2685,6 @@ Changing the order can produce completely incorrect predictions.
 Most real materials informatics datasets contain **dozens**, **hundreds**, or even **thousands** of descriptors.
 
 For example,
-
 using **Pymatgen** and **Matminer**, we can automatically generate descriptors such as
 
 - density,
@@ -2756,9 +2698,7 @@ using **Pymatgen** and **Matminer**, we can automatically generate descriptors s
 - structural fingerprints.
 
 Each descriptor becomes one feature in the machine learning model.
-
 The concepts you have learned here remain exactly the same.
-
 The only difference is that the number of features increases dramatically.
 
 In the next section, we will begin connecting Multiple Linear Regression with **Pymatgen**, showing how to transform crystal structures into numerical descriptors that can be used directly for machine learning.
@@ -2767,7 +2707,6 @@ In the next section, we will begin connecting Multiple Linear Regression with **
 # 2.73 From Crystal Structures to Machine Learning Features
 
 Up to this point, we have manually created our datasets.
-
 For example,
 
 ```python
@@ -2779,7 +2718,6 @@ data = {
 ```
 
 This approach is useful for learning machine learning concepts.
-
 However, **real materials informatics research almost never begins with manually typed datasets.**
 
 Instead, researchers start with
@@ -2790,11 +2728,8 @@ Instead, researchers start with
 - or materials databases.
 
 The first task is to convert this scientific information into numerical features that a machine learning algorithm can understand.
-
 This process is called **feature extraction**.
-
 Feature extraction is one of the most important steps in the entire machine learning pipeline.
-
 In many research projects, choosing good features has a greater impact on model performance than choosing the machine learning algorithm itself.
 
 ---
@@ -2802,7 +2737,6 @@ In many research projects, choosing good features has a greater impact on model 
 # 2.74 Why Can't We Train Directly on a Crystal Structure?
 
 Suppose you have a POSCAR file from Quantum ESPRESSO or VASP.
-
 A portion of the file may look like
 
 ```text
@@ -2819,13 +2753,10 @@ Direct
 ```
 
 A human can recognize that this describes a crystal structure.
-
 A machine learning model cannot.
-
 Algorithms such as Linear Regression expect numerical input arranged in rows and columns.
 
 They cannot interpret lattice vectors, atomic positions, or crystallographic information directly.
-
 Therefore, we must transform the crystal structure into meaningful numerical descriptors.
 
 ---
@@ -2833,7 +2764,6 @@ Therefore, we must transform the crystal structure into meaningful numerical des
 # 2.75 The Role of Pymatgen
 
 This is where **Pymatgen** becomes indispensable.
-
 Pymatgen is capable of reading crystal structures from many common file formats, including
 
 - POSCAR,
@@ -2845,7 +2775,6 @@ Pymatgen is capable of reading crystal structures from many common file formats,
 - and many others.
 
 After reading the structure, Pymatgen provides access to hundreds of structural and compositional properties through Python objects.
-
 These properties become candidate features for machine learning.
 
 ---
@@ -2853,7 +2782,6 @@ These properties become candidate features for machine learning.
 # 2.76 Loading a Crystal Structure
 
 Suppose you have a POSCAR file in your working directory.
-
 We first import the required class.
 
 ```python
@@ -2867,7 +2795,6 @@ structure = Structure.from_file("POSCAR")
 ```
 
 At this point,
-
 the entire crystal structure is stored inside the variable
 
 ```python
@@ -2908,7 +2835,6 @@ pymatgen.core
 ```
 
 contains the fundamental objects used to describe materials.
-
 The class
 
 ```python
@@ -2932,13 +2858,9 @@ from_file()
 ```
 
 reads the structure file,
-
 parses its contents,
-
 creates a `Structure` object,
-
 and returns it.
-
 We assign the returned object to
 
 ```python
@@ -2952,7 +2874,6 @@ so that it can be used later.
 # 2.78 Extracting the Unit Cell Volume
 
 Once the structure has been loaded,
-
 obtaining the unit cell volume is straightforward.
 
 ```python
