@@ -3734,16 +3734,9 @@ $$
 
 where
 
-$$(e)$$
- is the residual,
-$$
-(y)
-$$ 
- is the actual value,
-$$
-(\hat{y})
-$$
- is the predicted value.
+- $$(e)$$ is the residual,
+- $$(y)$$  is the actual value,
+- $$(\hat{y})$$  is the predicted value.
 
 For the previous example,
 
