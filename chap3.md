@@ -13,7 +13,7 @@ if we want to predict the hardness of an alloy,
 
 Linear Regression assumes that hardness can be represented approximately as
 
-\[
+$$
 Hardness =
 b_0
 +
@@ -22,13 +22,13 @@ b_1(Carbon)
 b_2(Grain\ Size)
 +
 b_3(Density)
-\]
+$$
 
 The model learns the coefficients
 
-\[
+$$
 b_0,b_1,b_2,b_3
-\]
+$$
 
 from the training data.
 
@@ -606,6 +606,664 @@ By the end of this chapter, you will be able to build, train, interpret, and mod
 
 
 
+# 3.16 How Decision Trees Split Data
+
+The most important concept in understanding Decision Trees is the **splitting process**.
+
+A Decision Tree does not learn a mathematical equation like Linear Regression.
+
+Instead, it repeatedly divides the dataset into smaller and more organized groups.
+
+Each division is called a **split**.
+
+The quality of these splits determines how accurately the final model can predict new data.
+
+---
+
+# 3.17 The Basic Idea of Splitting
+
+Imagine we have a dataset containing steel samples.
+
+Each sample has:
+
+- carbon content,
+- grain size,
+- density,
+
+and the target variable:
+
+- hardness.
+
+A Decision Tree starts with the complete dataset.
+
+At this point, the model knows only the average hardness of all samples.
+
+For example:
+
+```
+All Steel Samples
+
+Average Hardness = 250 HV
+```
+
+However, the samples may have very different properties.
+
+Some may have hardness around
+
+```
+150 HV
+```
+
+while others may have hardness around
+
+```
+350 HV.
+```
+
+The model wants to divide these samples into groups where the hardness values become more similar.
+
+---
+
+# 3.18 Choosing a Feature for Splitting
+
+The tree asks:
+
+> Which feature should I use to divide the data?
+
+Possible choices:
+
+```
+Carbon Content
+
+Density
+
+Grain Size
+
+Chromium Concentration
+
+```
+
+The algorithm tests many possible splits.
+
+For example:
+
+```
+Carbon > 0.30%
+```
+
+or
+
+```
+Grain Size < 20 μm
+```
+
+or
+
+```
+Density > 7.8 g/cm³
+```
+
+Each possible split creates different groups.
+
+The algorithm chooses the split that produces the best improvement.
+
+---
+
+# 3.19 Example of a Split
+
+Consider the following simplified dataset.
+
+| Carbon (%) | Hardness (HV) |
+|------------|--------------:|
+|0.10|160|
+|0.20|180|
+|0.30|220|
+|0.40|280|
+|0.50|330|
+
+Initially:
+
+```
+All Samples
+
+Hardness:
+
+160,180,220,280,330
+
+Average = 234 HV
+```
+
+If the model predicts every sample as
+
+```
+234 HV
+```
+
+the error is large.
+
+The tree tries a split:
+
+```
+Carbon ≤ 0.30%
+```
+
+The dataset becomes:
+
+## Left Group
+
+```
+Carbon ≤ 0.30%
+
+Hardness:
+
+160
+180
+220
+```
+
+Average:
+
+```
+186.7 HV
+```
+
+---
+
+## Right Group
+
+```
+Carbon > 0.30%
+
+Hardness:
+
+280
+330
+```
+
+Average:
+
+```
+305 HV
+```
+
+Now the predictions are much closer to the actual values.
+
+The split reduced the prediction error.
+
+Therefore,
+
+the tree considers this a useful split.
+
+---
+
+# 3.20 Recursive Splitting
+
+A Decision Tree does not stop after one split.
+
+After creating new groups,
+
+it repeats the same process.
+
+The structure becomes:
+
+```
+                 All Materials
+
+                       |
+
+              Carbon > 0.30%
+
+                 /          \
+
+              Yes            No
+
+              |              |
+
+      Further Splitting   Prediction
+
+```
+
+The left and right groups may again be divided.
+
+For example:
+
+```
+Carbon > 0.30%
+
+        |
+
+Grain Size < 15 μm
+
+        |
+
+High Hardness Region
+```
+
+This repeated process is called **recursive partitioning**.
+
+---
+
+# 3.21 What Is the Tree Trying to Achieve?
+
+The purpose of every split is the same:
+
+> Make the samples inside each group as similar as possible.
+
+For regression problems,
+
+similar means:
+
+the target values should have low variation.
+
+For example,
+
+this group is difficult to predict:
+
+```
+Hardness:
+
+150
+
+250
+
+350
+
+```
+
+The values are widely spread.
+
+The model does not know what value to choose.
+
+However,
+
+this group is easier:
+
+```
+Hardness:
+
+245
+
+250
+
+255
+
+```
+
+The average value is a very good prediction.
+
+Therefore,
+
+a good split creates groups with small internal variation.
+
+---
+
+# 3.22 Splitting in Regression Trees
+
+For regression problems,
+
+Decision Trees usually measure split quality using **variance reduction** or **Mean Squared Error (MSE)**.
+
+The idea is simple:
+
+Before splitting:
+
+```
+Large error
+```
+
+After splitting:
+
+```
+Smaller errors in each group
+```
+
+The algorithm prefers the split that creates the largest reduction in error.
+
+---
+
+# 3.23 Mean Squared Error as a Split Criterion
+
+For a group of samples,
+
+the Mean Squared Error is:
+
+$$
+MSE=
+\frac{1}{n}
+\sum_{i=1}^{n}
+(y_i-\bar{y})^2
+$$
+
+where:
+
+- \(y_i\) is the actual target value,
+- \(\bar{y}\) is the average target value,
+- \(n\) is the number of samples.
+
+The tree calculates this value before and after a possible split.
+
+A good split produces a lower total MSE.
+
+---
+
+# 3.24 Understanding MSE Intuitively
+
+Suppose a leaf contains:
+
+```
+Hardness:
+
+200
+
+210
+
+220
+```
+
+The average is:
+
+```
+210
+```
+
+Prediction errors:
+
+```
+200 - 210 = -10
+
+210 - 210 = 0
+
+220 - 210 = +10
+```
+
+The errors are small.
+
+Therefore,
+
+MSE is low.
+
+Now consider:
+
+```
+Hardness:
+
+100
+
+250
+
+400
+```
+
+Average:
+
+```
+250
+```
+
+Errors:
+
+```
+-150
+
+0
+
++150
+```
+
+The errors are much larger.
+
+Therefore,
+
+MSE is high.
+
+The tree tries to create groups like the first example.
+
+---
+
+# 3.25 Finding the Best Split
+
+The actual algorithm follows this procedure:
+
+```
+Step 1:
+
+Select a feature.
+
+
+Step 2:
+
+Try possible split points.
+
+
+Step 3:
+
+Calculate the error after each split.
+
+
+Step 4:
+
+Choose the split with the lowest error.
+
+
+Step 5:
+
+Repeat the process on the new groups.
+
+```
+
+For a dataset with many features,
+
+the tree may test thousands of possible splits.
+
+Modern implementations perform this efficiently using optimized algorithms.
+
+---
+
+# 3.26 Example with Materials Features
+
+Imagine a dataset containing:
+
+| Feature | Meaning |
+|-|-|
+|Carbon|Composition|
+|Atomic Radius|Element property|
+|Electronegativity|Chemical behavior|
+|Density|Physical property|
+
+Target:
+
+```
+Formation Energy
+```
+
+The tree may discover a relationship such as:
+
+```
+Is Electronegativity < 1.8?
+
+        |
+
+       Yes
+
+        |
+
+Is Atomic Radius Difference < 5%?
+
+        |
+
+Formation Energy = -2.4 eV
+```
+
+The tree automatically discovers these decision rules from the data.
+
+The researcher does not manually program them.
+
+---
+
+# 3.27 Why Decision Trees Are Called Non-Parametric Models
+
+Linear Regression is called a **parametric model** because it assumes a fixed mathematical form:
+
+$$
+y=mx+b
+$$
+
+The model learns a limited number of parameters.
+
+Decision Trees are different.
+
+They do not assume that the relationship follows any specific equation.
+
+They learn the structure directly from the data.
+
+Therefore,
+
+Decision Trees are called **non-parametric models**.
+
+This flexibility allows them to capture highly complex relationships.
+
+---
+
+# 3.28 The Problem of Excessive Splitting
+
+Although creating more splits can reduce training error,
+
+it can create a serious problem.
+
+Consider a tree that continues splitting until every sample has its own leaf.
+
+The model may learn:
+
+```
+Sample 1 → Prediction A
+
+Sample 2 → Prediction B
+
+Sample 3 → Prediction C
+
+```
+
+The training error becomes almost zero.
+
+However,
+
+the tree has memorized the training data.
+
+When a new material is introduced,
+
+it cannot generalize.
+
+This problem is called **overfitting**.
+
+---
+
+# 3.29 Controlling Tree Growth
+
+To prevent overfitting,
+
+we control how large the tree becomes.
+
+Important parameters include:
+
+## Maximum Depth
+
+Controls the maximum number of levels.
+
+Example:
+
+```python
+max_depth=5
+```
+
+means the tree cannot grow deeper than five levels.
+
+---
+
+## Minimum Samples Split
+
+Controls how many samples are required before creating another split.
+
+Example:
+
+```python
+min_samples_split=10
+```
+
+means a node needs at least ten samples before splitting.
+
+---
+
+## Minimum Samples Leaf
+
+Controls the minimum number of samples allowed in a final leaf.
+
+Example:
+
+```python
+min_samples_leaf=5
+```
+
+means every prediction region must contain at least five samples.
+
+---
+
+# 3.30 Decision Tree Thinking
+
+A useful way to remember Decision Trees is:
+
+Linear Regression asks:
+
+> What equation best describes the relationship?
+
+Decision Tree asks:
+
+> What sequence of questions divides the data into meaningful groups?
+
+Both methods attempt to learn relationships between inputs and outputs.
+
+They simply represent those relationships differently.
+
+---
+
+# 3.31 Connection to Future Models
+
+Understanding splitting is essential because every major tree-based algorithm builds upon this idea.
+
+The progression is:
+
+```
+Decision Tree
+
+↓
+
+Many Trees Combined
+
+↓
+
+Random Forest
+
+↓
+
+Trees Built Sequentially
+
+↓
+
+Gradient Boosting
+
+↓
+
+Optimized Gradient Boosting
+
+↓
+
+XGBoost
+```
+
+Therefore,
+
+learning how one tree makes decisions is the foundation for understanding the most powerful algorithms used in modern materials machine learning.
+
+
 # 3.32 Mathematical Foundation of Regression Trees
 
 A Decision Tree for regression may appear simple from the outside.
@@ -644,18 +1302,18 @@ Mathematically,
 
 if a leaf contains samples:
 
-\[
+$$
 y_1,y_2,y_3,...,y_n
-\]
+$$
 
 the prediction of that leaf is:
 
-\[
+$$
 \hat{y}
 =
 \frac{1}{n}
 \sum_{i=1}^{n}y_i
-\]
+$$
 
 This means the tree does not predict a complicated equation.
 
@@ -669,21 +1327,21 @@ Suppose a leaf contains three steel samples.
 
 Their measured hardness values are:
 
-\[
+$$
 220,240,260
-\]
+$$
 
 The prediction becomes:
 
-\[
+$$
 \hat{y}
 =
 \frac{220+240+260}{3}
-\]
+$$
 
-\[
+$$
 \hat{y}=240
-\]
+$$
 
 Therefore,
 
@@ -705,30 +1363,30 @@ The tree compares the predicted value with the actual values.
 
 The difference is called the residual.
 
-\[
+$$
 Residual =
 Actual\ Value - Predicted\ Value
-\]
+$$
 
 For example:
 
 Prediction:
 
-\[
+$$
 240
-\]
+$$
 
 Actual values:
 
-\[
+$$
 220,240,260
-\]
+$$
 
 Residuals:
 
-\[
+$$
 -20,0,+20
-\]
+$$
 
 The smaller these errors are,
 
@@ -742,18 +1400,18 @@ The most common criterion used by regression trees is Mean Squared Error.
 
 The formula is:
 
-\[
+$$
 MSE=
 \frac{1}{n}
 \sum_{i=1}^{n}
 (y_i-\hat{y})^2
-\]
+$$
 
 where:
 
-- \(y_i\) = actual target value,
-- \(\hat{y}\) = predicted value,
-- \(n\) = number of samples.
+- $(y_i)$= actual target value,
+- $(\hat{y})$ = predicted value,
+- $(n)$ = number of samples.
 
 ---
 
@@ -769,27 +1427,27 @@ Example:
 
 Errors:
 
-\[
+$$
 -20,+20
-\]
+$$
 
 Average error:
 
-\[
+$$
 \frac{-20+20}{2}=0
-\]
+$$
 
 This incorrectly suggests perfect prediction.
 
 By squaring the errors:
 
-\[
+$$
 (-20)^2=400
-\]
+$$
 
-\[
+$$
 (20)^2=400
-\]
+$$
 
 both errors contribute positively.
 
@@ -803,46 +1461,46 @@ MSE correctly measures the magnitude of prediction error.
 
 Suppose a leaf contains hardness values:
 
-\[
+$$
 200,220,240
-\]
+$$
 
 Prediction:
 
-\[
+$$
 \hat{y}=220
-\]
+$$
 
 The errors are:
 
-\[
+$$
 200-220=-20
-\]
+$$
 
-\[
+$$
 220-220=0
-\]
+$$
 
-\[
+$$
 240-220=20
-\]
+$$
 
 Square the errors:
 
-\[
+$$
 400,0,400
-\]
+$$
 
 Average:
 
-\[
+$$
 MSE=
 \frac{400+0+400}{3}
-\]
+$$
 
-\[
+$$
 MSE=266.67
-\]
+$$
 
 This value represents the impurity of the leaf.
 
@@ -875,7 +1533,7 @@ MSE = 150
 
 The tree calculates the weighted error:
 
-\[
+$$
 MSE_{split}
 =
 \frac{n_L}{n}
@@ -883,7 +1541,7 @@ MSE_L
 +
 \frac{n_R}{n}
 MSE_R
-\]
+$$
 
 where:
 
@@ -905,13 +1563,13 @@ A good split reduces variance.
 
 The reduction is:
 
-\[
+$$
 Reduction
 =
 Variance_{parent}
 -
 Weighted\ Variance_{children}
-\]
+$$
 
 The tree chooses the split with the largest reduction.
 
@@ -1050,9 +1708,9 @@ For regression,
 
 it usually minimizes:
 
-\[
+$$
 MSE
-\]
+$$
 
 or equivalently,
 
@@ -2224,16 +2882,16 @@ Tree 4:
 
 The Random Forest averages all predictions.
 
-\[
+$$
 Prediction =
 \frac{
 280+290+275+285
 }{4}
-\]
+$$
 
-\[
+$$
 Prediction=282.5
-\]
+$$
 
 Final prediction:
 
@@ -2303,13 +2961,13 @@ which stands for:
 
 The formula for averaging predictions is:
 
-\[
+$$
 \hat{y}
 =
 \frac{1}{N}
 \sum_{i=1}^{N}
 T_i(x)
-\]
+$$
 
 where:
 
@@ -2633,18 +3291,18 @@ Suppose we have \(N\) trees.
 
 Each tree produces a prediction:
 
-\[
+$$
 T_1(x),T_2(x),...,T_N(x)
-\]
+$$
 
 The Random Forest prediction is:
 
-\[
+$$
 \hat{y}
 =
 \frac{1}{N}
 \sum_{i=1}^{N}T_i(x)
-\]
+$$
 
 This is simply the average prediction.
 
@@ -2718,15 +3376,15 @@ Now imagine many trees.
 
 Tree predictions:
 
-\[
+$$
 250,260,255,270,245
-\]
+$$
 
 Average:
 
-\[
+$$
 256
-\]
+$$
 
 The average prediction is usually more stable than any individual tree.
 
@@ -2740,11 +3398,11 @@ For independent models,
 
 the variance of their average is:
 
-\[
+$$
 Var(\bar{X})
 =
 \frac{\sigma^2}{N}
-\]
+$$
 
 where:
 
@@ -2771,13 +3429,13 @@ their errors are often correlated.
 
 The variance becomes:
 
-\[
+$$
 Variance
 =
 \rho\sigma^2
 +
 \frac{(1-\rho)\sigma^2}{N}
-\]
+$$
 
 where:
 
@@ -2793,15 +3451,15 @@ This equation explains why Random Forest needs randomness.
 
 If all trees are identical:
 
-\[
+$$
 \rho=1
-\]
+$$
 
 Then:
 
-\[
+$$
 Variance=\sigma^2
-\]
+$$
 
 No improvement occurs.
 
@@ -2811,15 +3469,15 @@ The forest behaves like one tree.
 
 If trees are completely independent:
 
-\[
+$$
 \rho=0
-\]
+$$
 
 Variance becomes:
 
-\[
+$$
 \frac{\sigma^2}{N}
-\]
+$$
 
 The improvement is maximum.
 
@@ -2860,17 +3518,17 @@ these methods reduce correlation between trees.
 
 Suppose a dataset contains:
 
-\[
+$$
 n
-\]
+$$
 
 samples.
 
 A bootstrap sample also contains:
 
-\[
+$$
 n
-\]
+$$
 
 samples.
 
@@ -2882,22 +3540,22 @@ some samples appear multiple times.
 
 The probability that a particular sample is not selected is:
 
-\[
+$$
 \left(1-\frac{1}{n}\right)^n
-\]
+$$
 
 As \(n\) becomes large:
 
-\[
+$$
 \left(1-\frac{1}{n}\right)^n
 \approx e^{-1}
-\]
+$$
 
 which is approximately:
 
-\[
+$$
 0.368
-\]
+$$
 
 Therefore,
 
@@ -2945,7 +3603,7 @@ A perfect machine learning model must balance two errors:
 
 The total prediction error can be thought of as:
 
-\[
+$$
 Error
 =
 Bias^2
@@ -2953,7 +3611,7 @@ Bias^2
 Variance
 +
 Noise
-\]
+$$
 
 ---
 
@@ -3502,15 +4160,15 @@ Now we separate:
 
 Input variables:
 
-\[
+$$
 X
-\]
+$$
 
 and target:
 
-\[
+$$
 y
-\]
+$$
 
 Python:
 
@@ -3577,9 +4235,9 @@ BandGap
 
 The Random Forest learns:
 
-\[
+$$
 X \rightarrow y
-\]
+$$
 
 Meaning:
 
@@ -4132,9 +4790,9 @@ For regression:
 
 impurity is usually measured using:
 
-\[
+$$
 MSE
-\]
+$$
 
 If splitting on a feature greatly reduces MSE,
 
@@ -4148,12 +4806,12 @@ For a feature \(j\),
 
 importance is calculated from the reduction in impurity:
 
-\[
+$$
 Importance_j
 =
 \sum
 Weighted\ impurity\ reduction
-\]
+$$
 
 The reduction is calculated every time that feature is used in a split.
 

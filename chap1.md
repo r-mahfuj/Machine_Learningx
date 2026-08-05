@@ -5958,7 +5958,7 @@ Unlike the brief introduction in this chapter, Chapter 2 will explore Linear Reg
 You will learn:
 
 - the mathematics behind the algorithm,
-- the cost function and loss minimization,
+<!-- - the cost function and loss minimization -->
 - gradient descent intuition,
 - model coefficients and intercepts,
 - assumptions of linear regression,
