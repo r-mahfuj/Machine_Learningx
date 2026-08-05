@@ -28844,3 +28844,16189 @@ A well-designed validation strategy ensures that improvements in performance ref
 
 In the next section, we will study **overfitting and underfitting**, learning how to recognize these behaviors from training and validation curves and how modern deep learning techniques prevent them during MEGNet training.
 
+## 15.8.11 Overfitting: When MEGNet Memorizes Instead of Learning (Part 1)
+
+One of the most important challenges in training any machine learning model is not making the model powerful enough—it is preventing the model from becoming **too powerful**.
+
+This statement often surprises beginners.
+
+Throughout this book, we have continuously increased the complexity of our models.
+
+We moved from
+
+* Linear Regression,
+* Decision Trees,
+* Random Forests,
+* Gradient Boosting,
+* Neural Networks,
+
+and finally arrived at graph neural networks such as MEGNet.
+
+Each successive model is capable of learning increasingly complex relationships.
+
+It would therefore seem natural to assume that a more powerful model must always produce better predictions.
+
+Unfortunately, this is not true.
+
+A model with excessive capacity can begin to learn not only the true physical relationship between crystal structure and material properties but also the accidental details, random fluctuations, measurement noise, and peculiarities of the training dataset.
+
+When this occurs, the model appears to perform exceptionally well during training while performing poorly on previously unseen materials.
+
+This phenomenon is called **overfitting**.
+
+Overfitting is one of the central problems in modern machine learning and is especially important in materials informatics because available datasets are often much smaller than those used in computer vision or natural language processing.
+
+---
+
+### What Does "Overfitting" Actually Mean?
+
+Suppose we wish to predict the formation energy of crystalline materials.
+
+Our training dataset contains
+
+```text
+80,000 crystal structures
+```
+
+Each crystal has
+
+* atomic positions,
+* lattice parameters,
+* chemical composition,
+* neighbor information,
+* experimentally or computationally determined formation energy.
+
+During training,
+
+MEGNet attempts to discover a function
+
+$$
+f(G;\theta)
+$$
+
+that maps each crystal graph
+
+$$
+G
+$$
+
+to its corresponding property.
+
+Ideally,
+
+the learned function should approximate the true physical relationship
+
+$$
+f_{\text{physics}}(G).
+$$
+
+Instead,
+
+an overfitted model learns something closer to
+
+$$
+f_{\text{training}}(G),
+$$
+
+which contains not only genuine physical trends but also random characteristics unique to the training dataset.
+
+The model therefore becomes extremely specialized to the training data.
+
+---
+
+### An Everyday Analogy
+
+Imagine two students preparing for an advanced materials science examination.
+
+The first student studies
+
+* thermodynamics,
+* crystallography,
+* diffusion,
+* phase diagrams,
+* electronic structure.
+
+The second student memorizes
+
+every question from the previous year's examination.
+
+Suppose the instructor repeats the same examination.
+
+The second student scores
+
+100%.
+
+However,
+
+if the instructor writes a completely new examination,
+
+the second student performs poorly.
+
+The first student,
+
+although perhaps not perfect,
+
+performs consistently well because genuine understanding has been developed.
+
+Machine learning models behave in exactly the same manner.
+
+Learning the underlying scientific principles corresponds to **generalization**.
+
+Memorizing individual examples corresponds to **overfitting**.
+
+---
+
+### Overfitting from the Perspective of Materials Science
+
+Consider two crystals.
+
+The first crystal belongs to the training dataset.
+
+```text
+LiFePO₄
+```
+
+The second crystal is newly synthesized.
+
+```text
+LiMnPO₄
+```
+
+Although these materials are chemically related,
+
+the second crystal was never observed during training.
+
+A properly trained MEGNet model should recognize that
+
+both crystals share
+
+* similar crystal topology,
+* similar bonding environments,
+* similar coordination geometries,
+
+and therefore produce a physically reasonable prediction.
+
+An overfitted model,
+
+however,
+
+may rely excessively on the exact atomic configurations encountered during training.
+
+Instead of recognizing chemical similarity,
+
+it effectively asks
+
+> "Have I seen this exact crystal before?"
+
+If the answer is no,
+
+prediction quality deteriorates rapidly.
+
+---
+
+### Why Deep Neural Networks Are Especially Vulnerable
+
+Overfitting becomes increasingly severe as model capacity increases.
+
+Capacity refers to the ability of a model to represent complicated mathematical functions.
+
+A simple linear regression model contains relatively few parameters.
+
+A decision tree contains more.
+
+A random forest contains thousands.
+
+A modern graph neural network may contain
+
+```text
+500,000
+
+↓
+
+2,000,000
+
+↓
+
+10,000,000
+```
+
+trainable parameters.
+
+Each parameter increases the flexibility of the model.
+
+This flexibility is extremely valuable because it allows MEGNet to learn highly nonlinear relationships between crystal structures and material properties.
+
+However,
+
+the same flexibility also enables the network to memorize the training dataset.
+
+Consequently,
+
+the very property that makes deep learning successful also creates its greatest weakness.
+
+---
+
+### Capacity and Generalization
+
+To understand this idea more formally,
+
+suppose our neural network contains
+
+$$
+P
+$$
+
+trainable parameters.
+
+As
+
+$$
+P
+$$
+
+increases,
+
+the family of functions that the network can represent also expands.
+
+For very small
+
+$$
+P,
+$$
+
+the model may be incapable of representing the true physical relationship.
+
+For extremely large
+
+$$
+P,
+$$
+
+the network can represent almost any mapping,
+
+including mappings that simply memorize every training example.
+
+Therefore,
+
+increasing model complexity initially improves prediction accuracy,
+
+but eventually begins to reduce the model's ability to generalize.
+
+This trade-off between
+
+* model complexity,
+* training accuracy,
+* and generalization
+
+is one of the central ideas in statistical learning theory.
+
+---
+
+### Why Overfitting Is Dangerous in Scientific Machine Learning
+
+In many commercial applications,
+
+a small decrease in prediction accuracy may simply reduce user satisfaction.
+
+In scientific research,
+
+the consequences can be much more serious.
+
+Suppose a materials discovery project screens
+
+one million hypothetical compounds.
+
+The top
+
+100
+
+predicted candidates are selected for expensive DFT calculations.
+
+If the neural network is overfitted,
+
+many of these predictions may be incorrect.
+
+Researchers may then spend
+
+weeks or months
+
+performing simulations on materials that are actually poor candidates.
+
+Even worse,
+
+truly promising compounds may be discarded because the model underestimated their properties.
+
+Thus,
+
+overfitting wastes
+
+* computational resources,
+* experimental effort,
+* research funding,
+* and scientific time.
+
+For this reason,
+
+controlling overfitting is not merely a machine learning concern—it is essential for conducting reliable computational materials research.
+
+---
+
+### The Hidden Nature of Overfitting
+
+One reason overfitting is particularly dangerous is that it is often invisible during training.
+
+Imagine observing only the training loss.
+
+It decreases steadily.
+
+```text
+Epoch 1
+
+↓
+
+1.82
+
+Epoch 10
+
+↓
+
+0.47
+
+Epoch 30
+
+↓
+
+0.09
+
+Epoch 80
+
+↓
+
+0.006
+```
+
+Everything appears excellent.
+
+The optimizer is working.
+
+The network is learning.
+
+Training seems highly successful.
+
+However,
+
+suppose we now examine the validation loss.
+
+```text
+Epoch 1
+
+↓
+
+1.95
+
+Epoch 10
+
+↓
+
+0.62
+
+Epoch 30
+
+↓
+
+0.21
+
+Epoch 50
+
+↓
+
+0.19
+
+Epoch 80
+
+↓
+
+0.44
+```
+
+A completely different story emerges.
+
+Although training loss continues decreasing,
+
+validation loss begins increasing.
+
+The model is no longer learning better physical representations.
+
+Instead,
+
+it is memorizing increasingly specific details of the training dataset.
+
+This divergence between training and validation performance is the characteristic signature of overfitting.
+
+---
+
+In the next part, we will examine **how overfitting develops mathematically**, introduce the concepts of **empirical risk** and **generalization error**, and analyze why overfitting is particularly challenging for graph neural networks such as MEGNet trained on materials datasets.
+
+## 15.8.11 Overfitting: When MEGNet Memorizes Instead of Learning (Part 2)
+
+In the previous section, we developed an intuitive understanding of overfitting. We saw that a neural network can gradually shift from learning genuine physical relationships to memorizing the individual examples contained within the training dataset.
+
+While this intuition is important, modern machine learning studies overfitting from a much more rigorous perspective. To understand why overfitting occurs and how it can be detected, we must first distinguish between two different types of prediction error.
+
+---
+
+### Training Error and Generalization Error
+
+During training, the optimizer repeatedly minimizes the loss computed on the training dataset.
+
+Suppose the training dataset is
+
+$$
+D_{train}
+=========
+
+{(G_i,y_i)}_{i=1}^{N}.
+$$
+
+The average loss over this dataset is called the **training error** or **empirical risk**.
+
+Mathematically,
+
+$$
+R_{train}
+=========
+
+\frac{1}{N}
+\sum_{i=1}^{N}
+L
+\left(
+f(G_i;\theta),
+y_i
+\right),
+$$
+
+where
+
+* $L$ is the loss function,
+* $f(G_i;\theta)$ is the prediction of the neural network,
+* $y_i$ is the true target property.
+
+This quantity is exactly what the optimizer minimizes.
+
+Notice an important point.
+
+The optimizer never sees any data outside the training dataset.
+
+Therefore, from the optimizer's perspective,
+
+reducing
+
+$$
+R_{train}
+$$
+
+is the only objective.
+
+Unfortunately,
+
+our actual scientific objective is different.
+
+---
+
+### The Quantity We Really Care About
+
+Suppose another crystal exists,
+
+$$
+G_{new},
+$$
+
+which was never included in the training data.
+
+The prediction error for this crystal contributes to what is called the **generalization error**.
+
+Ideally, we would like to evaluate the model over **every possible crystal that could exist**.
+
+Conceptually,
+
+the desired objective is
+
+$$
+R_{true}
+========
+
+\mathbb{E}
+\left[
+L(f(G;\theta),y)
+\right],
+$$
+
+where the expectation is taken over the entire population of possible materials.
+
+This quantity is sometimes called
+
+* expected risk,
+* population risk,
+* true error.
+
+Unlike the training error,
+
+it cannot be computed directly,
+
+because we do not possess data for every possible crystal in nature.
+
+Instead,
+
+we estimate it using validation and test datasets.
+
+---
+
+### Why These Two Errors Are Different
+
+If the training dataset were infinitely large and perfectly representative of all materials,
+
+then
+
+$$
+R_{train}
+\approx
+R_{true}.
+$$
+
+In practice,
+
+materials datasets are finite.
+
+Consequently,
+
+the optimizer only learns from a limited sample.
+
+As the neural network becomes increasingly flexible,
+
+it begins fitting characteristics that exist only inside that sample.
+
+The result is
+
+$$
+R_{train}
+\downarrow
+$$
+
+while
+
+$$
+R_{true}
+\uparrow.
+$$
+
+This divergence is precisely the mathematical definition of overfitting.
+
+---
+
+### The Generalization Gap
+
+The difference between training performance and unseen-data performance is called the **generalization gap**.
+
+It is defined conceptually as
+
+$$
+\text{Generalization Gap}
+=
+
+R_{true}
+
+-R_{train}.
+$$
+
+A small generalization gap indicates that the model behaves similarly on both training data and unseen data.
+
+A large generalization gap indicates that the model has memorized the training dataset.
+
+For example,
+
+| Model   | Training MAE | Validation MAE | Generalization |
+| ------- | -----------: | -------------: | -------------- |
+| Model A |     0.025 eV |       0.031 eV | Excellent      |
+| Model B |     0.004 eV |       0.182 eV | Poor           |
+
+Although Model B achieves a much lower training error,
+
+its validation performance is dramatically worse.
+
+The larger gap immediately suggests severe overfitting.
+
+---
+
+### Why Graph Neural Networks Can Overfit
+
+Graph neural networks possess enormous representational power.
+
+A MEGNet model simultaneously learns
+
+* atomic embeddings,
+* bond representations,
+* local environments,
+* long-range interactions,
+* graph-level representations,
+* nonlinear mappings between structure and property.
+
+Each Graph Network block introduces additional trainable parameters.
+
+Each multilayer perceptron introduces even more.
+
+As additional blocks are stacked together,
+
+the network becomes increasingly expressive.
+
+This expressiveness is beneficial because materials exhibit highly nonlinear behavior.
+
+However,
+
+it also enables the network to reproduce extremely complicated patterns that may exist only within the training dataset.
+
+Consequently,
+
+a sufficiently large GNN can almost perfectly reproduce the training data without discovering the true underlying physical relationship.
+
+---
+
+### Noise Exists in Materials Data
+
+Another important source of overfitting is **noise**.
+
+Real materials datasets are rarely perfect.
+
+Even computational databases contain uncertainties arising from
+
+* DFT approximations,
+* exchange-correlation functionals,
+* convergence tolerances,
+* numerical precision,
+* structural relaxation procedures.
+
+Experimental datasets contain additional uncertainties,
+
+including
+
+* measurement error,
+* impurities,
+* synthesis variability,
+* instrument limitations.
+
+An ideal machine learning model should learn the true physical trend while ignoring random noise.
+
+An overfitted model does the opposite.
+
+It begins treating noise as though it were a meaningful scientific signal.
+
+As training continues,
+
+the network becomes increasingly specialized to accidental variations that have no physical significance.
+
+---
+
+### A Visual Interpretation
+
+Imagine plotting the true relationship between a structural descriptor and formation energy.
+
+The true relationship is smooth.
+
+The measured data fluctuate slightly because of noise.
+
+A well-generalized model follows the overall trend.
+
+An overfitted model attempts to pass through every individual point.
+
+Conceptually,
+
+```text
+True Physical Trend
+
+──────────────
+
+Measured Samples
+
+•   •      •    •
+
+  •     •      •
+
+Well-Generalized Model
+
+~~~~~~~~~~~~~~~
+
+Overfitted Model
+
+/\/\/\/\/\/\/\/\
+```
+
+The overfitted curve achieves a lower training error,
+
+yet it provides a poorer approximation of the underlying physical law.
+
+This illustrates one of the most fundamental principles of scientific machine learning:
+
+**The model with the lowest training error is not necessarily the model that best represents reality.**
+
+---
+
+### Overfitting Is Usually Gradual
+
+Many beginners imagine overfitting as a sudden event.
+
+In reality,
+
+it develops progressively.
+
+During the early stages of training,
+
+the network learns broad physical relationships.
+
+For example,
+
+it may first recognize that
+
+* bond length influences bond strength,
+* coordination environment influences stability,
+* electronegativity affects charge distribution.
+
+These relationships improve both training and validation performance.
+
+As optimization continues,
+
+the remaining errors become increasingly difficult to reduce.
+
+Instead of discovering new physical principles,
+
+the optimizer begins exploiting peculiarities unique to individual training samples.
+
+At this point,
+
+training loss continues to decrease,
+
+but validation performance no longer improves.
+
+Eventually,
+
+validation performance begins to deteriorate.
+
+This marks the transition from **learning** to **memorization**.
+
+---
+
+### Why More Training Is Not Always Better
+
+A common misconception is that additional training must always improve the model.
+
+This assumption is incorrect.
+
+Suppose we continue training long after the model has reached its optimal generalization point.
+
+The optimizer continues minimizing the training loss,
+
+but every additional epoch increases memorization.
+
+Consequently,
+
+the final model may actually perform worse than an earlier checkpoint.
+
+For this reason,
+
+modern deep learning does not simply train for as many epochs as possible.
+
+Instead,
+
+training is carefully monitored,
+
+and the model is often stopped before severe overfitting develops.
+
+This strategy is known as **early stopping**, which we will examine later in this chapter.
+
+---
+
+At this stage, we understand **what overfitting is and why it occurs**. However, recognizing overfitting in practice requires careful analysis of the model's behavior during training.
+
+In the next section, we will study **learning curves**, examining how training and validation losses evolve over time and how these curves provide one of the most powerful diagnostic tools for identifying overfitting in MEGNet and other graph neural networks.
+
+## 15.8.11 Overfitting: When MEGNet Memorizes Instead of Learning (Part 3)
+
+Up to this point, we have explained overfitting conceptually and mathematically. However, when training a real MEGNet model, researchers do not directly observe the internal parameters or the mathematical function being learned.
+
+Instead, they observe **training statistics**.
+
+These statistics provide indirect evidence about how the neural network is learning.
+
+Among all diagnostic tools used in deep learning, none is more informative than the **learning curve**.
+
+A properly interpreted learning curve can reveal
+
+* whether the optimizer is functioning correctly,
+* whether the learning rate is appropriate,
+* whether the model is underfitting,
+* whether the model is overfitting,
+* whether additional training is beneficial,
+* whether early stopping should be applied.
+
+For this reason, experienced researchers examine learning curves after nearly every training experiment.
+
+---
+
+### What Is a Learning Curve?
+
+A learning curve is simply a graph that shows how model performance changes as training progresses.
+
+The horizontal axis represents the number of training epochs.
+
+The vertical axis usually represents
+
+* loss,
+* MAE,
+* RMSE,
+* or another evaluation metric.
+
+The two most important curves are
+
+* the **training curve**, and
+* the **validation curve**.
+
+Conceptually,
+
+```text
+Performance Metric
+
+^
+
+|
+
+|  Training Curve
+
+|
+
+|
+
+|
+
+|  Validation Curve
+
+|
+
++------------------------------------>
+
+             Epoch
+```
+
+Although this figure appears simple,
+
+it summarizes everything that happens during training.
+
+---
+
+### How the Curves Are Produced
+
+Recall the complete training loop discussed earlier.
+
+For every epoch,
+
+the following sequence occurs.
+
+1. Train on every mini-batch.
+2. Compute the average training loss.
+3. Evaluate the validation dataset.
+4. Compute the validation loss.
+5. Store both values.
+
+After repeating this process for many epochs,
+
+we obtain two sequences.
+
+For example,
+
+| Epoch | Training Loss | Validation Loss |
+| ----: | ------------: | --------------: |
+|     1 |          2.18 |            2.25 |
+|     2 |          1.74 |            1.82 |
+|     3 |          1.39 |            1.51 |
+|   ... |           ... |             ... |
+|   100 |          0.06 |            0.08 |
+
+Plotting these values produces the learning curves.
+
+---
+
+### The Ideal Learning Curve
+
+In an ideal training process,
+
+both curves decrease together.
+
+Conceptually,
+
+```text
+Loss
+
+^
+
+|\
+| \
+|  \
+|   \
+|    \
+|     \
+|      \____
+
++------------------------------>
+
+          Epoch
+```
+
+Initially,
+
+both losses decrease rapidly because the network learns the most important physical relationships.
+
+As training continues,
+
+the rate of improvement slows.
+
+Eventually,
+
+both curves stabilize.
+
+When
+
+* the training loss is small,
+* the validation loss is also small,
+* and the two curves remain close,
+
+the model has likely learned useful representations without memorizing the data.
+
+---
+
+### What Happens During Early Training?
+
+At the beginning of optimization,
+
+the network parameters are random.
+
+Consequently,
+
+predictions are essentially random.
+
+Suppose the task is predicting formation energy.
+
+The first predictions may differ from the true values by several electron volts.
+
+The initial loss is therefore very large.
+
+After a few epochs,
+
+the optimizer begins discovering simple physical relationships.
+
+For example,
+
+the network may first learn
+
+* that neighboring atoms influence each other,
+* that atomic species matter,
+* that bond environments affect stability.
+
+These broad trends significantly reduce both training and validation loss.
+
+This phase corresponds to genuine learning.
+
+---
+
+### Why Validation Improves Initially
+
+An important observation is that
+
+during the early stages,
+
+improvements on the training dataset also improve predictions on unseen crystals.
+
+This occurs because
+
+the network is learning general physical principles rather than individual examples.
+
+For instance,
+
+the model may discover that
+
+higher coordination numbers often stabilize crystal structures.
+
+This relationship applies not only to crystals in the training dataset,
+
+but also to entirely new materials.
+
+Consequently,
+
+validation performance improves alongside training performance.
+
+---
+
+### The Turning Point
+
+Eventually,
+
+the optimizer reaches a critical stage.
+
+Most large-scale physical relationships have already been learned.
+
+The remaining training errors become increasingly difficult to reduce.
+
+Instead of discovering additional physical laws,
+
+the optimizer begins fitting subtle details that exist only within the training dataset.
+
+At this point,
+
+the learning curves begin to separate.
+
+The training loss continues decreasing,
+
+while the validation loss decreases much more slowly.
+
+This divergence marks the beginning of overfitting.
+
+---
+
+### The Signature of Overfitting
+
+The characteristic pattern of overfitting appears as
+
+```text
+Loss
+
+^
+
+|\
+| \
+|  \
+|   \
+|    \
+|     \____________________
+
+|
+
+|        \
+
+|         \
+
+|          \______
+
+|                 \
+
+|                  \
+
++---------------------------------->
+
+                Epoch
+```
+
+The lower curve represents the training loss.
+
+The upper curve represents the validation loss.
+
+Notice three distinct phases.
+
+**Phase 1**
+
+Both curves decrease together.
+
+The model is learning.
+
+---
+
+**Phase 2**
+
+Training loss continues decreasing.
+
+Validation loss decreases only slightly.
+
+The model is approaching its optimal generalization point.
+
+---
+
+**Phase 3**
+
+Training loss continues decreasing.
+
+Validation loss begins increasing.
+
+The model has entered the overfitting regime.
+
+Additional optimization no longer improves scientific performance.
+
+Instead,
+
+the network memorizes increasingly specific details of the training dataset.
+
+---
+
+### Why Training Loss Never Reveals Overfitting
+
+Suppose we examine only the training loss.
+
+It might appear as
+
+| Epoch | Training Loss |
+| ----: | ------------: |
+|    10 |          0.72 |
+|    20 |          0.38 |
+|    40 |          0.15 |
+|    80 |          0.05 |
+|   120 |          0.01 |
+
+Everything looks excellent.
+
+Every epoch improves performance.
+
+Nothing appears problematic.
+
+However,
+
+training loss alone provides no information about generalization.
+
+A continuously decreasing training loss is expected,
+
+even for a severely overfitted model.
+
+Therefore,
+
+training loss should never be interpreted in isolation.
+
+---
+
+### Why Validation Loss Is the Key Metric
+
+Now consider the validation loss.
+
+| Epoch | Validation Loss |
+| ----: | --------------: |
+|    10 |            0.81 |
+|    20 |            0.45 |
+|    40 |            0.19 |
+|    60 |            0.17 |
+|    80 |            0.20 |
+|   120 |            0.34 |
+
+This table immediately reveals the problem.
+
+The lowest validation loss occurs near
+
+Epoch 60.
+
+After this point,
+
+the network continues improving on the training dataset,
+
+yet performs progressively worse on unseen materials.
+
+Consequently,
+
+the model obtained at
+
+Epoch 120
+
+is actually inferior to the model obtained at
+
+Epoch 60,
+
+despite having a much smaller training loss.
+
+This illustrates one of the most important lessons in deep learning:
+
+> **The best model is determined by validation performance, not by training performance.**
+
+---
+
+### The Optimal Stopping Point
+
+If we overlay the two curves,
+
+the optimal model corresponds approximately to the point where
+
+the validation loss reaches its minimum.
+
+Conceptually,
+
+```text
+Loss
+
+^
+
+|\
+| \
+|  \
+|   \
+|    \
+|     \_________________
+
+|
+
+|      \
+
+|       \_____
+
+|             \
+
+|              \
+
++--------------------●---------------->
+
+                     Best Epoch
+```
+
+The highlighted point represents the epoch at which the model generalizes most effectively.
+
+Training beyond this point generally increases memorization without improving predictive capability.
+
+---
+
+### Why This Matters for Materials Informatics
+
+In materials science,
+
+the objective is rarely to reproduce known database values.
+
+Instead,
+
+we hope to predict the properties of
+
+* hypothetical compounds,
+* newly synthesized crystals,
+* unexplored chemical compositions,
+* or entirely new classes of materials.
+
+These systems resemble the validation and test datasets—not the training dataset.
+
+Therefore,
+
+the model selected for publication or deployment should always correspond to the epoch with the best validation performance.
+
+This principle is followed in virtually every high-quality MEGNet, CGCNN, ALIGNN, M3GNet, and CHGNet study.
+
+---
+
+At this point, we can recognize overfitting by examining learning curves. The next question naturally follows:
+
+**Why do some models overfit much more easily than others?**
+
+To answer this, we will study the factors that control overfitting, including **model capacity, dataset size, noise, feature dimensionality, graph depth, and parameter count**, and explain why graph neural networks for materials science require particularly careful regularization.
+
+## 15.8.11 Overfitting: When MEGNet Memorizes Instead of Learning (Part 4)
+
+In the previous section, we learned how to **detect** overfitting by examining learning curves. However, detecting overfitting is only the first step. A much deeper question remains:
+
+> **Why do some neural networks overfit while others generalize well?**
+
+This question has occupied machine learning researchers for decades.
+
+Although there is no single universal answer, experience and statistical learning theory show that overfitting is primarily controlled by the interaction between three factors:
+
+1. **Model capacity**
+2. **Dataset complexity and size**
+3. **Training duration**
+
+The relationship between these factors determines whether a model successfully learns the underlying physical laws or merely memorizes the available data.
+
+---
+
+### Model Capacity
+
+The first and perhaps most important factor is **model capacity**.
+
+Capacity refers to the ability of a model to represent different mathematical functions.
+
+A model with low capacity can represent only relatively simple relationships.
+
+A model with high capacity can represent extremely complicated nonlinear mappings.
+
+For example,
+
+a linear regression model has very low capacity because it can only learn relationships of the form
+
+$$
+y = wx + b.
+$$
+
+Regardless of how long it is trained, it cannot represent highly nonlinear behavior.
+
+A decision tree has greater capacity because it partitions the feature space into many regions.
+
+Random forests and gradient boosting increase capacity even further by combining multiple decision trees.
+
+Deep neural networks—and especially graph neural networks—possess extraordinarily high capacity.
+
+A modern MEGNet model may contain hundreds of thousands or even millions of trainable parameters.
+
+Such a model can approximate highly complex functions relating atomic environments to material properties.
+
+This expressive power is precisely what makes deep learning successful.
+
+However, it also introduces the possibility of memorization.
+
+---
+
+### A Simple Analogy
+
+Imagine giving two artists the same assignment.
+
+The first artist receives only a pencil.
+
+The second artist receives a complete professional digital drawing studio.
+
+The first artist has limited expressive ability.
+
+The second artist can reproduce even the smallest details.
+
+If both artists are asked to copy a noisy photograph,
+
+the first artist will naturally capture only the main shapes and important structures.
+
+The second artist can reproduce every shadow, scratch, dust particle, and camera artifact.
+
+Machine learning models behave similarly.
+
+A low-capacity model captures only the dominant physical relationships.
+
+A high-capacity model is capable of reproducing every detail—including noise.
+
+---
+
+### Capacity Is Not the Enemy
+
+At this point, it may appear that we should always use smaller models.
+
+This conclusion is incorrect.
+
+A model with insufficient capacity cannot represent the true relationship between crystal structure and material properties.
+
+Suppose the true mapping between crystal graphs and formation energy is highly nonlinear.
+
+A simple linear regression model cannot capture
+
+* bond-angle effects,
+* coordination environments,
+* long-range interactions,
+* many-body chemistry,
+* nonlinear electronic behavior.
+
+Its predictions will remain poor regardless of how much data are available.
+
+Thus,
+
+too little capacity produces **underfitting**.
+
+Too much capacity may produce **overfitting**.
+
+The objective is therefore **not** to minimize capacity.
+
+Instead, we seek an appropriate balance between flexibility and generalization.
+
+---
+
+### Dataset Size
+
+Capacity alone does not determine whether overfitting occurs.
+
+Dataset size is equally important.
+
+Consider two training scenarios.
+
+#### Scenario A
+
+A MEGNet model with one million parameters is trained using
+
+```text
+1,500 crystal structures.
+```
+
+#### Scenario B
+
+The same model is trained using
+
+```text
+1,500,000 crystal structures.
+```
+
+The architecture is identical.
+
+The optimizer is identical.
+
+The learning rate is identical.
+
+Yet the likelihood of overfitting is dramatically different.
+
+With only
+
+1,500 samples,
+
+the network can easily memorize individual crystals.
+
+With
+
+1.5 million samples,
+
+memorization becomes much more difficult because the dataset contains vastly greater chemical diversity.
+
+In general,
+
+larger datasets encourage the network to learn broad physical principles rather than individual examples.
+
+This is one of the primary reasons why large-scale databases such as the Materials Project have revolutionized materials informatics.
+
+---
+
+### Why Materials Science Suffers More Than Computer Vision
+
+Researchers in computer vision often train neural networks using datasets containing
+
+* ten million,
+* fifty million,
+* or even hundreds of millions
+
+of images.
+
+By comparison,
+
+materials science datasets are usually much smaller.
+
+Typical public datasets contain
+
+| Dataset           |                    Approximate Size |
+| ----------------- | ----------------------------------: |
+| QM9               |                  ~134,000 molecules |
+| Materials Project |         ~150,000 crystal structures |
+| OQMD              |             ~1,000,000 calculations |
+| JARVIS            | Hundreds of thousands of structures |
+
+Although these databases are impressive by materials science standards,
+
+they are still modest compared with datasets used in many other machine learning domains.
+
+Consequently,
+
+graph neural networks for materials science operate in a relatively **data-limited regime**.
+
+This makes overfitting a much more significant concern.
+
+---
+
+### Dataset Diversity Matters More Than Dataset Size
+
+A large dataset is not necessarily a diverse dataset.
+
+Imagine training a MEGNet model using one million crystal structures.
+
+At first,
+
+this sounds ideal.
+
+However,
+
+suppose
+
+95%
+
+of those structures belong to only a few closely related oxide families.
+
+The effective diversity of the dataset is much lower than the raw sample count suggests.
+
+Now consider a smaller dataset containing
+
+100,000 structures
+
+carefully selected from many different chemistries,
+
+including
+
+* oxides,
+* nitrides,
+* carbides,
+* sulfides,
+* halides,
+* phosphides,
+* intermetallic compounds,
+* layered materials,
+* perovskites,
+* spinels,
+* Heusler alloys.
+
+Although the second dataset is numerically smaller,
+
+it may provide better generalization because it exposes the neural network to a much broader range of atomic environments.
+
+For materials informatics,
+
+chemical diversity is often as important as sample size.
+
+---
+
+### Noise and Label Quality
+
+Another major contributor to overfitting is imperfect target data.
+
+Suppose two datasets are available.
+
+Dataset A
+
+contains formation energies computed using carefully converged DFT calculations.
+
+Dataset B
+
+contains values obtained using inconsistent computational settings.
+
+Even though both datasets contain the same number of structures,
+
+Dataset B includes greater numerical uncertainty.
+
+An expressive neural network may begin learning these inconsistencies.
+
+Instead of approximating the true physical relationship,
+
+it approximates the noise present in the labels.
+
+Consequently,
+
+better labels often produce larger improvements than more sophisticated neural network architectures.
+
+This principle is particularly important in scientific machine learning:
+
+> **A neural network cannot learn information that is absent from the data.**
+
+Likewise,
+
+it cannot distinguish genuine physical patterns from systematic errors unless the dataset itself is reliable.
+
+---
+
+### Feature Complexity
+
+Graph neural networks receive much richer information than conventional machine learning models.
+
+A MEGNet graph contains
+
+* node features,
+* edge features,
+* global state variables,
+* connectivity information,
+* neighborhood relationships.
+
+As additional descriptors are introduced,
+
+the feature space becomes increasingly high-dimensional.
+
+High-dimensional feature spaces provide the network with greater flexibility,
+
+but they also increase the possibility of learning accidental correlations.
+
+For example,
+
+suppose one particular coordination environment appears only in a small subset of training crystals.
+
+A large neural network may incorrectly conclude that this environment uniquely determines the target property,
+
+even though the apparent relationship arose purely by chance.
+
+Such spurious correlations often contribute to overfitting.
+
+---
+
+### Graph Depth
+
+Another important factor specific to graph neural networks is **graph depth**.
+
+Increasing the number of message-passing layers allows each atom to gather information from progressively more distant neighbors.
+
+A shallow network may consider only local bonding environments.
+
+A deeper network incorporates increasingly long-range structural information.
+
+Initially,
+
+this improves predictive performance.
+
+However,
+
+beyond a certain depth,
+
+additional layers may begin fitting increasingly subtle details specific to the training dataset.
+
+Moreover,
+
+very deep graph neural networks can suffer from additional problems such as
+
+* oversmoothing,
+* oversquashing,
+* optimization instability.
+
+Therefore,
+
+adding more graph layers does not guarantee better generalization.
+
+The optimal depth depends on both the dataset and the target property.
+
+---
+
+### The Balance Between Capacity and Data
+
+We can now summarize the central principle governing overfitting.
+
+A neural network should possess **enough capacity to represent the underlying physics**, but **not so much capacity that it memorizes the training data**.
+
+Whether this balance is achieved depends on
+
+* the number of trainable parameters,
+* the quantity of available data,
+* the diversity of chemical space,
+* the quality of the target labels,
+* the architecture of the graph neural network,
+* and the duration of training.
+
+Finding this balance is one of the primary responsibilities of a machine learning researcher.
+
+It is also one of the reasons why successful materials informatics models require careful experimental design rather than simply increasing network size.
+
+---
+
+At this stage, we understand **what causes overfitting**. The next logical question is:
+
+**How can we prevent it?**
+
+In the following sections, we will study the major regularization techniques used in modern graph neural networks, including **weight decay (L2 regularization), dropout, early stopping, data augmentation (where applicable), and model checkpointing**, explaining both their mathematical foundations and their practical implementation in MEGNet.
+
+## 15.8.12 Preventing Overfitting: Regularization in MEGNet (Part 2)
+
+### L2 Regularization (Weight Decay)
+
+Among all regularization techniques developed for machine learning, **L2 regularization** is one of the oldest, most thoroughly studied, and most widely used.
+
+If you examine the implementation details of modern graph neural networks—including
+
+* MEGNet,
+* CGCNN,
+* M3GNet,
+* ALIGNN,
+* CHGNet,
+
+you will almost always find some form of weight decay being used during optimization.
+
+Despite its widespread use, the underlying idea is remarkably simple.
+
+Instead of allowing the optimizer to choose arbitrarily large parameter values, we encourage it to prefer **smaller and smoother parameter values** whenever possible.
+
+The important phrase here is **"whenever possible."**
+
+Weight decay does **not** force every parameter to become zero.
+
+Instead, it asks the optimizer:
+
+> *"If two different parameter values produce nearly identical prediction accuracy, prefer the smaller one."*
+
+This seemingly small modification has profound consequences for generalization.
+
+---
+
+### Why Large Weights Lead to Complex Functions
+
+To understand weight decay, let us first examine the role of a weight in a neural network.
+
+Consider a single neuron
+
+$$
+z = wx + b.
+$$
+
+Suppose
+
+$$
+w = 1.
+$$
+
+A change of
+
+$$
+\Delta x = 0.1
+$$
+
+produces
+
+$$
+\Delta z = 0.1.
+$$
+
+Now suppose
+
+$$
+w = 100.
+$$
+
+The same input change produces
+
+$$
+\Delta z = 10.
+$$
+
+The neuron has become one hundred times more sensitive.
+
+As additional nonlinear activation functions are applied,
+
+this sensitivity propagates through the network.
+
+Eventually,
+
+tiny differences between two crystal structures may produce enormous differences in prediction.
+
+Such behavior often indicates that the network has begun fitting accidental details rather than robust physical relationships.
+
+---
+
+### Smooth Functions Versus Highly Sensitive Functions
+
+Imagine two MEGNet models trained to predict band gaps.
+
+The first model changes its prediction gradually as bond lengths change.
+
+```text
+Bond Length
+
+↓
+
+Prediction
+
+↓
+
+Smooth Change
+```
+
+The second model changes its prediction dramatically after extremely small geometric changes.
+
+```text
+Bond Length
+
+↓
+
+Prediction
+
+↓
+
+Large Oscillations
+```
+
+Which behavior is more physically reasonable?
+
+Materials properties usually vary continuously.
+
+Small structural perturbations rarely produce enormous discontinuities.
+
+Therefore,
+
+the smoother model is generally more consistent with physical reality.
+
+Weight decay encourages this smoother behavior.
+
+---
+
+### Constructing the Regularization Term
+
+Suppose the neural network contains
+
+$$
+n
+$$
+
+trainable parameters
+
+$$
+w_1,w_2,\ldots,w_n.
+$$
+
+A natural measure of the overall parameter magnitude is
+
+$$
+w_1^2+w_2^2+\cdots+w_n^2.
+$$
+
+Using summation notation,
+
+this becomes
+
+$$
+\sum_{i=1}^{n}w_i^2.
+$$
+
+This quantity increases whenever parameter magnitudes become large.
+
+Consequently,
+
+it provides a convenient measure of model complexity.
+
+We therefore define the L2 penalty as
+
+$$
+\boxed{
+L_{L2}
+======
+
+\sum_{i=1}^{n}
+w_i^2
+}
+$$
+
+Notice that every trainable parameter contributes to the penalty.
+
+Large parameters contribute much more strongly because their values are squared.
+
+---
+
+### Why Do We Square the Parameters?
+
+A natural question arises.
+
+Why use
+
+$$
+w^2
+$$
+
+instead of simply
+
+$$
+|w|
+$$
+
+or
+
+$$
+w?
+$$
+
+Several reasons make squaring particularly attractive.
+
+#### Positive Contributions
+
+If we summed the raw parameter values,
+
+positive and negative weights would cancel each other.
+
+For example,
+
+$$
+5+(-5)=0.
+$$
+
+Clearly,
+
+this does not indicate a simple model.
+
+Squaring eliminates this problem because
+
+$$
+5^2=25,
+$$
+
+$$
+(-5)^2=25.
+$$
+
+Both contribute equally.
+
+---
+
+#### Larger Penalties for Larger Weights
+
+Squaring increases rapidly.
+
+Consider
+
+| Weight | Square |
+| -----: | -----: |
+|    0.5 |   0.25 |
+|      1 |      1 |
+|      2 |      4 |
+|      5 |     25 |
+|     10 |    100 |
+
+Small parameters receive only modest penalties.
+
+Extremely large parameters receive very strong penalties.
+
+This behavior is precisely what we desire.
+
+---
+
+#### Mathematical Convenience
+
+The derivative of
+
+$$
+w^2
+$$
+
+is
+
+$$
+2w,
+$$
+
+which is continuous,
+
+smooth,
+
+and computationally efficient.
+
+This makes optimization straightforward.
+
+---
+
+### The Complete Loss Function
+
+Without regularization,
+
+the optimization objective is simply
+
+$$
+L_{prediction}.
+$$
+
+After introducing L2 regularization,
+
+the objective becomes
+
+$$
+\boxed{
+L_{total}
+=========
+
+L_{prediction}
++
+\lambda
+\sum_{i=1}^{n}
+w_i^2
+}
+$$
+
+where
+
+$$
+\lambda
+$$
+
+is called the **regularization coefficient**.
+
+This equation is one of the most important equations in supervised machine learning.
+
+It tells the optimizer to minimize
+
+both
+
+* prediction error,
+* parameter magnitude.
+
+---
+
+### The Role of the Regularization Coefficient
+
+The coefficient
+
+$$
+\lambda
+$$
+
+determines how strongly the model is penalized for large weights.
+
+Suppose
+
+$$
+\lambda=0.
+$$
+
+Then
+
+$$
+L_{total}
+=========
+
+L_{prediction}.
+$$
+
+No regularization occurs.
+
+The optimizer behaves exactly as before.
+
+Now suppose
+
+$$
+\lambda
+=======
+
+100.
+
+$$
+
+The regularization term dominates.
+
+The optimizer aggressively forces parameters toward zero.
+
+The resulting model may become too simple,
+
+leading to underfitting.
+
+Therefore,
+
+choosing
+
+$$
+\lambda
+$$
+
+requires careful balance.
+
+In practice,
+
+common values include
+
+$$
+10^{-5},
+10^{-4},
+10^{-3},
+10^{-2}.
+$$
+
+The optimal value depends on
+
+* dataset size,
+* network architecture,
+* prediction task.
+
+---
+
+### A Numerical Example
+
+Suppose
+
+the prediction loss equals
+
+$$
+0.025.
+$$
+
+The sum of squared parameters is
+
+$$
+420.
+$$
+
+If
+
+$$
+\lambda=10^{-4},
+$$
+
+then
+
+$$
+L_{regularization}
+==================
+
+10^{-4}
+\times420
+=========
+
+0.042.
+$$
+
+The optimizer therefore minimizes
+
+$$
+L_{total}
+=========
+
+0.025
++
+0.042
+=====
+
+0.067.
+$$
+
+Notice that
+
+improving prediction accuracy is no longer sufficient.
+
+Increasing parameter magnitudes also increases the total loss.
+
+The optimizer must therefore find a compromise between accuracy and simplicity.
+
+---
+
+### How Weight Decay Influences Optimization
+
+Recall the ordinary gradient descent update
+
+$$
+w_{new}
+=======
+
+## w_{old}
+
+\eta
+\frac{\partial L}{\partial w}.
+$$
+
+When L2 regularization is added,
+
+the gradient now contains an additional contribution from
+
+$$
+\lambda
+w^2.
+$$
+
+Since
+
+$$
+\frac{d}{dw}(w^2)=2w,
+$$
+
+the optimizer effectively experiences a small force that continuously pulls parameters toward zero.
+
+This does **not** abruptly eliminate parameters.
+
+Instead,
+
+every optimization step slightly discourages unnecessarily large weights.
+
+Consequently,
+
+parameter growth remains controlled throughout training.
+
+---
+
+### Why It Is Called "Weight Decay"
+
+The phrase **weight decay** arises because parameter magnitudes gradually decrease during optimization.
+
+Suppose a parameter currently equals
+
+$$
+w=8.
+$$
+
+During successive optimization steps,
+
+the regularization term gently nudges it toward smaller values.
+
+Conceptually,
+
+```text
+8.0
+
+↓
+
+7.8
+
+↓
+
+7.5
+
+↓
+
+7.2
+
+↓
+
+6.9
+
+↓
+
+...
+```
+
+This gradual shrinking is called **decay**.
+
+Importantly,
+
+weights are not forced to zero unless doing so also minimizes the prediction loss.
+
+Instead,
+
+only unnecessary parameter growth is discouraged.
+
+---
+
+### Physical Interpretation for MEGNet
+
+From a materials science perspective,
+
+weight decay encourages the neural network to learn **stable and physically meaningful relationships** rather than highly specialized mappings that depend on accidental characteristics of the training dataset.
+
+Because neighboring crystal structures often possess similar physical properties,
+
+smooth predictive functions are generally more consistent with real chemistry than functions that fluctuate dramatically in response to tiny structural changes.
+
+Weight decay therefore acts as a mathematical expression of an important scientific principle:
+
+> **Prefer the simplest explanation that adequately describes the observed data.**
+
+---
+
+In the next part, we will move beyond the mathematics and examine **how weight decay is implemented in PyTorch**, explain why the `weight_decay` parameter in the Adam optimizer corresponds to L2 regularization, discuss practical hyperparameter selection, and clarify which parameters should—and should not—receive weight decay during MEGNet training.
+
+
+## 15.8.12 Preventing Overfitting: Regularization in MEGNet (Part 3)
+
+In the previous section, we developed the mathematical foundation of L2 regularization. We derived the regularized loss function and showed that large parameter values are penalized during optimization.
+
+However, researchers rarely implement L2 regularization by explicitly adding
+
+$$
+\lambda \sum_i w_i^2
+$$
+
+to the loss function.
+
+Instead, modern deep learning frameworks implement weight decay directly inside the optimizer.
+
+Understanding this implementation is important because almost every MEGNet training script uses the optimizer interface rather than manually modifying the loss function.
+
+---
+
+### Weight Decay in PyTorch
+
+The simplest implementation of weight decay in PyTorch looks like
+
+```python
+optimizer = torch.optim.Adam(
+
+    model.parameters(),
+
+    lr=1e-3,
+
+    weight_decay=1e-5
+
+)
+```
+
+At first glance,
+
+this appears surprisingly simple.
+
+Only one additional argument has been introduced:
+
+```python
+weight_decay=1e-5
+```
+
+Behind this single line,
+
+PyTorch automatically performs L2 regularization throughout optimization.
+
+The user does not need to modify the loss function manually.
+
+---
+
+### What Happens Internally?
+
+Suppose the optimizer computes the gradient of the prediction loss.
+
+Without weight decay,
+
+the update direction depends only on
+
+$$
+\frac{\partial L_{\text{prediction}}}{\partial w}.
+$$
+
+With weight decay,
+
+an additional gradient term is included.
+
+Conceptually,
+
+the optimizer now behaves as though it were minimizing
+
+$$
+L_{\text{prediction}}
++
+\lambda
+\sum_i
+w_i^2.
+$$
+
+Therefore,
+
+each parameter update contains two contributions.
+
+The first contribution attempts to improve prediction accuracy.
+
+The second contribution attempts to keep the parameters reasonably small.
+
+The optimizer balances these two objectives automatically.
+
+---
+
+### Why Optimizer-Based Regularization Is Preferred
+
+One might wonder why PyTorch implements weight decay inside the optimizer rather than requiring users to modify the loss function themselves.
+
+There are several reasons.
+
+First,
+
+the optimizer-based implementation is concise.
+
+Instead of writing additional mathematical expressions,
+
+the user specifies only one hyperparameter.
+
+Second,
+
+the implementation is computationally efficient.
+
+Modern optimizers perform the necessary calculations directly during parameter updates.
+
+Third,
+
+this approach reduces programming errors.
+
+Researchers can easily enable or disable regularization without modifying the training loop.
+
+Consequently,
+
+optimizer-based weight decay has become the standard practice throughout deep learning.
+
+---
+
+### Choosing an Appropriate Weight Decay
+
+Selecting the weight decay coefficient is an example of **hyperparameter optimization**.
+
+There is no universally optimal value.
+
+Instead,
+
+the best choice depends on
+
+* the dataset,
+* the neural network architecture,
+* the target property,
+* and the amount of available training data.
+
+Nevertheless,
+
+certain ranges have become common in practice.
+
+| Weight Decay | Typical Interpretation     |
+| ------------ | -------------------------- |
+| 0            | No regularization          |
+| $10^{-6}$    | Very weak regularization   |
+| $10^{-5}$    | Common for many GNNs       |
+| $10^{-4}$    | Moderate regularization    |
+| $10^{-3}$    | Strong regularization      |
+| $10^{-2}$    | Very strong regularization |
+
+These values should not be viewed as rigid rules.
+
+Instead,
+
+they provide reasonable starting points for experimentation.
+
+---
+
+### What Happens If Weight Decay Is Too Small?
+
+Suppose
+
+```python
+weight_decay = 0
+```
+
+or
+
+```python
+weight_decay = 1e-8
+```
+
+The regularization term becomes almost negligible.
+
+The optimizer focuses almost entirely on minimizing the prediction loss.
+
+Large parameter values are no longer discouraged.
+
+If the network possesses high capacity,
+
+memorization becomes increasingly likely.
+
+Learning curves may eventually exhibit the characteristic divergence associated with overfitting.
+
+---
+
+### What Happens If Weight Decay Is Too Large?
+
+Now suppose
+
+```python
+weight_decay = 0.1
+```
+
+or even
+
+```python
+weight_decay = 1
+```
+
+The optimizer now spends most of its effort shrinking parameters.
+
+Prediction accuracy becomes a secondary objective.
+
+Many useful parameters are forced toward zero before they have an opportunity to learn meaningful chemical relationships.
+
+Training loss remains relatively high.
+
+Validation performance also suffers.
+
+This situation corresponds to **underfitting** rather than overfitting.
+
+Thus,
+
+both extremes should be avoided.
+
+---
+
+### A Conceptual View of the Trade-Off
+
+Weight decay introduces a balance between two competing objectives.
+
+On one side,
+
+the optimizer seeks maximum prediction accuracy.
+
+On the other,
+
+it seeks minimum model complexity.
+
+Conceptually,
+
+```text
+Prediction Accuracy
+
+←──────────────────────→
+
+Model Simplicity
+```
+
+Increasing weight decay shifts the optimization toward simplicity.
+
+Reducing weight decay shifts the optimization toward prediction accuracy.
+
+The optimal model lies somewhere between these extremes.
+
+---
+
+### Should Every Parameter Receive Weight Decay?
+
+An interesting practical question now arises.
+
+Should weight decay be applied to **every trainable parameter**?
+
+The answer is
+
+**not always**.
+
+Modern deep learning often distinguishes between different types of parameters.
+
+For example,
+
+consider
+
+* weights of linear layers,
+* weights of graph convolution layers,
+* bias parameters,
+* Batch Normalization parameters,
+* Layer Normalization parameters.
+
+Many researchers apply weight decay only to the weight matrices while excluding
+
+* biases,
+* normalization parameters.
+
+The reason is that these parameters play different roles during optimization.
+
+Excessively shrinking normalization parameters may actually reduce training stability.
+
+---
+
+### Selective Weight Decay in PyTorch
+
+PyTorch allows parameters to be grouped so that different optimization settings can be applied.
+
+A simplified example is
+
+```python
+optimizer = torch.optim.Adam(
+
+    [
+
+        {
+
+            "params": weight_parameters,
+
+            "weight_decay": 1e-5
+
+        },
+
+        {
+
+            "params": bias_parameters,
+
+            "weight_decay": 0.0
+
+        }
+
+    ],
+
+    lr=1e-3
+
+)
+```
+
+Here,
+
+ordinary weight matrices receive regularization,
+
+whereas bias parameters do not.
+
+Large-scale research codebases frequently employ this strategy.
+
+---
+
+### Weight Decay and Adam
+
+Historically,
+
+many researchers combined weight decay directly with the Adam optimizer.
+
+Later research demonstrated that the original implementation was **not mathematically identical** to true weight decay.
+
+This observation led to the development of **AdamW**, an optimizer that decouples weight decay from the adaptive gradient update.
+
+Today,
+
+many modern deep learning libraries recommend
+
+```python
+torch.optim.AdamW
+```
+
+instead of
+
+```python
+torch.optim.Adam
+```
+
+when weight decay is required.
+
+Although both optimizers often produce similar results,
+
+AdamW provides a cleaner theoretical formulation and has become the preferred choice in many state-of-the-art models.
+
+---
+
+### Adam Versus AdamW
+
+The practical difference can be summarized as follows.
+
+| Optimizer      | Weight Decay Implementation           |
+| -------------- | ------------------------------------- |
+| Adam           | Coupled with adaptive gradients       |
+| AdamW          | Decoupled weight decay                |
+| Recommendation | Prefer AdamW for modern deep learning |
+
+Many recent graph neural network implementations,
+
+including advanced materials informatics models,
+
+use AdamW for this reason.
+
+---
+
+### Practical Recommendations for MEGNet
+
+When training a MEGNet model,
+
+a reasonable starting configuration is
+
+```python
+optimizer = torch.optim.AdamW(
+
+    model.parameters(),
+
+    lr=1e-3,
+
+    weight_decay=1e-5
+
+)
+```
+
+This configuration
+
+* provides adaptive optimization,
+* controls parameter growth,
+* reduces the risk of overfitting,
+* and works well for many regression tasks involving crystal graphs.
+
+Nevertheless,
+
+the optimal hyperparameters should always be determined experimentally using the validation dataset rather than copied blindly from previous studies.
+
+---
+
+### Limitations of Weight Decay
+
+Although weight decay is extremely useful,
+
+it is **not a complete solution** to overfitting.
+
+Even with carefully chosen regularization,
+
+a sufficiently large neural network may still memorize the training dataset.
+
+Additional techniques are therefore required.
+
+One of the most effective of these techniques is **dropout**, which approaches regularization from an entirely different perspective.
+
+Rather than penalizing large parameters,
+
+dropout temporarily removes portions of the neural network during training, forcing the remaining neurons to learn more robust and independent representations.
+
+In the next section, we will study **dropout from first principles**, understand why randomly disabling neurons improves generalization, derive its mathematical interpretation, and implement dropout layers within a MEGNet architecture using PyTorch.
+
+## 15.8.12 Preventing Overfitting: Regularization in MEGNet (Part 4)
+
+### Dropout: Preventing Neurons from Becoming Overly Dependent
+
+Weight decay regularizes a neural network by discouraging excessively large parameter values.
+
+Dropout approaches the same problem from an entirely different perspective.
+
+Instead of restricting the magnitude of the weights,
+
+dropout modifies the **network architecture during training**.
+
+More specifically,
+
+dropout temporarily removes a randomly selected subset of neurons from the computation graph during each forward pass.
+
+At first glance, this idea appears counterintuitive.
+
+Why would deliberately removing information improve the performance of a neural network?
+
+Surprisingly,
+
+this simple idea has become one of the most influential regularization techniques in deep learning.
+
+Although dropout is used less aggressively in graph neural networks than in image classification, it remains an important component of many GNN architectures, including numerous variants used in materials informatics.
+
+---
+
+### The Fundamental Problem: Co-Adaptation
+
+To understand dropout, we must first understand a phenomenon known as **co-adaptation**.
+
+Consider two neurons inside a multilayer perceptron.
+
+Suppose the first neuron always activates whenever a certain crystal environment is observed.
+
+The second neuron gradually learns to rely almost entirely on the first neuron.
+
+Instead of learning an independent representation,
+
+it simply assumes that the first neuron will always provide the necessary information.
+
+This creates a dependency.
+
+Eventually,
+
+many neurons begin relying on one another in increasingly specialized ways.
+
+The network becomes highly effective for the training dataset,
+
+but these fragile dependencies often fail to generalize.
+
+This behavior is called **co-adaptation**.
+
+Dropout was specifically designed to reduce this phenomenon.
+
+---
+
+### An Analogy
+
+Imagine a research laboratory with five scientists.
+
+Initially,
+
+every scientist understands the complete research project.
+
+Now suppose one scientist becomes exceptionally skilled.
+
+Gradually,
+
+the remaining four scientists stop learning certain tasks because they know the expert will always perform them.
+
+The laboratory now depends heavily on one individual.
+
+If that researcher becomes unavailable,
+
+the entire project suffers.
+
+A better strategy is to require every scientist to understand the project independently.
+
+Dropout applies exactly this philosophy to neural networks.
+
+During training,
+
+some neurons are temporarily removed.
+
+The remaining neurons must continue solving the prediction task without relying on those missing neurons.
+
+As a result,
+
+every neuron learns a stronger and more independent representation.
+
+---
+
+### The Basic Idea
+
+Consider a hidden layer containing eight neurons.
+
+Normally,
+
+every neuron participates in the forward pass.
+
+```text id="k3vxp2"
+Input
+
+↓
+
+● ● ● ● ● ● ● ●
+
+↓
+
+Output
+```
+
+Now suppose dropout uses a probability
+
+$$
+p = 0.5.
+$$
+
+During one training iteration,
+
+approximately half of the neurons are randomly disabled.
+
+```text id="n7hd4c"
+Input
+
+↓
+
+● ○ ● ○ ● ● ○ ●
+
+↓
+
+Output
+```
+
+The circles marked
+
+○
+
+represent neurons that have been temporarily removed.
+
+These neurons contribute nothing during this forward pass.
+
+On the next mini-batch,
+
+a completely different subset of neurons is removed.
+
+```text id="qv5p8e"
+Input
+
+↓
+
+○ ● ● ● ○ ● ● ○
+
+↓
+
+Output
+```
+
+Every mini-batch therefore trains a slightly different neural network.
+
+---
+
+### Why Random Removal Helps
+
+Suppose a particular neuron has become extremely important.
+
+Without dropout,
+
+many other neurons may learn to depend on it.
+
+Now imagine that dropout suddenly removes this neuron.
+
+The remaining network must continue making accurate predictions without its assistance.
+
+Consequently,
+
+other neurons are forced to develop alternative representations.
+
+Over many iterations,
+
+the network becomes much more robust.
+
+Instead of relying on a few dominant neurons,
+
+information becomes distributed across many neurons.
+
+This distributed representation usually generalizes much better.
+
+---
+
+### Dropout Can Be Viewed as Training Many Networks
+
+One of the most elegant interpretations of dropout is that it approximately trains an enormous collection of different neural networks simultaneously.
+
+Consider a layer containing only four neurons.
+
+Each neuron may be
+
+* active,
+* inactive.
+
+Therefore,
+
+the number of possible subnetworks is
+
+$$
+2^4 = 16.
+$$
+
+Now imagine a layer containing
+
+512 neurons.
+
+The number of possible subnetworks becomes
+
+$$
+2^{512},
+$$
+
+which is astronomically large.
+
+Of course,
+
+we never explicitly train all these networks.
+
+Instead,
+
+every mini-batch randomly samples one particular subnetwork.
+
+After thousands of optimization steps,
+
+the learned parameters perform well across many different subnetworks.
+
+This is one reason dropout improves robustness.
+
+---
+
+### Mathematical Description
+
+Suppose the activation of a neuron is
+
+$$
+h.
+$$
+
+Introduce a random variable
+
+$$
+m,
+$$
+
+called the dropout mask.
+
+The mask follows a Bernoulli distribution.
+
+Specifically,
+
+$$
+m =
+\begin{cases}
+1, & \text{with probability } 1-p,\
+0, & \text{with probability } p.
+\end{cases}
+$$
+
+The output after dropout becomes
+
+$$
+\tilde{h}
+=========
+
+m h.
+$$
+
+If
+
+$$
+m=1,
+$$
+
+the neuron remains active.
+
+If
+
+$$
+m=0,
+$$
+
+the neuron is completely removed during that forward pass.
+
+This operation is repeated independently for every neuron in the dropout layer.
+
+---
+
+### The Meaning of the Dropout Probability
+
+The parameter
+
+$$
+p
+$$
+
+controls the fraction of neurons removed.
+
+Common values include
+
+| Dropout Probability | Interpretation          |
+| ------------------: | ----------------------- |
+|                 0.0 | No dropout              |
+|                 0.1 | Very weak dropout       |
+|                 0.2 | Light regularization    |
+|                 0.3 | Moderate regularization |
+|                 0.5 | Strong regularization   |
+
+A larger value increases regularization,
+
+but excessive dropout may remove too much information,
+
+making optimization difficult.
+
+Thus,
+
+dropout probability must be selected carefully.
+
+---
+
+### What Happens During Every Mini-Batch?
+
+Suppose training proceeds for
+
+100 epochs.
+
+Each epoch contains
+
+500 mini-batches.
+
+During every mini-batch,
+
+a new dropout mask is generated.
+
+Consequently,
+
+the network architecture changes
+
+50,000 times throughout training.
+
+Importantly,
+
+the parameters are shared among all these temporary subnetworks.
+
+This continual architectural variation prevents the network from memorizing highly specific neuron interactions.
+
+---
+
+### Why Dropout Is Disabled During Evaluation
+
+A very important question now arises.
+
+Should neurons continue disappearing when the model predicts new materials?
+
+The answer is
+
+**no**.
+
+During validation and testing,
+
+we want deterministic and reproducible predictions.
+
+Randomly disabling neurons would cause predictions to fluctuate.
+
+Therefore,
+
+dropout is used **only during training**.
+
+During evaluation,
+
+every neuron participates.
+
+This is one of the reasons PyTorch distinguishes between
+
+```python
+model.train()
+```
+
+and
+
+```python
+model.eval()
+```
+
+When
+
+```python
+model.train()
+```
+
+is active,
+
+dropout randomly removes neurons.
+
+When
+
+```python
+model.eval()
+```
+
+is called,
+
+dropout is automatically disabled,
+
+and the complete network is used for inference.
+
+This behavior occurs automatically for every `nn.Dropout` layer.
+
+---
+
+### Why Dropout Works Well
+
+Although dropout appears almost random,
+
+its effect is remarkably systematic.
+
+It
+
+* reduces co-adaptation,
+* distributes learned information,
+* increases robustness,
+* decreases memorization,
+* improves generalization.
+
+However,
+
+dropout also has limitations.
+
+In graph neural networks,
+
+particularly those operating on relatively small crystal graphs,
+
+aggressive dropout may unintentionally remove important structural information.
+
+Consequently,
+
+dropout probabilities used in GNNs are often smaller than those commonly employed in computer vision.
+
+In the next section, we will move from the underlying theory to **practical dropout implementation in MEGNet**, examining exactly where dropout layers should be inserted, where they should be avoided, and how different dropout placements influence predictive performance in graph neural networks for materials science.
+
+## 15.8.12 Preventing Overfitting: Regularization in MEGNet (Part 5)
+
+In the previous section, we introduced the fundamental idea of dropout and explained why randomly removing neurons during training improves generalization.
+
+However, an important practical question remains.
+
+> **Where should dropout actually be placed inside a MEGNet model?**
+
+The answer is more subtle than many beginners expect.
+
+Unlike a conventional multilayer perceptron, MEGNet contains several different computational stages.
+
+Each stage processes different types of information.
+
+Applying dropout indiscriminately may actually reduce predictive performance.
+
+Understanding where dropout is appropriate—and where it should be avoided—is therefore an important aspect of designing high-quality graph neural networks.
+
+---
+
+### Revisiting the MEGNet Architecture
+
+Recall the overall architecture developed earlier in this chapter.
+
+```text
+Crystal Structure
+
+↓
+
+Graph Construction
+
+↓
+
+Node Features
+
+↓
+
+Edge Features
+
+↓
+
+Global Features
+
+↓
+
+Embedding Layers
+
+↓
+
+MEGNet Block 1
+
+↓
+
+MEGNet Block 2
+
+↓
+
+...
+
+↓
+
+Readout
+
+↓
+
+Fully Connected Layers
+
+↓
+
+Property Prediction
+```
+
+Each of these components performs a distinct function.
+
+Some layers learn local chemical representations.
+
+Others combine information across the graph.
+
+Still others transform the graph representation into the final prediction.
+
+Dropout affects each stage differently.
+
+---
+
+### Should Dropout Be Applied to the Input Features?
+
+One possible idea is to apply dropout immediately after the input features are created.
+
+For example,
+
+suppose each atom is represented by
+
+* atomic number,
+* electronegativity,
+* covalent radius,
+* valence electron count.
+
+Should we randomly remove some of these descriptors?
+
+Generally,
+
+the answer is **no**.
+
+These features represent genuine physical information.
+
+Randomly deleting them may remove important chemical knowledge before the network has an opportunity to learn.
+
+Unlike images,
+
+where individual pixels contain highly redundant information,
+
+many atomic descriptors are fundamentally important.
+
+Consequently,
+
+input dropout is rarely used in materials graph neural networks.
+
+---
+
+### Dropout Inside the Message-Passing Layers
+
+The next possibility is applying dropout inside the Graph Network blocks.
+
+Recall that each MEGNet block performs
+
+* edge updates,
+* node updates,
+* global state updates.
+
+These computations are responsible for learning the chemical interactions within the crystal.
+
+Conceptually,
+
+```text
+Edge Update
+
+↓
+
+Node Update
+
+↓
+
+Global Update
+```
+
+Should dropout be introduced here?
+
+The answer is
+
+**sometimes—but with caution**.
+
+Message passing is the heart of the graph neural network.
+
+Removing too much information during this stage may interrupt the propagation of chemical information between neighboring atoms.
+
+If the dropout probability is too large,
+
+important interaction pathways may disappear.
+
+As a result,
+
+the network may struggle to learn meaningful atomic representations.
+
+For this reason,
+
+many MEGNet implementations either
+
+* avoid dropout inside message-passing blocks entirely,
+* or use only very small dropout probabilities.
+
+---
+
+### Why Message Passing Is Different from Ordinary Neural Networks
+
+In a conventional multilayer perceptron,
+
+each neuron processes information independently.
+
+Randomly removing several neurons generally has only a local effect.
+
+Graph neural networks behave differently.
+
+Every node communicates with its neighbors.
+
+Removing information from one node can indirectly influence many other nodes through repeated message passing.
+
+Consider a crystal graph.
+
+```text id="8x74gn"
+Atom A
+
+↓
+
+Atom B
+
+↓
+
+Atom C
+
+↓
+
+Atom D
+```
+
+Suppose dropout removes information associated with Atom B.
+
+Now,
+
+Atom C receives incomplete information.
+
+During the next message-passing layer,
+
+Atom D also receives degraded information.
+
+Thus,
+
+the effect propagates through the graph.
+
+Because of this cascading behavior,
+
+dropout inside graph convolutions must be used carefully.
+
+---
+
+### Dropout After Readout
+
+One of the safest locations for dropout is **after graph pooling (readout)**.
+
+Recall that the readout layer converts the variable-sized crystal graph into a fixed-length vector.
+
+Conceptually,
+
+```text
+Crystal Graph
+
+↓
+
+Readout
+
+↓
+
+Graph Embedding
+
+↓
+
+Fully Connected Network
+```
+
+At this stage,
+
+the graph representation has already been constructed.
+
+The remaining computations resemble an ordinary feed-forward neural network.
+
+Applying dropout here is often very effective.
+
+The graph representation remains intact,
+
+while the prediction head is prevented from overfitting.
+
+---
+
+### Dropout in the Prediction Head
+
+Suppose the prediction head consists of
+
+```text
+Graph Embedding
+
+↓
+
+Linear Layer
+
+↓
+
+ReLU
+
+↓
+
+Linear Layer
+
+↓
+
+Prediction
+```
+
+A common architecture introduces dropout between the fully connected layers.
+
+```text
+Graph Embedding
+
+↓
+
+Linear
+
+↓
+
+ReLU
+
+↓
+
+Dropout
+
+↓
+
+Linear
+
+↓
+
+Prediction
+```
+
+This is one of the most widely used dropout configurations in graph neural networks.
+
+Because the message-passing process has already finished,
+
+dropout no longer interferes with information propagation across the crystal.
+
+Instead,
+
+it regularizes only the final regression network.
+
+---
+
+### PyTorch Implementation
+
+PyTorch provides dropout through the module
+
+```python
+nn.Dropout
+```
+
+A simple prediction head might be written as
+
+```python
+self.predictor = nn.Sequential(
+
+    nn.Linear(hidden_dim, hidden_dim),
+
+    nn.ReLU(),
+
+    nn.Dropout(p=0.2),
+
+    nn.Linear(hidden_dim, 1)
+
+)
+```
+
+During training,
+
+approximately
+
+20%
+
+of the hidden activations are randomly removed.
+
+During evaluation,
+
+every neuron remains active automatically.
+
+No additional code is required.
+
+---
+
+### Multiple Dropout Layers
+
+Large neural networks sometimes employ several dropout layers.
+
+For example,
+
+```text
+Linear
+
+↓
+
+ReLU
+
+↓
+
+Dropout
+
+↓
+
+Linear
+
+↓
+
+ReLU
+
+↓
+
+Dropout
+
+↓
+
+Linear
+
+↓
+
+Prediction
+```
+
+Each dropout layer generates an independent random mask.
+
+Consequently,
+
+different portions of the prediction head are regularized simultaneously.
+
+This strategy is common in deep multilayer perceptrons.
+
+---
+
+### Choosing the Dropout Probability
+
+The choice of dropout probability depends on
+
+* dataset size,
+* model complexity,
+* amount of available training data.
+
+Typical values for graph neural networks include
+
+| Dropout Probability | Interpretation                  |
+| ------------------: | ------------------------------- |
+|                 0.0 | Disabled                        |
+|                0.05 | Very light                      |
+|                0.10 | Light                           |
+|                0.20 | Common                          |
+|                0.30 | Moderate                        |
+|                0.50 | Usually too aggressive for GNNs |
+
+Unlike image classification,
+
+where dropout values of
+
+$$
+0.5
+$$
+
+are common,
+
+graph neural networks frequently use smaller probabilities because graph datasets are relatively small and graph representations are more sensitive to missing information.
+
+---
+
+### Combining Weight Decay and Dropout
+
+An important question is whether dropout replaces weight decay.
+
+The answer is
+
+**no**.
+
+These techniques address overfitting in different ways.
+
+Weight decay discourages excessively large parameter values.
+
+Dropout discourages excessive dependence between neurons.
+
+Because they operate through different mechanisms,
+
+they complement one another.
+
+Many successful MEGNet training configurations therefore combine
+
+* AdamW optimization,
+* weight decay,
+* dropout,
+* and early stopping.
+
+Together,
+
+these techniques provide substantially better generalization than any single method alone.
+
+---
+
+### A Practical Observation
+
+If you examine published implementations of
+
+* MEGNet,
+* M3GNet,
+* CHGNet,
+* ALIGNN,
+
+you will notice an interesting trend.
+
+The graph representation itself is often treated carefully,
+
+with relatively little dropout during message passing,
+
+while the final multilayer perceptron receives stronger regularization.
+
+This reflects an important principle:
+
+> The learned crystal representation is valuable and should be preserved, whereas the final prediction head is comparatively more prone to memorizing the training data.
+
+This design philosophy has proven effective across many state-of-the-art materials informatics models.
+
+---
+
+At this point, we have examined the two most common parameter-based regularization techniques:
+
+* **Weight Decay (L2 Regularization)**
+* **Dropout**
+
+However, among all regularization methods used in practical deep learning, the one that often has the greatest impact is neither of these.
+
+Instead, it is **Early Stopping**—a strategy that recognizes the precise moment at which a model has learned as much as it can before memorization begins.
+
+In the next section, we will study **Early Stopping** in depth, beginning with its underlying intuition before moving to its mathematical interpretation and PyTorch implementation for MEGNet training.
+
+
+## 15.8.12 Preventing Overfitting: Regularization in MEGNet (Part 6)
+
+### Early Stopping: Stopping Training Before Memorization Begins
+
+Among all the regularization techniques discussed so far,
+
+* weight decay,
+* dropout,
+* architectural design,
+
+one method stands out because of its remarkable simplicity and effectiveness.
+
+That method is **Early Stopping**.
+
+Interestingly, early stopping does not modify
+
+* the neural network architecture,
+* the optimizer,
+* the loss function,
+* or the dataset.
+
+Instead, it changes **when training ends**.
+
+This simple idea often produces larger improvements than making the neural network itself more sophisticated.
+
+Consequently, early stopping has become a standard component of nearly every modern deep learning workflow, including MEGNet, M3GNet, ALIGNN, CHGNet, and many other graph neural network models.
+
+---
+
+### The Fundamental Idea
+
+Recall the learning curves discussed in the previous section.
+
+Initially,
+
+both training loss and validation loss decrease together.
+
+```text id="es1"
+Training Loss
+
+↓
+
+Validation Loss
+
+↓
+
+Both Improve
+```
+
+As optimization continues,
+
+the model reaches a point where it has learned most of the meaningful physical relationships contained within the data.
+
+Beyond this point,
+
+training continues to improve,
+
+but validation performance begins to deteriorate.
+
+Conceptually,
+
+```text id="es2"
+Training Loss
+
+↓
+
+Continues Decreasing
+
+Validation Loss
+
+↓
+
+Begins Increasing
+```
+
+This marks the beginning of overfitting.
+
+The key insight behind early stopping is remarkably simple:
+
+> **Why continue training after validation performance has already begun to worsen?**
+
+Instead of allowing memorization to continue,
+
+we simply stop training.
+
+---
+
+### The Best Model Is Rarely the Final Model
+
+A common misconception among beginners is that the model obtained after the final epoch must be the best model.
+
+In practice,
+
+this is often false.
+
+Suppose training lasts for
+
+200 epochs.
+
+Validation performance might evolve as follows.
+
+| Epoch | Validation MAE (eV) |
+| ----: | ------------------: |
+|    20 |               0.115 |
+|    40 |               0.081 |
+|    60 |           **0.064** |
+|    80 |               0.068 |
+|   100 |               0.076 |
+|   150 |               0.102 |
+|   200 |               0.145 |
+
+The best-performing model was obtained at
+
+**Epoch 60**.
+
+Continuing to Epoch 200 only increased memorization.
+
+If we publish the final model instead of the best validation model,
+
+our reported results will actually be worse.
+
+Therefore,
+
+modern deep learning almost never uses the final epoch automatically.
+
+Instead,
+
+it keeps track of the best validation performance throughout training.
+
+---
+
+### An Analogy
+
+Imagine preparing for a marathon.
+
+Initially,
+
+each day of training improves your physical fitness.
+
+Eventually,
+
+you reach peak condition.
+
+If training continues without sufficient recovery,
+
+fatigue begins accumulating.
+
+Performance gradually declines.
+
+At this stage,
+
+continuing to train harder no longer improves athletic ability.
+
+The optimal strategy is to stop before excessive fatigue develops.
+
+Neural networks behave similarly.
+
+Initially,
+
+additional epochs improve learning.
+
+Eventually,
+
+the network reaches peak generalization.
+
+Beyond this point,
+
+additional optimization increases memorization rather than understanding.
+
+Early stopping simply recognizes this optimal moment.
+
+---
+
+### Why Early Stopping Works
+
+Recall that the optimizer minimizes only the training loss.
+
+It has no direct understanding of generalization.
+
+Consequently,
+
+the optimizer will continue reducing training error indefinitely if allowed.
+
+Validation performance,
+
+however,
+
+provides information about unseen data.
+
+By monitoring validation loss,
+
+we indirectly estimate the true generalization error.
+
+When validation performance stops improving,
+
+it suggests that further optimization is no longer discovering meaningful physical relationships.
+
+Instead,
+
+the optimizer is fitting characteristics unique to the training dataset.
+
+Stopping at this point preserves the best balance between learning and memorization.
+
+---
+
+### Monitoring Validation Loss
+
+Suppose validation loss is recorded after every epoch.
+
+```text id="es3"
+Epoch
+
+↓
+
+Validation Loss
+
+↓
+
+Store Result
+```
+
+The algorithm compares the current validation loss with the best value observed so far.
+
+If the new value is lower,
+
+the current model becomes the new best model.
+
+If not,
+
+training continues,
+
+but a counter is increased.
+
+This process repeats after every epoch.
+
+---
+
+### The Concept of Patience
+
+Validation loss does not always decrease smoothly.
+
+Because optimization is stochastic,
+
+small fluctuations are normal.
+
+For example,
+
+suppose validation loss evolves as
+
+| Epoch | Validation Loss |
+| ----: | --------------: |
+|    50 |           0.082 |
+|    51 |           0.081 |
+|    52 |           0.082 |
+|    53 |           0.080 |
+|    54 |           0.081 |
+
+Stopping immediately after Epoch 52 would be a mistake.
+
+The increase from
+
+0.081
+
+to
+
+0.082
+
+is simply random variation.
+
+To avoid premature termination,
+
+early stopping introduces the concept of **patience**.
+
+Patience specifies the number of consecutive epochs during which validation performance is allowed to remain unimproved.
+
+For example,
+
+```text id="es4"
+Patience = 20
+```
+
+means that training continues until
+
+20 consecutive epochs
+
+fail to improve validation performance.
+
+Only then is training terminated.
+
+---
+
+### Choosing the Patience Value
+
+The patience parameter depends on
+
+* dataset size,
+* optimizer,
+* learning rate,
+* batch size,
+* model complexity.
+
+Common values include
+
+| Patience | Typical Usage                        |
+| -------: | ------------------------------------ |
+|        5 | Small experiments                    |
+|       10 | Moderate training                    |
+|       20 | Common for GNNs                      |
+|    30–50 | Large datasets with slow convergence |
+
+Graph neural networks often require relatively large patience values because validation loss may improve slowly over many epochs.
+
+Stopping too early may prevent the network from reaching its optimal solution.
+
+---
+
+### The Early Stopping Algorithm
+
+Conceptually,
+
+the procedure is straightforward.
+
+```text id="es5"
+Initialize
+
+↓
+
+Best Validation Loss = ∞
+
+↓
+
+Train One Epoch
+
+↓
+
+Evaluate Validation Loss
+
+↓
+
+Improved?
+
+↓
+
+Yes
+
+↓
+
+Save Model
+
+↓
+
+Reset Counter
+
+↓
+
+Continue
+
+↓
+
+No
+
+↓
+
+Increase Counter
+
+↓
+
+Counter > Patience?
+
+↓
+
+Yes
+
+↓
+
+Stop Training
+```
+
+Although simple,
+
+this algorithm has become one of the most widely used regularization strategies in deep learning.
+
+---
+
+### Why Early Stopping Is Especially Effective for Materials GNNs
+
+Materials datasets are typically much smaller than datasets used in natural language processing or computer vision.
+
+Consequently,
+
+graph neural networks often begin overfitting relatively early.
+
+Suppose a MEGNet model is trained using
+
+50,000 crystal structures.
+
+The model may already reach its optimal generalization performance after
+
+80 epochs.
+
+Continuing to
+
+300 epochs
+
+rarely improves predictive accuracy.
+
+Instead,
+
+the network gradually memorizes increasingly specific structural patterns.
+
+Early stopping prevents this unnecessary optimization.
+
+---
+
+### A Common Misunderstanding
+
+Many beginners assume that early stopping is merely a method for reducing training time.
+
+This interpretation is incomplete.
+
+Reducing computation is a useful side effect,
+
+but it is **not** the primary objective.
+
+The true purpose is
+
+> **to preserve the model corresponding to the best generalization performance.**
+
+Even if computational resources were unlimited,
+
+continuing optimization beyond the optimal validation epoch would still produce an inferior scientific model.
+
+Therefore,
+
+early stopping should be viewed as a regularization technique,
+
+not simply as a computational optimization.
+
+---
+
+### Combining Early Stopping with Weight Decay and Dropout
+
+One of the reasons modern graph neural networks generalize so well is that they rarely rely on a single regularization technique.
+
+Instead,
+
+multiple complementary methods are used simultaneously.
+
+A typical MEGNet training pipeline may include
+
+* AdamW optimization,
+* weight decay,
+* dropout,
+* early stopping,
+* model checkpointing.
+
+Each technique addresses a different aspect of overfitting.
+
+Together,
+
+they produce a model that is significantly more robust than one trained without regularization.
+
+---
+
+At this point, we understand **why early stopping works**. The next practical question is equally important:
+
+> **How do we implement early stopping in a real MEGNet training loop?**
+
+In the next section, we will build a complete early stopping utility in PyTorch, integrate it into the MEGNet training process, and explain how professional research code automatically saves and restores the best-performing model during optimization.
+
+## 15.8.12 Preventing Overfitting: Regularization in MEGNet (Part 7)
+
+### Implementing Early Stopping in PyTorch for MEGNet
+
+In the previous section, we studied the theory behind early stopping. We learned that training should terminate when validation performance no longer improves, rather than after an arbitrary number of epochs.
+
+Now we will implement this idea in code.
+
+This section is particularly important because nearly every professional deep learning project—including those in materials informatics—uses some variation of this procedure.
+
+---
+
+## A Common Beginner Mistake
+
+Many beginners write training loops like this:
+
+```python
+for epoch in range(200):
+
+    train(...)
+
+    validate(...)
+```
+
+After 200 epochs,
+
+they simply save the final model.
+
+```python
+torch.save(model.state_dict(), "final_model.pth")
+```
+
+This approach is easy to understand,
+
+but it contains a serious flaw.
+
+There is absolutely no guarantee that
+
+**Epoch 200**
+
+contains the best model.
+
+The best validation performance may have occurred at
+
+* Epoch 47,
+* Epoch 83,
+* Epoch 126,
+
+or any other point during optimization.
+
+Saving only the final model may therefore discard the best-performing network.
+
+---
+
+# The Correct Strategy
+
+Instead of saving only the last model,
+
+we should save the model **whenever validation performance improves.**
+
+Conceptually,
+
+```text
+Epoch 1
+
+↓
+
+Validation Loss = 0.92
+
+↓
+
+Save Model
+
+↓
+
+Epoch 2
+
+↓
+
+Validation Loss = 0.81
+
+↓
+
+Save Model
+
+↓
+
+Epoch 3
+
+↓
+
+Validation Loss = 0.78
+
+↓
+
+Save Model
+
+↓
+
+...
+
+↓
+
+Epoch 48
+
+↓
+
+Validation Loss = 0.064
+
+↓
+
+Save Model
+
+↓
+
+Epoch 49
+
+↓
+
+Validation Loss = 0.065
+
+↓
+
+Do Not Save
+
+↓
+
+Epoch 50
+
+↓
+
+Validation Loss = 0.067
+
+↓
+
+Do Not Save
+```
+
+Notice something important.
+
+The best model is always preserved.
+
+Even if training later becomes unstable,
+
+the optimal checkpoint already exists.
+
+---
+
+# Tracking the Best Validation Loss
+
+The simplest implementation begins by storing
+
+```python
+best_val_loss = float("inf")
+```
+
+Initially,
+
+the best validation loss is set to positive infinity.
+
+Since every real validation loss is smaller,
+
+the first epoch automatically becomes the best model.
+
+After each epoch,
+
+we compare
+
+```python
+if val_loss < best_val_loss:
+```
+
+If the new validation loss is smaller,
+
+we update
+
+```python
+best_val_loss = val_loss
+```
+
+and save the model.
+
+---
+
+# Saving the Best Model
+
+Saving the model is straightforward.
+
+```python
+torch.save(
+
+    model.state_dict(),
+
+    "best_megnet_model.pth"
+
+)
+```
+
+The file
+
+```text
+best_megnet_model.pth
+```
+
+contains only the learned parameters.
+
+Whenever validation performance improves,
+
+this file is overwritten with the new best model.
+
+At the end of training,
+
+it automatically contains the parameters corresponding to the lowest validation loss.
+
+---
+
+# Counting Consecutive Failures
+
+Saving the best model is only half of early stopping.
+
+We also need to determine
+
+when training should terminate.
+
+To accomplish this,
+
+we introduce a counter.
+
+Initially,
+
+```python
+counter = 0
+```
+
+Whenever validation improves,
+
+the counter is reset.
+
+```python
+counter = 0
+```
+
+Whenever validation fails to improve,
+
+the counter increases.
+
+```python
+counter += 1
+```
+
+If the counter becomes larger than the chosen patience,
+
+training stops.
+
+---
+
+# The Complete Logic
+
+The decision process can be summarized as
+
+```text
+Validation Improved?
+
+↓
+
+Yes
+
+↓
+
+Save Model
+
+↓
+
+Reset Counter
+
+↓
+
+Continue Training
+
+-------------------
+
+Validation Improved?
+
+↓
+
+No
+
+↓
+
+Increase Counter
+
+↓
+
+Counter > Patience?
+
+↓
+
+Yes
+
+↓
+
+Stop Training
+```
+
+Although simple,
+
+this algorithm is remarkably effective.
+
+---
+
+# A Complete Early Stopping Class
+
+Rather than scattering this logic throughout the training loop,
+
+professional code usually encapsulates it inside a reusable class.
+
+```python
+class EarlyStopping:
+
+    def __init__(self, patience=20):
+
+        self.patience = patience
+
+        self.counter = 0
+
+        self.best_loss = float("inf")
+
+        self.stop = False
+
+    def __call__(self, val_loss):
+
+        if val_loss < self.best_loss:
+
+            self.best_loss = val_loss
+
+            self.counter = 0
+
+            return True
+
+        else:
+
+            self.counter += 1
+
+            if self.counter >= self.patience:
+
+                self.stop = True
+
+            return False
+```
+
+This class stores
+
+* the best validation loss,
+* the patience,
+* the failure counter,
+* whether training should stop.
+
+---
+
+# Using the Class
+
+Training becomes much cleaner.
+
+```python
+early_stopping = EarlyStopping(
+
+    patience=20
+
+)
+```
+
+After every validation step,
+
+```python
+save_model = early_stopping(val_loss)
+```
+
+If
+
+```python
+save_model
+```
+
+is
+
+```python
+True
+```
+
+the current parameters are saved.
+
+```python
+if save_model:
+
+    torch.save(
+
+        model.state_dict(),
+
+        "best_model.pth"
+
+    )
+```
+
+Finally,
+
+after each epoch,
+
+```python
+if early_stopping.stop:
+
+    break
+```
+
+The training loop immediately terminates.
+
+---
+
+# Complete Training Flow
+
+The overall procedure now becomes
+
+```text
+Initialize Model
+
+↓
+
+Initialize Optimizer
+
+↓
+
+Initialize EarlyStopping
+
+↓
+
+Epoch
+
+↓
+
+Training
+
+↓
+
+Validation
+
+↓
+
+Validation Improved?
+
+↓
+
+Yes
+
+↓
+
+Save Model
+
+↓
+
+Reset Counter
+
+↓
+
+Continue
+
+----------------
+
+No
+
+↓
+
+Increase Counter
+
+↓
+
+Counter ≥ Patience?
+
+↓
+
+Yes
+
+↓
+
+Terminate Training
+```
+
+This workflow is almost identical to that used in production research code.
+
+---
+
+# Restoring the Best Model
+
+One subtle but extremely important point remains.
+
+Suppose training terminates at
+
+Epoch 143.
+
+The best validation performance actually occurred at
+
+Epoch 117.
+
+The parameters currently stored inside
+
+```python
+model
+```
+
+correspond to
+
+Epoch 143,
+
+not
+
+Epoch 117.
+
+Therefore,
+
+before testing or inference,
+
+we must reload the saved checkpoint.
+
+```python
+model.load_state_dict(
+
+    torch.load(
+
+        "best_model.pth"
+
+    )
+
+)
+```
+
+Now,
+
+the model once again contains the parameters associated with the lowest validation loss.
+
+Only after this step should we evaluate the test dataset.
+
+This detail is frequently overlooked by beginners but is essential for obtaining correct results.
+
+---
+
+# Why Checkpointing and Early Stopping Work Together
+
+Notice that early stopping alone is insufficient.
+
+Imagine the following sequence.
+
+| Epoch | Validation MAE |
+| ----: | -------------: |
+|    95 |          0.052 |
+|    96 |          0.051 |
+|    97 |      **0.049** |
+|    98 |          0.050 |
+|    99 |          0.052 |
+|   100 |          0.054 |
+|   ... |            ... |
+|   117 |           Stop |
+
+Early stopping eventually terminates at
+
+Epoch 117.
+
+However,
+
+the best model existed at
+
+Epoch 97.
+
+Without checkpointing,
+
+that model would be lost forever.
+
+This is why professional deep learning always combines
+
+* **early stopping** and
+* **model checkpointing**.
+
+Checkpointing preserves the best parameters.
+
+Early stopping decides when to terminate optimization.
+
+Together,
+
+they ensure that the final model corresponds to the highest validation performance.
+
+---
+
+# Practical Advice for MEGNet Training
+
+For most MEGNet regression tasks, a solid starting configuration is:
+
+| Parameter        |  Recommended Starting Value |
+| ---------------- | --------------------------: |
+| Optimizer        |                       AdamW |
+| Learning rate    |            $1\times10^{-3}$ |
+| Weight decay     |            $1\times10^{-5}$ |
+| Dropout          |                     0.1–0.2 |
+| Patience         |                20–30 epochs |
+| Model checkpoint | Save lowest validation loss |
+
+These are **starting points**, not universal rules. The final values should always be chosen based on validation performance for the specific dataset and prediction task.
+
+---
+
+At this point, we have covered the major regularization techniques used in MEGNet:
+
+* L2 Regularization (Weight Decay)
+* Dropout
+* Early Stopping
+* Model Checkpointing
+
+The next major topic in Chapter 15 should naturally be **15.9 Training a Complete MEGNet Model**, where we integrate everything learned so far into a complete, research-quality training pipeline, including data loading, optimizer setup, learning rate scheduling, mixed precision (optional), logging, checkpointing, validation, testing, and final inference. This section will serve as the bridge between understanding MEGNet and using it for real materials informatics research.
+
+# 15.9 Training a Complete MEGNet Model
+
+At this point in the chapter, we have learned nearly every individual component required to build a MEGNet model.
+
+We understand
+
+* crystal graph construction,
+* node, edge, and global features,
+* message passing,
+* graph updates,
+* pooling,
+* prediction heads,
+* loss functions,
+* optimizers,
+* regularization,
+* and early stopping.
+
+However, these concepts have been studied independently.
+
+In real research, they must work together as one complete machine learning pipeline.
+
+This section integrates everything developed throughout the chapter into a complete MEGNet training workflow.
+
+The goal is not simply to write code that runs.
+
+The goal is to understand **every operation performed during training**, why it exists, and how it contributes to learning meaningful materials representations.
+
+---
+
+# From Crystal Structure to a Trained Neural Network
+
+When reading a published MEGNet paper, the training process is often summarized in only a few sentences.
+
+For example,
+
+> "The model was trained using Adam with a learning rate of $10^{-3}$ for 300 epochs."
+
+To a beginner, this sounds deceptively simple.
+
+In reality,
+
+those few words hide hundreds of computational operations.
+
+A complete training workflow actually looks like
+
+```text
+Crystal Structures
+
+↓
+
+Graph Construction
+
+↓
+
+Dataset
+
+↓
+
+Train–Validation–Test Split
+
+↓
+
+DataLoader
+
+↓
+
+Initialize MEGNet
+
+↓
+
+Initialize Optimizer
+
+↓
+
+Initialize Scheduler
+
+↓
+
+Initialize Early Stopping
+
+↓
+
+Training Loop
+
+↓
+
+Validation
+
+↓
+
+Checkpoint Saving
+
+↓
+
+Learning Rate Adjustment
+
+↓
+
+Early Stopping Decision
+
+↓
+
+Best Model
+
+↓
+
+Test Evaluation
+
+↓
+
+Inference on New Materials
+```
+
+Every box in this workflow corresponds to dozens or even hundreds of lines of code.
+
+Professional research software simply automates these operations.
+
+Understanding them individually is what allows us to modify, debug, and improve the model.
+
+---
+
+# The Overall Philosophy of Training
+
+Many beginners believe that training means
+
+> "Give the neural network some data."
+
+This is incorrect.
+
+Training is actually an **optimization problem**.
+
+Suppose the neural network contains
+
+$$
+\theta
+$$
+
+trainable parameters.
+
+Initially,
+
+these parameters are random.
+
+Therefore,
+
+the prediction
+
+$$
+\hat y=f(G;\theta)
+$$
+
+is also essentially random.
+
+Training repeatedly modifies
+
+$$
+\theta
+$$
+
+until
+
+$$
+f(G;\theta)
+$$
+
+approximates the unknown physical function
+
+$$
+f_{\text{physics}}(G).
+$$
+
+Notice something important.
+
+The dataset never changes.
+
+The crystal structures remain exactly the same.
+
+Only the neural network parameters change.
+
+Training is therefore the process of **searching parameter space**.
+
+---
+
+# What Happens During One Epoch?
+
+The word **epoch** appears constantly in machine learning literature.
+
+Unfortunately,
+
+many students use the term without understanding its precise meaning.
+
+An epoch is defined as
+
+> **One complete pass through the entire training dataset.**
+
+Suppose the training dataset contains
+
+```text
+50,000 crystal structures.
+```
+
+If every crystal is processed exactly once,
+
+one epoch has been completed.
+
+This definition is independent of
+
+* model architecture,
+* optimizer,
+* batch size.
+
+Only the dataset matters.
+
+---
+
+# Why We Do Not Process the Entire Dataset at Once
+
+A natural question arises.
+
+Why not feed all
+
+50,000
+
+crystals into the neural network simultaneously?
+
+The answer is computational.
+
+Consider a realistic MEGNet dataset.
+
+Each crystal graph contains
+
+* atomic features,
+* bond features,
+* neighbor lists,
+* graph connectivity,
+* global attributes.
+
+Different crystals contain different numbers of atoms.
+
+Some may have
+
+```text
+8 atoms.
+```
+
+Others may contain
+
+```text
+120 atoms.
+```
+
+Processing all graphs simultaneously would require enormous GPU memory.
+
+Instead,
+
+the dataset is divided into **mini-batches**.
+
+---
+
+# Mini-Batch Training
+
+Suppose the batch size equals
+
+```text
+32
+```
+
+The dataset is divided as
+
+```text
+50,000 Crystals
+
+↓
+
+32
+
+↓
+
+32
+
+↓
+
+32
+
+↓
+
+...
+
+↓
+
+Final Batch
+```
+
+Each mini-batch contains only a small subset of crystals.
+
+The optimizer updates the parameters after processing each batch.
+
+This approach provides several advantages.
+
+First,
+
+GPU memory requirements become manageable.
+
+Second,
+
+parameter updates occur much more frequently.
+
+Third,
+
+the slight randomness introduced by mini-batches often improves optimization.
+
+Mini-batch gradient descent has therefore become the standard approach for training deep neural networks.
+
+---
+
+# Determining the Number of Mini-Batches
+
+Suppose
+
+the training dataset contains
+
+$$
+N
+$$
+
+samples,
+
+and the batch size is
+
+$$
+B.
+$$
+
+The number of batches per epoch is approximately
+
+$$
+\frac{N}{B}.
+$$
+
+For example,
+
+$$
+N=50,000,
+$$
+
+$$
+B=32.
+$$
+
+Then
+
+$$
+\frac{50000}{32}
+\approx1563.
+$$
+
+Thus,
+
+one epoch consists of approximately
+
+1,563
+
+forward and backward passes.
+
+Notice how different this is from the beginner intuition that
+
+> "One epoch means one optimization step."
+
+In reality,
+
+one epoch often contains thousands of optimization steps.
+
+---
+
+# One Mini-Batch Inside MEGNet
+
+Consider one mini-batch containing
+
+32 crystal graphs.
+
+Conceptually,
+
+```text
+Batch
+
+├── Crystal 1
+
+├── Crystal 2
+
+├── Crystal 3
+
+├── ...
+
+└── Crystal 32
+```
+
+Each graph possesses
+
+* different numbers of atoms,
+* different numbers of edges,
+* different crystal symmetries.
+
+PyTorch Geometric combines these variable-sized graphs into a single large disconnected graph.
+
+Conceptually,
+
+```text
+Large Batch Graph
+
+────────────────────────
+
+Crystal A
+
+(no connections)
+
+Crystal B
+
+(no connections)
+
+Crystal C
+
+(no connections)
+
+────────────────────────
+```
+
+Notice that
+
+the crystals are **not connected**.
+
+They simply share one computational graph,
+
+allowing GPU operations to process them efficiently.
+
+This batching strategy is one of the key innovations that makes graph neural networks practical.
+
+---
+
+# Operations Performed for Every Mini-Batch
+
+Every batch undergoes exactly the same sequence of operations.
+
+```text
+Mini-Batch
+
+↓
+
+Move to GPU
+
+↓
+
+Forward Pass
+
+↓
+
+Loss Calculation
+
+↓
+
+Gradient Computation
+
+↓
+
+Parameter Update
+
+↓
+
+Next Batch
+```
+
+Although this diagram appears simple,
+
+each step contains substantial computation.
+
+In the following sections,
+
+we will analyze every operation individually,
+
+beginning with **moving graph data to the GPU**, followed by the complete forward pass through the MEGNet architecture, gradient computation via backpropagation, optimizer updates, and finally the validation stage.
+
+By the end of this section, you will understand not only **how** to train a MEGNet model, but **why every line of the training loop exists**, enabling you to confidently modify and extend research implementations rather than treating them as black boxes.
+
+## 15.9 Training a Complete MEGNet Model (Part 2)
+
+### Understanding the Training Loop: The Heart of Deep Learning
+
+Every machine learning paper contains a sentence similar to
+
+> "The model was trained for 300 epochs."
+
+Although this statement appears simple,
+
+it hides the most important algorithm in deep learning:
+
+the **training loop**.
+
+Everything that a neural network learns occurs inside this loop.
+
+Whether the model is
+
+* Linear Regression,
+* ResNet,
+* Transformer,
+* CGCNN,
+* MEGNet,
+* M3GNet,
+* CHGNet,
+
+the overall training philosophy remains remarkably similar.
+
+The architecture changes.
+
+The optimizer changes.
+
+The data change.
+
+The training loop remains almost unchanged.
+
+For this reason,
+
+understanding the training loop is one of the most valuable skills in machine learning.
+
+---
+
+# A Bird's-Eye View
+
+Before examining code,
+
+consider the complete process.
+
+```text
+Initialize Model
+
+↓
+
+Initialize Optimizer
+
+↓
+
+Initialize Loss Function
+
+↓
+
+for each epoch
+
+    for each mini-batch
+
+        Forward Pass
+
+        Compute Loss
+
+        Backpropagation
+
+        Update Parameters
+
+    Validate
+
+    Save Best Model
+
+    Early Stopping Check
+
+Training Complete
+```
+
+Although this algorithm contains only a few steps,
+
+every modern deep learning framework—including PyTorch, TensorFlow, and JAX—implements some variation of this process.
+
+---
+
+# Step 1 — Loading a Mini-Batch
+
+The first operation inside the loop is obtaining a mini-batch from the DataLoader.
+
+```python
+for batch in train_loader:
+```
+
+This single line performs a surprising amount of work.
+
+The DataLoader
+
+* reads graph objects from memory,
+* groups them into a mini-batch,
+* creates the batch index,
+* constructs edge connectivity,
+* prepares tensors for GPU computation.
+
+For PyTorch Geometric,
+
+the variable
+
+```python
+batch
+```
+
+is not a simple tensor.
+
+Instead,
+
+it is a **Batch object** containing several tensors.
+
+Conceptually,
+
+```text
+Batch
+
+├── x
+
+├── edge_index
+
+├── edge_attr
+
+├── batch
+
+├── global_features
+
+└── y
+```
+
+Each of these tensors serves a specific purpose.
+
+---
+
+# Understanding Each Tensor
+
+Let us examine them individually.
+
+### Node Features
+
+```python
+batch.x
+```
+
+contains the feature vector of every atom.
+
+Suppose three crystals are batched together.
+
+```text
+Crystal A
+
+3 atoms
+
+Crystal B
+
+5 atoms
+
+Crystal C
+
+4 atoms
+```
+
+The batch contains
+
+```text
+12 atoms
+```
+
+Therefore,
+
+```python
+batch.x
+```
+
+has shape
+
+$$
+(12,F_n)
+$$
+
+where
+
+$$
+F_n
+$$
+
+is the number of node features.
+
+Notice that
+
+PyTorch Geometric stores
+
+**all atoms together**
+
+rather than storing each crystal separately.
+
+---
+
+### Edge Connectivity
+
+```python
+batch.edge_index
+```
+
+contains the graph connectivity.
+
+Its shape is
+
+$$
+(2,E)
+$$
+
+where
+
+$$
+E
+$$
+
+is the number of edges.
+
+Each column represents one bond.
+
+For example,
+
+```text
+0 → 1
+
+1 → 2
+
+2 → 0
+```
+
+means
+
+Atom 0 sends a message to Atom 1,
+
+Atom 1 sends a message to Atom 2,
+
+Atom 2 sends a message back to Atom 0.
+
+---
+
+### Edge Features
+
+```python
+batch.edge_attr
+```
+
+contains bond information.
+
+Typical edge descriptors include
+
+* bond distance,
+* bond type,
+* Gaussian basis expansion,
+* relative position vectors.
+
+If there are
+
+400 edges,
+
+then
+
+$$
+batch.edge_attr
+\in
+\mathbb{R}^{400\times F_e}
+$$
+
+where
+
+$$
+F_e
+$$
+
+is the edge feature dimension.
+
+---
+
+### Batch Index
+
+Perhaps the most mysterious tensor is
+
+```python
+batch.batch
+```
+
+Many beginners ignore this variable,
+
+yet it is one of the most important tensors in graph neural networks.
+
+Recall that
+
+PyTorch Geometric combines multiple graphs into one large disconnected graph.
+
+The tensor
+
+```python
+batch.batch
+```
+
+records
+
+which atom belongs to which crystal.
+
+For example,
+
+```text
+Atom
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+```
+
+may correspond to
+
+```text
+Batch Index
+
+0
+
+0
+
+0
+
+1
+
+1
+
+1
+
+2
+
+2
+```
+
+This tells the readout layer
+
+Atoms
+
+0–2
+
+belong to Crystal 0,
+
+Atoms
+
+3–5
+
+belong to Crystal 1,
+
+Atoms
+
+6–7
+
+belong to Crystal 2.
+
+Without this tensor,
+
+graph pooling would be impossible.
+
+---
+
+### Target Values
+
+Finally,
+
+```python
+batch.y
+```
+
+contains the target property.
+
+For formation energy prediction,
+
+it may look like
+
+```text
+[-3.24,
+
+-1.87,
+
+-2.41,
+
+...]
+
+```
+
+Its shape is
+
+$$
+(B,1)
+$$
+
+where
+
+$$
+B
+$$
+
+is the batch size.
+
+---
+
+# Step 2 — Moving Data to the GPU
+
+Modern graph neural networks are almost always trained on GPUs.
+
+Before computation,
+
+every tensor must be transferred from CPU memory.
+
+The standard PyTorch command is
+
+```python
+batch = batch.to(device)
+```
+
+where
+
+```python
+device
+```
+
+is typically
+
+```python
+device = torch.device(
+
+    "cuda"
+
+)
+```
+
+if a GPU is available,
+
+or
+
+```python
+device = torch.device(
+
+    "cpu"
+
+)
+```
+
+otherwise.
+
+This command moves
+
+* node features,
+* edge indices,
+* edge attributes,
+* targets,
+* batch indices,
+
+simultaneously.
+
+After this operation,
+
+all computations occur on the GPU.
+
+---
+
+# Why GPUs Matter
+
+Consider a MEGNet model containing
+
+2 million parameters.
+
+Training on a CPU may require
+
+hours
+
+or even
+
+days.
+
+A modern GPU performs
+
+thousands of floating-point operations simultaneously.
+
+This parallelism dramatically accelerates
+
+* matrix multiplication,
+* message passing,
+* gradient computation.
+
+For large materials datasets,
+
+GPU acceleration is not merely convenient—
+
+it is practically essential.
+
+---
+
+# Step 3 — Resetting the Gradients
+
+Before computing new gradients,
+
+the old gradients must be removed.
+
+This is done using
+
+```python
+optimizer.zero_grad()
+```
+
+This line often confuses beginners.
+
+Why must gradients be reset?
+
+The answer lies in how PyTorch computes derivatives.
+
+Unlike many mathematical descriptions,
+
+PyTorch **accumulates gradients** by default.
+
+Suppose
+
+after one batch,
+
+the gradient equals
+
+$$
+0.8.
+$$
+
+If gradients are not cleared,
+
+the next batch may produce
+
+$$
+0.6.
+$$
+
+The stored value becomes
+
+$$
+1.4,
+$$
+
+rather than
+
+$$
+0.6.
+$$
+
+After hundreds of batches,
+
+the accumulated gradients become meaningless.
+
+Therefore,
+
+every iteration begins by clearing the previous gradients.
+
+Conceptually,
+
+```text
+Previous Batch
+
+↓
+
+Gradient = 0
+
+↓
+
+Forward Pass
+
+↓
+
+Backward Pass
+
+↓
+
+New Gradient
+```
+
+This ensures that every optimization step depends only on the current mini-batch.
+
+---
+
+# Summary of the First Three Steps
+
+At this point,
+
+every iteration of the training loop has performed three essential operations:
+
+1. **Load one mini-batch** from the DataLoader.
+2. **Move the graph data to the computation device** (GPU or CPU).
+3. **Clear any previously accumulated gradients**.
+
+Only after these preparation steps is the model ready to perform its first real computation:
+
+the **forward pass**.
+
+The forward pass is where the crystal graph enters the MEGNet architecture, messages propagate through the graph, node, edge, and global features are updated, and the network ultimately predicts a material property.
+
+In the next section, we will dissect the forward pass line by line, tracing a single batch of crystal graphs through every stage of the MEGNet model until the final prediction is produced.
+
+## 15.9 Training a Complete MEGNet Model (Part 3)
+
+### Step 4 — The Forward Pass: How MEGNet Makes Predictions
+
+The preparation stage of the training loop is now complete.
+
+For every mini-batch, we have
+
+* loaded the crystal graphs,
+* moved them to the GPU,
+* cleared the previous gradients.
+
+Now comes the most important computation in the entire neural network:
+
+> **The forward pass.**
+
+The forward pass is where the neural network transforms a crystal structure into a predicted material property.
+
+Everything that we have studied throughout this chapter—including
+
+* graph construction,
+* embeddings,
+* edge updates,
+* node updates,
+* global state updates,
+* graph pooling,
+
+is executed during this stage.
+
+---
+
+# What Is the Forward Pass?
+
+Mathematically,
+
+the forward pass is simply the evaluation of the neural network function
+
+$$
+\hat y=f(G;\theta),
+$$
+
+where
+
+* $G$ is the crystal graph,
+* $\theta$ represents all trainable parameters,
+* $\hat y$ is the predicted property.
+
+Although this equation appears compact,
+
+the computation hidden inside
+
+$$
+f(G;\theta)
+$$
+
+is extremely complex.
+
+A single forward pass through MEGNet may involve
+
+* millions of matrix multiplications,
+* nonlinear activation functions,
+* message passing,
+* aggregation operations,
+* pooling,
+* fully connected layers.
+
+Yet PyTorch allows all of this to be performed using a single line.
+
+---
+
+# The Entire Forward Pass in PyTorch
+
+The complete forward pass usually looks like
+
+```python
+prediction = model(batch)
+```
+
+This single statement triggers every operation defined inside
+
+```python
+model.forward()
+```
+
+To a beginner,
+
+this may appear almost magical.
+
+However,
+
+what actually happens is a carefully organized sequence of computations.
+
+---
+
+# Looking Inside `model.forward()`
+
+Conceptually,
+
+the forward function might resemble
+
+```python
+def forward(self, batch):
+
+    node_features = self.node_embedding(batch.x)
+
+    edge_features = self.edge_embedding(batch.edge_attr)
+
+    global_features = self.global_embedding(batch.u)
+
+    node_features, edge_features, global_features = self.megnet_block(
+
+        node_features,
+
+        edge_features,
+
+        global_features,
+
+        batch.edge_index,
+
+        batch.batch
+
+    )
+
+    graph_embedding = self.readout(
+
+        node_features,
+
+        batch.batch
+
+    )
+
+    prediction = self.predictor(
+
+        graph_embedding
+
+    )
+
+    return prediction
+```
+
+This is a simplified version,
+
+but it illustrates the complete computational pipeline.
+
+Every line corresponds to concepts developed earlier in this chapter.
+
+---
+
+# Step 4.1 — Embedding the Input Features
+
+Recall that the raw graph contains
+
+* atomic numbers,
+* bond distances,
+* global descriptors.
+
+These quantities are meaningful to humans,
+
+but they are not immediately suitable for deep learning.
+
+The first task is therefore to transform them into continuous vector representations.
+
+For atoms,
+
+we compute
+
+$$
+\mathbf{h}_v^{(0)}
+==================
+
+E_v(\mathbf{x}_v),
+$$
+
+where
+
+* $\mathbf{x}_v$ is the original atomic feature vector,
+* $E_v$ is the node embedding network.
+
+Similarly,
+
+edge features become
+
+$$
+\mathbf{e}_{ij}^{(0)}
+=====================
+
+E_e(\mathbf{x}_{ij}),
+$$
+
+and global features become
+
+$$
+\mathbf{u}^{(0)}
+================
+
+E_u(\mathbf{x}_u).
+$$
+
+After embedding,
+
+all three feature types share a common latent space.
+
+This makes message passing much more effective.
+
+---
+
+# Step 4.2 — Passing Through the MEGNet Blocks
+
+Next,
+
+the embedded graph enters the first Graph Network block.
+
+Conceptually,
+
+```text
+Embedded Graph
+
+↓
+
+MEGNet Block 1
+
+↓
+
+Updated Graph
+
+↓
+
+MEGNet Block 2
+
+↓
+
+Updated Graph
+
+↓
+
+...
+
+↓
+
+Final Graph Representation
+```
+
+Each block performs three operations.
+
+---
+
+### Edge Update
+
+Each bond gathers information from
+
+* the source atom,
+* the destination atom,
+* the previous edge representation,
+* the global state.
+
+Mathematically,
+
+$$
+\mathbf{e}_{ij}^{(t+1)}
+=======================
+
+\phi_e
+\left(
+\mathbf{h}_i^{(t)},
+\mathbf{h}*j^{(t)},
+\mathbf{e}*{ij}^{(t)},
+\mathbf{u}^{(t)}
+\right).
+$$
+
+The edge representation now contains richer chemical information.
+
+---
+
+### Node Update
+
+Every atom collects messages from neighboring bonds.
+
+The aggregated message is
+
+$$
+\mathbf{m}_i
+============
+
+\sum_{j\in\mathcal N(i)}
+\mathbf{e}_{ij}.
+$$
+
+The node representation is updated as
+
+$$
+\mathbf{h}_i^{(t+1)}
+====================
+
+\phi_v
+\left(
+\mathbf{h}_i^{(t)},
+\mathbf{m}_i,
+\mathbf{u}^{(t)}
+\right).
+$$
+
+Each atom therefore acquires information about its local chemical environment.
+
+---
+
+### Global Update
+
+Finally,
+
+the entire crystal representation is updated.
+
+The global state combines information from
+
+* all nodes,
+* all edges,
+* the previous global state.
+
+Conceptually,
+
+$$
+\mathbf{u}^{(t+1)}
+==================
+
+\phi_u
+(
+\mathbf{u}^{(t)},
+\bar{\mathbf h},
+\bar{\mathbf e}
+).
+$$
+
+At this point,
+
+every part of the graph has exchanged information.
+
+---
+
+# Repeating the Process
+
+One MEGNet block rarely provides sufficient expressive power.
+
+Instead,
+
+multiple blocks are stacked.
+
+Suppose the model contains four blocks.
+
+The information flow becomes
+
+```text
+Initial Graph
+
+↓
+
+Block 1
+
+↓
+
+Block 2
+
+↓
+
+Block 3
+
+↓
+
+Block 4
+
+↓
+
+Final Graph
+```
+
+Every block allows information to propagate farther through the crystal.
+
+After several iterations,
+
+an atom may indirectly receive information from distant regions of the structure.
+
+This progressive information exchange is one of the defining characteristics of graph neural networks.
+
+---
+
+# Step 4.3 — Readout (Pooling)
+
+After message passing,
+
+every atom possesses its own learned representation.
+
+Suppose the graph contains
+
+100 atoms.
+
+We therefore have
+
+100 feature vectors.
+
+However,
+
+the prediction task concerns
+
+**the crystal**,
+
+not individual atoms.
+
+We therefore require a fixed-length graph representation.
+
+This is achieved through the readout layer.
+
+Conceptually,
+
+```text
+Atom Features
+
+↓
+
+Pooling
+
+↓
+
+Graph Embedding
+```
+
+Mathematically,
+
+the graph embedding is
+
+$$
+\mathbf{g}
+==========
+
+R
+(
+\mathbf{h}_1,
+\mathbf{h}_2,
+\ldots,
+\mathbf{h}_N
+),
+$$
+
+where
+
+$R$
+
+is a permutation-invariant pooling operator,
+
+such as
+
+* sum,
+* mean,
+* or set2set pooling.
+
+Regardless of whether the crystal contains
+
+10 atoms
+
+or
+
+500 atoms,
+
+the output always has the same dimension.
+
+This property allows graphs of different sizes to be processed by the same neural network.
+
+---
+
+# Step 4.4 — Prediction Head
+
+The graph embedding is now passed through a multilayer perceptron.
+
+Conceptually,
+
+```text
+Graph Embedding
+
+↓
+
+Linear Layer
+
+↓
+
+ReLU
+
+↓
+
+Dropout
+
+↓
+
+Linear Layer
+
+↓
+
+Predicted Property
+```
+
+The mathematical operation can be written as
+
+$$
+\hat y
+======
+
+f_{\text{MLP}}
+(
+\mathbf g
+).
+$$
+
+Depending on the task,
+
+the output may represent
+
+* formation energy,
+* band gap,
+* bulk modulus,
+* elastic tensor component,
+* dielectric constant,
+* magnetic moment,
+
+or any other graph-level material property.
+
+---
+
+# The Output Tensor
+
+Suppose the batch size equals
+
+32.
+
+The forward pass returns
+
+```python
+prediction = model(batch)
+```
+
+The shape of
+
+```python
+prediction
+```
+
+is
+
+$$
+(32,1)
+$$
+
+Each row corresponds to one crystal.
+
+For example,
+
+```text
+Crystal 1 → -2.34 eV
+
+Crystal 2 → -1.67 eV
+
+Crystal 3 → -3.02 eV
+
+...
+
+Crystal 32 → -2.48 eV
+```
+
+Notice that the model predicts all crystals simultaneously.
+
+This parallel computation is one of the reasons GPUs are so effective for deep learning.
+
+---
+
+# Why the Forward Pass Is Differentiable
+
+Every operation inside the forward pass—
+
+* linear layers,
+* message passing,
+* pooling,
+* activation functions,
+
+is differentiable.
+
+Consequently,
+
+PyTorch automatically constructs a **computational graph** while the forward pass executes.
+
+This graph records every mathematical operation.
+
+It is **not** the crystal graph.
+
+Instead,
+
+it is a graph describing the sequence of computations required to produce the prediction.
+
+This computational graph is what makes automatic differentiation possible.
+
+Without it,
+
+backpropagation could not compute parameter gradients.
+
+---
+
+# Forward Pass vs. Inference
+
+An important distinction should be made.
+
+The forward pass occurs both during
+
+* training,
+* and inference.
+
+The computation itself is almost identical.
+
+The difference lies in what happens **after** the forward pass.
+
+During training,
+
+the prediction is compared with the true target,
+
+the loss is computed,
+
+and gradients are propagated backward.
+
+During inference,
+
+no gradients are calculated.
+
+The prediction is simply returned to the user.
+
+Thus,
+
+the forward pass is the common foundation of both training and prediction.
+
+---
+
+# Summary
+
+At this point in every training iteration,
+
+MEGNet has successfully transformed a batch of crystal structures into predicted material properties.
+
+The next question naturally follows:
+
+> **How does the neural network know whether these predictions are good or bad?**
+
+To answer this,
+
+we must compare the predictions with the true material properties using a **loss function**.
+
+The loss converts prediction errors into a single numerical quantity that tells the optimizer how well the model is performing.
+
+In the next section, we will study **loss computation in MEGNet**, derive the most commonly used regression loss functions (MAE, MSE, and Huber loss), explain when each should be used in materials informatics, and show exactly how they are implemented in PyTorch.
+
+## 15.9 Training a Complete MEGNet Model (Part 4)
+
+### Step 5 — Computing the Loss: Measuring Prediction Error
+
+The forward pass has now produced predictions for every crystal in the mini-batch.
+
+Suppose the model predicts formation energies.
+
+For one mini-batch, the predictions may be
+
+```text
+Crystal          Predicted Formation Energy (eV)
+
+1                         -2.15
+
+2                         -1.84
+
+3                         -3.47
+
+...
+
+32                        -2.73
+```
+
+However,
+
+these numbers alone tell us nothing.
+
+Are these predictions good?
+
+Are they terrible?
+
+Should the neural network change its parameters?
+
+The neural network itself has no intuition about chemistry.
+
+It does not know whether
+
+* a prediction error of 0.01 eV is excellent,
+* a prediction error of 2 eV is disastrous.
+
+It needs a mathematical measure of performance.
+
+That measure is called the **loss function**.
+
+---
+
+# Why a Loss Function Is Necessary
+
+Imagine teaching a student to solve mathematics problems.
+
+After every answer,
+
+you compare the student's solution with the correct answer.
+
+If the answer is wrong,
+
+you explain the mistake.
+
+The student gradually improves.
+
+Without feedback,
+
+learning would be impossible.
+
+A neural network learns in exactly the same way.
+
+The true material properties serve as the "correct answers."
+
+The predictions are the student's answers.
+
+The loss function measures the disagreement between them.
+
+The optimizer then uses this information to improve the model.
+
+Thus,
+
+the loss function acts as the **teacher** of the neural network.
+
+---
+
+# Predictions and Targets
+
+Suppose one mini-batch contains four crystals.
+
+The predictions are
+
+$$
+\hat{\mathbf y}
+=
+
+[-2.41,,-1.82,,-3.05,,-0.91].
+$$
+
+The true DFT values are
+
+$$
+\mathbf y
+=
+
+[-2.35,,-1.90,,-2.96,,-1.02].
+$$
+
+Clearly,
+
+the predictions are not identical.
+
+The question is
+
+**How should we measure the difference?**
+
+Many possibilities exist.
+
+Some penalize large errors heavily.
+
+Others treat all errors equally.
+
+Choosing an appropriate loss function is therefore an important modeling decision.
+
+---
+
+# Requirements of a Good Loss Function
+
+A useful loss function should satisfy several properties.
+
+It should
+
+* produce small values for accurate predictions,
+* produce large values for inaccurate predictions,
+* be differentiable,
+* provide meaningful gradients,
+* be computationally efficient.
+
+If these conditions are satisfied,
+
+gradient-based optimization becomes possible.
+
+---
+
+# Regression Versus Classification
+
+Before discussing specific loss functions,
+
+it is useful to distinguish between two major categories of machine learning.
+
+### Classification
+
+Classification predicts categories.
+
+Examples include
+
+* metal vs insulator,
+* magnetic vs non-magnetic,
+* stable vs unstable.
+
+Typical outputs are
+
+```text
+Class A
+
+Class B
+
+Class C
+```
+
+Classification commonly uses
+
+* Cross Entropy Loss,
+* Binary Cross Entropy.
+
+---
+
+### Regression
+
+MEGNet is usually used for **regression**.
+
+Regression predicts continuous numerical values.
+
+Examples include
+
+* formation energy,
+* band gap,
+* elastic modulus,
+* lattice constant,
+* dielectric constant,
+* heat capacity.
+
+These quantities are real numbers.
+
+Consequently,
+
+MEGNet generally employs regression loss functions.
+
+---
+
+# The Prediction Error
+
+The simplest quantity is the prediction error.
+
+For one sample,
+
+$$
+e
+=
+
+\hat y-y.
+$$
+
+Suppose
+
+True formation energy
+
+$$-2.50\text{ eV}.$$
+
+Prediction
+
+$$
+
+-2.20
+\text{ eV}.
+$$
+
+Then
+
+$$
+e
+=
+ -2.20-(-2.50)
+
+0.30
+\text{ eV}.
+$$
+
+The prediction is
+
+0.30 eV
+
+too high.
+
+---
+
+Suppose instead
+
+Prediction
+
+$$
+
+-2.80
+\text{ eV}.
+$$
+
+Then
+
+$$
+e
+=
+
+ -2.80-(-2.50)
+
+-0.30
+\text{ eV}.
+$$
+
+Now the prediction is
+
+0.30 eV
+
+too low.
+
+Notice something important.
+
+Both predictions are equally inaccurate.
+
+Yet
+
+their errors have opposite signs.
+
+Therefore,
+
+we cannot simply average
+
+$$
+e.
+$$
+
+Positive and negative errors would cancel each other.
+
+---
+
+# Removing the Sign
+
+There are two common ways to eliminate this cancellation.
+
+The first is
+
+the **absolute value**
+
+$$
+|e|.
+$$
+
+The second is
+
+the **square**
+
+$$
+e^2.
+$$
+
+These lead to the two most widely used regression loss functions.
+
+* Mean Absolute Error (MAE)
+* Mean Squared Error (MSE)
+
+We will study each individually.
+
+---
+
+# Mean Absolute Error (MAE)
+
+The absolute error for one prediction is
+
+$$
+|y-\hat y|.
+$$
+
+For an entire dataset containing
+
+$$
+N
+$$
+
+samples,
+
+the Mean Absolute Error is
+
+$$
+\boxed{
+MAE
+===
+
+\frac1N
+\sum_{i=1}^{N}
+|y_i-\hat y_i|
+}
+$$
+
+This is one of the most popular evaluation metrics in materials informatics.
+
+---
+
+### Example
+
+Suppose
+
+| True | Predicted |
+| ---: | --------: |
+| -2.5 |      -2.2 |
+| -1.8 |      -1.9 |
+| -3.1 |      -2.8 |
+
+Absolute errors become
+
+| Error |
+| ----: |
+|   0.3 |
+|   0.1 |
+|   0.3 |
+
+Therefore,
+
+$$
+MAE
+=
+
+\frac{0.3+0.1+0.3}{3}
+
+0.233
+\text{ eV}.
+$$
+
+This means
+
+the average prediction error is approximately
+
+0.233 eV.
+
+---
+
+# Why Researchers Like MAE
+
+MAE has several attractive properties.
+
+First,
+
+it has the same physical units as the target.
+
+For formation energy,
+
+the MAE is measured in
+
+eV.
+
+For bulk modulus,
+
+it is measured in
+
+GPa.
+
+For band gap,
+
+again,
+
+eV.
+
+This makes interpretation straightforward.
+
+If a paper reports
+
+```text
+MAE = 0.03 eV
+```
+
+the meaning is immediately clear.
+
+---
+
+Second,
+
+every error contributes linearly.
+
+A prediction error of
+
+2 eV
+
+is treated as twice as bad as
+
+1 eV.
+
+This makes MAE relatively robust against occasional outliers.
+
+---
+
+# Limitations of MAE
+
+Although MAE is easy to interpret,
+
+its mathematical properties are not ideal.
+
+The absolute value function is not differentiable at
+
+$$
+e=0.
+$$
+
+Although modern optimization algorithms can still handle this,
+
+gradient-based methods generally prefer smoother functions.
+
+This motivates another important loss function.
+
+---
+
+# Mean Squared Error (MSE)
+
+Instead of taking the absolute value,
+
+we square each error.
+
+The Mean Squared Error becomes
+
+$$
+\boxed{
+MSE
+===
+
+\frac1N
+\sum_{i=1}^{N}
+(y_i-\hat y_i)^2
+}
+$$
+
+Notice the difference.
+
+Large errors now receive much larger penalties.
+
+---
+
+### Example
+
+Consider three prediction errors.
+
+```text
+0.1
+
+0.2
+
+1.0
+```
+
+For MAE,
+
+the contributions are
+
+```text
+0.1
+
+0.2
+
+1.0
+```
+
+For MSE,
+
+the contributions become
+
+```text
+0.01
+
+0.04
+
+1.00
+```
+
+Observe that
+
+the largest error now dominates the loss.
+
+MSE therefore strongly encourages the optimizer to eliminate large prediction errors.
+
+---
+
+# Why MSE Is So Popular
+
+MSE possesses several important mathematical advantages.
+
+Its derivative is continuous.
+
+The gradient is smooth.
+
+Optimization becomes more stable.
+
+Consequently,
+
+MSE has historically become one of the most widely used loss functions for regression neural networks.
+
+Many early graph neural networks,
+
+including some MEGNet implementations,
+
+used MSE during training.
+
+---
+
+# A Trade-Off Between MAE and MSE
+
+At this point,
+
+we can compare the two losses.
+
+| Property                | MAE             | MSE            |
+| ----------------------- | --------------- | -------------- |
+| Interpretation          | Excellent       | Less intuitive |
+| Units                   | Same as target  | Squared units  |
+| Sensitivity to Outliers | Low             | High           |
+| Gradient Smoothness     | Lower           | Higher         |
+| Optimization            | Slightly harder | Easier         |
+
+Neither loss is universally superior.
+
+The choice depends on the problem being solved.
+
+---
+
+# Loss Function vs Evaluation Metric
+
+An important distinction should now be emphasized.
+
+Many papers state
+
+> "The model was trained using MSE loss and evaluated using MAE."
+
+This is **not** a contradiction.
+
+Training and evaluation serve different purposes.
+
+The optimizer prefers MSE because of its smooth gradients.
+
+Researchers prefer MAE because it is easier to interpret physically.
+
+Thus,
+
+it is common to
+
+* optimize MSE,
+* report MAE.
+
+Understanding this distinction helps explain many materials informatics publications.
+
+---
+
+At this point, we have introduced the two most fundamental regression loss functions.
+
+However, modern materials informatics increasingly employs another loss that combines the strengths of both:
+
+**Huber Loss (Smooth L1 Loss).**
+
+Huber loss behaves like MSE for small errors, providing smooth optimization, while behaving like MAE for large errors, making it much more robust to outliers.
+
+In the next section, we will derive the Huber loss mathematically, explain why it is often preferred for noisy materials datasets, visualize its behavior, and implement it in PyTorch for MEGNet training.
+
+## 15.9 Training a Complete MEGNet Model (Part 5)
+
+### Huber Loss: Combining the Advantages of MAE and MSE
+
+In the previous section, we introduced the two most fundamental regression loss functions:
+
+* Mean Absolute Error (MAE)
+* Mean Squared Error (MSE)
+
+Each possesses important strengths.
+
+Each also has important weaknesses.
+
+Before proceeding further, let us briefly summarize what we have learned.
+
+---
+
+### Mean Absolute Error
+
+MAE computes
+
+$$
+MAE
+===
+
+\frac1N
+\sum_{i=1}^{N}
+|y_i-\hat y_i|.
+$$
+
+Advantages
+
+* Easy to interpret
+* Same units as the target
+* Robust against outliers
+
+Disadvantages
+
+* Absolute value is not perfectly smooth
+* Optimization is somewhat more difficult
+
+---
+
+### Mean Squared Error
+
+MSE computes
+
+$$
+MSE
+===
+
+\frac1N
+\sum_{i=1}^{N}
+(y_i-\hat y_i)^2.
+$$
+
+Advantages
+
+* Smooth derivatives
+* Stable optimization
+* Excellent for gradient descent
+
+Disadvantages
+
+* Extremely sensitive to large errors
+* Outliers dominate the loss
+
+Neither loss is perfect.
+
+This naturally raises an important question.
+
+> **Can we combine the strengths of both MAE and MSE into a single loss function?**
+
+The answer is yes.
+
+That loss function is called the **Huber Loss**.
+
+It is also known in PyTorch as **Smooth L1 Loss**.
+
+---
+
+# Motivation
+
+Suppose we are training MEGNet on a dataset of formation energies.
+
+Most DFT calculations are highly reliable.
+
+However,
+
+a few structures contain
+
+* unconverged calculations,
+* incorrect magnetic states,
+* numerical instabilities,
+* data entry errors.
+
+These samples produce unusually large prediction errors.
+
+Suppose the prediction errors are
+
+```text
+0.02
+
+0.04
+
+0.03
+
+0.05
+
+2.15
+```
+
+Notice that
+
+the final sample is dramatically different from the others.
+
+---
+
+### What Happens with MSE?
+
+Squaring these errors gives
+
+```text
+0.0004
+
+0.0016
+
+0.0009
+
+0.0025
+
+4.6225
+```
+
+The final sample dominates the optimization.
+
+The neural network spends much of its effort attempting to fit this one abnormal example.
+
+This may actually reduce generalization.
+
+---
+
+### What Happens with MAE?
+
+Using MAE,
+
+the errors become
+
+```text
+0.02
+
+0.04
+
+0.03
+
+0.05
+
+2.15
+```
+
+Now,
+
+the outlier still contributes,
+
+but it no longer overwhelms the optimization.
+
+Unfortunately,
+
+we lose the smooth optimization properties of MSE.
+
+---
+
+# The Idea Behind Huber Loss
+
+Huber loss combines these two behaviors.
+
+The idea is remarkably elegant.
+
+For **small errors**,
+
+use the squared loss
+
+because it is smooth.
+
+For **large errors**,
+
+switch to the absolute loss
+
+because it is robust.
+
+Thus,
+
+the optimizer enjoys the best characteristics of both methods.
+
+---
+
+# Mathematical Definition
+
+Define the prediction error
+
+$$
+e
+=
+
+y-\hat y.
+$$
+
+Choose a threshold
+
+$$
+\delta.
+$$
+
+The Huber loss is defined as
+
+$$
+\boxed{
+L(e)=
+\begin{cases}
+\frac12e^2,
+&
+|e|\le\delta,
+[0.4cm]
+\delta
+\left(
+|e|-\frac12\delta
+\right),
+&
+|e|>\delta.
+\end{cases}
+}
+$$
+
+This equation deserves careful examination.
+
+It consists of
+
+**two different mathematical expressions**.
+
+The loss automatically chooses between them depending on the prediction error.
+
+---
+
+# Region 1 — Small Errors
+
+Suppose
+
+$$
+|e|
+<
+\delta.
+$$
+
+The loss becomes
+
+$$
+L(e)
+====
+
+\frac12e^2.
+$$
+
+This is essentially MSE.
+
+Near the correct solution,
+
+optimization behaves exactly like squared error minimization.
+
+The gradients remain smooth,
+
+allowing efficient optimization.
+
+---
+
+### Example
+
+Suppose
+
+$$
+\delta=1.
+$$
+
+Prediction error
+
+$$
+e=0.3.
+$$
+
+Since
+
+$$
+0.3<1,
+$$
+
+Huber loss becomes
+
+$$
+L
+=
+
+\frac12
+(0.3)^2
+=======
+
+0.045.
+$$
+
+The behavior is almost identical to MSE.
+
+---
+
+# Region 2 — Large Errors
+
+Now suppose
+
+$$
+|e|
+
+>
+
+\delta.
+$$
+
+Instead of continuing to square the error,
+
+Huber loss changes to
+
+$$
+L(e)
+====
+
+\delta
+\left(
+|e|-\frac12\delta
+\right).
+$$
+
+Notice something remarkable.
+
+The loss now grows
+
+**linearly**,
+
+just like MAE.
+
+Large prediction errors therefore cannot dominate the optimization.
+
+---
+
+### Example
+
+Again,
+
+let
+
+$$
+\delta=1.
+$$
+
+Suppose
+
+$$
+e=3.
+$$
+
+Then
+
+$$
+L
+=
+
+1
+\left(
+3-\frac12
+\right)
+=======
+
+2.5.
+$$
+
+Compare this with MSE.
+
+For MSE,
+
+$$
+3^2
+===
+
+9.
+
+$$
+
+Huber loss
+
+$$
+
+2.5.
+$$
+
+The outlier is still penalized,
+
+but much less aggressively.
+
+---
+
+# Visualizing the Three Loss Functions
+
+Conceptually,
+
+the three losses behave differently.
+
+```text
+Prediction Error
+
+↓
+
+MAE
+
+Linear
+
+────────────
+
+MSE
+
+Quadratic
+
+╭───────╮
+
+Huber
+
+Quadratic
+
+↓
+
+Linear
+```
+
+Huber loss starts like MSE.
+
+After reaching
+
+$$
+\delta,
+$$
+
+it gradually transitions into MAE.
+
+This smooth transition is the key to its success.
+
+---
+
+# Why Is the Transition Smooth?
+
+An important design goal of Huber loss is that
+
+there should be **no sudden jump** at
+
+$$
+|e|
+===
+
+\delta.
+$$
+
+The two equations are carefully constructed so that
+
+* the loss is continuous,
+* the gradient is continuous.
+
+This smooth transition makes optimization stable while still protecting against outliers.
+
+This is one reason why Huber loss is widely used in modern deep learning.
+
+---
+
+# Choosing the Threshold
+
+The parameter
+
+$$
+\delta
+$$
+
+controls
+
+where the transition occurs.
+
+Suppose
+
+$$
+\delta
+======
+
+0.5.
+$$
+
+Then
+
+all errors larger than
+
+0.5
+
+behave like MAE.
+
+Now suppose
+
+$$
+\delta
+======
+
+5.
+
+$$
+
+Almost every prediction behaves like MSE.
+
+Thus,
+
+the threshold determines how sensitive the loss is to outliers.
+
+---
+
+# Typical Values
+
+Many machine learning libraries use
+
+```text
+δ = 1
+```
+
+as the default.
+
+For normalized regression problems,
+
+this often performs well.
+
+However,
+
+materials informatics frequently predicts quantities with very different numerical scales.
+
+For example,
+
+| Property          | Typical Magnitude |
+| ----------------- | ----------------: |
+| Band gap          |            0–8 eV |
+| Formation energy  |       −10 to 5 eV |
+| Bulk modulus      |        10–400 GPa |
+| Elastic constants |   Hundreds of GPa |
+
+Consequently,
+
+the optimal
+
+$$
+\delta
+$$
+
+should be selected according to the scale of the target property.
+
+---
+
+# PyTorch Implementation
+
+PyTorch implements Huber loss through
+
+```python
+criterion = torch.nn.HuberLoss(
+
+    delta=1.0
+
+)
+```
+
+or equivalently,
+
+```python
+criterion = torch.nn.SmoothL1Loss()
+```
+
+Training then proceeds exactly as before.
+
+```python
+loss = criterion(
+
+    prediction,
+
+    target
+
+)
+```
+
+From the user's perspective,
+
+changing from MSE to Huber loss requires only one line of code.
+
+Internally,
+
+however,
+
+the optimization behavior changes substantially.
+
+---
+
+# Which Loss Should You Use for MEGNet?
+
+There is no universal answer.
+
+The best choice depends on
+
+* dataset quality,
+* target property,
+* presence of outliers,
+* numerical noise.
+
+Nevertheless,
+
+general recommendations can be made.
+
+| Situation                        | Recommended Loss |
+| -------------------------------- | ---------------- |
+| Very clean DFT dataset           | MSE              |
+| Dataset with occasional outliers | Huber            |
+| Reporting prediction accuracy    | MAE              |
+| Noisy experimental measurements  | Huber            |
+
+Many recent materials informatics studies prefer Huber loss because real datasets often contain
+
+* noisy measurements,
+* imperfect DFT calculations,
+* inconsistent experimental values.
+
+Huber loss provides a good balance between optimization stability and robustness.
+
+---
+
+# Computing the Loss in the Training Loop
+
+Regardless of which loss function is selected,
+
+the training loop remains almost identical.
+
+```python
+prediction = model(batch)
+
+loss = criterion(
+
+    prediction,
+
+    batch.y
+
+)
+```
+
+At this moment,
+
+the neural network has completed its forward computation.
+
+The loss is now a **single scalar value**.
+
+For example,
+
+```text
+Loss = 0.0247
+```
+
+This number summarizes the prediction quality of the entire mini-batch.
+
+However,
+
+the optimizer still does not know
+
+**how each parameter contributed to this error**.
+
+To improve the model,
+
+it must determine how changing every weight would affect the loss.
+
+This is the purpose of **backpropagation**.
+
+Backpropagation is arguably the most important algorithm in modern deep learning.
+
+It computes the gradient of the loss with respect to **every trainable parameter** in the MEGNet model, enabling gradient-based optimization.
+
+In the next section, we will study backpropagation from first principles, beginning with the chain rule of calculus and progressing to PyTorch's automatic differentiation system (`autograd`), showing exactly how gradients flow backward through every MEGNet block.
+
+## 15.9 Training a Complete MEGNet Model (Part 6)
+
+# Step 6 — Backpropagation: How MEGNet Learns from Its Mistakes
+
+At this point in the training loop, something remarkable has happened.
+
+The neural network has
+
+* received a batch of crystal graphs,
+* converted them into graph representations,
+* predicted material properties,
+* computed the prediction loss.
+
+Suppose the loss is
+
+$$
+L=0.026.
+$$
+
+The model now knows
+
+> "I am wrong."
+
+However,
+
+this information alone is not enough.
+
+The optimizer needs to answer a much more difficult question:
+
+> **Which of the millions of parameters caused this error?**
+
+More importantly,
+
+> **How should each parameter change to reduce the loss?**
+
+Answering these questions is the purpose of **backpropagation**.
+
+Backpropagation is the algorithm that transforms prediction errors into learning.
+
+Without backpropagation,
+
+deep learning would not exist.
+
+---
+
+# Learning Requires Blame Assignment
+
+Imagine a research group publishing an incorrect scientific result.
+
+The paper contains contributions from
+
+* the experimental team,
+* the computational team,
+* the data analysts,
+* the principal investigator.
+
+The final result is incorrect.
+
+Who is responsible?
+
+Perhaps
+
+* the experiment contained measurement errors,
+* the simulation used an incorrect potential,
+* the data preprocessing introduced mistakes,
+* or the statistical analysis was flawed.
+
+To improve future work,
+
+we must determine
+
+**how much responsibility belongs to each contributor.**
+
+Backpropagation performs exactly this task for neural networks.
+
+Instead of scientists,
+
+it analyzes
+
+* weights,
+* biases,
+* embedding layers,
+* message passing functions,
+* prediction layers.
+
+Every parameter receives its share of responsibility for the prediction error.
+
+---
+
+# The Objective of Backpropagation
+
+Suppose the MEGNet model contains
+
+two million trainable parameters.
+
+Denote them collectively by
+
+$$
+\theta.
+$$
+
+The optimizer wishes to minimize
+
+$$
+L(\theta).
+$$
+
+To accomplish this,
+
+it must determine
+
+how sensitive the loss is to every parameter.
+
+Mathematically,
+
+it computes
+
+$$
+\frac{\partial L}{\partial\theta}.
+$$
+
+This quantity is called the **gradient**.
+
+The gradient tells us
+
+how much the loss changes
+
+if a parameter changes slightly.
+
+---
+
+# Understanding a Gradient
+
+Consider a simple function
+
+$$
+L(w)=w^2.
+$$
+
+Its derivative is
+
+$$
+\frac{dL}{dw}=2w.
+$$
+
+Suppose
+
+$$
+w=5.
+$$
+
+Then
+
+$$
+\frac{dL}{dw}=10.
+$$
+
+A positive gradient means
+
+increasing
+
+$$
+w
+$$
+
+increases the loss.
+
+Therefore,
+
+the optimizer should decrease
+
+$$
+w.
+$$
+
+Now suppose
+
+$$
+w=-4.
+$$
+
+The gradient becomes
+
+$$
+-8.
+$$
+
+A negative gradient means
+
+increasing
+
+$$
+w
+$$
+
+reduces the loss.
+
+The optimizer therefore moves in the opposite direction.
+
+This simple example illustrates the fundamental idea behind gradient descent.
+
+---
+
+# Gradients in MEGNet
+
+Of course,
+
+MEGNet is far more complicated than
+
+$$
+w^2.
+$$
+
+The loss depends on
+
+millions of parameters simultaneously.
+
+These include
+
+* embedding weights,
+* edge update weights,
+* node update weights,
+* global update weights,
+* linear layer weights,
+* bias parameters.
+
+Conceptually,
+
+```text
+Loss
+
+↑
+
+Prediction Layer
+
+↑
+
+Readout
+
+↑
+
+MEGNet Block
+
+↑
+
+Embedding Layer
+
+↑
+
+Input Graph
+```
+
+Every layer contributes to the final prediction.
+
+Therefore,
+
+every layer contributes to the loss.
+
+Backpropagation computes gradients for **all** of them.
+
+---
+
+# Why It Is Called Backpropagation
+
+Recall the direction of information flow during the forward pass.
+
+```text
+Crystal
+
+↓
+
+Embedding
+
+↓
+
+MEGNet Block
+
+↓
+
+Readout
+
+↓
+
+Prediction
+
+↓
+
+Loss
+```
+
+Information moves
+
+**forward**
+
+through the network.
+
+Backpropagation reverses this direction.
+
+```text
+Loss
+
+↓
+
+Prediction Layer
+
+↓
+
+Readout
+
+↓
+
+MEGNet Block
+
+↓
+
+Embedding
+
+↓
+
+Parameters
+```
+
+The prediction error travels backward,
+
+gradually determining how every parameter contributed to the final mistake.
+
+Hence the name
+
+**back-propagation**.
+
+---
+
+# The Chain Rule
+
+The mathematical foundation of backpropagation is
+
+the **chain rule** from calculus.
+
+Suppose
+
+$$
+L=f(g(w)).
+$$
+
+The derivative is
+
+$$
+\boxed{
+\frac{dL}{dw}
+=============
+
+\frac{dL}{dg}
+\cdot
+\frac{dg}{dw}
+}
+$$
+
+Instead of computing one enormous derivative,
+
+the chain rule decomposes it into a sequence of simpler derivatives.
+
+Deep neural networks are essentially gigantic compositions of functions.
+
+Consequently,
+
+the chain rule provides an efficient method for computing gradients.
+
+---
+
+# Applying the Chain Rule to MEGNet
+
+Recall the computational pipeline
+
+```text
+Node Features
+
+↓
+
+Embedding
+
+↓
+
+Message Passing
+
+↓
+
+Pooling
+
+↓
+
+Prediction Head
+
+↓
+
+Loss
+```
+
+The loss depends on
+
+the prediction.
+
+The prediction depends on
+
+the pooled graph representation.
+
+The pooled representation depends on
+
+the node embeddings.
+
+The node embeddings depend on
+
+the message-passing layers.
+
+The message-passing layers depend on
+
+the original parameters.
+
+The chain rule connects all of these relationships.
+
+Rather than treating the network as one enormous equation,
+
+backpropagation computes gradients one layer at a time.
+
+---
+
+# A Simple Example
+
+Suppose
+
+$$
+y=2x.
+$$
+
+Then
+
+$$
+z=y+3.
+$$
+
+Finally,
+
+$$
+L=z^2.
+$$
+
+The computation proceeds
+
+```text
+x
+
+↓
+
+y = 2x
+
+↓
+
+z = y + 3
+
+↓
+
+L = z²
+```
+
+Using the chain rule,
+
+$$
+\frac{dL}{dx}
+=============
+
+\frac{dL}{dz}
+\cdot
+\frac{dz}{dy}
+\cdot
+\frac{dy}{dx}.
+$$
+
+Each derivative is simple.
+
+Together,
+
+they produce the complete gradient.
+
+Deep neural networks follow exactly the same principle,
+
+only with millions of intermediate operations instead of three.
+
+---
+
+# Why Manual Differentiation Is Impossible
+
+Imagine attempting to compute gradients manually for MEGNet.
+
+The network may contain
+
+* 30 linear layers,
+* multiple Graph Network blocks,
+* activation functions,
+* pooling operations,
+* normalization layers.
+
+The resulting derivative would occupy hundreds of pages.
+
+Even a small programming error would invalidate the calculation.
+
+Fortunately,
+
+modern deep learning frameworks perform this differentiation automatically.
+
+---
+
+# PyTorch Autograd
+
+PyTorch includes an automatic differentiation engine called
+
+```text
+Autograd
+```
+
+During the forward pass,
+
+Autograd records
+
+every differentiable operation.
+
+Conceptually,
+
+```text
+Forward Pass
+
+↓
+
+Operation 1
+
+↓
+
+Operation 2
+
+↓
+
+Operation 3
+
+↓
+
+Loss
+
+↓
+
+Computational Graph
+```
+
+This computational graph stores
+
+* tensor operations,
+* dependencies,
+* required gradients.
+
+When backpropagation begins,
+
+Autograd traverses this graph in reverse order,
+
+applying the chain rule automatically.
+
+---
+
+# Triggering Backpropagation
+
+The remarkable aspect of PyTorch is
+
+that the entire gradient computation requires only one command.
+
+```python
+loss.backward()
+```
+
+This single line computes
+
+the gradient of the loss
+
+with respect to
+
+**every trainable parameter**.
+
+No explicit derivative calculations are required.
+
+Internally,
+
+PyTorch performs millions of mathematical operations,
+
+but the user sees only one function call.
+
+---
+
+# What Happens After `loss.backward()`?
+
+Suppose the model contains
+
+```python
+self.linear.weight
+```
+
+After
+
+```python
+loss.backward()
+```
+
+its gradient becomes available.
+
+```python
+print(
+
+    self.linear.weight.grad
+
+)
+```
+
+Every trainable parameter now possesses a corresponding gradient.
+
+Conceptually,
+
+```text
+Weight Matrix
+
+↓
+
+Gradient Matrix
+```
+
+These gradients are **not** new parameter values.
+
+Instead,
+
+they describe
+
+how the parameters should change
+
+to reduce the loss.
+
+The optimizer will use these gradients in the next step.
+
+---
+
+# Important Observation
+
+Notice that
+
+```python
+loss.backward()
+```
+
+does **not**
+
+change the neural network.
+
+It merely computes gradients.
+
+The parameters remain exactly the same.
+
+Learning has not yet occurred.
+
+The actual learning happens during the optimizer update.
+
+The optimizer reads the gradients,
+
+calculates new parameter values,
+
+and modifies the neural network accordingly.
+
+Only after this update has the model actually learned from the current mini-batch.
+
+---
+
+# Summary
+
+At this stage of the training loop,
+
+we have
+
+1. performed the forward pass,
+2. computed the prediction loss,
+3. calculated gradients for every trainable parameter.
+
+The neural network now knows **how every parameter should change** to reduce the prediction error.
+
+However, the parameters themselves remain unchanged.
+
+The final step is to use these gradients to update the model.
+
+This is the responsibility of the **optimizer**.
+
+In the next section, we will study the optimizer update in depth, derive the gradient descent equation, explain how Adam and AdamW modify the standard algorithm, and trace exactly how millions of MEGNet parameters are updated after every mini-batch.
+
+## 15.9 Training a Complete MEGNet Model (Part 7)
+
+# Step 7 — Optimizer Step: Updating the Neural Network Parameters
+
+At the end of the previous section, every trainable parameter in the MEGNet model has an associated gradient.
+
+For example,
+
+```python
+embedding.weight.grad
+edge_update.weight.grad
+node_update.weight.grad
+global_update.weight.grad
+predictor.weight.grad
+```
+
+Each gradient answers the following question:
+
+> **"If this parameter changes slightly, how will the loss change?"**
+
+However, the neural network has **not learned anything yet**.
+
+The gradients merely provide directions.
+
+Someone still needs to use those directions to modify the parameters.
+
+That "someone" is the **optimizer**.
+
+The optimizer is the component responsible for transforming gradients into actual learning.
+
+---
+
+# From Gradients to Learning
+
+Suppose a parameter has the value
+
+$$
+w = 2.50.
+$$
+
+After backpropagation,
+
+its gradient is
+
+$$
+\frac{\partial L}{\partial w}=0.80.
+$$
+
+The optimizer now asks
+
+> "Should I increase this parameter or decrease it?"
+
+Since the gradient is positive,
+
+increasing
+
+$$
+w
+$$
+
+would increase the loss.
+
+Therefore,
+
+the optimizer decreases
+
+$$
+w.
+$$
+
+The new parameter becomes
+
+$$
+w_{\text{new}}
+==============
+
+## 2.50
+
+\eta
+\times
+0.80,
+$$
+
+where
+
+$$
+\eta
+$$
+
+is the learning rate.
+
+This is the fundamental idea behind **gradient descent**.
+
+---
+
+# The Gradient Descent Equation
+
+The simplest optimization algorithm is
+
+Gradient Descent.
+
+Its update equation is
+
+$$
+\boxed{
+\theta_{\text{new}}
+===================
+
+## \theta_{\text{old}}
+
+\eta
+\nabla_{\theta}L
+}
+$$
+
+This equation is one of the most important equations in machine learning.
+
+Let us examine each component carefully.
+
+---
+
+### Parameters
+
+The symbol
+
+$$
+\theta
+$$
+
+represents
+
+**all trainable parameters**
+
+inside MEGNet.
+
+These include
+
+* embedding matrices,
+* neural network weights,
+* bias vectors,
+* update function parameters,
+* prediction layer weights.
+
+Instead of updating one parameter,
+
+the optimizer updates **millions** of parameters simultaneously.
+
+---
+
+### Learning Rate
+
+The symbol
+
+$$
+\eta
+$$
+
+(pronounced "eta")
+
+is the learning rate.
+
+It determines
+
+how large each optimization step should be.
+
+A small learning rate results in
+
+small,
+
+careful updates.
+
+A large learning rate produces
+
+large,
+
+aggressive updates.
+
+The choice of learning rate has an enormous influence on training stability.
+
+---
+
+### Gradient
+
+The quantity
+
+$$
+\nabla_{\theta}L
+$$
+
+is the gradient computed by backpropagation.
+
+It tells us
+
+which direction increases the loss most rapidly.
+
+To reduce the loss,
+
+we therefore move in the opposite direction.
+
+Hence the negative sign in the update equation.
+
+---
+
+# An Intuitive Analogy
+
+Imagine hiking down a mountain while blindfolded.
+
+Your objective is to reach the lowest point in the valley.
+
+You cannot see the landscape.
+
+However,
+
+at every step,
+
+someone tells you
+
+which direction points uphill.
+
+Naturally,
+
+you walk in the opposite direction.
+
+Eventually,
+
+you reach the valley.
+
+Gradient descent works in exactly the same manner.
+
+The loss function defines the landscape.
+
+The gradient indicates the uphill direction.
+
+The optimizer walks downhill.
+
+The minimum of the loss corresponds to the valley.
+
+---
+
+# Why Not Take Huge Steps?
+
+Suppose the learning rate is extremely large.
+
+Instead of taking careful steps,
+
+the optimizer leaps enormous distances.
+
+Conceptually,
+
+```text
+Valley
+
+↓
+
+Huge Jump
+
+↓
+
+Other Side
+
+↓
+
+Huge Jump Back
+
+↓
+
+Other Side Again
+```
+
+The optimizer repeatedly overshoots the minimum.
+
+Training becomes unstable.
+
+Sometimes,
+
+the loss even diverges.
+
+---
+
+Now suppose the learning rate is extremely small.
+
+```text
+Tiny Step
+
+↓
+
+Tiny Step
+
+↓
+
+Tiny Step
+
+↓
+
+Tiny Step
+```
+
+Training becomes painfully slow.
+
+Reaching convergence may require thousands of epochs.
+
+Therefore,
+
+an appropriate learning rate balances
+
+* stability,
+* speed,
+* convergence.
+
+---
+
+# Why We Use Adam Instead of Simple Gradient Descent
+
+Although gradient descent is easy to understand,
+
+it is rarely used for deep neural networks.
+
+Modern models contain
+
+millions of parameters.
+
+Different parameters may require
+
+different update magnitudes.
+
+Simple gradient descent uses
+
+the same learning rate
+
+for every parameter.
+
+This is inefficient.
+
+Instead,
+
+MEGNet typically employs
+
+**Adam**
+
+or
+
+**AdamW**.
+
+---
+
+# Adam: Adaptive Moment Estimation
+
+Adam stands for
+
+**Adaptive Moment Estimation**.
+
+Rather than using only the current gradient,
+
+Adam also remembers
+
+previous gradients.
+
+This allows the optimizer to estimate
+
+* the average gradient,
+* the variability of the gradient.
+
+Consequently,
+
+parameter updates become
+
+more stable,
+
+more adaptive,
+
+and generally faster.
+
+Conceptually,
+
+Adam maintains
+
+```text
+Current Gradient
+
++
+
+Past Gradients
+
+↓
+
+Adaptive Update
+```
+
+Instead of treating every parameter equally,
+
+Adam automatically adjusts the effective learning rate for each parameter.
+
+---
+
+# Why Adam Works Well for MEGNet
+
+Graph neural networks produce complex optimization landscapes.
+
+Different layers behave very differently.
+
+For example,
+
+the embedding layer may receive
+
+small,
+
+stable gradients.
+
+Meanwhile,
+
+the prediction layer may experience
+
+large,
+
+rapidly changing gradients.
+
+Adam automatically adapts to these differences.
+
+This makes optimization
+
+more efficient
+
+and more stable.
+
+Consequently,
+
+Adam has become the default optimizer for many graph neural networks.
+
+---
+
+# AdamW: The Modern Improvement
+
+Although Adam performs well,
+
+it has one important weakness.
+
+Weight decay,
+
+which serves as L2 regularization,
+
+was originally incorporated into Adam in a way that does not perfectly match the intended regularization behavior.
+
+AdamW modifies this procedure.
+
+Instead of mixing weight decay with the gradient,
+
+AdamW applies weight decay separately.
+
+This seemingly small modification produces
+
+better generalization,
+
+particularly for deep neural networks.
+
+Therefore,
+
+recent materials informatics research often prefers
+
+**AdamW**
+
+over standard Adam.
+
+---
+
+# Initializing the Optimizer
+
+In PyTorch,
+
+AdamW is initialized as
+
+```python
+optimizer = torch.optim.AdamW(
+
+    model.parameters(),
+
+    lr=1e-3,
+
+    weight_decay=1e-5
+
+)
+```
+
+Notice that
+
+```python
+model.parameters()
+```
+
+automatically collects
+
+every trainable parameter
+
+inside the MEGNet model.
+
+No manual specification is required.
+
+---
+
+# Performing the Update
+
+Once gradients have been computed,
+
+the optimizer performs one update step.
+
+The entire parameter update requires only
+
+```python
+optimizer.step()
+```
+
+This deceptively simple command
+
+* reads every stored gradient,
+* computes the AdamW update,
+* applies weight decay,
+* modifies every trainable parameter.
+
+After this operation,
+
+the neural network has officially learned from the current mini-batch.
+
+---
+
+# What Changes After `optimizer.step()`?
+
+Before the update,
+
+suppose one parameter equals
+
+$$
+0.842731.
+$$
+
+After the optimizer step,
+
+it might become
+
+$$
+0.841902.
+$$
+
+The change is very small.
+
+In fact,
+
+most parameter updates are tiny.
+
+Yet,
+
+millions of such small adjustments accumulate over thousands of mini-batches.
+
+Gradually,
+
+the network transforms from
+
+random initialization
+
+into
+
+a model capable of accurately predicting material properties.
+
+This gradual refinement is one of the defining characteristics of deep learning.
+
+---
+
+# The Complete Sequence So Far
+
+At this stage,
+
+the training loop for one mini-batch consists of
+
+```text
+Load Mini-Batch
+
+↓
+
+Move to GPU
+
+↓
+
+Zero Gradients
+
+↓
+
+Forward Pass
+
+↓
+
+Compute Loss
+
+↓
+
+Backpropagation
+
+↓
+
+Optimizer Step
+```
+
+After the optimizer step,
+
+one training iteration is complete.
+
+The DataLoader then provides the next mini-batch,
+
+and the entire process repeats.
+
+---
+
+# One Epoch Is Thousands of Learning Steps
+
+Recall that an epoch consists of
+
+all mini-batches in the training dataset.
+
+Suppose
+
+* Training samples = 64,000
+* Batch size = 64
+
+Then
+
+$$
+\frac{64,000}{64}=1,000
+$$
+
+mini-batches.
+
+This means
+
+one epoch contains
+
+1,000
+
+forward passes,
+
+1,000
+
+backward passes,
+
+and
+
+1,000
+
+optimizer updates.
+
+If training lasts
+
+200 epochs,
+
+the optimizer performs
+
+200,000
+
+parameter updates.
+
+This illustrates why deep learning models can gradually learn highly complex relationships despite each individual update being very small.
+
+---
+
+# Have We Finished Training?
+
+Not yet.
+
+After completing one epoch,
+
+the model has learned from the training data.
+
+However,
+
+we still do not know whether it has become **better**.
+
+To answer this question,
+
+we must evaluate the model on data that it has **never seen during optimization**.
+
+This is the purpose of the **validation phase**.
+
+Validation allows us to monitor generalization, detect overfitting, determine whether the model is improving, decide when to save checkpoints, adjust the learning rate, and trigger early stopping.
+
+In the next section, we will examine the complete validation procedure, explain why gradients are disabled during evaluation using `torch.no_grad()`, discuss the difference between `model.train()` and `model.eval()`, and show how validation guides the entire training process.
+
+## 15.9 Training a Complete MEGNet Model (Part 8)
+
+# Step 8 — Validation: Measuring the True Performance of MEGNet
+
+After completing one epoch, the model has learned from every mini-batch in the training dataset.
+
+At first glance, it might seem reasonable to measure the model's performance using the same training data.
+
+However, this approach can be dangerously misleading.
+
+A neural network can become extremely good at predicting the samples it has already seen while performing poorly on completely new crystal structures.
+
+This phenomenon is known as **overfitting**, and it is one of the central challenges in machine learning.
+
+To determine whether the model has truly learned general chemical and structural relationships—or has merely memorized the training data—we evaluate it on a **validation dataset**.
+
+---
+
+# Why We Need Validation
+
+Consider two students preparing for an examination.
+
+The first student memorizes the exact questions from previous years.
+
+The second student studies the underlying concepts.
+
+Suppose the examination contains entirely new questions.
+
+The first student struggles because the questions differ from those that were memorized.
+
+The second student performs well because the concepts have been understood.
+
+A neural network behaves in exactly the same way.
+
+If it memorizes the training data,
+
+it may produce very low training error,
+
+yet fail on new materials.
+
+Validation allows us to distinguish between
+
+**memorization**
+
+and
+
+**generalization**.
+
+---
+
+# The Role of the Validation Dataset
+
+The complete dataset is typically divided into three parts.
+
+```text
+Entire Dataset
+
+│
+
+├── Training Set
+
+├── Validation Set
+
+└── Test Set
+```
+
+Each subset serves a different purpose.
+
+### Training Set
+
+The optimizer updates the model using this data.
+
+Gradients are computed.
+
+Weights are modified.
+
+Learning occurs.
+
+---
+
+### Validation Set
+
+The optimizer **never** updates parameters using validation data.
+
+Instead,
+
+the validation set answers questions such as
+
+* Is the model improving?
+* Has overfitting begun?
+* Should training stop?
+* Should this checkpoint be saved?
+
+Validation therefore guides the training process.
+
+---
+
+### Test Set
+
+The test set is used only after training is completely finished.
+
+It provides an unbiased estimate of the model's final performance.
+
+Ideally,
+
+the test set remains untouched until every modeling decision has been completed.
+
+---
+
+# The Validation Workflow
+
+After finishing one epoch,
+
+the workflow becomes
+
+```text
+Training Epoch Complete
+
+↓
+
+Switch to Evaluation Mode
+
+↓
+
+Disable Gradient Computation
+
+↓
+
+Predict Validation Set
+
+↓
+
+Compute Validation Loss
+
+↓
+
+Compute Validation Metrics
+
+↓
+
+Compare with Previous Epoch
+
+↓
+
+Save Best Model?
+```
+
+Notice that
+
+validation does **not**
+
+modify the model.
+
+It simply measures performance.
+
+---
+
+# Step 1 — Switching to Evaluation Mode
+
+Before validating,
+
+the model must be switched from training mode to evaluation mode.
+
+In PyTorch,
+
+this is done using
+
+```python
+model.eval()
+```
+
+This line is easy to overlook,
+
+yet it is extremely important.
+
+Many neural network layers behave differently during training and evaluation.
+
+Examples include
+
+* Dropout
+* Batch Normalization
+
+During training,
+
+Dropout randomly disables neurons.
+
+During validation,
+
+we want every neuron to contribute.
+
+Calling
+
+```python
+model.eval()
+```
+
+automatically changes the behavior of these layers.
+
+---
+
+# What Happens If We Forget `model.eval()`?
+
+Suppose the network contains dropout.
+
+During validation,
+
+random neurons continue to disappear.
+
+Consequently,
+
+the predictions become inconsistent.
+
+Running validation twice on the same dataset may produce different results.
+
+The measured validation error no longer reflects the true model performance.
+
+For this reason,
+
+forgetting
+
+```python
+model.eval()
+```
+
+is one of the most common beginner mistakes in PyTorch.
+
+---
+
+# Step 2 — Disabling Gradient Computation
+
+Validation does not require learning.
+
+Therefore,
+
+there is no reason to compute gradients.
+
+PyTorch provides the context manager
+
+```python
+with torch.no_grad():
+```
+
+The validation loop typically appears as
+
+```python
+model.eval()
+
+with torch.no_grad():
+
+    for batch in val_loader:
+
+        prediction = model(batch)
+
+        ...
+```
+
+This simple statement produces several important benefits.
+
+---
+
+# Why Disable Gradients?
+
+During training,
+
+PyTorch stores every intermediate computation because it will later need them for backpropagation.
+
+These stored tensors consume a considerable amount of GPU memory.
+
+During validation,
+
+backpropagation never occurs.
+
+Therefore,
+
+storing these tensors is unnecessary.
+
+Using
+
+```python
+torch.no_grad()
+```
+
+offers several advantages.
+
+* Reduces GPU memory usage
+* Speeds up computation
+* Prevents accidental gradient accumulation
+
+For large MEGNet models,
+
+the memory savings can be substantial.
+
+---
+
+# Step 3 — Making Predictions
+
+The forward pass during validation is almost identical to the training forward pass.
+
+```python
+prediction = model(batch)
+```
+
+The important difference is that
+
+no computational graph is constructed for gradient computation.
+
+The network simply produces predictions.
+
+For example,
+
+```text
+Crystal 1
+
+↓
+
+Predicted Formation Energy
+
+↓
+
+−2.43 eV
+```
+
+This process repeats for every crystal in the validation dataset.
+
+---
+
+# Step 4 — Computing Validation Loss
+
+After obtaining predictions,
+
+we compute the validation loss using exactly the same loss function employed during training.
+
+```python
+loss = criterion(
+
+    prediction,
+
+    batch.y
+
+)
+```
+
+Suppose the validation dataset contains
+
+500 crystals.
+
+Each mini-batch produces its own loss.
+
+These batch losses are then averaged to obtain the overall validation loss.
+
+For example,
+
+```text
+Batch 1
+
+↓
+
+Loss = 0.021
+
+Batch 2
+
+↓
+
+Loss = 0.018
+
+Batch 3
+
+↓
+
+Loss = 0.024
+
+...
+
+↓
+
+Average Validation Loss
+
+↓
+
+0.020
+```
+
+This single number summarizes the model's performance on unseen data.
+
+---
+
+# Step 5 — Computing Evaluation Metrics
+
+Although the optimizer only needs the loss,
+
+researchers usually compute additional metrics.
+
+For regression tasks,
+
+common choices include
+
+* Mean Absolute Error (MAE)
+* Root Mean Squared Error (RMSE)
+* Coefficient of Determination ($R^2$)
+
+For example,
+
+```text
+Validation Results
+
+Loss : 0.019
+
+MAE  : 0.041 eV
+
+RMSE : 0.062 eV
+
+R²   : 0.987
+```
+
+Each metric provides different information about model performance.
+
+MAE is particularly popular in materials informatics because it is easy to interpret physically.
+
+---
+
+# Tracking Validation Performance
+
+Validation metrics are recorded after every epoch.
+
+Suppose the validation MAE evolves as follows.
+
+| Epoch | Validation MAE (eV) |
+| ----: | ------------------: |
+|     1 |               0.214 |
+|     5 |               0.132 |
+|    10 |               0.081 |
+|    20 |               0.046 |
+|    30 |               0.039 |
+|    40 |               0.041 |
+|    50 |               0.045 |
+
+Observe the trend.
+
+Initially,
+
+the model improves rapidly.
+
+Later,
+
+the validation error reaches a minimum.
+
+After that,
+
+performance begins to deteriorate.
+
+This is the signature of overfitting.
+
+---
+
+# Comparing Training and Validation Loss
+
+One of the most informative diagnostic tools is to compare
+
+training loss
+
+and
+
+validation loss
+
+over time.
+
+Several characteristic patterns may emerge.
+
+### Healthy Training
+
+```text
+Epoch →
+
+Training Loss
+
+↓
+
+Validation Loss
+
+↓
+
+Both decrease together
+```
+
+The model is learning useful representations that generalize to unseen data.
+
+---
+
+### Underfitting
+
+```text
+Training Loss
+
+High
+
+Validation Loss
+
+High
+```
+
+The model cannot even fit the training data.
+
+Possible reasons include
+
+* insufficient model capacity,
+* poor feature representation,
+* inadequate training.
+
+---
+
+### Overfitting
+
+```text
+Training Loss
+
+↓
+
+↓
+
+↓
+
+Validation Loss
+
+↓
+
+↓
+
+↑
+
+↑
+```
+
+Training performance continues to improve,
+
+but validation performance worsens.
+
+The model is memorizing the training data.
+
+---
+
+# Why Validation Guides Training
+
+Validation results influence nearly every important decision made during training.
+
+They determine
+
+* whether the current checkpoint should be saved,
+* whether the learning rate should be reduced,
+* whether early stopping should terminate training,
+* which epoch represents the best-performing model.
+
+Without validation,
+
+these decisions would rely on training performance alone,
+
+which often leads to models that fail to generalize.
+
+Validation is therefore not merely an evaluation step—
+
+it is the central feedback mechanism that guides the entire optimization process.
+
+---
+
+# Summary
+
+At the end of each epoch,
+
+the MEGNet training pipeline performs a complete evaluation on previously unseen crystal structures.
+
+Unlike the training phase,
+
+validation
+
+* uses `model.eval()`,
+* disables gradient computation with `torch.no_grad()`,
+* performs only forward passes,
+* computes loss and evaluation metrics,
+* never updates model parameters.
+
+These validation results determine whether the model is genuinely improving or beginning to overfit.
+
+The next step is to use this information intelligently.
+
+Instead of simply recording validation metrics,
+
+we can use them to automatically
+
+* save the best-performing model,
+* reduce the learning rate when progress stalls,
+* terminate training when further improvement becomes unlikely.
+
+In the next section, we will integrate **learning rate scheduling, model checkpointing, and early stopping** into a single, complete training pipeline, producing a research-quality MEGNet training workflow suitable for real materials informatics applications.
+
+## 15.9 Training a Complete MEGNet Model (Part 9)
+
+# Step 9 — Model Checkpointing: Saving the Best MEGNet Model
+
+After every validation phase, an important question arises:
+
+> **Should we save the current model?**
+
+A beginner might answer,
+
+> "Just save the model after the last epoch."
+
+Unfortunately, this strategy often produces inferior models.
+
+The model obtained after the final epoch is **not necessarily the best model**.
+
+In many cases, the neural network reaches its highest validation performance long before training ends.
+
+Consequently, modern deep learning does not simply save the final model.
+
+Instead, it saves the **best-performing model** during training.
+
+This process is known as **model checkpointing**.
+
+---
+
+# Why Saving Only the Final Model Is Dangerous
+
+Suppose we train MEGNet for
+
+100 epochs.
+
+The validation MAE evolves as follows.
+
+| Epoch | Validation MAE (eV) |
+| ----: | ------------------: |
+|    10 |               0.091 |
+|    20 |               0.058 |
+|    30 |               0.041 |
+|    40 |               0.034 |
+|    50 |               0.031 |
+|    60 |               0.029 |
+|    70 |               0.028 |
+|    80 |               0.030 |
+|    90 |               0.034 |
+|   100 |               0.039 |
+
+Notice what happened.
+
+The model improved continuously until
+
+Epoch 70.
+
+After that,
+
+the validation error increased.
+
+The model began to overfit.
+
+If we simply save the final epoch,
+
+we obtain
+
+```text
+Epoch 100
+
+MAE = 0.039 eV
+```
+
+However,
+
+the best model actually occurred at
+
+```text
+Epoch 70
+
+MAE = 0.028 eV
+```
+
+The difference is substantial.
+
+---
+
+# The Purpose of a Checkpoint
+
+A checkpoint is a snapshot of the training process.
+
+It records the current state of the model so that it can be restored later.
+
+Depending on the application,
+
+a checkpoint may include
+
+* model parameters,
+* optimizer state,
+* learning rate scheduler state,
+* epoch number,
+* validation metrics.
+
+In its simplest form,
+
+a checkpoint stores only the trained neural network weights.
+
+---
+
+# The Checkpoint Decision
+
+After each validation phase,
+
+the algorithm compares
+
+```text
+Current Validation Loss
+```
+
+with
+
+```text
+Best Validation Loss So Far
+```
+
+Two outcomes are possible.
+
+---
+
+### Case 1 — Performance Improved
+
+Suppose
+
+```text
+Best Loss
+
+0.026
+```
+
+Current loss
+
+```text
+0.023
+```
+
+Since
+
+```text
+0.023 < 0.026
+```
+
+the model has improved.
+
+The checkpoint should be updated.
+
+Conceptually,
+
+```text
+Current Model
+
+↓
+
+Better than Previous?
+
+↓
+
+YES
+
+↓
+
+Save Model
+```
+
+The current model now becomes
+
+the new best model.
+
+---
+
+### Case 2 — Performance Did Not Improve
+
+Suppose
+
+```text
+Best Loss
+
+0.023
+```
+
+Current loss
+
+```text
+0.027
+```
+
+Since performance has deteriorated,
+
+the checkpoint remains unchanged.
+
+```text
+Current Model
+
+↓
+
+Better than Previous?
+
+↓
+
+NO
+
+↓
+
+Keep Old Checkpoint
+```
+
+Thus,
+
+the best model is never overwritten by a worse one.
+
+---
+
+# Implementing Checkpointing in PyTorch
+
+The logic is surprisingly simple.
+
+```python
+if val_loss < best_val_loss:
+
+    best_val_loss = val_loss
+
+    torch.save(
+
+        model.state_dict(),
+
+        "best_megnet_model.pth"
+
+    )
+```
+
+Only two operations occur.
+
+First,
+
+the best validation loss is updated.
+
+Second,
+
+the model parameters are written to disk.
+
+---
+
+# Understanding `state_dict()`
+
+Many beginners wonder
+
+why we save
+
+```python
+model.state_dict()
+```
+
+instead of
+
+```python
+model
+```
+
+The answer is efficiency.
+
+A PyTorch model contains
+
+* network architecture,
+* parameters,
+* Python objects,
+* methods.
+
+The architecture is already defined in the source code.
+
+The only information that changes during training is
+
+the parameter values.
+
+The
+
+```python
+state_dict()
+```
+
+contains precisely these trainable tensors.
+
+Consequently,
+
+saving the state dictionary is
+
+smaller,
+
+faster,
+
+and more portable.
+
+---
+
+# Loading a Saved Model
+
+Once training is complete,
+
+the checkpoint can be restored.
+
+```python
+model.load_state_dict(
+
+    torch.load(
+
+        "best_megnet_model.pth"
+
+    )
+
+)
+```
+
+After this command,
+
+the neural network returns to
+
+its best recorded state.
+
+Notice that
+
+training does not resume automatically.
+
+Only the parameters are restored.
+
+---
+
+# What Information Can a Research Checkpoint Contain?
+
+Professional research projects often save considerably more than the model weights.
+
+A comprehensive checkpoint may include
+
+```python
+checkpoint = {
+
+    "epoch": epoch,
+
+    "model_state_dict": model.state_dict(),
+
+    "optimizer_state_dict":
+
+        optimizer.state_dict(),
+
+    "scheduler_state_dict":
+
+        scheduler.state_dict(),
+
+    "validation_loss": val_loss
+
+}
+```
+
+Saving the optimizer state allows training to resume later without losing momentum estimates or adaptive learning-rate information.
+
+---
+
+# Naming Checkpoints
+
+Research projects often save checkpoints using descriptive filenames.
+
+Examples include
+
+```text
+best_model.pth
+
+best_validation_model.pth
+
+megnet_bandgap_best.pth
+
+formation_energy_checkpoint.pth
+```
+
+Meaningful filenames become particularly valuable when multiple experiments are conducted simultaneously.
+
+---
+
+# Saving Multiple Checkpoints
+
+Sometimes researchers save
+
+more than one checkpoint.
+
+For example,
+
+```text
+Latest Model
+
+↓
+
+Saved Every Epoch
+```
+
+and
+
+```text
+Best Model
+
+↓
+
+Saved Only When Validation Improves
+```
+
+The latest model allows interrupted training to resume.
+
+The best model provides the highest validation performance.
+
+Maintaining both checkpoints is common in large-scale research projects.
+
+---
+
+# Checkpoint Frequency
+
+Should we save after every mini-batch?
+
+Usually not.
+
+Saving to disk is relatively slow.
+
+Instead,
+
+most implementations save checkpoints
+
+once per epoch,
+
+after validation has been completed.
+
+This strikes a good balance between computational efficiency and data safety.
+
+---
+
+# Why Validation Is Used Instead of Training Loss
+
+An important question arises.
+
+Why compare validation loss rather than training loss?
+
+Suppose
+
+Training Loss
+
+```text
+0.002
+```
+
+Validation Loss
+
+```text
+0.061
+```
+
+The training performance is excellent.
+
+However,
+
+validation performance is poor.
+
+Saving this model would preserve an overfitted network.
+
+Checkpointing based on validation performance ensures that the selected model generalizes well to unseen materials.
+
+---
+
+# The Training Pipeline So Far
+
+Our complete training workflow has now expanded.
+
+```text
+Initialize Model
+
+↓
+
+Train One Epoch
+
+↓
+
+Validation
+
+↓
+
+Better Than Previous?
+
+↓
+
+Yes
+
+↓
+
+Save Checkpoint
+
+↓
+
+Next Epoch
+```
+
+This simple decision process ensures that the best-performing model is never lost during training.
+
+---
+
+# Is Saving the Best Model Enough?
+
+Checkpointing protects the best model,
+
+but it does not solve another important problem.
+
+Suppose the validation loss stops improving for many consecutive epochs.
+
+The optimizer may continue training
+
+for hours,
+
+or even days,
+
+without achieving any meaningful improvement.
+
+This wastes computational resources.
+
+A more intelligent strategy is to monitor the validation performance and automatically terminate training when improvement has stalled.
+
+This technique is called **early stopping**.
+
+In the next section, we will study early stopping in detail, explain the concept of **patience**, discuss how it prevents overfitting, and integrate it into the complete MEGNet training pipeline to produce a robust, research-grade training workflow.
+
+## 15.9 Training a Complete MEGNet Model (Part 10)
+
+# Step 10 — Early Stopping: Preventing Overfitting Automatically
+
+Modern deep learning models are often trained for hundreds of epochs.
+
+However, training for more epochs does **not** always produce a better model.
+
+After a certain point, the neural network begins to memorize the training data instead of learning the underlying physical relationships.
+
+As a result,
+
+* training loss continues to decrease,
+* validation loss begins to increase.
+
+This phenomenon is called **overfitting**.
+
+Rather than forcing the user to manually monitor training, modern machine learning uses an automatic mechanism called **early stopping**.
+
+Early stopping terminates training when the validation performance has stopped improving.
+
+It is one of the simplest and most effective regularization techniques in deep learning.
+
+---
+
+# Why More Training Can Hurt Performance
+
+Suppose we train MEGNet for 200 epochs.
+
+The validation MAE evolves as follows.
+
+| Epoch | Validation MAE (eV) |
+| ----: | ------------------: |
+|    10 |               0.182 |
+|    20 |               0.104 |
+|    30 |               0.061 |
+|    40 |               0.038 |
+|    50 |               0.031 |
+|    60 |               0.028 |
+|    70 |               0.027 |
+|    80 |               0.028 |
+|    90 |               0.030 |
+|   100 |               0.033 |
+|   150 |               0.044 |
+|   200 |               0.057 |
+
+Notice what happens.
+
+The model reaches its best performance around
+
+Epoch 70.
+
+After that,
+
+training continues,
+
+but validation performance gradually deteriorates.
+
+If we continue training until Epoch 200,
+
+we obtain a worse model than the one already available at Epoch 70.
+
+Early stopping prevents this unnecessary training.
+
+---
+
+# The Basic Idea
+
+Instead of asking
+
+> "How many epochs should I train?"
+
+we ask
+
+> "Has the validation performance improved recently?"
+
+If the answer is
+
+"No"
+
+for many consecutive epochs,
+
+training stops automatically.
+
+Conceptually,
+
+```text
+Validation Improves
+
+↓
+
+Continue Training
+
+Validation Stops Improving
+
+↓
+
+Wait
+
+↓
+
+Still No Improvement?
+
+↓
+
+Stop Training
+```
+
+---
+
+# Patience
+
+The central idea behind early stopping is the **patience parameter**.
+
+Patience specifies
+
+how many consecutive epochs
+
+without improvement
+
+are allowed before training terminates.
+
+Suppose
+
+```text
+Patience = 10
+```
+
+This means
+
+training continues
+
+for ten additional epochs
+
+after the last improvement.
+
+If validation performance still does not improve,
+
+training stops.
+
+---
+
+# Why Patience Is Necessary
+
+Suppose validation loss behaves as follows.
+
+| Epoch | Validation Loss |
+| ----: | --------------: |
+|    40 |           0.041 |
+|    41 |           0.042 |
+|    42 |           0.041 |
+|    43 |           0.040 |
+|    44 |           0.039 |
+
+Notice that
+
+validation performance briefly worsens
+
+before improving again.
+
+If we stopped immediately after Epoch 41,
+
+we would miss the better model found later.
+
+Patience prevents premature termination.
+
+It allows the optimizer time to escape temporary plateaus.
+
+---
+
+# Tracking Improvement
+
+Early stopping maintains two variables.
+
+```text
+Best Validation Loss
+
+Counter
+```
+
+Initially,
+
+```text
+Best Loss = ∞
+
+Counter = 0
+```
+
+After each validation phase,
+
+the algorithm compares
+
+the current validation loss
+
+with
+
+the best validation loss observed so far.
+
+---
+
+### Case 1 — Improvement
+
+Suppose
+
+```text
+Best Loss = 0.031
+
+Current Loss = 0.029
+```
+
+Since performance improved,
+
+```text
+Best Loss
+
+↓
+
+Updated to 0.029
+
+Counter
+
+↓
+
+Reset to 0
+```
+
+Training continues.
+
+---
+
+### Case 2 — No Improvement
+
+Suppose
+
+```text
+Best Loss = 0.029
+
+Current Loss = 0.031
+```
+
+Performance did not improve.
+
+Therefore,
+
+```text
+Counter
+
+↓
+
+Counter + 1
+```
+
+Training still continues,
+
+provided that the counter has not exceeded the patience value.
+
+---
+
+# When Does Training Stop?
+
+Suppose
+
+```text
+Patience = 5
+```
+
+Validation losses evolve as follows.
+
+| Epoch | Validation Loss | Counter |
+| ----: | --------------: | ------: |
+|    50 |           0.028 |       0 |
+|    51 |           0.029 |       1 |
+|    52 |           0.030 |       2 |
+|    53 |           0.031 |       3 |
+|    54 |           0.030 |       4 |
+|    55 |           0.032 |       5 |
+
+At Epoch 55,
+
+the patience limit has been reached.
+
+Training terminates automatically.
+
+Notice that
+
+the best model remains
+
+the checkpoint saved at
+
+Epoch 50.
+
+---
+
+# Implementing Early Stopping
+
+A simplified implementation appears below.
+
+```python
+if val_loss < best_val_loss:
+
+    best_val_loss = val_loss
+
+    patience_counter = 0
+
+    torch.save(
+
+        model.state_dict(),
+
+        "best_model.pth"
+
+    )
+
+else:
+
+    patience_counter += 1
+
+if patience_counter >= patience:
+
+    print("Early stopping")
+
+    break
+```
+
+Although only a few lines long,
+
+this algorithm is used in thousands of modern research projects.
+
+---
+
+# Early Stopping and Checkpointing Work Together
+
+Checkpointing
+
+and
+
+early stopping
+
+serve different purposes.
+
+Checkpointing answers
+
+> "Which model should be saved?"
+
+Early stopping answers
+
+> "When should training stop?"
+
+Together,
+
+they produce an efficient training workflow.
+
+```text
+Training
+
+↓
+
+Validation
+
+↓
+
+Improved?
+
+↓
+
+Yes
+
+↓
+
+Save Checkpoint
+
+↓
+
+Reset Patience
+
+↓
+
+Continue
+
+────────────
+
+Improved?
+
+↓
+
+No
+
+↓
+
+Increase Counter
+
+↓
+
+Counter ≥ Patience?
+
+↓
+
+Yes
+
+↓
+
+Stop Training
+```
+
+---
+
+# Choosing the Patience Value
+
+The appropriate patience depends on
+
+* dataset size,
+* optimizer,
+* learning rate,
+* model complexity.
+
+Typical values include
+
+| Dataset Size | Typical Patience |
+| ------------ | ---------------: |
+| Small        |     10–20 epochs |
+| Medium       |     20–40 epochs |
+| Large        |    30–100 epochs |
+
+For many MEGNet applications,
+
+patience values between
+
+20
+
+and
+
+50 epochs
+
+provide good results.
+
+---
+
+# Advantages of Early Stopping
+
+Early stopping offers several important benefits.
+
+### Prevents Overfitting
+
+Training stops before the model begins memorizing the training data.
+
+---
+
+### Saves Computational Time
+
+Large graph neural networks may require
+
+many hours
+
+or even
+
+days
+
+to train.
+
+Early stopping avoids wasting computation once improvement has ceased.
+
+---
+
+### Requires No Architectural Changes
+
+Unlike dropout or weight decay,
+
+early stopping does not modify the neural network itself.
+
+It simply determines
+
+when training should end.
+
+---
+
+### Improves Generalization
+
+In practice,
+
+the model selected by early stopping often performs better on completely unseen materials than the final epoch.
+
+---
+
+# Limitations
+
+Early stopping is highly effective,
+
+but it is not perfect.
+
+If the validation dataset is very small,
+
+random fluctuations may trigger premature stopping.
+
+Similarly,
+
+if the patience value is too small,
+
+training may terminate before reaching the optimal solution.
+
+Consequently,
+
+the validation curve should always be interpreted alongside domain knowledge and other evaluation metrics.
+
+---
+
+# The Complete Research Training Pipeline
+
+At this stage,
+
+our MEGNet training workflow has become considerably more sophisticated.
+
+```text
+Initialize Model
+
+↓
+
+Initialize Optimizer
+
+↓
+
+Train One Epoch
+
+↓
+
+Validation
+
+↓
+
+Improved?
+
+↓
+
+Yes
+
+↓
+
+Save Best Model
+
+↓
+
+Reset Patience
+
+↓
+
+Continue Training
+
+────────────
+
+No
+
+↓
+
+Increase Patience Counter
+
+↓
+
+Counter ≥ Patience?
+
+↓
+
+Yes
+
+↓
+
+Stop Training
+```
+
+This pipeline is representative of modern deep learning practice and forms the backbone of many published materials informatics studies.
+
+---
+
+# What Is Still Missing?
+
+Although the training pipeline is now robust,
+
+one important component remains.
+
+Suppose validation performance improves rapidly at the beginning of training,
+
+then reaches a plateau.
+
+Using the same learning rate throughout training is often inefficient.
+
+Instead,
+
+modern optimizers automatically **reduce the learning rate** when progress slows,
+
+allowing the model to make increasingly fine parameter updates near the optimum.
+
+This strategy is implemented through a **learning rate scheduler**.
+
+In the next section, we will study learning rate scheduling in depth, explain why reducing the learning rate often produces substantial improvements in MEGNet performance, compare common scheduling strategies (StepLR, Cosine Annealing, OneCycleLR, and ReduceLROnPlateau), and demonstrate how schedulers are integrated into a complete, publication-quality MEGNet training pipeline.
+
+## 15.9 Training a Complete MEGNet Model (Part 11)
+
+# Step 11 — Learning Rate Scheduling: Making Optimization More Efficient
+
+In the previous sections, we learned that the **learning rate** controls how large each parameter update is during optimization.
+
+Recall the gradient descent update equation
+
+[
+\theta_{\text{new}}
+===================
+
+## \theta_{\text{old}}
+
+\eta
+\nabla_{\theta}L,
+]
+
+where
+
+* (\theta) represents the trainable parameters,
+* (\nabla_{\theta}L) is the gradient,
+* (\eta) is the learning rate.
+
+Throughout our earlier discussion, we treated the learning rate as a fixed number.
+
+For example,
+
+```python
+optimizer = torch.optim.AdamW(
+    model.parameters(),
+    lr=1e-3
+)
+```
+
+This means that every optimizer step uses exactly the same learning rate.
+
+Although this approach works,
+
+it is rarely the best strategy.
+
+Modern deep learning almost always changes the learning rate **during training**.
+
+This process is called **learning rate scheduling**.
+
+---
+
+# Why Should the Learning Rate Change?
+
+Imagine driving from one city to another.
+
+At the beginning of the journey,
+
+the road is empty.
+
+Driving quickly is efficient.
+
+However,
+
+as you approach your destination,
+
+continuing at high speed becomes dangerous.
+
+Instead,
+
+you gradually slow down.
+
+Optimization behaves in a very similar way.
+
+During the early stages of training,
+
+the neural network is far from the optimum.
+
+Large parameter updates allow rapid learning.
+
+Near convergence,
+
+the model requires much smaller updates to fine-tune the parameters.
+
+A scheduler automatically performs this adjustment.
+
+---
+
+# Constant Learning Rate vs Scheduled Learning Rate
+
+Suppose the learning rate remains fixed.
+
+```text
+Epoch
+
+↓
+
+Learning Rate
+
+0.001
+
+0.001
+
+0.001
+
+0.001
+
+0.001
+```
+
+Every optimizer step has the same magnitude.
+
+Now consider a scheduled learning rate.
+
+```text
+Epoch
+
+↓
+
+0.001
+
+↓
+
+0.0005
+
+↓
+
+0.0001
+
+↓
+
+0.00005
+```
+
+The optimizer starts aggressively,
+
+then gradually becomes more precise.
+
+This simple idea often improves both convergence speed and final model accuracy.
+
+---
+
+# An Intuitive Picture
+
+Imagine the loss function as a valley.
+
+Initially,
+
+the optimizer is far from the minimum.
+
+Large steps help reach the valley quickly.
+
+```text
+Large Steps
+
+↓
+
+↓
+
+↓
+
+Valley
+```
+
+Near the minimum,
+
+large steps may overshoot the optimum.
+
+Instead,
+
+small careful steps are preferable.
+
+```text
+Near Minimum
+
+↓
+
+Small Step
+
+↓
+
+Smaller Step
+
+↓
+
+Optimal Solution
+```
+
+Learning rate scheduling automatically performs this transition.
+
+---
+
+# Benefits of Learning Rate Scheduling
+
+A well-designed scheduler provides several advantages.
+
+### Faster Initial Learning
+
+Large learning rates allow the optimizer to explore the parameter space efficiently.
+
+---
+
+### Improved Stability
+
+Reducing the learning rate later prevents oscillations around the optimum.
+
+---
+
+### Better Final Accuracy
+
+Small updates near convergence allow the model to refine its parameters more precisely.
+
+---
+
+### Reduced Training Time
+
+Because optimization becomes more efficient,
+
+fewer epochs are often required.
+
+---
+
+# Types of Learning Rate Schedulers
+
+PyTorch provides many scheduling strategies.
+
+Some of the most widely used include
+
+* StepLR
+* MultiStepLR
+* ExponentialLR
+* CosineAnnealingLR
+* OneCycleLR
+* ReduceLROnPlateau
+
+Each follows a different philosophy.
+
+We will examine the most important ones individually.
+
+---
+
+# StepLR
+
+The simplest scheduler reduces the learning rate after a fixed number of epochs.
+
+Suppose
+
+* initial learning rate = 0.001
+* step size = 30 epochs
+* decay factor = 0.1
+
+The schedule becomes
+
+| Epoch | Learning Rate |
+| ----: | ------------: |
+|  1–30 |         0.001 |
+| 31–60 |        0.0001 |
+| 61–90 |       0.00001 |
+
+Every thirty epochs,
+
+the learning rate decreases by a factor of ten.
+
+---
+
+### PyTorch Implementation
+
+```python
+scheduler = torch.optim.lr_scheduler.StepLR(
+    optimizer,
+    step_size=30,
+    gamma=0.1
+)
+```
+
+At the end of every epoch,
+
+we update the scheduler.
+
+```python
+scheduler.step()
+```
+
+Although simple,
+
+StepLR has been successfully used in many deep learning applications.
+
+---
+
+# Exponential Learning Rate Decay
+
+Instead of reducing the learning rate abruptly,
+
+ExponentialLR decreases it gradually after every epoch.
+
+Conceptually,
+
+```text
+Epoch
+
+↓
+
+0.001
+
+↓
+
+0.00095
+
+↓
+
+0.00090
+
+↓
+
+0.00086
+
+↓
+
+...
+```
+
+The learning rate changes smoothly,
+
+avoiding sudden jumps.
+
+Implementation is equally straightforward.
+
+```python
+scheduler = torch.optim.lr_scheduler.ExponentialLR(
+    optimizer,
+    gamma=0.95
+)
+```
+
+Here,
+
+the learning rate decreases by approximately
+
+5%
+
+after every epoch.
+
+---
+
+# Cosine Annealing
+
+One of the most popular schedulers in modern deep learning is
+
+**Cosine Annealing**.
+
+Instead of decreasing the learning rate linearly,
+
+it follows a cosine curve.
+
+Conceptually,
+
+```text
+Learning Rate
+
+High
+
+│\
+│ \
+│  \
+│   \
+│    \____
+
+Epoch
+```
+
+The learning rate decreases slowly at first,
+
+then more rapidly,
+
+before flattening near the end of training.
+
+Cosine Annealing often provides smoother convergence than StepLR.
+
+---
+
+### PyTorch Implementation
+
+```python
+scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+    optimizer,
+    T_max=100
+)
+```
+
+Here,
+
+(T_{\text{max}})
+
+represents the number of epochs required to complete one cosine cycle.
+
+Cosine scheduling has become especially popular for transformer models and graph neural networks.
+
+---
+
+# ReduceLROnPlateau
+
+Unlike previous schedulers,
+
+ReduceLROnPlateau does not depend on the epoch number.
+
+Instead,
+
+it monitors
+
+the validation performance.
+
+Suppose validation loss stops improving.
+
+Rather than terminating training,
+
+the scheduler first reduces the learning rate.
+
+Conceptually,
+
+```text
+Validation Improves
+
+↓
+
+Keep Learning Rate
+
+Validation Plateaus
+
+↓
+
+Reduce Learning Rate
+
+↓
+
+Continue Training
+```
+
+This allows the optimizer to make smaller,
+
+more precise updates.
+
+---
+
+### PyTorch Implementation
+
+```python
+scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+    optimizer,
+    mode="min",
+    factor=0.5,
+    patience=5
+)
+```
+
+Unlike most schedulers,
+
+the validation loss must be supplied.
+
+```python
+scheduler.step(val_loss)
+```
+
+If validation loss fails to improve for five epochs,
+
+the learning rate is reduced by half.
+
+---
+
+# Why ReduceLROnPlateau Is Popular in Materials Informatics
+
+Materials datasets often exhibit
+
+long periods of slow improvement.
+
+A fixed learning rate may become too large to achieve further refinement.
+
+ReduceLROnPlateau automatically detects this situation.
+
+Instead of stopping immediately,
+
+it decreases the learning rate,
+
+allowing optimization to continue.
+
+Consequently,
+
+this scheduler is widely used in
+
+* CGCNN,
+* MEGNet,
+* ALIGNN,
+* M3GNet,
+
+and many other materials informatics models.
+
+---
+
+# Combining Scheduling with Early Stopping
+
+Learning rate scheduling
+
+and
+
+early stopping
+
+work together.
+
+Suppose validation loss stops improving.
+
+The scheduler first reduces the learning rate.
+
+If performance subsequently improves,
+
+training continues.
+
+If improvement still does not occur,
+
+early stopping eventually terminates training.
+
+Conceptually,
+
+```text
+Validation Plateau
+
+↓
+
+Reduce Learning Rate
+
+↓
+
+Performance Improves?
+
+↓
+
+Yes
+
+↓
+
+Continue Training
+
+────────────
+
+No
+
+↓
+
+Early Stopping
+```
+
+This combination is considerably more effective than early stopping alone.
+
+---
+
+# Monitoring the Learning Rate
+
+During training,
+
+it is useful to record the current learning rate.
+
+PyTorch allows this through
+
+```python
+current_lr = optimizer.param_groups[0]["lr"]
+
+print(current_lr)
+```
+
+A typical training log might appear as
+
+```text
+Epoch 10
+
+Learning Rate = 0.001
+
+Validation MAE = 0.051
+
+-------------------------
+
+Epoch 30
+
+Learning Rate = 0.0005
+
+Validation MAE = 0.038
+
+-------------------------
+
+Epoch 60
+
+Learning Rate = 0.00025
+
+Validation MAE = 0.031
+```
+
+Such logs help researchers understand how the scheduler influences optimization.
+
+---
+
+# Recommended Scheduler for MEGNet
+
+Several schedulers perform well with graph neural networks,
+
+but practical experience suggests the following recommendations.
+
+| Scenario                    | Recommended Scheduler           |
+| --------------------------- | ------------------------------- |
+| Small datasets              | ReduceLROnPlateau               |
+| Medium datasets             | CosineAnnealingLR               |
+| Large datasets              | OneCycleLR or CosineAnnealingLR |
+| Simple baseline experiments | StepLR                          |
+
+For many MEGNet applications,
+
+**ReduceLROnPlateau** is an excellent default choice because it responds directly to validation performance rather than relying on a predetermined epoch schedule.
+
+---
+
+# Summary
+
+Learning rate scheduling is a simple yet powerful technique for improving optimization.
+
+Instead of using one fixed learning rate throughout training,
+
+the scheduler automatically adjusts the step size as learning progresses.
+
+Different schedulers employ different strategies,
+
+but all share the same objective:
+
+* accelerate early learning,
+* stabilize late optimization,
+* improve final model performance.
+
+When combined with
+
+* checkpointing,
+* early stopping,
+* AdamW optimization,
+
+learning rate scheduling forms an essential component of a modern, research-quality MEGNet training pipeline.
+
+In the next section, we will combine **every component studied so far** into a **complete end-to-end MEGNet training program**, integrating data loading, model initialization, optimization, validation, checkpointing, learning rate scheduling, and early stopping into a single, publication-quality training script suitable for real-world materials informatics research.
+
+## 15.9 Training a Complete MEGNet Model (Part 12)
+
+# Step 12 — Building a Complete Research-Grade MEGNet Training Pipeline
+
+Over the previous sections, we have studied every component of the MEGNet training process individually.
+
+We learned
+
+* how data are loaded,
+* how mini-batches are created,
+* how the forward pass works,
+* how the loss is computed,
+* how backpropagation calculates gradients,
+* how AdamW updates parameters,
+* how validation measures generalization,
+* how checkpointing saves the best model,
+* how early stopping prevents overfitting,
+* how learning rate scheduling improves optimization.
+
+Individually,
+
+each of these components is relatively simple.
+
+The true power of modern deep learning emerges when they are combined into a single training pipeline.
+
+In this section, we will assemble every component into a research-quality workflow similar to those used in published materials informatics studies.
+
+---
+
+# The Complete Training Pipeline
+
+At a high level,
+
+training a MEGNet model follows the sequence below.
+
+```text
+Load Dataset
+
+↓
+
+Split Dataset
+
+↓
+
+Create DataLoaders
+
+↓
+
+Initialize Model
+
+↓
+
+Initialize Optimizer
+
+↓
+
+Initialize Scheduler
+
+↓
+
+Training Loop
+
+↓
+
+Validation Loop
+
+↓
+
+Checkpoint
+
+↓
+
+Early Stopping
+
+↓
+
+Testing
+
+↓
+
+Deployment
+```
+
+Every research project based on MEGNet follows this general structure.
+
+The specific implementation details may differ,
+
+but the overall workflow remains essentially the same.
+
+---
+
+# Step 1 — Loading the Dataset
+
+Training begins by loading the crystal dataset.
+
+The dataset may originate from
+
+* Materials Project,
+* OQMD,
+* JARVIS,
+* AFLOW,
+* or a custom DFT database.
+
+Each sample contains
+
+* atomic species,
+* atomic coordinates,
+* lattice vectors,
+* target properties.
+
+Conceptually,
+
+```text
+Crystal Structure
+
+↓
+
+Graph Construction
+
+↓
+
+Crystal Graph Dataset
+```
+
+At this stage,
+
+no neural network computation has yet occurred.
+
+---
+
+# Step 2 — Splitting the Dataset
+
+Before training,
+
+the dataset is divided into three subsets.
+
+```text
+Entire Dataset
+
+↓
+
+Training Set
+
+Validation Set
+
+Test Set
+```
+
+A common split is
+
+* 80% training,
+* 10% validation,
+* 10% testing.
+
+The validation and test sets must remain completely independent of training.
+
+---
+
+# Step 3 — Creating DataLoaders
+
+Each subset is wrapped inside a DataLoader.
+
+```python
+train_loader
+
+val_loader
+
+test_loader
+```
+
+The DataLoader
+
+* creates mini-batches,
+* shuffles the training data,
+* manages parallel loading,
+* feeds batches to the GPU.
+
+This allows efficient training even for datasets containing hundreds of thousands of crystals.
+
+---
+
+# Step 4 — Initializing the Model
+
+The MEGNet model is now created.
+
+```python
+model = MEGNet(...)
+```
+
+Initially,
+
+all trainable parameters are randomly initialized.
+
+At this point,
+
+the model has absolutely no knowledge of chemistry,
+
+crystal structures,
+
+or material properties.
+
+Every prediction is essentially random.
+
+Training will gradually transform these random parameters into meaningful representations.
+
+---
+
+# Step 5 — Moving the Model to the GPU
+
+If a GPU is available,
+
+the model is transferred to GPU memory.
+
+```python
+device = torch.device("cuda")
+
+model.to(device)
+```
+
+This allows the large matrix operations inside MEGNet to execute much more efficiently.
+
+For modern graph neural networks,
+
+GPU acceleration is almost essential.
+
+---
+
+# Step 6 — Initializing the Optimizer
+
+The optimizer determines
+
+how parameters are updated.
+
+A typical choice is
+
+```python
+optimizer = AdamW(...)
+```
+
+The optimizer stores
+
+* learning rate,
+* weight decay,
+* momentum information.
+
+These quantities remain available throughout training.
+
+---
+
+# Step 7 — Initializing the Loss Function
+
+Next,
+
+the regression loss is selected.
+
+Examples include
+
+```python
+MSELoss()
+
+HuberLoss()
+
+SmoothL1Loss()
+```
+
+The choice depends on
+
+* dataset quality,
+* noise level,
+* target property.
+
+For many materials informatics applications,
+
+Huber loss provides an excellent balance between stability and robustness.
+
+---
+
+# Step 8 — Initializing the Scheduler
+
+The learning-rate scheduler is then created.
+
+For example,
+
+```python
+ReduceLROnPlateau(...)
+```
+
+or
+
+```python
+CosineAnnealingLR(...)
+```
+
+The scheduler automatically adjusts the learning rate during optimization.
+
+---
+
+# Step 9 — The Epoch Loop
+
+Training now begins.
+
+Conceptually,
+
+```text
+Epoch 1
+
+↓
+
+Epoch 2
+
+↓
+
+Epoch 3
+
+↓
+
+...
+
+↓
+
+Epoch N
+```
+
+Each epoch processes
+
+every training crystal exactly once.
+
+---
+
+# Step 10 — The Mini-Batch Loop
+
+Inside every epoch,
+
+the DataLoader produces mini-batches.
+
+```text
+Mini-batch 1
+
+↓
+
+Mini-batch 2
+
+↓
+
+Mini-batch 3
+
+↓
+
+...
+```
+
+Each mini-batch follows the complete optimization cycle.
+
+---
+
+# Step 11 — Training One Mini-Batch
+
+For every mini-batch,
+
+the following operations occur.
+
+```text
+Move Batch to GPU
+
+↓
+
+Zero Gradients
+
+↓
+
+Forward Pass
+
+↓
+
+Compute Loss
+
+↓
+
+Backpropagation
+
+↓
+
+Optimizer Step
+```
+
+This sequence is repeated thousands of times during training.
+
+---
+
+# Step 12 — Validation
+
+After every epoch,
+
+training temporarily pauses.
+
+The model switches to evaluation mode.
+
+```python
+model.eval()
+```
+
+Gradients are disabled.
+
+```python
+torch.no_grad()
+```
+
+The validation dataset is processed,
+
+and metrics such as
+
+* validation loss,
+* MAE,
+* RMSE
+
+are computed.
+
+These metrics estimate
+
+how well the model generalizes to unseen crystals.
+
+---
+
+# Step 13 — Scheduler Update
+
+Once validation is complete,
+
+the scheduler examines the validation results.
+
+If progress has slowed,
+
+the learning rate is reduced.
+
+Conceptually,
+
+```text
+Validation Plateau
+
+↓
+
+Reduce Learning Rate
+
+↓
+
+Continue Optimization
+```
+
+This often allows additional improvements.
+
+---
+
+# Step 14 — Save the Best Model
+
+If validation performance improves,
+
+the current model is saved.
+
+```text
+Validation Improved
+
+↓
+
+Save Checkpoint
+```
+
+The checkpoint contains
+
+the best-performing parameters observed so far.
+
+---
+
+# Step 15 — Early Stopping Check
+
+If validation performance has not improved for many epochs,
+
+the patience counter increases.
+
+Eventually,
+
+```text
+Counter ≥ Patience
+
+↓
+
+Stop Training
+```
+
+The optimization process terminates automatically.
+
+---
+
+# Step 16 — Load the Best Checkpoint
+
+Once training finishes,
+
+the best checkpoint is restored.
+
+```python
+model.load_state_dict(...)
+```
+
+Notice that
+
+the final epoch
+
+may not correspond
+
+to the best-performing model.
+
+Checkpointing ensures that
+
+the optimal parameters are recovered.
+
+---
+
+# Step 17 — Final Testing
+
+Only now
+
+is the test dataset evaluated.
+
+The test set has never influenced
+
+* optimization,
+* checkpointing,
+* scheduler decisions,
+* early stopping.
+
+Consequently,
+
+its performance provides
+
+an unbiased estimate
+
+of the model's real predictive capability.
+
+---
+
+# The Entire Training Pipeline
+
+Putting everything together,
+
+the complete workflow becomes
+
+```text
+Load Dataset
+
+↓
+
+Split Dataset
+
+↓
+
+Create DataLoaders
+
+↓
+
+Initialize MEGNet
+
+↓
+
+Initialize Optimizer
+
+↓
+
+Initialize Scheduler
+
+↓
+
+For Each Epoch
+
+    ↓
+
+    Train
+
+        ↓
+
+        Forward
+
+        ↓
+
+        Loss
+
+        ↓
+
+        Backward
+
+        ↓
+
+        Optimizer Step
+
+    ↓
+
+    Validation
+
+    ↓
+
+    Scheduler
+
+    ↓
+
+    Save Best Model
+
+    ↓
+
+    Early Stopping
+
+↓
+
+Load Best Checkpoint
+
+↓
+
+Evaluate on Test Set
+
+↓
+
+Deploy Model
+```
+
+This flowchart summarizes the entire lifecycle of training a modern graph neural network for materials property prediction.
+
+---
+
+# From Theory to Research Practice
+
+At the beginning of this chapter,
+
+MEGNet may have appeared to be a highly complex architecture.
+
+However,
+
+after studying every stage individually,
+
+its training process can now be understood as a sequence of well-defined operations.
+
+Every published MEGNet study,
+
+regardless of the target property,
+
+follows this same fundamental workflow.
+
+Whether predicting
+
+* formation energies,
+* band gaps,
+* elastic constants,
+* dielectric properties,
+* thermal conductivity,
+* battery voltages,
+
+or any other materials property,
+
+the underlying optimization pipeline remains essentially unchanged.
+
+The differences lie primarily in
+
+* the dataset,
+* the target property,
+* the graph construction,
+* the hyperparameters,
+
+not in the core training procedure.
+
+---
+
+# Conclusion of Section 15.9
+
+We have now completed a comprehensive study of the MEGNet training pipeline, progressing from the loading of crystal datasets to the final evaluation of a trained model.
+
+More importantly, we have connected the mathematical concepts of gradients, optimization, loss functions, and graph neural networks to their practical implementation in a research workflow.
+
+At this point, you should understand **how** a MEGNet model learns.
+
+However, understanding how a model learns is only one part of becoming a successful materials informatics researcher.
+
+Equally important is understanding **why a model makes a particular prediction**.
+
+Deep neural networks are often criticized for behaving as "black boxes."
+
+The next major section addresses this challenge.
+
+We will begin **Section 15.10 — Interpreting MEGNet Predictions**, where we will explore feature importance, learned atomic embeddings, latent representations, attention and message-passing analysis, visualization techniques, uncertainty estimation, and explainable AI methods that reveal what the model has actually learned about crystal chemistry and materials physics.
+
+## 15.10 Interpreting MEGNet Predictions
+
+### Why Interpretability Matters in Materials Informatics
+
+By this point, we have learned how MEGNet
+
+* represents crystal structures as graphs,
+* performs message passing,
+* updates atomic, bond, and global features,
+* predicts material properties,
+* learns through backpropagation,
+* is trained using modern optimization techniques.
+
+If the training process is successful, the model may achieve excellent predictive accuracy.
+
+For example,
+
+| Property         |           MAE |
+| ---------------- | ------------: |
+| Formation Energy | 0.023 eV/atom |
+| Band Gap         |       0.19 eV |
+| Bulk Modulus     |       8.5 GPa |
+
+These numbers are impressive.
+
+However, an important scientific question immediately arises.
+
+> **Why did the model make these predictions?**
+
+Unlike classical physics models, deep neural networks rarely provide explicit equations.
+
+For example,
+
+a traditional regression model might produce
+
+[
+E = 0.52x_1 - 1.43x_2 + 0.81x_3.
+]
+
+From this equation, we can immediately determine
+
+* which variables are important,
+* whether each variable increases or decreases the prediction,
+* how strongly each variable contributes.
+
+A deep neural network such as MEGNet does not provide such a simple equation.
+
+Instead, it consists of
+
+* millions of trainable parameters,
+* multiple message-passing layers,
+* nonlinear activation functions,
+* graph pooling operations,
+* high-dimensional latent representations.
+
+Consequently, the relationship between the input crystal structure and the predicted property is much more difficult to understand.
+
+---
+
+# Accuracy Is Not Enough
+
+Suppose a MEGNet model predicts that a newly designed alloy has
+
+```text
+Formation Energy = −2.81 eV/atom
+```
+
+The prediction may be highly accurate.
+
+However, a materials scientist immediately asks
+
+* Which atoms contributed most?
+* Which chemical bonds were important?
+* Did the model recognize local coordination?
+* Was the prediction dominated by composition or crystal structure?
+* Can this prediction be trusted?
+
+A prediction without an explanation is often insufficient for scientific discovery.
+
+Scientists seek understanding,
+
+not merely accurate numbers.
+
+---
+
+# The Black Box Problem
+
+Deep neural networks are often described as **black boxes**.
+
+This means
+
+we know
+
+* the input,
+* the output,
+
+but the internal reasoning remains difficult to interpret.
+
+Conceptually,
+
+```text
+Crystal Structure
+
+↓
+
+???
+
+↓
+
+Predicted Band Gap
+```
+
+The question marks represent
+
+hundreds of nonlinear mathematical operations.
+
+Understanding these operations is the goal of model interpretability.
+
+---
+
+# Why Interpretability Is Especially Important in Materials Science
+
+Interpretability is valuable in every application of machine learning,
+
+but it is particularly important in materials science.
+
+Unlike image classification,
+
+materials informatics is not merely interested in prediction.
+
+Its ultimate goal is
+
+**scientific discovery**.
+
+A successful machine learning model should help answer questions such as
+
+* Why is diamond harder than silicon?
+* Why do certain crystal structures become superconducting?
+* Which atomic environments stabilize a material?
+* Which chemical substitutions improve ionic conductivity?
+
+If the model cannot provide insight,
+
+its scientific usefulness becomes limited.
+
+---
+
+# Interpretability Builds Scientific Confidence
+
+Imagine two models predicting
+
+the formation energy
+
+of the same crystal.
+
+Model A predicts
+
+```text
+−3.12 eV/atom
+```
+
+without any explanation.
+
+Model B predicts
+
+```text
+−3.10 eV/atom
+```
+
+and additionally explains
+
+* oxygen atoms dominate the prediction,
+* octahedral coordination is highly influential,
+* long metal–oxygen bonds reduce stability,
+* strong covalent bonding lowers the energy.
+
+Although the numerical predictions are similar,
+
+most researchers would trust
+
+Model B
+
+far more.
+
+Interpretability increases confidence.
+
+---
+
+# Interpretability Helps Detect Errors
+
+Understanding model behavior also helps identify mistakes.
+
+Suppose a band-gap model consistently focuses on
+
+lattice constants,
+
+while ignoring
+
+chemical composition.
+
+This observation may indicate
+
+* insufficient training data,
+* incorrect graph construction,
+* missing node features,
+* biased optimization.
+
+Interpretability therefore serves as a powerful debugging tool.
+
+---
+
+# Interpretability Supports Materials Discovery
+
+Suppose researchers wish to design a new battery cathode.
+
+A MEGNet model predicts
+
+excellent voltage.
+
+Interpretability may reveal
+
+that
+
+* transition-metal oxidation state,
+* oxygen coordination,
+* local bond geometry,
+
+are primarily responsible.
+
+These insights immediately suggest
+
+new candidate materials with similar structural characteristics.
+
+Thus,
+
+interpretability transforms
+
+machine learning
+
+into
+
+a scientific discovery tool.
+
+---
+
+# Levels of Interpretability
+
+Interpretability can be studied at several different levels.
+
+### 1. Global Interpretability
+
+Global interpretability seeks to understand
+
+how the model behaves overall.
+
+Questions include
+
+* Which elements are generally important?
+* Which crystal structures are easily recognized?
+* What chemical trends has the model learned?
+
+This provides a broad understanding of the trained network.
+
+---
+
+### 2. Local Interpretability
+
+Local interpretability focuses on
+
+one individual prediction.
+
+For example,
+
+consider a single crystal.
+
+We may ask
+
+* Which atoms contributed most?
+* Which bonds were most influential?
+* Why was this particular band gap predicted?
+
+Local explanations are especially useful for materials design.
+
+---
+
+### 3. Latent Representation Analysis
+
+Instead of studying predictions directly,
+
+we examine
+
+the learned internal representations.
+
+Questions include
+
+* Do chemically similar elements cluster together?
+* Are crystal families separated automatically?
+* Has the model discovered periodic trends?
+
+This analysis provides insight into
+
+what the neural network has learned internally.
+
+---
+
+# Sources of Information Inside MEGNet
+
+Unlike many machine learning models,
+
+MEGNet contains several different types of learned information.
+
+These include
+
+```text
+Atomic Embeddings
+
+↓
+
+Bond Embeddings
+
+↓
+
+Global State Embeddings
+
+↓
+
+Message Passing Features
+
+↓
+
+Graph Representation
+
+↓
+
+Final Prediction
+```
+
+Each stage contains valuable scientific information.
+
+Consequently,
+
+interpretability can be performed at multiple levels of the architecture.
+
+---
+
+# Major Interpretability Techniques for MEGNet
+
+Throughout this section,
+
+we will study several complementary approaches.
+
+| Technique                      | Primary Question                                     |
+| ------------------------------ | ---------------------------------------------------- |
+| Atomic embedding visualization | What chemical relationships has the model learned?   |
+| Latent-space visualization     | How are materials organized internally?              |
+| Message-passing analysis       | How does information flow through the crystal graph? |
+| Feature attribution            | Which atoms and bonds are most influential?          |
+| Saliency analysis              | Which structural changes most affect predictions?    |
+| SHAP analysis                  | How does each feature contribute to the prediction?  |
+| Uncertainty estimation         | How confident is the model?                          |
+
+Each technique provides a different perspective on the learned model.
+
+No single method tells the complete story.
+
+Instead,
+
+they complement one another.
+
+---
+
+# Interpretability Is an Active Research Area
+
+Although interpretability has become increasingly important,
+
+it remains an active area of research.
+
+Graph neural networks are significantly more difficult to interpret than
+
+* linear regression,
+* decision trees,
+* random forests.
+
+Their predictions depend on
+
+complex interactions among
+
+* atomic environments,
+* neighboring atoms,
+* bond features,
+* graph topology,
+* nonlinear transformations.
+
+Developing reliable interpretation methods for graph neural networks is therefore an important research frontier in artificial intelligence.
+
+---
+
+# Roadmap for This Section
+
+In the remainder of Section 15.10, we will gradually uncover what MEGNet has learned during training.
+
+We will proceed in the following order:
+
+1. **Learned Atomic Embeddings** – understanding how MEGNet represents chemical elements.
+2. **Visualizing Latent Space** – exploring how crystals organize themselves in the learned feature space.
+3. **Message Passing Interpretation** – analyzing how information propagates through crystal graphs.
+4. **Feature Attribution Methods** – identifying the atoms, bonds, and structural motifs that most influence predictions.
+5. **Explainable AI Techniques** – applying saliency maps, Integrated Gradients, GNNExplainer, and SHAP to graph neural networks.
+6. **Uncertainty Estimation** – determining when the model is confident and when its predictions should be treated cautiously.
+7. **Case Studies** – interpreting real MEGNet predictions for formation energy, band gap, and elastic properties.
+
+By the end of this section, you will not only know **how MEGNet makes predictions**, but also **how to investigate the scientific reasoning behind those predictions**, enabling you to use graph neural networks as tools for both accurate prediction and meaningful materials discovery.
+
+---
+
+### Next Section
+
+**15.10.1 Learned Atomic Embeddings: How MEGNet Discovers the Periodic Table Automatically**
+
+## 15.10.1 Learned Atomic Embeddings: How MEGNet Discovers the Periodic Table Automatically
+
+One of the most fascinating aspects of MEGNet is that it is **never explicitly taught chemistry**.
+
+No one tells the model that
+
+* sodium belongs to the alkali metals,
+* fluorine is highly electronegative,
+* silicon and germanium belong to the same group,
+* oxygen forms strong bonds with transition metals.
+
+The model receives only
+
+* crystal structures,
+* target material properties.
+
+Yet, after training, MEGNet frequently develops internal representations that closely resemble the organization of the periodic table.
+
+This remarkable behavior emerges automatically through learning.
+
+---
+
+# What Is an Atomic Embedding?
+
+Earlier in this chapter, we learned that neural networks cannot process element symbols directly.
+
+For example,
+
+consider the crystal
+
+```text
+SiO₂
+```
+
+The neural network cannot perform calculations using the strings
+
+```text
+"Si"
+
+"O"
+```
+
+Instead,
+
+each element is converted into a numerical vector called an **embedding**.
+
+Suppose the embedding dimension is
+
+64.
+
+Then
+
+```text
+Si
+
+↓
+
+[0.24, -0.17, 0.91, ..., 0.38]
+```
+
+Similarly,
+
+```text
+O
+
+↓
+
+[-0.73, 0.45, 0.18, ..., -0.61]
+```
+
+Each element is therefore represented by a point in a **64-dimensional vector space**.
+
+These vectors become the initial node features of the crystal graph.
+
+---
+
+# Random at the Beginning
+
+When training begins,
+
+the embeddings contain no chemical information.
+
+For example,
+
+the embeddings might look like
+
+```text
+Hydrogen
+
+↓
+
+[0.18, -0.41, 0.72, ...]
+
+Carbon
+
+↓
+
+[-0.36, 0.83, -0.27, ...]
+
+Iron
+
+↓
+
+[0.55, -0.09, 0.14, ...]
+```
+
+These values are initialized randomly.
+
+At this stage,
+
+the model has no concept of
+
+* valence electrons,
+* electronegativity,
+* atomic radius,
+* oxidation state,
+* periodic trends.
+
+Every element is simply a random vector.
+
+---
+
+# How Do Embeddings Learn?
+
+Suppose MEGNet is trained to predict
+
+formation energy.
+
+During training,
+
+backpropagation updates not only
+
+* convolution weights,
+* message-passing functions,
+* prediction layers,
+
+but also
+
+the atomic embeddings.
+
+Conceptually,
+
+```text
+Random Embeddings
+
+↓
+
+Forward Pass
+
+↓
+
+Prediction Error
+
+↓
+
+Backpropagation
+
+↓
+
+Updated Embeddings
+```
+
+This process repeats
+
+millions of times.
+
+Gradually,
+
+the embedding vectors evolve into meaningful chemical representations.
+
+---
+
+# Why Similar Elements Become Similar
+
+Consider two alkali metals,
+
+sodium (Na)
+
+and
+
+potassium (K).
+
+Both
+
+* possess one valence electron,
+* commonly form +1 ions,
+* exhibit similar bonding behavior,
+* appear in chemically similar compounds.
+
+Because they often play similar roles during prediction,
+
+the optimizer discovers that
+
+their embedding vectors should also become similar.
+
+Mathematically,
+
+their positions in embedding space move closer together.
+
+Conceptually,
+
+```text
+Beginning
+
+Na •                 K •
+
+Far Apart
+
+↓
+
+Training
+
+↓
+
+Na • • K
+
+Close Together
+```
+
+The optimizer is never instructed to do this.
+
+It emerges naturally because similar embeddings reduce prediction error.
+
+---
+
+# A Geometric Interpretation
+
+Suppose every element is represented as a point in a high-dimensional space.
+
+Initially,
+
+the arrangement resembles random noise.
+
+```text
+Random Space
+
+H        Fe
+
+      O
+
+Si
+
+          Na
+```
+
+After training,
+
+elements with similar chemistry begin forming clusters.
+
+```text
+Learned Space
+
+Li Na K
+
+↓
+
+Mg Ca Sr
+
+↓
+
+O S Se
+
+↓
+
+F Cl Br
+
+↓
+
+Fe Co Ni
+```
+
+This organization closely resembles the periodic table.
+
+---
+
+# Why Does This Happen?
+
+The neural network optimizes only one objective:
+
+reduce prediction error.
+
+Suppose replacing
+
+sodium
+
+with
+
+potassium
+
+rarely changes the target property.
+
+The optimizer gradually learns
+
+that their embeddings should become nearly identical.
+
+Conversely,
+
+replacing
+
+oxygen
+
+with
+
+gold
+
+dramatically changes the prediction.
+
+Therefore,
+
+their embeddings remain far apart.
+
+The embedding space naturally organizes itself according to chemical similarity.
+
+---
+
+# Embeddings Encode Hidden Chemical Knowledge
+
+Although the embedding vectors consist only of numerical values,
+
+they implicitly encode numerous chemical properties.
+
+Researchers have observed that learned embeddings often correlate with
+
+* atomic number,
+* atomic radius,
+* electronegativity,
+* ionization energy,
+* oxidation state,
+* valence electron count,
+* periodic group,
+* periodic period.
+
+Remarkably,
+
+none of these quantities were explicitly supplied during training.
+
+The neural network discovered them because they help predict material properties.
+
+---
+
+# Visualizing Atomic Embeddings
+
+A 64-dimensional vector cannot be plotted directly.
+
+To visualize the learned embeddings,
+
+we first reduce their dimensionality.
+
+Popular techniques include
+
+* Principal Component Analysis (PCA),
+* t-SNE,
+* UMAP.
+
+Suppose PCA projects the embeddings into two dimensions.
+
+The resulting visualization might resemble
+
+```text
+                Halogens
+
+                   •
+
+             •
+
+Transition Metals
+
+• • • • •
+
+             •
+
+Alkali Metals
+
+• • •
+```
+
+Clusters corresponding to chemical families often emerge automatically.
+
+---
+
+# Example: Alkali Metals
+
+Suppose we examine
+
+* Li
+* Na
+* K
+* Rb
+* Cs
+
+After training,
+
+their embedding vectors frequently occupy neighboring regions.
+
+Why?
+
+Because these elements
+
+* possess one valence electron,
+* exhibit similar oxidation states,
+* participate in similar crystal environments.
+
+The optimizer recognizes these similarities through the prediction task.
+
+---
+
+# Example: Oxygen and Sulfur
+
+Consider
+
+oxygen
+
+and
+
+sulfur.
+
+Although different,
+
+they both belong to
+
+Group 16.
+
+Both frequently
+
+* accept electrons,
+* form oxides and sulfides,
+* bond strongly with metals.
+
+Consequently,
+
+their learned embeddings often lie relatively close together.
+
+Again,
+
+this relationship was not manually programmed.
+
+---
+
+# What Do Individual Dimensions Mean?
+
+Suppose the embedding dimension equals
+
+64.
+
+Does
+
+Dimension 17
+
+represent electronegativity?
+
+Does
+
+Dimension 42
+
+represent atomic radius?
+
+Usually,
+
+no.
+
+Unlike handcrafted descriptors,
+
+individual embedding dimensions rarely possess simple physical meanings.
+
+Instead,
+
+chemical information is distributed across many dimensions simultaneously.
+
+For example,
+
+electronegativity may influence
+
+* Dimension 4,
+* Dimension 12,
+* Dimension 27,
+* Dimension 51,
+
+all at once.
+
+This phenomenon is known as a **distributed representation**.
+
+---
+
+# Advantages of Learned Embeddings
+
+Compared with manually designed descriptors,
+
+learned embeddings provide several advantages.
+
+### Automatically Optimized
+
+The vectors are optimized specifically for the prediction task.
+
+---
+
+### Capture Complex Relationships
+
+They learn nonlinear chemical relationships that handcrafted descriptors may miss.
+
+---
+
+### Adapt to Different Properties
+
+Embeddings trained for
+
+formation energy
+
+may differ from those trained for
+
+band gap
+
+or
+
+elastic modulus.
+
+The representation adapts to the scientific problem.
+
+---
+
+### Reduce Manual Feature Engineering
+
+Instead of designing dozens of chemical descriptors,
+
+the neural network learns its own representation directly from data.
+
+---
+
+# Limitations
+
+Despite their power,
+
+atomic embeddings also have limitations.
+
+First,
+
+they require
+
+large,
+
+high-quality datasets.
+
+Small datasets may produce unstable embeddings.
+
+Second,
+
+the learned vectors depend on
+
+the prediction task.
+
+An embedding optimized for
+
+formation energy
+
+may not be optimal for predicting
+
+thermal conductivity.
+
+Finally,
+
+individual embedding dimensions are difficult to interpret physically,
+
+making direct scientific interpretation more challenging than with handcrafted descriptors.
+
+---
+
+# Scientific Importance
+
+The discovery that graph neural networks automatically learn chemically meaningful embeddings was one of the major breakthroughs in materials informatics.
+
+It demonstrated that deep learning is capable of extracting fundamental chemical knowledge directly from crystal structures,
+
+without requiring manually engineered descriptors.
+
+This finding has inspired numerous subsequent architectures,
+
+including
+
+* CGCNN,
+* MEGNet,
+* ALIGNN,
+* M3GNet,
+
+all of which rely on learned atomic representations rather than fixed chemical feature vectors.
+
+---
+
+# Summary
+
+Learned atomic embeddings form the foundation of MEGNet's understanding of chemistry.
+
+Although initialized randomly,
+
+they gradually evolve during training into structured representations that often reflect the organization of the periodic table.
+
+Chemically similar elements naturally acquire similar embedding vectors because doing so reduces prediction error.
+
+These embeddings capture rich chemical information in a high-dimensional latent space and serve as the starting point for all subsequent message-passing operations.
+
+However, atomic embeddings describe **individual elements**.
+
+A material is much more than a collection of isolated atoms.
+
+The next question is therefore:
+
+> **How does MEGNet combine these atomic embeddings to create a representation of an entire crystal?**
+
+In the next section, **15.10.2 Latent Crystal Representations**, we will explore how message passing transforms atomic embeddings into high-dimensional representations of complete crystal structures and how these latent representations reveal hidden organization within materials space.
+
+## 15.10.2 Latent Crystal Representations: How MEGNet Learns the Materials Space
+
+In the previous section, we learned that MEGNet assigns every chemical element a learned embedding vector.
+
+For example,
+
+```text
+Silicon
+
+↓
+
+64-dimensional embedding
+```
+
+and
+
+```text
+Oxygen
+
+↓
+
+64-dimensional embedding
+```
+
+These embeddings provide numerical representations of **individual atoms**.
+
+However, a crystal is not simply a collection of isolated atoms.
+
+Its properties depend on
+
+* atomic composition,
+* crystal structure,
+* chemical bonding,
+* local coordination,
+* long-range interactions.
+
+Therefore, the neural network must combine thousands of atomic features into **one representation describing the entire crystal**.
+
+This representation is called the **latent crystal representation**.
+
+It is one of the most important concepts in graph neural networks.
+
+---
+
+# What Does "Latent" Mean?
+
+The word **latent** means
+
+> **hidden or internal.**
+
+A latent representation is therefore an internal numerical description learned by the neural network.
+
+Unlike
+
+* density,
+* lattice constant,
+* electronegativity,
+
+latent features are **not directly measured physical quantities**.
+
+Instead,
+
+they are automatically learned because they help predict the target property.
+
+---
+
+# From Atoms to a Crystal Representation
+
+Consider a simple crystal.
+
+```text
+Si
+
+O
+
+O
+```
+
+Initially,
+
+each atom possesses its own embedding.
+
+```text
+Si
+
+↓
+
+[0.41, -0.22, ..., 0.18]
+
+O
+
+↓
+
+[-0.73, 0.52, ..., -0.44]
+
+O
+
+↓
+
+[-0.73, 0.52, ..., -0.44]
+```
+
+After several message-passing layers,
+
+every atom has incorporated information from its neighbors.
+
+The updated node features now encode
+
+* atomic identity,
+* local environment,
+* neighboring atoms,
+* bond geometry.
+
+The graph pooling layer then combines all node features into a single vector.
+
+Conceptually,
+
+```text
+Updated Atom Features
+
+↓
+
+Graph Pooling
+
+↓
+
+Crystal Representation
+
+↓
+
+[0.26, -0.41, ..., 0.83]
+```
+
+This vector represents the **entire material**.
+
+---
+
+# Why Is a Single Crystal Vector Necessary?
+
+The prediction layer expects a fixed-size input.
+
+However,
+
+different crystals contain different numbers of atoms.
+
+For example,
+
+```text
+Diamond
+
+8 atoms
+
+↓
+
+?
+
+Silicon Supercell
+
+128 atoms
+
+↓
+
+?
+
+Perovskite
+
+40 atoms
+
+↓
+
+?
+```
+
+The prediction network cannot directly process graphs of arbitrary size.
+
+Pooling solves this problem.
+
+Regardless of whether a crystal contains
+
+8 atoms
+
+or
+
+800 atoms,
+
+pooling produces
+
+one fixed-length vector.
+
+For example,
+
+```text
+Crystal
+
+↓
+
+Pooling
+
+↓
+
+128-dimensional vector
+```
+
+The prediction layer always receives vectors of identical size.
+
+---
+
+# What Information Does the Latent Representation Contain?
+
+The latent crystal representation is expected to summarize everything relevant for prediction.
+
+For example,
+
+it may encode information about
+
+* elemental composition,
+* average bond strength,
+* crystal symmetry,
+* coordination environments,
+* electronic interactions,
+* structural motifs.
+
+Importantly,
+
+these quantities are **not stored separately**.
+
+Instead,
+
+they are distributed throughout the latent vector.
+
+---
+
+# Learning Without Explicit Rules
+
+Suppose we train MEGNet to predict
+
+formation energy.
+
+Nobody tells the model
+
+* which coordination numbers matter,
+* which bond angles are important,
+* how electronegativity affects stability.
+
+Instead,
+
+the optimizer gradually adjusts the latent representation so that crystals with similar formation energies occupy similar regions of latent space.
+
+This organization emerges automatically.
+
+---
+
+# Understanding Latent Space
+
+Imagine that every crystal is represented by one point in a high-dimensional space.
+
+Initially,
+
+the points are randomly distributed.
+
+```text
+Random Space
+
+•
+
+      •
+
+            •
+
+   •
+
+          •
+```
+
+After training,
+
+the organization becomes much more meaningful.
+
+Crystals with similar chemistry and properties begin clustering together.
+
+```text
+Learned Space
+
+Oxides
+
+••••
+
+Semiconductors
+
+••••
+
+Metals
+
+••••
+
+Layered Materials
+
+••••
+```
+
+The neural network has effectively organized the entire materials database.
+
+---
+
+# Why Similar Materials Cluster Together
+
+Suppose two materials are
+
+```text
+MgO
+
+CaO
+```
+
+Although they are different compounds,
+
+both are
+
+* ionic oxides,
+* wide-band-gap insulators,
+* rocksalt structures.
+
+Because they often exhibit similar target properties,
+
+their latent representations become similar.
+
+Now consider
+
+```text
+Graphite
+
+Diamond
+```
+
+Both consist entirely of carbon,
+
+yet their crystal structures are completely different.
+
+Consequently,
+
+their latent vectors remain separated.
+
+The latent representation therefore captures
+
+both composition
+
+and
+
+structure.
+
+---
+
+# Visualizing Latent Space
+
+A latent vector may contain
+
+128
+
+or
+
+256 dimensions.
+
+Humans cannot visualize such spaces directly.
+
+Therefore,
+
+dimensionality reduction techniques are commonly used.
+
+Popular choices include
+
+* Principal Component Analysis (PCA),
+* t-SNE,
+* UMAP.
+
+These methods project the high-dimensional latent vectors into
+
+two
+
+or
+
+three dimensions,
+
+allowing researchers to inspect the learned organization.
+
+---
+
+# Example Using PCA
+
+Suppose PCA projects thousands of crystal representations into two dimensions.
+
+The visualization may resemble
+
+```text
+                   Wide Band Gap
+
+                        ••••
+
+              Oxides
+
+             •••••••
+
+Metals
+
+••••••
+
+Layered Materials
+
+           •••••
+
+Semiconductors
+
+                 •••••
+```
+
+Each point represents
+
+one crystal.
+
+Nearby points correspond to materials with similar learned representations.
+
+---
+
+# Scientific Meaning of Clusters
+
+Clusters in latent space often correspond to meaningful material families.
+
+Researchers have observed clusters representing
+
+* oxides,
+* nitrides,
+* carbides,
+* sulfides,
+* metallic alloys,
+* semiconductors,
+* layered materials.
+
+Remarkably,
+
+the neural network is never explicitly instructed to create these categories.
+
+They emerge because similar materials require similar internal representations for accurate prediction.
+
+---
+
+# Discovering New Materials
+
+Latent space is valuable not only for visualization,
+
+but also for materials discovery.
+
+Suppose a new crystal is projected into latent space.
+
+If it lies close to
+
+known high-temperature superconductors,
+
+it may exhibit similar behavior.
+
+Likewise,
+
+a candidate battery material located near successful cathode materials may deserve experimental investigation.
+
+Thus,
+
+latent space provides a powerful tool for
+
+**similarity search**.
+
+---
+
+# Interpolation in Latent Space
+
+Because latent space is continuous,
+
+it becomes possible to interpolate between materials.
+
+Conceptually,
+
+```text
+Material A
+
+•
+
+↓
+
+Intermediate Region
+
+↓
+
+•
+
+↓
+
+Material B
+```
+
+Materials located between known compounds may possess intermediate properties.
+
+This idea has inspired many generative models for inverse materials design.
+
+---
+
+# Latent Space Reflects the Training Objective
+
+An important point is that latent representations are **task-dependent**.
+
+Suppose we train one MEGNet model to predict
+
+formation energy,
+
+and another to predict
+
+band gap.
+
+Although both models analyze the same crystals,
+
+their latent spaces may differ substantially.
+
+The formation-energy model emphasizes
+
+thermodynamic stability.
+
+The band-gap model emphasizes
+
+electronic structure.
+
+Consequently,
+
+each model organizes materials differently.
+
+---
+
+# Limitations of Latent Representations
+
+Although latent space is extremely informative,
+
+it also has limitations.
+
+First,
+
+individual dimensions rarely possess clear physical interpretations.
+
+Unlike handcrafted descriptors,
+
+latent features are distributed representations.
+
+Second,
+
+visualizations produced by PCA,
+
+t-SNE,
+
+or UMAP inevitably lose information because they compress hundreds of dimensions into only two or three.
+
+Finally,
+
+the organization of latent space depends strongly on
+
+* dataset quality,
+* model architecture,
+* training objective.
+
+Therefore,
+
+latent-space visualizations should be interpreted carefully.
+
+---
+
+# Latent Space in Modern Materials Informatics
+
+Latent crystal representations have become central to many areas of materials informatics.
+
+They are widely used for
+
+* clustering material families,
+* identifying chemically similar compounds,
+* anomaly detection,
+* transfer learning,
+* active learning,
+* inverse materials design,
+* generative crystal models.
+
+Many recent graph neural network architectures build directly upon these learned representations.
+
+---
+
+# Summary
+
+The latent crystal representation is MEGNet's internal numerical description of an entire material.
+
+Beginning with learned atomic embeddings,
+
+successive message-passing layers integrate information from neighboring atoms until each node encodes its local chemical environment.
+
+Graph pooling then combines these updated node features into a single fixed-length vector representing the complete crystal.
+
+Crystals with similar chemistry and physical behavior naturally cluster together in this latent space, making it a valuable tool for visualization, similarity search, and materials discovery.
+
+However, latent representations describe **what** the network has learned—not **how** information moves through the crystal during learning.
+
+To understand that process, we must examine the flow of information itself.
+
+In the next section, **15.10.3 Message Passing Interpretation**, we will investigate how atomic information propagates across crystal graphs, how neighboring atoms influence one another during prediction, and how successive message-passing layers progressively construct a chemically meaningful representation of the entire crystal.
+
+## 15.10.3 Message Passing Interpretation: Understanding Information Flow in MEGNet
+
+So far, we have learned that MEGNet represents a crystal as a graph and gradually transforms this graph into a latent crystal representation.
+
+However, one important question remains unanswered:
+
+> **How does information actually travel through the graph?**
+
+This question is central to understanding Graph Neural Networks.
+
+Unlike conventional neural networks, where information flows through fixed layers, MEGNet continuously exchanges information **between neighboring atoms** through a process known as **message passing**.
+
+Understanding message passing is essential because it reveals **how local atomic environments influence the final prediction**.
+
+---
+
+# Revisiting the Crystal Graph
+
+Consider a simple crystal fragment.
+
+```text id="mp01"
+      O
+     /
+Si —— O
+     \
+      O
+```
+
+Each atom is represented as a node.
+
+Each chemical bond (or neighboring interaction) is represented as an edge.
+
+Initially,
+
+every node contains only its own atomic embedding.
+
+For example,
+
+```text id="mp02"
+Silicon
+
+↓
+
+Embedding
+
+Oxygen
+
+↓
+
+Embedding
+```
+
+At this point,
+
+the silicon atom has **no information** about the surrounding oxygen atoms.
+
+Similarly,
+
+each oxygen atom knows nothing about silicon.
+
+The graph consists of isolated node features connected only by edges.
+
+---
+
+# Why Message Passing Is Necessary
+
+Suppose we want to predict
+
+the band gap of silicon dioxide.
+
+The band gap is **not** determined by silicon alone.
+
+It depends on
+
+* the neighboring oxygen atoms,
+* bond lengths,
+* bond angles,
+* local coordination,
+* crystal symmetry.
+
+If silicon ignored its neighboring atoms,
+
+accurate prediction would be impossible.
+
+Therefore,
+
+the node features must exchange information.
+
+This exchange is message passing.
+
+---
+
+# Information Flow During One Message Passing Layer
+
+Consider again the SiO₂ fragment.
+
+Initially,
+
+```text id="mp03"
+Si
+
+↓
+
+Own Features Only
+```
+
+After one message-passing step,
+
+each neighboring oxygen sends information to silicon.
+
+Conceptually,
+
+```text id="mp04"
+      O
+
+      ↓
+
+O → Si ← O
+```
+
+The silicon node now combines
+
+* its own embedding,
+* information received from every neighboring oxygen.
+
+Its feature vector becomes
+
+```text id="mp05"
+Updated Silicon Features
+
+=
+
+Original Silicon Features
+
++
+
+Neighbor Information
+```
+
+The same process occurs simultaneously for every atom in the graph.
+
+---
+
+# Every Atom Learns From Its Neighbors
+
+Message passing is **symmetric**.
+
+Silicon learns from oxygen,
+
+but oxygen also learns from silicon.
+
+For example,
+
+```text id="mp06"
+Oxygen
+
+↓
+
+Original Features
+
++
+
+Neighbor Silicon Features
+
+↓
+
+Updated Oxygen Features
+```
+
+Thus,
+
+every node continuously updates its representation based on its local chemical environment.
+
+---
+
+# One Layer Means One-Hop Communication
+
+An important observation is that
+
+one message-passing layer only exchanges information between **direct neighbors**.
+
+Suppose the graph is
+
+```text id="mp07"
+A — B — C
+```
+
+After one layer,
+
+A receives information from B,
+
+and C receives information from B.
+
+However,
+
+A has **not yet received information from C**.
+
+The communication distance is only
+
+one edge.
+
+---
+
+# Two Message Passing Layers
+
+Now consider two consecutive message-passing layers.
+
+### Layer 1
+
+```text id="mp08"
+A ←→ B ←→ C
+```
+
+After Layer 1,
+
+B contains information from both A and C.
+
+### Layer 2
+
+During the second layer,
+
+B sends its updated information back.
+
+```text id="mp09"
+A ← B → C
+```
+
+Since B already knows about C,
+
+A now indirectly receives information originating from C.
+
+Consequently,
+
+after two layers,
+
+A has learned about atoms two hops away.
+
+---
+
+# Information Propagation
+
+As additional message-passing layers are added,
+
+information spreads progressively farther through the crystal.
+
+```text id="mp10"
+Layer 1
+
+Immediate Neighbors
+
+↓
+
+Layer 2
+
+Neighbors of Neighbors
+
+↓
+
+Layer 3
+
+Three-Hop Neighborhood
+
+↓
+
+...
+
+↓
+
+Entire Crystal
+```
+
+Eventually,
+
+each atom contains information describing a significant portion of the crystal.
+
+---
+
+# Chemical Interpretation
+
+Consider a transition-metal oxide.
+
+```text id="mp11"
+O
+
+↓
+
+Fe
+
+↓
+
+O
+```
+
+Initially,
+
+the iron atom knows only that it is iron.
+
+After message passing,
+
+its feature vector incorporates information about
+
+* surrounding oxygen atoms,
+* local bond distances,
+* coordination geometry,
+* neighboring transition metals.
+
+Consequently,
+
+the updated iron representation becomes
+
+a description of its **chemical environment**,
+
+rather than merely its atomic identity.
+
+---
+
+# Local Environment Is More Important Than Atomic Identity
+
+Two atoms of the same element can have very different environments.
+
+For example,
+
+consider two carbon atoms.
+
+One belongs to
+
+diamond.
+
+The other belongs to
+
+graphite.
+
+Initially,
+
+both possess identical atomic embeddings.
+
+```text id="mp12"
+Carbon
+
+↓
+
+Embedding
+```
+
+After message passing,
+
+their updated representations become very different.
+
+Diamond carbon receives messages corresponding to
+
+tetrahedral covalent bonding.
+
+Graphite carbon receives messages corresponding to
+
+planar sp² bonding.
+
+Although both atoms are carbon,
+
+their final node representations are no longer identical.
+
+The network has learned the importance of local structure.
+
+---
+
+# Message Passing Is Repeated
+
+A single message-passing layer captures only local information.
+
+Therefore,
+
+MEGNet stacks multiple graph network blocks.
+
+Conceptually,
+
+```text id="mp13"
+Input Graph
+
+↓
+
+Message Passing
+
+↓
+
+Updated Graph
+
+↓
+
+Message Passing
+
+↓
+
+Updated Graph
+
+↓
+
+Message Passing
+
+↓
+
+Final Graph Representation
+```
+
+Each successive layer increases the receptive field of every atom.
+
+---
+
+# What Information Is Actually Passed?
+
+A common misconception is that
+
+atoms simply transmit their embedding vectors.
+
+In reality,
+
+the transmitted message depends on
+
+* node features,
+* edge features,
+* global state features.
+
+Conceptually,
+
+```text id="mp14"
+Message
+
+=
+
+f(
+
+Atom Features,
+
+Bond Features,
+
+Global Features
+
+)
+```
+
+Therefore,
+
+the information exchanged already reflects
+
+chemical bonding
+
+and
+
+the overall crystal environment.
+
+This makes MEGNet significantly more expressive than models using only node features.
+
+---
+
+# Which Neighbors Matter Most?
+
+Not every neighboring atom contributes equally.
+
+Consider
+
+```text id="mp15"
+Central Atom
+
+↓
+
+Neighbor A
+
+Neighbor B
+
+Neighbor C
+```
+
+Some neighbors may exert
+
+strong influence,
+
+while others contribute relatively little.
+
+Later sections on
+
+* attention mechanisms,
+* saliency maps,
+* GNNExplainer,
+
+will show how researchers identify the most influential neighbors.
+
+---
+
+# Message Passing Learns Chemical Rules
+
+Although no chemical rules are explicitly programmed,
+
+message passing gradually learns relationships such as
+
+* oxygen strongly influences transition metals,
+* tetrahedral coordination differs from octahedral coordination,
+* long bonds contribute differently from short bonds,
+* local geometry affects electronic structure.
+
+These relationships emerge because they improve prediction accuracy.
+
+Thus,
+
+message passing serves as the mechanism through which chemical knowledge is learned.
+
+---
+
+# Visualizing Message Passing
+
+Researchers often visualize message passing using colored graphs.
+
+For example,
+
+important atoms may be highlighted.
+
+```text id="mp16"
+Large Contribution
+
+🔴
+
+Medium Contribution
+
+🟠
+
+Small Contribution
+
+🔵
+```
+
+Similarly,
+
+important bonds can be displayed using thicker edges.
+
+Such visualizations help explain why a particular prediction was made.
+
+---
+
+# Limitations of Message Passing Interpretation
+
+Although message passing provides valuable insight,
+
+interpreting it remains challenging.
+
+Several difficulties arise.
+
+First,
+
+messages are high-dimensional vectors,
+
+not simple numerical values.
+
+Second,
+
+multiple message-passing layers interact in complex nonlinear ways.
+
+Third,
+
+neighboring atoms influence one another simultaneously,
+
+making it difficult to isolate individual contributions.
+
+Consequently,
+
+additional explainability techniques are often required.
+
+---
+
+# Why Understanding Message Passing Matters
+
+Message passing is the mechanism through which MEGNet transforms
+
+isolated atomic embeddings
+
+into chemically meaningful crystal representations.
+
+Without message passing,
+
+every atom would remain independent,
+
+and the model could never learn
+
+* chemical bonding,
+* local coordination,
+* structural motifs,
+* long-range interactions.
+
+Understanding message passing therefore provides insight into **how MEGNet reasons about crystal structures**.
+
+---
+
+# Summary
+
+Message passing is the core computational process that enables MEGNet to learn from crystal graphs.
+
+During each message-passing layer,
+
+every atom exchanges information with its neighbors,
+
+allowing node features to evolve from simple atomic embeddings into rich descriptions of local chemical environments.
+
+By stacking multiple graph network layers,
+
+information propagates progressively farther through the crystal,
+
+ultimately enabling the model to build a comprehensive representation of the entire material.
+
+However,
+
+message passing alone does not tell us **which atoms or bonds were most responsible for a specific prediction**.
+
+To answer that question,
+
+we require methods that quantify the importance of different parts of the crystal graph.
+
+In the next section, **15.10.4 Feature Attribution Methods**, we will study techniques that identify the atoms, bonds, and structural motifs that contribute most strongly to MEGNet's predictions, providing a direct explanation for individual material property predictions.
+
+## 15.10.4 Feature Attribution Methods: Identifying the Most Important Atoms and Bonds
+
+In the previous section, we learned that information flows through a crystal graph via message passing.
+
+Every atom exchanges information with its neighbors, gradually building a representation of the entire crystal.
+
+Although this explains **how** information propagates, it does not answer another important question:
+
+> **Which atoms were actually responsible for the final prediction?**
+
+Similarly,
+
+we may ask
+
+* Which chemical bonds were most influential?
+* Which local atomic environments dominated the prediction?
+* Which part of the crystal should a scientist modify to improve a material property?
+
+Answering these questions requires **feature attribution methods**.
+
+These methods attempt to measure the contribution of different parts of the input graph to the model's prediction.
+
+---
+
+# What Is Feature Attribution?
+
+Feature attribution is the process of assigning an **importance score** to each input feature.
+
+For an ordinary machine learning model,
+
+the input features might be
+
+* density,
+* atomic radius,
+* electronegativity,
+* lattice constant.
+
+Feature attribution determines
+
+how much each feature contributed to the prediction.
+
+Graph neural networks are different.
+
+The input is not a simple feature vector.
+
+Instead, the input consists of
+
+* nodes,
+* edges,
+* graph connectivity,
+* node features,
+* edge features,
+* global features.
+
+Therefore,
+
+feature attribution becomes considerably more challenging.
+
+---
+
+# A Simple Example
+
+Suppose MEGNet predicts
+
+```text id="fa01"
+Band Gap
+
+=
+
+2.31 eV
+```
+
+The crystal contains
+
+```text id="fa02"
+Silicon
+
+Oxygen
+
+Oxygen
+```
+
+A feature attribution method may produce
+
+| Atom | Importance |
+| ---- | ---------: |
+| Si   |       0.48 |
+| O₁   |       0.29 |
+| O₂   |       0.23 |
+
+This result suggests that
+
+the silicon atom contributed most strongly to the prediction.
+
+Notice that
+
+the importance scores sum to
+
+1.0,
+
+making them easy to interpret.
+
+---
+
+# Bond Attribution
+
+Sometimes,
+
+the most important information lies not in the atoms,
+
+but in the bonds connecting them.
+
+Suppose a crystal contains
+
+```text id="fa03"
+Fe — O
+
+Fe — O
+
+Fe — Fe
+```
+
+A feature attribution algorithm might produce
+
+| Bond  | Importance |
+| ----- | ---------: |
+| Fe–O  |       0.41 |
+| Fe–O  |       0.38 |
+| Fe–Fe |       0.21 |
+
+This result suggests that
+
+metal–oxygen interactions dominate the prediction.
+
+---
+
+# Local Environment Attribution
+
+Instead of evaluating atoms or bonds individually,
+
+some methods evaluate complete local environments.
+
+For example,
+
+consider
+
+```text id="fa04"
+Central Atom
+
+↓
+
+Six Neighboring Oxygen Atoms
+
+↓
+
+Octahedral Coordination
+```
+
+The attribution algorithm may conclude
+
+that the **entire octahedral environment**
+
+is primarily responsible for the predicted formation energy.
+
+This type of interpretation is particularly useful in crystallography.
+
+---
+
+# Importance Scores
+
+Feature attribution methods typically assign a numerical importance score.
+
+For example,
+
+| Feature | Score |
+| ------- | ----: |
+| Atom A  |  0.63 |
+| Atom B  |  0.24 |
+| Atom C  |  0.13 |
+
+Higher scores indicate
+
+greater influence on the prediction.
+
+A score near zero suggests
+
+that the corresponding atom had little effect.
+
+---
+
+# Positive and Negative Contributions
+
+Not all features increase the prediction.
+
+Some decrease it.
+
+Suppose MEGNet predicts
+
+formation energy.
+
+A feature attribution analysis might reveal
+
+| Feature                  | Contribution |
+| ------------------------ | -----------: |
+| Strong Metal–Oxygen Bond |        −0.81 |
+| Long Bond Length         |        +0.44 |
+| Vacancy Defect           |        +0.29 |
+
+Negative contributions reduce the predicted energy,
+
+often indicating increased stability.
+
+Positive contributions increase the predicted energy,
+
+often indicating destabilization.
+
+Thus,
+
+feature attribution provides not only importance,
+
+but also direction.
+
+---
+
+# Visualizing Feature Importance
+
+Importance scores are usually displayed directly on the crystal structure.
+
+For example,
+
+important atoms may appear
+
+larger,
+
+brighter,
+
+or warmer in color.
+
+Conceptually,
+
+```text id="fa05"
+High Importance
+
+🔴
+
+Medium Importance
+
+🟠
+
+Low Importance
+
+🔵
+```
+
+Similarly,
+
+important bonds may be displayed using thicker lines.
+
+These visualizations allow researchers to identify chemically significant regions immediately.
+
+---
+
+# Example: Lithium-Ion Battery Material
+
+Suppose MEGNet predicts
+
+a high intercalation voltage
+
+for a lithium transition-metal oxide.
+
+Feature attribution may reveal
+
+```text id="fa06"
+High Importance
+
+↓
+
+Transition Metal
+
+↓
+
+Neighboring Oxygen
+
+↓
+
+Li Pathway
+```
+
+This suggests
+
+that
+
+the transition-metal–oxygen network
+
+is primarily responsible for the voltage prediction.
+
+Such information guides future material design.
+
+---
+
+# Feature Attribution Is Local
+
+An important property of feature attribution methods is that
+
+they usually explain
+
+**one prediction at a time**.
+
+For example,
+
+consider two crystals.
+
+```text id="fa07"
+Crystal A
+
+↓
+
+Band Gap
+
+2.1 eV
+
+Crystal B
+
+↓
+
+Band Gap
+
+3.8 eV
+```
+
+The important atoms in Crystal A
+
+may be completely different
+
+from those in Crystal B.
+
+Consequently,
+
+feature attribution provides
+
+**local explanations**,
+
+not global chemical rules.
+
+---
+
+# Different Attribution Methods
+
+Many algorithms have been developed for neural network interpretation.
+
+Some of the most widely used include
+
+* Gradient Saliency
+* Integrated Gradients
+* Grad-CAM (adapted for graphs)
+* SHAP
+* LIME
+* GNNExplainer
+* GraphMask
+
+Each method computes importance differently.
+
+Some analyze gradients,
+
+others perturb the input,
+
+while others learn explanatory subgraphs.
+
+---
+
+# Perturbation-Based Attribution
+
+One intuitive approach is
+
+to remove part of the input
+
+and observe what happens.
+
+Suppose an oxygen atom is removed.
+
+If the prediction changes dramatically,
+
+the oxygen atom was probably important.
+
+Conceptually,
+
+```text id="fa08"
+Original Crystal
+
+↓
+
+Prediction
+
+↓
+
+Remove Atom
+
+↓
+
+New Prediction
+
+↓
+
+Large Difference
+
+↓
+
+Important Atom
+```
+
+This approach is easy to understand,
+
+although computationally expensive.
+
+---
+
+# Gradient-Based Attribution
+
+Another common strategy uses gradients.
+
+Instead of removing atoms,
+
+we ask
+
+> **How sensitive is the prediction to small changes in each input feature?**
+
+Large gradients indicate
+
+that small changes strongly influence the prediction.
+
+Small gradients indicate
+
+relatively unimportant features.
+
+Gradient-based methods are generally much faster than perturbation methods.
+
+---
+
+# Scientific Applications
+
+Feature attribution has become increasingly important in materials informatics.
+
+Researchers use it to investigate
+
+* catalytic active sites,
+* defect chemistry,
+* dopant effectiveness,
+* ionic diffusion pathways,
+* structural instabilities,
+* superconducting motifs,
+* magnetic interactions.
+
+Rather than simply predicting a property,
+
+the model begins to explain
+
+**why** the property exists.
+
+---
+
+# Limitations
+
+Feature attribution methods are extremely useful,
+
+but they are not perfect.
+
+Several limitations should be recognized.
+
+First,
+
+different attribution algorithms may produce different explanations for the same prediction.
+
+Second,
+
+importance scores indicate
+
+correlation,
+
+not necessarily causation.
+
+Finally,
+
+graph neural networks contain highly nonlinear interactions,
+
+making exact attribution inherently difficult.
+
+Consequently,
+
+feature attribution should always be interpreted alongside chemical knowledge and experimental evidence.
+
+---
+
+# From Attribution to Explainable AI
+
+Feature attribution represents one important branch of explainable artificial intelligence.
+
+However,
+
+modern explainability extends beyond assigning importance scores.
+
+Researchers also wish to
+
+* identify the smallest subgraph responsible for a prediction,
+* understand how gradients propagate,
+* quantify uncertainty,
+* explain predictions in terms of human-understandable concepts.
+
+These objectives require more advanced explainability techniques.
+
+---
+
+# Summary
+
+Feature attribution methods attempt to identify the atoms, bonds, and local structural environments that contribute most strongly to a MEGNet prediction.
+
+Unlike message-passing analysis, which explains how information flows through the graph, feature attribution focuses on **which parts of the graph are most responsible for a specific prediction**.
+
+These methods provide valuable scientific insight by highlighting chemically significant regions of a crystal, supporting hypothesis generation, materials design, and model validation.
+
+However, feature attribution alone cannot fully explain the reasoning of a graph neural network.
+
+Modern explainable AI includes additional techniques that reveal influential subgraphs, trace gradient flow, and provide more faithful interpretations of complex graph models.
+
+In the next section, **15.10.5 Explainable AI for Graph Neural Networks**, we will explore advanced interpretation methods including **Saliency Maps, Integrated Gradients, GNNExplainer, GraphMask, and SHAP**, and learn how these techniques provide deeper insight into MEGNet's predictions while preserving scientific interpretability.
+
+## 15.10.6 Uncertainty Estimation: Knowing When MEGNet Can Be Trusted
+
+Throughout this chapter, we have focused on improving the predictive accuracy of MEGNet.
+
+Suppose our trained model predicts
+
+```text id="unc01"
+Formation Energy
+
+=
+
+−2.84 eV/atom
+```
+
+The prediction appears reasonable.
+
+However, an important question remains:
+
+> **How confident is the model in this prediction?**
+
+A prediction without an estimate of uncertainty can be misleading.
+
+Two predictions may have identical values,
+
+yet one may be highly reliable while the other may be little more than an educated guess.
+
+Understanding prediction uncertainty is therefore a critical aspect of modern materials informatics.
+
+---
+
+# Why Uncertainty Matters
+
+Consider two hypothetical crystals.
+
+### Crystal A
+
+```text id="unc02"
+Predicted Band Gap
+
+=
+
+2.10 eV
+```
+
+Estimated uncertainty
+
+```text id="unc03"
+±0.03 eV
+```
+
+### Crystal B
+
+```text id="unc04"
+Predicted Band Gap
+
+=
+
+2.10 eV
+```
+
+Estimated uncertainty
+
+```text id="unc05"
+±1.25 eV
+```
+
+Although both predictions are identical,
+
+their reliability is dramatically different.
+
+The first prediction is highly trustworthy.
+
+The second should be treated with considerable caution.
+
+Thus,
+
+a complete machine learning prediction consists of
+
+```text id="unc06"
+Prediction
+
++
+
+Uncertainty
+```
+
+rather than
+
+```text id="unc07"
+Prediction Only
+```
+
+---
+
+# What Is Uncertainty?
+
+Uncertainty measures
+
+how unsure a model is about its prediction.
+
+In machine learning,
+
+uncertainty generally reflects one of two situations.
+
+1. The model has **insufficient knowledge**.
+
+2. The data themselves contain **noise or ambiguity**.
+
+These two situations correspond to two different types of uncertainty.
+
+---
+
+# Aleatoric Uncertainty
+
+The first type is called **aleatoric uncertainty**.
+
+Aleatoric uncertainty originates from the data themselves.
+
+Examples include
+
+* experimental measurement error,
+* thermal fluctuations,
+* instrument noise,
+* imperfect DFT calculations,
+* inconsistent labels.
+
+Even a perfect machine learning model cannot eliminate this uncertainty because it is inherent in the observations.
+
+---
+
+### Example
+
+Suppose several laboratories measure
+
+the thermal conductivity
+
+of the same material.
+
+Their results might be
+
+| Laboratory | Measured Value (W·m⁻¹·K⁻¹) |
+| ---------- | -------------------------: |
+| A          |                        152 |
+| B          |                        149 |
+| C          |                        154 |
+| D          |                        151 |
+
+The variation arises from experimental uncertainty,
+
+not from the neural network.
+
+This is aleatoric uncertainty.
+
+---
+
+# Epistemic Uncertainty
+
+The second type is **epistemic uncertainty**.
+
+This uncertainty reflects
+
+the model's lack of knowledge.
+
+It occurs because
+
+* the training dataset is too small,
+* certain crystal types are missing,
+* the model has never encountered similar materials.
+
+Unlike aleatoric uncertainty,
+
+epistemic uncertainty **can decrease** as more training data become available.
+
+---
+
+### Example
+
+Suppose the training dataset contains
+
+thousands of oxides
+
+but very few nitrides.
+
+When predicting a new nitride,
+
+MEGNet may be uncertain because
+
+it has limited prior experience with this class of materials.
+
+The uncertainty reflects
+
+missing knowledge,
+
+not noisy measurements.
+
+---
+
+# Comparing the Two Types
+
+| Property                  | Aleatoric          | Epistemic            |
+| ------------------------- | ------------------ | -------------------- |
+| Source                    | Noisy data         | Limited knowledge    |
+| Reduced with more data?   | No                 | Yes                  |
+| Present in perfect model? | Yes                | No                   |
+| Typical Cause             | Experimental error | Sparse training data |
+
+Understanding this distinction is essential when interpreting model confidence.
+
+---
+
+# Why Materials Informatics Needs Uncertainty
+
+Materials discovery often involves exploring
+
+previously unknown compounds.
+
+For many candidate materials,
+
+the model operates far from its training distribution.
+
+Without uncertainty estimation,
+
+the model may produce
+
+confident-looking predictions
+
+that are actually unreliable.
+
+Uncertainty estimation helps researchers distinguish between
+
+```text id="unc08"
+Reliable Prediction
+
+↓
+
+Experimental Validation
+```
+
+and
+
+```text id="unc09"
+Highly Uncertain Prediction
+
+↓
+
+Collect More Data First
+```
+
+This saves both time and experimental resources.
+
+---
+
+# Confidence Intervals
+
+A common way to express uncertainty is through a confidence interval.
+
+For example,
+
+```text id="unc10"
+Bulk Modulus
+
+=
+
+165 ± 4 GPa
+```
+
+The predicted value is
+
+165 GPa,
+
+while the model estimates that the true value is likely to lie within
+
+approximately
+
+161–169 GPa.
+
+Confidence intervals communicate both
+
+the prediction
+
+and
+
+its reliability.
+
+---
+
+# Monte Carlo Dropout
+
+One of the simplest uncertainty estimation techniques is
+
+**Monte Carlo Dropout**.
+
+Normally,
+
+dropout is disabled during inference.
+
+Monte Carlo Dropout intentionally leaves dropout active.
+
+The same crystal is evaluated multiple times.
+
+```text id="unc11"
+Crystal
+
+↓
+
+Prediction 1
+
+↓
+
+Prediction 2
+
+↓
+
+Prediction 3
+
+↓
+
+Prediction 4
+
+↓
+
+Prediction 5
+```
+
+Because different neurons are randomly deactivated,
+
+the predictions vary slightly.
+
+Large variation indicates
+
+high uncertainty.
+
+Small variation indicates
+
+high confidence.
+
+---
+
+### Example
+
+Suppose five predictions are obtained.
+
+| Run | Band Gap (eV) |
+| --: | ------------: |
+|   1 |          1.95 |
+|   2 |          1.98 |
+|   3 |          1.97 |
+|   4 |          1.94 |
+|   5 |          1.96 |
+
+The predictions are tightly clustered.
+
+The model appears confident.
+
+Now consider
+
+| Run | Band Gap (eV) |
+| --: | ------------: |
+|   1 |          0.82 |
+|   2 |          2.74 |
+|   3 |          1.35 |
+|   4 |          3.01 |
+|   5 |          1.89 |
+
+The predictions vary dramatically,
+
+indicating substantial uncertainty.
+
+---
+
+# Deep Ensembles
+
+Another highly effective approach is
+
+**Deep Ensembles**.
+
+Instead of training
+
+one MEGNet model,
+
+we train
+
+multiple independent models.
+
+```text id="unc12"
+MEGNet 1
+
+↓
+
+MEGNet 2
+
+↓
+
+MEGNet 3
+
+↓
+
+MEGNet 4
+
+↓
+
+Average Prediction
+```
+
+Each model begins with different random initialization.
+
+Agreement among the models implies
+
+high confidence.
+
+Disagreement indicates
+
+greater uncertainty.
+
+---
+
+# Advantages of Deep Ensembles
+
+Deep ensembles are widely regarded as one of the most reliable uncertainty estimation methods because they
+
+* capture model uncertainty effectively,
+* require no architectural modifications,
+* perform well across many applications.
+
+The primary disadvantage is computational cost,
+
+since multiple models must be trained.
+
+---
+
+# Bayesian Neural Networks
+
+A more advanced approach is the
+
+**Bayesian Neural Network (BNN)**.
+
+In ordinary neural networks,
+
+each parameter has
+
+one fixed value.
+
+For example,
+
+```text id="unc13"
+Weight
+
+=
+
+0.42
+```
+
+In Bayesian neural networks,
+
+every parameter is treated as
+
+a probability distribution.
+
+```text id="unc14"
+Weight
+
+~
+
+Normal Distribution
+```
+
+Rather than predicting
+
+one value,
+
+the model predicts
+
+a distribution of possible values.
+
+This naturally provides uncertainty estimates.
+
+---
+
+# Out-of-Distribution Detection
+
+One major challenge in materials informatics is
+
+predicting materials that differ substantially from those in the training set.
+
+Such materials are called
+
+**out-of-distribution (OOD)** samples.
+
+For example,
+
+suppose MEGNet was trained almost exclusively on
+
+* oxides,
+* nitrides,
+* carbides.
+
+Now it encounters
+
+a complex high-entropy alloy.
+
+Because this material lies outside the training distribution,
+
+the model should report
+
+high uncertainty.
+
+OOD detection is therefore an important safeguard against overconfident predictions.
+
+---
+
+# Uncertainty in Active Learning
+
+Uncertainty estimation is a key component of
+
+**active learning**.
+
+Instead of randomly selecting new materials for expensive DFT calculations,
+
+the algorithm identifies
+
+the materials with the highest uncertainty.
+
+Conceptually,
+
+```text id="unc15"
+Candidate Materials
+
+↓
+
+Predict Properties
+
+↓
+
+Estimate Uncertainty
+
+↓
+
+Select Most Uncertain Materials
+
+↓
+
+Perform DFT
+
+↓
+
+Retrain Model
+```
+
+This strategy maximizes information gain while minimizing computational cost.
+
+---
+
+# Scientific Applications
+
+Uncertainty estimation has become increasingly important in
+
+* autonomous materials discovery,
+* high-throughput screening,
+* inverse materials design,
+* Bayesian optimization,
+* experimental planning,
+* robotics-driven laboratories.
+
+Rather than treating every prediction equally,
+
+scientists prioritize predictions
+
+that are both
+
+accurate
+
+and
+
+confident.
+
+---
+
+# Limitations
+
+Although uncertainty estimation is powerful,
+
+it is not perfect.
+
+Several challenges remain.
+
+First,
+
+different uncertainty estimation methods may produce different confidence estimates.
+
+Second,
+
+uncertainty itself must be calibrated.
+
+A model claiming
+
+95% confidence
+
+should indeed be correct
+
+approximately 95% of the time.
+
+Finally,
+
+accurate uncertainty estimation often increases computational cost.
+
+Consequently,
+
+practical applications require balancing
+
+accuracy,
+
+interpretability,
+
+and
+
+efficiency.
+
+---
+
+# From Prediction to Scientific Decision-Making
+
+Traditional machine learning answers
+
+> **What is the predicted property?**
+
+Modern materials informatics asks two additional questions.
+
+> **Why was this prediction made?**
+
+and
+
+> **How confident is the prediction?**
+
+Together,
+
+prediction,
+
+interpretability,
+
+and
+
+uncertainty
+
+form the foundation of trustworthy AI for scientific research.
+
+---
+
+# Summary
+
+Uncertainty estimation quantifies the confidence of a MEGNet prediction, enabling researchers to distinguish reliable predictions from uncertain ones.
+
+Two principal forms of uncertainty exist:
+
+* **Aleatoric uncertainty**, arising from inherent noise in the data.
+* **Epistemic uncertainty**, arising from limited model knowledge and reducible through additional training data.
+
+Methods such as Monte Carlo Dropout, Deep Ensembles, Bayesian Neural Networks, and out-of-distribution detection allow MEGNet to estimate prediction confidence and support safer decision-making in materials discovery.
+
+Combined with interpretability techniques, uncertainty estimation transforms graph neural networks into trustworthy scientific tools suitable for high-throughput screening, autonomous experimentation, and AI-assisted materials design.
+
+However, theoretical understanding alone is not sufficient for research.
+
+To fully appreciate these concepts, we must see them applied to real materials.
+
+In the next section, **15.10.7 Case Studies: Interpreting Real MEGNet Predictions**, we will analyze published examples involving **formation energy, band gap, elastic properties, and battery materials**, demonstrating how interpretability and uncertainty estimation work together to reveal the scientific reasoning behind MEGNet's predictions in practical materials informatics research.
+
+## 15.10.7 Case Studies: Interpreting Real MEGNet Predictions
+
+Throughout this chapter, we have explored the theoretical foundations of interpreting Graph Neural Networks.
+
+We learned
+
+* how atomic embeddings are learned,
+* how latent crystal representations emerge,
+* how message passing propagates chemical information,
+* how feature attribution identifies important atoms,
+* how explainable AI techniques interpret predictions,
+* how uncertainty estimation measures model confidence.
+
+Although these concepts are important individually,
+
+their real value becomes apparent only when they are applied to actual materials science problems.
+
+In this section, we will examine several representative case studies that demonstrate how researchers use MEGNet to gain scientific insight rather than merely produce accurate predictions.
+
+The goal is not only to understand **what** the model predicts, but also **why** it makes those predictions and **how much confidence** we should place in them.
+
+---
+
+# Case Study 1 — Formation Energy Prediction
+
+Formation energy is one of the most common targets in materials informatics because it is directly related to thermodynamic stability.
+
+Suppose a trained MEGNet model predicts the formation energy of a previously unseen oxide.
+
+```text id="cs01"
+Predicted Formation Energy
+
+=
+
+−3.12 eV/atom
+```
+
+with an uncertainty estimate of
+
+```text id="cs02"
+±0.04 eV/atom
+```
+
+The small uncertainty indicates that the prediction is highly reliable.
+
+However, the numerical value alone provides little scientific understanding.
+
+---
+
+## Step 1 — Feature Attribution
+
+Feature attribution highlights the atoms contributing most strongly to the prediction.
+
+| Atom             | Importance |
+| ---------------- | ---------: |
+| Transition Metal |       0.53 |
+| Oxygen 1         |       0.19 |
+| Oxygen 2         |       0.16 |
+| Oxygen 3         |       0.12 |
+
+The transition-metal atom contributes more than half of the prediction.
+
+This suggests that
+
+the local transition-metal environment largely determines the crystal's stability.
+
+---
+
+## Step 2 — Message Passing Interpretation
+
+Analyzing the message-passing layers reveals that
+
+the strongest information exchange occurs between
+
+```text id="cs03"
+Transition Metal
+
+↓
+
+Nearest Oxygen Atoms
+```
+
+Long-range interactions contribute relatively little.
+
+This indicates that
+
+local coordination dominates the formation energy.
+
+---
+
+## Step 3 — Scientific Interpretation
+
+From a materials science perspective,
+
+this result is reasonable.
+
+Formation energy depends strongly on
+
+* bond strength,
+* oxidation state,
+* local coordination,
+* crystal chemistry.
+
+The explanation therefore agrees with established physical principles.
+
+---
+
+# Case Study 2 — Band Gap Prediction
+
+Electronic band gap is considerably more complex than formation energy because it depends on
+
+* orbital hybridization,
+* crystal symmetry,
+* chemical bonding,
+* long-range electronic interactions.
+
+Suppose MEGNet predicts
+
+```text id="cs04"
+Band Gap
+
+=
+
+2.84 eV
+```
+
+---
+
+## Atomic Importance
+
+Feature attribution identifies
+
+| Region                      | Relative Importance |
+| --------------------------- | ------------------: |
+| Transition Metal d Orbitals |                0.47 |
+| Oxygen p Orbitals           |                0.35 |
+| Remaining Atoms             |                0.18 |
+
+Although MEGNet never explicitly receives orbital information,
+
+it has learned representations that correlate with these electronic interactions.
+
+---
+
+## Latent Representation
+
+Projecting the latent crystal representation using UMAP reveals
+
+that the material lies close to
+
+known semiconductors.
+
+Conceptually,
+
+```text id="cs05"
+Known Semiconductors
+
+•••••
+
+↓
+
+New Material
+
+•
+
+↓
+
+Wide Band Gap Oxides
+
+•••••
+```
+
+This suggests that
+
+the model recognizes similarities with previously studied semiconductor families.
+
+---
+
+## Scientific Conclusion
+
+The prediction is not merely numerical.
+
+The latent representation indicates
+
+that the new material belongs to a chemically meaningful family.
+
+This increases confidence in the prediction.
+
+---
+
+# Case Study 3 — Elastic Modulus Prediction
+
+Elastic properties depend strongly on
+
+* bond stiffness,
+* crystal packing,
+* coordination geometry.
+
+Suppose MEGNet predicts
+
+```text id="cs06"
+Bulk Modulus
+
+=
+
+215 GPa
+```
+
+---
+
+## Graph Interpretation
+
+GNNExplainer identifies the following explanatory subgraph.
+
+```text id="cs07"
+Central Metal Atom
+
+↓
+
+Six Strong Covalent Bonds
+
+↓
+
+Nearest Neighbor Network
+```
+
+Remarkably,
+
+only a small fraction of the entire crystal graph is required to reproduce the prediction.
+
+---
+
+## Physical Interpretation
+
+The identified subgraph corresponds to
+
+the primary load-bearing region of the crystal.
+
+This agrees with classical elasticity theory,
+
+which predicts that
+
+strong directional bonds dominate elastic stiffness.
+
+---
+
+# Case Study 4 — Battery Cathode Materials
+
+Suppose MEGNet is trained to predict
+
+average lithium intercalation voltage.
+
+A candidate material produces
+
+```text id="cs08"
+Predicted Voltage
+
+=
+
+4.18 V
+```
+
+---
+
+## Explainability Analysis
+
+Integrated Gradients highlight
+
+```text id="cs09"
+Transition Metal
+
+↓
+
+Oxygen Network
+
+↓
+
+Lithium Diffusion Path
+```
+
+The lithium atoms themselves contribute surprisingly little.
+
+Instead,
+
+the transition-metal–oxygen framework dominates the prediction.
+
+---
+
+## Scientific Insight
+
+This observation agrees with battery chemistry.
+
+The voltage is controlled primarily by
+
+changes in transition-metal oxidation states,
+
+rather than by lithium alone.
+
+Thus,
+
+the explanation reinforces existing electrochemical theory.
+
+---
+
+# Case Study 5 — Detecting an Unreliable Prediction
+
+Suppose MEGNet predicts
+
+```text id="cs10"
+Thermal Conductivity
+
+=
+
+920 W/m·K
+```
+
+At first glance,
+
+this appears impressive.
+
+However,
+
+uncertainty estimation produces
+
+```text id="cs11"
+±430 W/m·K
+```
+
+The uncertainty is extremely large.
+
+---
+
+## Why Is the Uncertainty High?
+
+Inspection of the dataset reveals
+
+that
+
+the crystal belongs to
+
+a family almost absent from the training database.
+
+Consequently,
+
+the model is making an extrapolation.
+
+---
+
+## Recommended Action
+
+Instead of trusting the prediction immediately,
+
+researchers should
+
+* perform DFT calculations,
+* obtain experimental measurements,
+* expand the training dataset.
+
+This example illustrates why uncertainty estimation is essential for responsible materials discovery.
+
+---
+
+# Case Study 6 — Discovering Similar Materials Through Latent Space
+
+Suppose researchers develop
+
+a new thermoelectric material.
+
+After projection into latent space,
+
+the crystal appears close to
+
+several well-known thermoelectric compounds.
+
+```text id="cs12"
+Known Thermoelectrics
+
+••••
+
+↓
+
+New Material
+
+•
+
+↓
+
+Similar Compounds
+
+•••
+```
+
+Although the material has never been experimentally tested,
+
+its location within latent space suggests
+
+that it may possess similar transport properties.
+
+This approach is increasingly used for
+
+candidate screening
+
+before expensive calculations.
+
+---
+
+# Case Study 7 — Detecting Dataset Bias
+
+Interpretability can also reveal problems with the training data.
+
+Suppose saliency maps consistently emphasize
+
+crystal volume,
+
+while largely ignoring
+
+chemical composition.
+
+This observation raises important questions.
+
+Perhaps
+
+* the dataset contains mostly one chemical family,
+* composition varies little,
+* volume accidentally correlates with the target property.
+
+The model may therefore have learned
+
+a shortcut
+
+rather than genuine chemistry.
+
+Interpretability helps detect such hidden biases before deployment.
+
+---
+
+# Lessons from These Case Studies
+
+Although the predicted properties differ,
+
+the workflow remains remarkably consistent.
+
+```text id="cs13"
+Prediction
+
+↓
+
+Interpretation
+
+↓
+
+Uncertainty
+
+↓
+
+Scientific Reasoning
+
+↓
+
+Materials Decision
+```
+
+Every successful materials informatics study follows this general strategy.
+
+The machine learning model becomes
+
+not merely a predictor,
+
+but a scientific assistant.
+
+---
+
+# Combining Multiple Interpretation Techniques
+
+In practice,
+
+researchers rarely rely on a single explainability method.
+
+Instead,
+
+they combine several complementary approaches.
+
+| Technique                  | Purpose                            |
+| -------------------------- | ---------------------------------- |
+| Atomic Embeddings          | Understand learned chemistry       |
+| Latent Space Visualization | Identify similar materials         |
+| Message Passing Analysis   | Study information flow             |
+| Feature Attribution        | Identify important atoms and bonds |
+| Integrated Gradients       | Measure feature sensitivity        |
+| GNNExplainer               | Find explanatory subgraphs         |
+| SHAP                       | Quantify feature contributions     |
+| Uncertainty Estimation     | Assess prediction confidence       |
+
+Using multiple methods provides
+
+more reliable scientific conclusions.
+
+---
+
+# From Prediction to Scientific Discovery
+
+The true strength of MEGNet lies not in achieving a slightly lower prediction error,
+
+but in enabling scientific discovery.
+
+A successful model should help researchers
+
+* understand chemical bonding,
+* recognize structural motifs,
+* identify important atomic environments,
+* estimate confidence,
+* prioritize experiments,
+* accelerate materials discovery.
+
+When combined with domain knowledge,
+
+graph neural networks become partners in scientific research rather than simple prediction engines.
+
+---
+
+# Summary
+
+The case studies presented in this section demonstrate how MEGNet predictions can be interpreted using atomic embeddings, latent representations, message-passing analysis, feature attribution, explainable AI methods, and uncertainty estimation.
+
+Across diverse applications—including formation energy, band gap, elastic properties, battery materials, and thermoelectric compounds—the same interpretability framework consistently transforms numerical predictions into scientifically meaningful insights.
+
+Rather than asking only **"What property does the model predict?"**, researchers now ask three complementary questions:
+
+* **What is the predicted property?**
+* **Why did the model make this prediction?**
+* **How confident is the prediction?**
+
+Answering these questions enables graph neural networks to support trustworthy, explainable, and scientifically grounded materials discovery.
+
+---
+
+# Chapter 15 Conclusion
+
+With the completion of **Section 15.10**, we have finished our comprehensive study of **MEGNet (Materials Graph Network)**.
+
+Beginning with graph construction, we explored message passing, graph network blocks, training strategies, optimization methods, interpretability, explainable AI, and uncertainty estimation.
+
+You should now understand not only how to train a MEGNet model for materials property prediction, but also how to interpret its predictions, evaluate its reliability, and extract meaningful scientific insights from its learned representations.
+
+This knowledge forms a strong foundation for modern graph-based materials informatics.
+
+In the next chapter, we will build upon this foundation by studying **M3GNet (Materials 3-Body Graph Network)**, a next-generation graph neural network that extends MEGNet by incorporating explicit three-body interactions, enabling significantly improved prediction of structural, energetic, and dynamical properties while providing a unified framework for interatomic potentials and materials property prediction.
+
+## 15.11 Chapter Summary
+
+In this chapter, we conducted a comprehensive study of the **Materials Graph Network (MEGNet)**, one of the most influential graph neural network architectures developed for materials informatics. Unlike traditional machine learning methods that rely on handcrafted descriptors, MEGNet learns directly from crystal structures by representing materials as graphs and applying message-passing operations to capture complex atomic interactions.
+
+The chapter began by introducing the motivation behind graph neural networks in materials science. We discussed the limitations of conventional descriptor-based machine learning and explained why crystal structures are naturally represented as graphs, where atoms correspond to nodes, chemical bonds correspond to edges, and the entire crystal is represented by global state variables.
+
+We then examined the architecture of MEGNet in detail. We learned how node features, edge features, and global state features are initialized and updated through successive graph network blocks. Unlike earlier graph neural network models, MEGNet updates all three types of features simultaneously, enabling the model to capture not only local atomic environments but also global material characteristics. We also studied the mathematical foundations of message passing and understood how repeated information exchange allows each atom to gradually build a richer representation of its surrounding chemical environment.
+
+A significant portion of the chapter focused on graph pooling. Since crystals contain different numbers of atoms, graph pooling converts variable-sized crystal graphs into fixed-length vectors suitable for prediction tasks. We explored several pooling strategies, including sum pooling, mean pooling, max pooling, and set2set pooling, and discussed their advantages and limitations for different materials science applications.
+
+The training procedure of MEGNet was then presented step by step. We examined dataset preparation, graph construction, batching, forward propagation, loss computation, backpropagation, and parameter optimization. We discussed commonly used loss functions for regression and classification problems, optimization algorithms such as Adam, learning-rate scheduling, early stopping, and techniques for preventing overfitting. These concepts provide the practical knowledge required to train MEGNet models on real materials datasets.
+
+The chapter also introduced transfer learning within the MEGNet framework. We learned how models pretrained on large datasets, such as formation-energy databases, can be fine-tuned for smaller property-prediction tasks. This approach enables researchers to achieve high predictive accuracy even when only limited experimental data are available.
+
+A major emphasis of the chapter was model interpretability. We investigated how MEGNet automatically learns chemically meaningful atomic embeddings that often reflect periodic trends without explicitly encoding chemical knowledge. We studied latent crystal representations, which organize materials into meaningful regions of high-dimensional feature space, allowing researchers to identify chemically similar compounds and discover hidden relationships among materials.
+
+The chapter further explored message-passing interpretation, demonstrating how information propagates through crystal graphs and how local atomic environments influence final predictions. Building on this foundation, we introduced feature attribution methods that identify the atoms, bonds, and structural motifs most responsible for a given prediction.
+
+Modern explainable artificial intelligence techniques were then discussed in detail. We examined gradient-based methods such as Saliency Maps and Integrated Gradients, graph-specific approaches including GNNExplainer and GraphMask, and game-theoretic methods such as SHAP. Together, these approaches transform MEGNet from a purely predictive model into a scientifically interpretable tool capable of revealing the reasoning behind its predictions.
+
+Recognizing that prediction accuracy alone is insufficient for scientific applications, we devoted considerable attention to uncertainty estimation. We distinguished between aleatoric uncertainty, arising from noisy observations, and epistemic uncertainty, resulting from limited model knowledge. We also explored practical uncertainty estimation techniques, including Monte Carlo Dropout, Deep Ensembles, Bayesian Neural Networks, and out-of-distribution detection, all of which help determine whether a prediction should be trusted.
+
+Finally, we studied several realistic case studies involving formation energy, band gap, elastic properties, battery materials, thermoelectric compounds, and dataset bias detection. These examples demonstrated how interpretability, explainability, and uncertainty estimation work together to transform machine learning predictions into scientifically meaningful insights that support materials discovery.
+
+Overall, MEGNet represents a major milestone in the evolution of materials informatics. By combining graph representations, message passing, learned atomic embeddings, global state modeling, transfer learning, explainable AI, and uncertainty estimation, MEGNet provides a powerful framework for predicting and understanding material properties directly from crystal structures. Its influence extends beyond property prediction, serving as the conceptual foundation for many subsequent graph neural network architectures, including **M3GNet**, **ALIGNN**, and several modern universal interatomic potential models.
+
+After completing this chapter, the reader should be able to:
+
+* Explain why graph neural networks are particularly suitable for materials science.
+* Represent crystal structures as graphs containing node, edge, and global features.
+* Describe the architecture and workflow of the MEGNet model.
+* Understand the mathematical principles of message passing and graph pooling.
+* Train and optimize MEGNet models for materials property prediction.
+* Apply transfer learning to improve performance on small datasets.
+* Interpret learned atomic embeddings and latent crystal representations.
+* Analyze message passing and perform feature attribution.
+* Use explainable AI techniques to interpret graph neural network predictions.
+* Estimate prediction uncertainty and assess model reliability.
+* Apply MEGNet to practical materials informatics research problems.
+
+With a thorough understanding of MEGNet, the reader is now prepared to study more advanced graph neural network architectures that incorporate richer physical information. In the next chapter, we will explore **M3GNet (Materials Three-Body Graph Network)**, which extends the MEGNet framework by explicitly modeling three-body interactions and angular information, significantly improving the prediction of structural, energetic, mechanical, and dynamical properties while enabling state-of-the-art universal interatomic potentials for atomistic simulations.
+
+
