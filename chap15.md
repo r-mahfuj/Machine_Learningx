@@ -27956,9 +27956,7 @@ its own gradient.
 # 15.7.131 Step 6 — Parameter Update
 
 Once gradients have been computed,
-
 the optimizer updates
-
 the network parameters.
 
 ```python
@@ -27966,7 +27964,6 @@ optimizer.step()
 ```
 
 For Adam,
-
 this involves
 
 - momentum,
@@ -27975,11 +27972,8 @@ this involves
 - parameter updates.
 
 The model
-
 has now learned
-
 from
-
 the current mini-batch.
 
 ---
@@ -27987,13 +27981,9 @@ the current mini-batch.
 # 15.7.132 Step 7 — Repeat for Every Mini-Batch
 
 The previous six steps
-
 are repeated
-
 for
-
 every mini-batch
-
 inside the dataset.
 
 ```text
@@ -28029,9 +28019,7 @@ Final Batch
 ```
 
 When the final mini-batch finishes,
-
 one epoch
-
 has been completed.
 
 ---
@@ -28039,7 +28027,6 @@ has been completed.
 # 15.7.133 The Complete Training Loop in PyTorch
 
 The complete training loop
-
 looks remarkably concise.
 
 ```python
@@ -28063,11 +28050,8 @@ for batch in train_loader:
 ```
 
 Although only a few lines long,
-
 this code performs
-
 millions of mathematical operations,
-
 including
 
 - graph construction,
@@ -28077,7 +28061,6 @@ including
 - parameter optimization.
 
 This simplicity
-
 is one of the greatest strengths
 
 of PyTorch.
@@ -28087,13 +28070,9 @@ of PyTorch.
 # 15.7.134 Why Training Requires Many Epochs
 
 One epoch
-
 rarely produces
-
 an accurate model.
-
 Instead,
-
 the network gradually improves.
 
 For example,
@@ -28107,25 +28086,18 @@ For example,
 | 100 | 0.05 |
 
 Each epoch
-
 slightly improves
-
 the learned parameters.
-
 Eventually,
-
 the loss stabilizes,
-
 indicating that
-
-the model has largely converged.
+the mdoel has largely converged.
 
 ---
 
 # 15.7.135 Monitoring Training Progress
 
 During training,
-
 researchers usually record
 
 - training loss,
@@ -28153,15 +28125,10 @@ Validation MAE
 ```
 
 Monitoring these metrics
-
 helps determine
-
 whether
-
 the model is
-
 learning effectively
-
 or beginning to overfit.
 
 ---
@@ -28169,39 +28136,22 @@ or beginning to overfit.
 # 15.7.136 Why Validation Is Necessary
 
 A decreasing training loss
-
 does **not**
-
 guarantee
-
 that the model generalizes well.
-
 The network may simply memorize
-
 the training data.
-
 Therefore,
-
 after each epoch,
-
 the model is evaluated
-
 on
-
 a separate validation dataset.
-
 Importantly,
-
 during validation,
-
 the parameters
-
 are **not updated**.
-
 The validation step measures
-
 how well the model predicts
-
 previously unseen crystals.
 
 ---
@@ -28209,9 +28159,7 @@ previously unseen crystals.
 # 15.7.137 Saving the Best Model
 
 Suppose
-
 validation MAE
-
 improves.
 
 ```text
@@ -28227,7 +28175,6 @@ Validation MAE
 ```
 
 This model
-
 should be saved.
 
 ```python
@@ -28241,17 +28188,11 @@ torch.save(
 ```
 
 Later,
-
 if performance deteriorates,
-
 the best-performing checkpoint
-
 can be restored.
-
 Model checkpointing
-
 is standard practice
-
 in almost every deep learning project.
 
 ---
@@ -28259,9 +28200,7 @@ in almost every deep learning project.
 # 15.7.138 The Full Training Lifecycle
 
 The complete lifecycle
-
 of a MEGNet training experiment
-
 can now be summarized.
 
 ```text
@@ -28325,9 +28264,7 @@ Training Complete
 ```
 
 This pipeline
-
 forms the foundation
-
 of nearly every graph neural network training workflow.
 
 ---
@@ -28335,7 +28272,6 @@ of nearly every graph neural network training workflow.
 # 15.7.139 Connecting the Mathematics to the Code
 
 At first glance,
-
 the training loop appears deceptively simple.
 
 ```python
@@ -28349,7 +28285,6 @@ optimizer.step()
 ```
 
 Behind these four statements,
-
 PyTorch performs
 
 - tensor operations,
@@ -28359,19 +28294,12 @@ PyTorch performs
 - adaptive optimization.
 
 Every mathematical concept
-
 introduced throughout this chapter
-
 is executed automatically
-
 inside these few lines of code.
-
 Understanding this correspondence
-
 between theory and implementation
-
 is one of the defining characteristics
-
 of an expert machine learning practitioner.
 
 ---
@@ -28387,57 +28315,31 @@ The next major section moves beyond optimization itself and focuses on **evaluat
 # 15.8 Model Evaluation, Validation, and Generalization
 
 Up to this point,
-
 our objective has been
-
 to **train** a MEGNet model.
-
 Training, however,
-
 is only half of the machine learning pipeline.
-
 A model that performs extremely well on the training dataset
-
 is **not necessarily** a useful scientific model.
-
 The true objective of machine learning is not
-
 to memorize the training data,
-
 but to discover underlying physical relationships that can be applied to **previously unseen materials**.
-
 Suppose we train a MEGNet model
-
 using
-
 120,000 crystal structures
-
 from the Materials Project.
-
 After training,
-
 the model predicts every training crystal
-
 almost perfectly.
-
 Does this mean
-
 the model has learned materials science?
-
 Not necessarily.
-
 The model may simply have memorized
-
 the training dataset.
-
 To determine whether the model has genuinely learned
-
 the relationship between crystal structure and material properties,
-
 we must evaluate it
-
 using crystals that it has **never encountered before**.
-
 This process is called **model validation**.
 
 ---
@@ -28445,55 +28347,32 @@ This process is called **model validation**.
 # 15.8.1 Why Training Accuracy Is Misleading
 
 Imagine preparing for an examination.
-
 A student receives
-
 100 practice questions.
-
 Instead of understanding the concepts,
-
 the student memorizes every answer.
-
 On the examination,
-
 the teacher asks
-
 those exact same questions.
-
 The student scores
 
 100%.
 
 Now consider a different examination.
-
 The questions are new,
-
 although they test the same concepts.
-
 The memorizing student now performs poorly.
-
 Clearly,
-
 the student did not truly understand the subject.
-
-Neural networks behave in exactly the same way.
-
+Neural networks behave in exactly the same way
 If a model merely memorizes
-
 the training crystals,
-
 it may achieve an extremely small training loss,
-
-yet completely fail
-
+yet completely fai
 when predicting new materials.
-
 Therefore,
-
-training performance alone
-
+training performance alon
 is not a reliable measure
-
 of scientific usefulness.
 
 ---
@@ -28501,37 +28380,21 @@ of scientific usefulness.
 # 15.8.2 The Goal of Generalization
 
 The fundamental goal of machine learning
-
 is called
-
 **generalization**.
-
 Generalization means
-
 the ability of a model
-
 to make accurate predictions
-
 for data that were **not used during training**.
-
 For MEGNet,
-
 generalization means
-
 predicting the properties of
-
 new crystal structures,
-
 new chemical compositions,
-
 or newly synthesized materials.
-
 A model with good generalization
-
 has learned
-
 the underlying structure–property relationship,
-
 rather than simply memorizing examples.
 
 ---
@@ -28539,9 +28402,7 @@ rather than simply memorizing examples.
 # 15.8.3 The Three Dataset Splits
 
 To measure generalization objectively,
-
 the dataset is divided
-
 into three independent subsets.
 
 ```text
@@ -28561,7 +28422,6 @@ Test Set
 ```
 
 Each subset has
-
 a different purpose.
 
 ---
@@ -28569,21 +28429,13 @@ a different purpose.
 ### Training Set
 
 The training set
-
 is used
-
 to update
-
 the neural network parameters.
-
 Only this subset
-
 participates in
-
 backpropagation
-
 and
-
 optimization.
 
 ---
@@ -28591,13 +28443,9 @@ optimization.
 ### Validation Set
 
 The validation set
-
 is used
-
 to monitor
-
 training progress.
-
 It helps answer questions such as
 
 - Is the model improving?
@@ -28606,11 +28454,8 @@ It helps answer questions such as
 - Which hyperparameters work best?
 
 Importantly,
-
 validation data
-
 are **never used**
-
 to update parameters.
 
 ---
@@ -28618,27 +28463,16 @@ to update parameters.
 ### Test Set
 
 The test set
-
 is used
-
 only once,
-
 after all training decisions
-
 have been completed.
-
 Its purpose is
-
 to provide
-
 an unbiased estimate
-
 of the final model performance.
-
 The test set
-
 should remain untouched
-
 throughout model development.
 
 ---
@@ -28646,11 +28480,8 @@ throughout model development.
 # 15.8.4 A Typical Dataset Split
 
 Suppose
-
 our dataset contains
-
 100,000 crystals.
-
 A common split is
 
 | Dataset | Percentage | Samples |
@@ -28660,25 +28491,18 @@ A common split is
 | Test | 10% | 10,000 |
 
 Other ratios,
-
 such as
 
 70–15–15
-
 or
 
 90–5–5,
 
 are also common.
-
 The exact choice
-
 depends on
-
 the dataset size
-
 and
-
 the research objective.
 
 ---
@@ -28686,21 +28510,15 @@ the research objective.
 # 15.8.5 Why Data Leakage Must Be Avoided
 
 One of the most serious mistakes
-
 in machine learning
-
 is
 
 **data leakage**.
 
 Data leakage occurs
-
 when information from
-
 the validation
-
 or
-
 test dataset
 
 accidentally influences

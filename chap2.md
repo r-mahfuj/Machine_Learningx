@@ -4098,7 +4098,7 @@ where
 - \(m\) is the slope,
 - \(b\) is the intercept,
 - \(x\) is the feature,
-- \(\hat{y}\) is the predicted value.
+- \\hat{y}\) is the predicted value.
 
 Suppose we have \(n\) experimental observations.
 
