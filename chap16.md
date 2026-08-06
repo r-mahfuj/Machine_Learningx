@@ -4994,3 +4994,4134 @@ CFConv Message Passing
 This distance embedding mechanism is a key reason why SchNet can accurately model molecular and crystalline systems while maintaining smooth physical behavior.
 
 Next, we will continue with **16.9 Interaction Block Mathematics**, where we will derive the complete mathematical operation of stacked SchNet interaction blocks and connect them to energy and force prediction.
+
+# 16.9 Interaction Block Mathematics
+
+In the previous sections, we studied the individual components that make up a SchNet interaction block:
+
+* atomic embeddings,
+* radial basis function (RBF) expansion,
+* the Filter-Generating Network,
+* Continuous-Filter Convolution (CFConv),
+* residual connections.
+
+Each of these components performs a specific task. However, understanding SchNet at a research level requires seeing how these components combine into a single mathematical framework.
+
+In this section, we derive the complete mathematical formulation of an interaction block and examine how information propagates through the network. Rather than viewing the interaction block as a collection of independent layers, we will treat it as a single mathematical operator acting on an atomistic system.
+
+---
+
+# 16.9.1 Mathematical Description of the Input
+
+Assume a crystal contains $N$ atoms.
+
+Each atom has two pieces of information.
+
+First, its atomic number
+
+$$
+Z_i.
+$$
+
+Second, its Cartesian coordinates
+
+$$
+\mathbf{R}_i=(x_i,y_i,z_i).
+$$
+
+The complete crystal can therefore be represented as
+
+$$
+\mathcal{C}
+===========
+
+{
+(Z_i,\mathbf{R}*i)
+}*{i=1}^{N}.
+$$
+
+Unlike image data, the number of atoms is not fixed.
+
+Some crystals may contain
+
+* 20 atoms,
+* 100 atoms,
+* 500 atoms,
+
+or even thousands.
+
+Therefore, the mathematical formulation must work for arbitrary system sizes.
+
+---
+
+# 16.9.2 Atomic Embeddings
+
+The first layer converts atomic numbers into continuous feature vectors.
+
+Mathematically,
+
+$$
+\mathbf{x}_i^{(0)}
+==================
+
+E(Z_i),
+$$
+
+where
+
+* $E(\cdot)$ is the embedding function,
+* $\mathbf{x}_i^{(0)}$ is the initial representation of atom $i$.
+
+If the embedding dimension is
+
+$$
+F=128,
+$$
+
+then
+
+$$
+\mathbf{x}_i^{(0)}
+\in
+\mathbb{R}^{128}.
+$$
+
+Collecting all atoms gives
+
+$$
+\mathbf{X}^{(0)}
+================
+
+\begin{bmatrix}
+\mathbf{x}_1^{(0)}\
+\mathbf{x}_2^{(0)}\
+\vdots\
+\mathbf{x}_N^{(0)}
+\end{bmatrix}.
+$$
+
+This matrix serves as the input to the first interaction block.
+
+---
+
+# 16.9.3 Computing the Neighborhood
+
+SchNet does not connect every atom with every other atom.
+
+Instead, each atom interacts only with nearby atoms.
+
+The neighborhood of atom $i$ is
+
+$$
+\mathcal{N}(i)
+==============
+
+{
+j
+\mid
+r_{ij}
+<
+r_c
+},
+$$
+
+where
+
+* $r_c$ is the cutoff radius,
+* $r_{ij}$ is the interatomic distance.
+
+The distance is computed as
+
+$$
+r_{ij}
+======
+
+\sqrt{
+(x_i-x_j)^2+
+(y_i-y_j)^2+
+(z_i-z_j)^2
+}.
+$$
+
+This neighborhood determines which atoms exchange information.
+
+---
+
+# 16.9.4 Distance Expansion
+
+Every neighboring distance is transformed using Gaussian radial basis functions.
+
+The distance embedding becomes
+
+$$
+\mathbf{e}_{ij}
+===============
+
+\left[
+e_1(r_{ij}),
+e_2(r_{ij}),
+\dots,
+e_K(r_{ij})
+\right].
+$$
+
+Instead of learning from one scalar,
+
+the network now learns from a high-dimensional distance representation.
+
+The resulting tensor has shape
+
+$$
+(E,K),
+$$
+
+where
+
+* $E$ is the number of neighboring pairs,
+* $K$ is the number of radial basis functions.
+
+---
+
+# 16.9.5 Filter Generation
+
+The embedded distance vector is passed into the Filter-Generating Network.
+
+Mathematically,
+
+$$
+\mathbf{W}_{ij}
+===============
+
+f_{\theta}
+(
+\mathbf{e}_{ij}
+),
+$$
+
+where
+
+* $f_{\theta}$ denotes the multilayer perceptron,
+* $\theta$ represents the learnable parameters.
+
+Each neighboring atom pair therefore receives its own filter.
+
+Unlike classical CNNs,
+
+there is no universal convolution kernel.
+
+---
+
+# 16.9.6 Feature Projection
+
+Before applying CFConv,
+
+neighboring atomic features are projected into another feature space.
+
+Let
+
+$$
+\mathbf{h}_j
+============
+
+L
+(
+\mathbf{x}_j
+),
+$$
+
+where
+
+$L$
+
+is a learnable linear transformation.
+
+This allows the network to mix feature channels before message passing.
+
+---
+
+# 16.9.7 Continuous-Filter Message
+
+The message sent from atom $j$ to atom $i$ is
+
+$$
+\mathbf{m}_{ij}
+===============
+
+\mathbf{W}_{ij}
+\odot
+\mathbf{h}_j.
+$$
+
+Each component of the generated filter multiplies the corresponding feature channel.
+
+This operation allows different chemical interactions to influence different dimensions of the feature vector.
+
+---
+
+# 16.9.8 Neighbor Aggregation
+
+The incoming messages from all neighboring atoms are summed.
+
+The aggregated message becomes
+
+$$
+\mathbf{m}_i
+============
+
+\sum_{j\in\mathcal{N}(i)}
+\mathbf{m}_{ij}.
+$$
+
+Substituting the previous equation gives
+
+$$
+\mathbf{m}_i
+============
+
+\sum_{j\in\mathcal{N}(i)}
+\mathbf{W}_{ij}
+\odot
+L(\mathbf{x}_j).
+$$
+
+This is the central message-passing equation of SchNet.
+
+---
+
+# 16.9.9 Output Projection
+
+The aggregated message is transformed again using another linear layer,
+
+$$
+\mathbf{u}_i
+============
+
+L_{\text{out}}
+(
+\mathbf{m}_i
+).
+$$
+
+The output projection enables interactions between feature channels and increases the expressive power of the interaction block.
+
+---
+
+# 16.9.10 Residual Update
+
+Instead of discarding the previous representation,
+
+SchNet updates it using residual learning.
+
+The update rule is
+
+$$
+\mathbf{x}_i'
+=============
+
+\mathbf{x}_i
++
+\mathbf{u}_i.
+$$
+
+Substituting every intermediate step,
+
+the complete interaction block becomes
+
+$$
+\boxed{
+\mathbf{x}_i'
+=============
+
+\mathbf{x}*i
++
+L*{\text{out}}
+\left(
+\sum_{j\in\mathcal{N}(i)}
+f_{\theta}
+(
+\mathbf{e}_{ij}
+)
+\odot
+L(\mathbf{x}_j)
+\right)
+}
+$$
+
+This compact equation represents the entire computation performed by one SchNet interaction block.
+
+---
+
+# 16.9.11 Multiple Interaction Blocks
+
+Suppose the network contains $T$ interaction blocks.
+
+The feature vectors evolve according to
+
+$$
+\mathbf{X}^{(0)}
+\rightarrow
+\mathbf{X}^{(1)}
+\rightarrow
+\mathbf{X}^{(2)}
+\rightarrow
+\cdots
+\rightarrow
+\mathbf{X}^{(T)}.
+$$
+
+More explicitly,
+
+$$
+\mathbf{X}^{(t+1)}
+==================
+
+\text{InteractionBlock}
+(
+\mathbf{X}^{(t)}
+).
+$$
+
+Each block refines the atomic representation by incorporating information from progressively larger neighborhoods.
+
+---
+
+# 16.9.12 Information Propagation
+
+To understand why stacking interaction blocks is effective, consider a chain of atoms.
+
+```text
+A —— B —— C —— D —— E
+```
+
+Initially,
+
+atom **A** knows only its own embedding.
+
+After one interaction block,
+
+```text
+A ⇄ B
+```
+
+After two interaction blocks,
+
+```text
+A ⇄ B ⇄ C
+```
+
+After three interaction blocks,
+
+```text
+A ⇄ B ⇄ C ⇄ D
+```
+
+Eventually,
+
+the representation of atom **A** contains information originating from distant atoms.
+
+Thus,
+
+deep SchNet models naturally capture long-range structural effects.
+
+---
+
+# 16.9.13 Matrix Interpretation
+
+Instead of considering one atom at a time,
+
+the interaction block can also be viewed as an operation on the entire feature matrix.
+
+Let
+
+$$
+\mathbf{X}
+\in
+\mathbb{R}^{N\times F}.
+$$
+
+Then one interaction block computes
+
+$$
+\boxed{
+\mathbf{X}'
+===========
+
+\mathbf{X}
++
+L_{\text{out}}
+\left(
+\text{CFConv}
+(
+L(\mathbf{X})
+)
+\right)
+}
+$$
+
+This matrix equation highlights the modular structure of SchNet.
+
+Each block consists of
+
+1. feature projection,
+2. continuous-filter convolution,
+3. output projection,
+4. residual addition.
+
+---
+
+# 16.9.14 Tensor Dimensions
+
+Suppose
+
+* Number of atoms = $N$,
+* Neighbor pairs = $E$,
+* Embedding dimension = $F$,
+* Number of RBFs = $K$.
+
+The tensors evolve as follows.
+
+| Quantity            | Shape   |
+| ------------------- | ------- |
+| Atomic embeddings   | $(N,F)$ |
+| Coordinates         | $(N,3)$ |
+| Neighbor list       | $(E,2)$ |
+| Distances           | $(E)$   |
+| RBF embeddings      | $(E,K)$ |
+| Generated filters   | $(E,F)$ |
+| Messages            | $(E,F)$ |
+| Aggregated messages | $(N,F)$ |
+| Updated features    | $(N,F)$ |
+
+Notice that the atomic feature dimension remains unchanged throughout the interaction block.
+
+---
+
+# 16.9.15 Computational Complexity
+
+Assume
+
+* $N$ atoms,
+* average of $M$ neighbors per atom.
+
+The number of interactions is approximately
+
+$$
+E
+\approx
+NM.
+$$
+
+Since each interaction requires multiplying vectors of length $F$,
+
+the computational complexity of one interaction block is approximately
+
+$$
+O(NMF).
+$$
+
+This linear dependence on the number of neighboring interactions makes SchNet significantly more efficient than methods that consider every possible atom pair, whose complexity grows as $O(N^2)$.
+
+---
+
+# 16.9.16 Physical Interpretation
+
+An interaction block represents one round of physical communication between atoms.
+
+During this communication,
+
+1. each atom observes its local neighborhood,
+2. interaction strengths are computed from geometry,
+3. neighboring information is aggregated,
+4. the atomic representation is updated.
+
+Repeated interaction blocks mimic the gradual propagation of physical information through the material.
+
+Although SchNet does not explicitly solve the Schrödinger equation, this iterative message-passing process enables it to learn effective approximations of quantum mechanical interactions directly from data.
+
+---
+
+# Summary
+
+The interaction block is the mathematical core of SchNet. It combines atomic embeddings, neighborhood construction, radial basis expansion, filter generation, continuous-filter convolution, feature transformations, and residual learning into a single differentiable operator. By stacking multiple interaction blocks, SchNet progressively refines atomic representations, allowing information to propagate over increasingly larger regions of a molecule or crystal.
+
+The complete interaction block equation,
+
+$$
+\boxed{
+\mathbf{x}_i'
+=============
+
+\mathbf{x}*i
++
+L*{\text{out}}
+\left(
+\sum_{j\in\mathcal{N}(i)}
+f_{\theta}(\mathbf{e}_{ij})
+\odot
+L(\mathbf{x}_j)
+\right)
+}
+$$
+
+summarizes how SchNet transforms atomic features while respecting the continuous geometry of atomistic systems.
+
+In the next section, **16.10 Energy Prediction**, we will show how these refined atomic representations are converted into a single total energy for the entire molecule or crystal, why SchNet predicts **atomic energies instead of total energy directly**, and how this design ensures extensivity and transferability across systems of different sizes.
+
+# 16.10 Energy Prediction
+
+After passing through multiple interaction blocks, each atom possesses a rich feature vector that encodes information about its local chemical environment, neighboring atoms, bond lengths, coordination number, and indirectly, even atoms that are several hops away.
+
+However, the ultimate objective of SchNet is **not** to predict atomic feature vectors.
+
+Instead, we want to predict physical properties such as
+
+* total potential energy,
+* atomization energy,
+* formation energy,
+* adsorption energy,
+* band gap (with suitable modifications),
+* dipole moment,
+* and many other quantum mechanical properties.
+
+The question is therefore:
+
+> **How can the learned atomic representations be converted into the total energy of a molecule or crystal?**
+
+This section answers that question in detail.
+
+---
+
+# 16.10.1 Why Predict Atomic Energies?
+
+Suppose we have a silicon crystal containing 64 atoms.
+
+Should a neural network directly predict
+
+$$
+E_{\text{total}}?
+$$
+
+At first glance,
+
+this seems reasonable.
+
+However, consider another crystal containing 128 atoms.
+
+Its total energy is naturally much larger because it contains more atoms.
+
+A network trained only on total energies would struggle because
+
+* the output changes dramatically with system size,
+* larger systems produce larger target values,
+* the model cannot easily generalize to systems with different numbers of atoms.
+
+This violates one of the most important physical properties of energy:
+
+> **Energy is an extensive property.**
+
+---
+
+# Extensive Properties
+
+A physical quantity is called **extensive** if it scales with system size.
+
+Examples include
+
+* mass,
+* volume,
+* total charge,
+* total energy.
+
+Suppose a crystal has total energy
+
+$$
+E.
+$$
+
+If we duplicate the crystal,
+
+its energy approximately doubles.
+
+Mathematically,
+
+$$
+E(2N)
+\approx
+2E(N).
+$$
+
+A machine learning model should naturally satisfy this property.
+
+---
+
+# 16.10.2 The SchNet Solution
+
+Instead of predicting one global energy,
+
+SchNet predicts an energy contribution for every atom.
+
+For atom $i$,
+
+the network predicts
+
+$$
+E_i.
+$$
+
+The total energy is then obtained simply by summing all atomic contributions,
+
+$$
+\boxed{
+E
+=
+
+\sum_{i=1}^{N}
+E_i
+}
+$$
+
+This idea is remarkably simple but extremely powerful.
+
+It guarantees extensivity automatically.
+
+---
+
+# Why Does This Work?
+
+Imagine a crystal containing four atoms.
+
+Suppose the predicted atomic energies are
+
+| Atom | Predicted Energy (eV) |
+| ---- | --------------------: |
+| 1    |                 −5.21 |
+| 2    |                 −5.19 |
+| 3    |                 −5.23 |
+| 4    |                 −5.20 |
+
+The total energy becomes
+
+$$
+E
+=
+
+-5.21
+-5.19
+-5.23
+-5.20
+=====
+
+-20.83
+\text{ eV}.
+$$
+
+Now imagine doubling the crystal.
+
+SchNet predicts eight atomic energies.
+
+Summing them automatically produces approximately twice the total energy.
+
+Thus,
+
+extensivity is preserved without explicitly teaching the model this physical law.
+
+---
+
+# 16.10.3 Atom-wise Prediction Network
+
+The final atomic representations produced by the interaction blocks are
+
+$$
+\mathbf{x}_i^{(T)},
+$$
+
+where
+
+$T$
+
+denotes the last interaction block.
+
+These feature vectors are passed into a small neural network called the **atom-wise network**.
+
+Mathematically,
+
+$$
+E_i
+===
+
+g
+(
+\mathbf{x}_i^{(T)}
+),
+$$
+
+where
+
+* $g(\cdot)$ is a multilayer perceptron,
+* the output is a single scalar.
+
+Notice that every atom uses the **same** neural network.
+
+This parameter sharing allows SchNet to work with systems containing arbitrary numbers of atoms.
+
+---
+
+# Architecture of the Atom-wise Network
+
+The atom-wise network is relatively simple.
+
+```text id="6g4q6h"
+Atomic Feature Vector
+
+↓
+
+Linear Layer
+
+↓
+
+Activation
+
+↓
+
+Linear Layer
+
+↓
+
+Atomic Energy
+```
+
+Unlike the interaction blocks,
+
+this network no longer exchanges information between atoms.
+
+Its only task is converting an atomic feature vector into a scalar energy.
+
+---
+
+# Mathematical Formulation
+
+Suppose the atomic embedding dimension is
+
+$$
+F=128.
+$$
+
+The final atomic representation satisfies
+
+$$
+\mathbf{x}_i
+\in
+\mathbb{R}^{128}.
+$$
+
+The first layer computes
+
+$$
+\mathbf{h}_i
+============
+
+W_1
+\mathbf{x}_i
++
+\mathbf{b}_1.
+$$
+
+After applying a nonlinear activation function,
+
+$$
+\mathbf{z}_i
+============
+
+\sigma
+(
+\mathbf{h}_i
+),
+$$
+
+the final linear layer predicts
+
+$$
+E_i
+===
+
+W_2
+\mathbf{z}_i
++
+b_2.
+$$
+
+Since the output is one scalar,
+
+$$
+E_i
+\in
+\mathbb{R}.
+$$
+
+---
+
+# Computing the Total Energy
+
+Once every atomic contribution has been computed,
+
+the total energy is simply
+
+$$
+E
+=
+
+\sum_{i=1}^{N}
+E_i.
+$$
+
+This summation layer contains **no trainable parameters**.
+
+It is simply an addition operation.
+
+Because addition is differentiable,
+
+gradient-based optimization remains possible.
+
+---
+
+# Tensor Shapes
+
+Suppose
+
+* Number of atoms = $N$
+* Embedding dimension = $F$
+
+The tensors evolve as follows.
+
+| Quantity              | Shape   |
+| --------------------- | ------- |
+| Final atomic features | $(N,F)$ |
+| Hidden layer          | $(N,H)$ |
+| Atomic energies       | $(N,1)$ |
+| Total energy          | $(1)$   |
+
+Here,
+
+$H$
+
+denotes the hidden dimension of the atom-wise network.
+
+---
+
+# PyTorch Implementation
+
+A simple atom-wise prediction network is shown below.
+
+```python
+import torch
+import torch.nn as nn
+
+class AtomwiseNetwork(nn.Module):
+
+    def __init__(self, hidden_dim):
+
+        super().__init__()
+
+        self.network = nn.Sequential(
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.SiLU(),
+            nn.Linear(hidden_dim, 1)
+        )
+
+    def forward(self, x):
+
+        atomic_energy = self.network(x)
+
+        total_energy = atomic_energy.sum(dim=0)
+
+        return atomic_energy, total_energy
+```
+
+Example:
+
+```python
+num_atoms = 64
+
+features = torch.randn(num_atoms,128)
+
+model = AtomwiseNetwork(128)
+
+atomic_energy,total_energy = model(features)
+
+print(atomic_energy.shape)
+
+print(total_energy.shape)
+```
+
+Output
+
+```text
+torch.Size([64,1])
+
+torch.Size([1])
+```
+
+---
+
+# Why Predict Atomic Energies Instead of Total Energy?
+
+This design offers several advantages.
+
+## 1. Extensivity
+
+The total energy automatically scales with the number of atoms.
+
+---
+
+## 2. Transferability
+
+A model trained on
+
+* 20 atoms,
+
+can be applied to
+
+* 100 atoms,
+* 500 atoms,
+* even several thousand atoms,
+
+without changing the architecture.
+
+---
+
+## 3. Better Learning
+
+Learning many small atomic contributions is generally easier than learning one large global quantity.
+
+Instead of predicting
+
+$$
+-1832.74
+\text{ eV},
+$$
+
+the network predicts many values around
+
+$$
+-5
+\text{ eV}.
+$$
+
+This often improves numerical stability during optimization.
+
+---
+
+## 4. Physical Interpretability
+
+Although atomic energies are not directly observable,
+
+they provide useful insight into
+
+* defects,
+* adsorption sites,
+* interfaces,
+* chemical environments.
+
+Researchers often visualize predicted atomic energies to understand local energetic variations.
+
+---
+
+# Energy Conservation
+
+Because the total energy is computed as
+
+$$
+E
+=
+
+\sum_i
+E_i,
+$$
+
+every interaction contributes consistently to the final prediction.
+
+There is no possibility of counting interactions multiple times,
+
+nor is there any dependence on the ordering of atoms.
+
+This property is essential for atomistic simulations.
+
+---
+
+# Comparison with Classical Machine Learning
+
+Traditional machine learning approaches often compute handcrafted descriptors for the entire structure and then predict one global property.
+
+SchNet follows a different philosophy.
+
+Instead of
+
+```text
+Structure
+
+↓
+
+Handcrafted Features
+
+↓
+
+Regression Model
+
+↓
+
+Total Energy
+```
+
+it performs
+
+```text
+Atoms
+
+↓
+
+Interaction Blocks
+
+↓
+
+Atomic Features
+
+↓
+
+Atomic Energies
+
+↓
+
+Summation
+
+↓
+
+Total Energy
+```
+
+This atom-centric formulation makes SchNet much more flexible and physically consistent.
+
+---
+
+# Physical Interpretation
+
+Each interaction block teaches an atom about its surroundings.
+
+After several rounds of message passing,
+
+an atom has accumulated information about
+
+* neighboring species,
+* bond lengths,
+* coordination,
+* local geometry,
+* electronic environment.
+
+The atom-wise network then asks a simple question:
+
+> **Given everything this atom has learned about its environment, how much does it contribute to the total energy of the system?**
+
+The answer is its predicted atomic energy.
+
+The total energy emerges naturally by summing all these local contributions.
+
+---
+
+# Limitations of the Atomic Energy Decomposition
+
+Although the atomic energy formulation is highly effective, it has some limitations.
+
+For certain properties,
+
+such as
+
+* molecular dipole moments,
+* electronic polarization,
+* optical excitations,
+
+a simple sum of independent atomic contributions may not fully capture the underlying physics.
+
+Consequently,
+
+later architectures such as PhysNet, PaiNN, NequIP, Allegro, and MACE introduce additional mechanisms to model vector quantities and many-body interactions more accurately.
+
+Nevertheless,
+
+for total energy prediction,
+
+the atom-wise decomposition remains one of the most successful and widely used approaches in atomistic machine learning.
+
+---
+
+# Summary
+
+Energy prediction in SchNet is based on the physically motivated principle that the total energy of a system can be decomposed into the sum of individual atomic contributions. After multiple interaction blocks have refined the atomic feature vectors, a shared atom-wise neural network predicts one scalar energy for each atom. The total energy is then obtained by summing these atomic energies,
+
+$$
+E=\sum_{i=1}^{N}E_i.
+$$
+
+This design guarantees extensivity, enables transfer to systems of different sizes, improves optimization stability, and aligns naturally with the physics of atomistic systems. It is one of the key innovations that allows SchNet to achieve high accuracy across molecules and crystalline materials.
+
+In the next section, **16.11 Force Prediction**, we will explore how SchNet predicts atomic forces using **automatic differentiation**, derive the fundamental relationship between energy and force,
+
+$$
+\mathbf{F}_i=-\frac{\partial E}{\partial \mathbf{R}_i},
+$$
+
+and implement force computation in PyTorch using `autograd`.
+
+# 16.11 Force Prediction
+
+One of the most remarkable capabilities of SchNet is that it can predict **atomic forces** without being explicitly designed as a force predictor. Unlike many traditional machine learning models, SchNet is trained to predict the **total potential energy** of a molecular or crystalline system. Once the energy is known as a differentiable function of the atomic coordinates, the forces emerge naturally through calculus.
+
+This idea originates from classical mechanics and quantum mechanics, where the force acting on an atom is defined as the **negative gradient of the potential energy** with respect to its position.
+
+Instead of constructing a separate neural network for force prediction, SchNet predicts energy and then computes forces automatically using differentiation. This approach guarantees that the predicted forces are physically consistent with the predicted energy.
+
+This section explains why this formulation is important, derives the force equation, discusses automatic differentiation, and demonstrates how force prediction is implemented in PyTorch.
+
+---
+
+# 16.11.1 Why Predict Forces?
+
+Predicting energy alone is sufficient for many property prediction tasks, but it is not enough for atomistic simulations.
+
+Many applications require knowledge of the force acting on every atom.
+
+Examples include
+
+* molecular dynamics,
+* geometry optimization,
+* crystal structure relaxation,
+* phonon calculations,
+* reaction pathway exploration,
+* defect migration,
+* diffusion simulations.
+
+Without forces, atoms cannot move realistically during simulation.
+
+---
+
+# Energy Landscape
+
+Imagine placing a ball on a hilly surface.
+
+```text
+          ●
+        /\
+      /    \
+_____/______\_____
+```
+
+The height of the surface represents the potential energy.
+
+The ball naturally rolls downhill toward regions of lower energy.
+
+The direction in which it moves is determined by the **slope** of the surface.
+
+In atomistic systems,
+
+the multidimensional energy surface is called the **Potential Energy Surface (PES)**.
+
+Forces determine how atoms move across this surface.
+
+---
+
+# 16.11.2 Force as the Gradient of Energy
+
+Suppose the total energy of a system depends on the atomic coordinates.
+
+For a single atom,
+
+$$
+E=E(x,y,z).
+$$
+
+The force acting on that atom is
+
+$$
+\boxed{
+\mathbf{F}
+==========
+
+-\nabla E
+}
+$$
+
+where
+
+$$
+\nabla E
+========
+
+\left(
+\frac{\partial E}{\partial x},
+\frac{\partial E}{\partial y},
+\frac{\partial E}{\partial z}
+\right).
+$$
+
+Therefore,
+
+$$
+\boxed{
+\mathbf{F}
+==========
+
+*
+
+\left(
+\frac{\partial E}{\partial x},
+\frac{\partial E}{\partial y},
+\frac{\partial E}{\partial z}
+\right)
+}
+$$
+
+The negative sign indicates that atoms move toward lower energy.
+
+---
+
+# Force on Atom $i$
+
+For an atom located at
+
+$$
+\mathbf{R}_i
+============
+
+(x_i,y_i,z_i),
+$$
+
+the force becomes
+
+$$
+\boxed{
+\mathbf{F}_i
+============
+
+*
+
+\frac{\partial E}
+{\partial \mathbf{R}_i}
+}
+$$
+
+Expanding the vector derivative,
+
+$$
+\mathbf{F}_i
+============
+
+*
+
+\left(
+\frac{\partial E}{\partial x_i},
+\frac{\partial E}{\partial y_i},
+\frac{\partial E}{\partial z_i}
+\right).
+$$
+
+This equation is one of the most important equations in atomistic machine learning.
+
+---
+
+# Physical Interpretation
+
+Suppose the energy increases when an atom moves to the right.
+
+Then
+
+$$
+\frac{\partial E}{\partial x}>0.
+$$
+
+Therefore,
+
+$$
+F_x
+===
+
+*
+
+\frac{\partial E}{\partial x}
+<
+0.
+$$
+
+The force points toward the left,
+
+driving the atom back toward a lower-energy configuration.
+
+Similarly,
+
+if moving upward decreases the energy,
+
+the force points upward.
+
+Thus,
+
+forces always direct atoms toward energetically favorable configurations.
+
+---
+
+# 16.11.3 Why SchNet Can Predict Forces
+
+Recall that SchNet predicts
+
+$$
+E
+=
+
+\sum_i E_i.
+$$
+
+Importantly,
+
+the predicted energy depends on
+
+* atomic coordinates,
+* interatomic distances,
+* radial basis functions,
+* interaction blocks,
+* atom-wise prediction layers.
+
+Symbolically,
+
+$$
+E
+=
+
+f(\mathbf{R}).
+$$
+
+Since every operation inside SchNet is differentiable,
+
+the entire network is differentiable.
+
+Therefore,
+
+the gradient
+
+$$
+\frac{\partial E}
+{\partial \mathbf{R}}
+$$
+
+exists automatically.
+
+This is why SchNet can predict forces without introducing a separate force prediction network.
+
+---
+
+# Computational Graph
+
+During the forward pass,
+
+the computation proceeds as
+
+```text
+Atomic Coordinates
+        │
+        ▼
+Pairwise Distances
+        │
+        ▼
+RBF Expansion
+        │
+        ▼
+Interaction Blocks
+        │
+        ▼
+Atomic Energies
+        │
+        ▼
+Total Energy
+```
+
+Every operation shown above is differentiable.
+
+During backpropagation,
+
+the gradient flows in the reverse direction,
+
+eventually reaching the atomic coordinates.
+
+---
+
+# 16.11.4 Automatic Differentiation
+
+Computing derivatives of deep neural networks manually would be extremely difficult.
+
+Modern machine learning frameworks solve this using **automatic differentiation**.
+
+Automatic differentiation records every mathematical operation during the forward pass.
+
+For example,
+
+if
+
+$$
+y=x^2,
+$$
+
+then
+
+$$
+\frac{dy}{dx}
+=============
+
+2x.
+$$
+
+Instead of deriving this manually,
+
+PyTorch automatically computes the derivative.
+
+SchNet uses exactly the same mechanism.
+
+---
+
+# Example of Automatic Differentiation
+
+Suppose
+
+```python
+x = torch.tensor(2.0, requires_grad=True)
+
+y = x**2
+
+y.backward()
+```
+
+PyTorch computes
+
+$$
+\frac{dy}{dx}
+=============
+
+4.
+
+$$
+
+The result is stored in
+
+```python
+x.grad
+```
+
+SchNet applies this same principle to millions of parameters and thousands of atomic coordinates simultaneously.
+
+---
+
+# 16.11.5 Computing Forces in PyTorch
+
+The only requirement is that atomic coordinates participate in gradient computation.
+
+```python
+coordinates.requires_grad_(True)
+```
+
+After predicting the total energy,
+
+```python
+energy = model(data)
+```
+
+forces are computed using
+
+```python
+forces = -torch.autograd.grad(
+    energy,
+    coordinates,
+    grad_outputs=torch.ones_like(energy),
+    create_graph=True
+)[0]
+```
+
+This single command computes
+
+## $$
+
+\frac{\partial E}
+{\partial \mathbf{R}}.
+$$
+
+No manual differentiation is required.
+
+---
+
+# Understanding `torch.autograd.grad`
+
+The function
+
+```python
+torch.autograd.grad()
+```
+
+computes derivatives of one tensor with respect to another.
+
+In SchNet,
+
+```python
+torch.autograd.grad(
+    outputs=energy,
+    inputs=coordinates
+)
+```
+
+means
+
+> Compute the derivative of the total energy with respect to every atomic coordinate.
+
+The returned tensor has shape
+
+$$
+(N,3),
+$$
+
+because every atom has three Cartesian coordinates.
+
+---
+
+# Tensor Shapes
+
+Suppose
+
+* Number of atoms = $N$.
+
+The relevant tensors are
+
+| Quantity         | Shape   |
+| ---------------- | ------- |
+| Coordinates      | $(N,3)$ |
+| Predicted energy | $(1)$   |
+| Predicted forces | $(N,3)$ |
+
+Each atom therefore receives one three-dimensional force vector.
+
+---
+
+# Example
+
+Suppose the predicted force tensor is
+
+```text
+Atom 1 : (-0.12, 0.45, 0.09)
+
+Atom 2 : (0.18,-0.27, 0.11)
+
+Atom 3 : (-0.06,-0.18,-0.20)
+```
+
+Each row specifies
+
+* force in the x-direction,
+* force in the y-direction,
+* force in the z-direction.
+
+---
+
+# Why Energy-Based Force Prediction Is Better
+
+Some neural networks predict forces directly.
+
+For example,
+
+```text
+Coordinates
+
+↓
+
+Neural Network
+
+↓
+
+Force
+```
+
+Although simple,
+
+this approach has an important drawback.
+
+The predicted forces may not correspond to any physically meaningful energy function.
+
+Consequently,
+
+energy conservation may be violated during molecular dynamics.
+
+SchNet instead follows
+
+```text
+Coordinates
+
+↓
+
+Neural Network
+
+↓
+
+Energy
+
+↓
+
+Automatic Differentiation
+
+↓
+
+Force
+```
+
+Since forces originate from the gradient of the energy,
+
+they automatically satisfy physical consistency.
+
+---
+
+# Energy Conservation
+
+Because
+
+$$
+\mathbf{F}
+==========
+
+*
+
+\nabla E,
+$$
+
+the predicted forces always correspond to the same potential energy surface.
+
+This ensures
+
+* conservative forces,
+* energy conservation,
+* stable molecular dynamics,
+* physically meaningful trajectories.
+
+These properties are essential for realistic atomistic simulations.
+
+---
+
+# Joint Training Using Energy and Force
+
+In many datasets,
+
+both energies and forces are available from Density Functional Theory (DFT).
+
+Instead of training only on energy,
+
+SchNet is often trained using both quantities simultaneously.
+
+The loss function becomes
+
+$$
+L
+=
+
+\lambda_E
+L_E
++
+\lambda_F
+L_F,
+$$
+
+where
+
+* $L_E$ is the energy loss,
+* $L_F$ is the force loss,
+* $\lambda_E$ and $\lambda_F$ control the relative importance of each term.
+
+The force loss is commonly defined as
+
+$$
+L_F
+===
+
+\frac{1}{3N}
+\sum_{i=1}^{N}
+||
+\mathbf{F}_i^{\text{true}}
+--------------------------
+
+\mathbf{F}_i^{\text{pred}}
+||^2.
+$$
+
+Training with both energy and force information generally produces significantly more accurate interatomic potentials.
+
+---
+
+# Advantages of Force Training
+
+Including force information during training provides several benefits.
+
+* Forces contain much richer information than energies alone.
+* Every atom contributes three additional training targets.
+* The model learns the local shape of the potential energy surface rather than only its absolute value.
+* Molecular dynamics simulations become substantially more accurate.
+* Structural optimization converges more reliably.
+
+For these reasons, modern atomistic neural networks are almost always trained using both energies and forces whenever force labels are available.
+
+---
+
+# Summary
+
+One of SchNet's greatest strengths is its ability to predict physically consistent atomic forces without requiring a separate force prediction network. Because the total energy is a differentiable function of the atomic coordinates, the forces are obtained directly as the negative gradient of the energy,
+
+$$
+\mathbf{F}_i
+============
+
+*
+
+\frac{\partial E}
+{\partial \mathbf{R}_i}.
+$$
+
+Automatic differentiation in PyTorch makes this computation straightforward and efficient, allowing gradients to propagate through every component of the model—from interaction blocks and filter-generating networks to radial basis functions and atomic coordinates. This energy-based formulation guarantees conservative forces, supports accurate molecular dynamics simulations, and provides one of the major advantages of SchNet over models that predict forces directly.
+
+In the next section, **16.12 Training SchNet**, we will examine the complete training pipeline, including dataset preparation, mini-batch construction, forward propagation, loss computation, backpropagation, optimizer selection, learning rate scheduling, and practical strategies for training SchNet on large molecular and crystalline datasets.
+
+
+# 16.12 Training SchNet
+
+Designing a powerful neural network architecture is only one part of building an effective atomistic machine learning model. The second equally important part is **training**. During training, SchNet learns millions of parameters that allow it to approximate the quantum mechanical relationship between atomic structures and their corresponding properties.
+
+Unlike conventional machine learning problems, training SchNet involves learning from graph-structured atomic systems, handling variable numbers of atoms, computing neighborhood information, generating continuous filters, and in many applications simultaneously optimizing both energies and forces.
+
+This section presents the complete training pipeline, beginning with raw datasets and ending with a fully trained SchNet model.
+
+---
+
+# 16.12.1 Overview of the Training Pipeline
+
+The complete training process can be summarized as
+
+```text
+Dataset
+
+↓
+
+Data Preprocessing
+
+↓
+
+Neighbor List Construction
+
+↓
+
+Graph Representation
+
+↓
+
+Mini-batch Formation
+
+↓
+
+Forward Pass
+
+↓
+
+Energy Prediction
+
+↓
+
+(Optional Force Prediction)
+
+↓
+
+Loss Computation
+
+↓
+
+Backpropagation
+
+↓
+
+Optimizer Update
+
+↓
+
+Repeat Until Convergence
+```
+
+Although the process appears straightforward, each stage involves several important design choices that influence the final model performance.
+
+---
+
+# 16.12.2 Preparing the Dataset
+
+SchNet requires atomistic data rather than ordinary feature vectors.
+
+Each training example typically contains
+
+* atomic numbers,
+* atomic coordinates,
+* target energy,
+* optional atomic forces,
+* optional stress tensor,
+* optional additional physical properties.
+
+Conceptually, one sample may look like
+
+```text
+Atoms
+
+Atomic Numbers:
+[14,14,14,14]
+
+Coordinates:
+[[0.0,0.0,0.0],
+ [2.35,0.0,0.0],
+ [0.0,2.35,0.0],
+ [2.35,2.35,0.0]]
+
+Energy:
+-21.63 eV
+
+Forces:
+[[...],[...],[...],[...]]
+```
+
+Unlike image datasets, each sample may contain a different number of atoms.
+
+---
+
+# Common Datasets
+
+Several benchmark datasets are widely used for training SchNet.
+
+| Dataset                     | Application                              |
+| --------------------------- | ---------------------------------------- |
+| QM9                         | Small organic molecules                  |
+| MD17                        | Molecular dynamics trajectories          |
+| ISO17                       | Molecular dynamics with unseen molecules |
+| Materials Project           | Crystalline materials                    |
+| Open Catalyst Project (OCP) | Catalysis                                |
+| ANI-1                       | Organic molecules                        |
+| OC20                        | Surface chemistry                        |
+
+Each dataset differs in
+
+* number of atoms,
+* chemical diversity,
+* target properties,
+* computational cost.
+
+---
+
+# 16.12.3 Data Splitting
+
+Before training,
+
+the dataset is divided into three subsets.
+
+```text
+Entire Dataset
+
+├── Training Set
+
+├── Validation Set
+
+└── Test Set
+```
+
+A common split is
+
+* Training: 80%
+* Validation: 10%
+* Test: 10%
+
+The training set updates the model parameters.
+
+The validation set selects hyperparameters and detects overfitting.
+
+The test set estimates the final model performance.
+
+---
+
+# Why Separate the Data?
+
+Suppose a model memorizes every training example.
+
+Its training error becomes very small.
+
+However,
+
+when presented with a new crystal,
+
+the prediction may be poor.
+
+This phenomenon is called **overfitting**.
+
+A separate validation and test set measures the model's ability to generalize.
+
+---
+
+# 16.12.4 Mini-Batch Training
+
+Instead of processing the entire dataset at once,
+
+training is performed using **mini-batches**.
+
+Suppose the dataset contains
+
+10,000 structures.
+
+Instead of computing gradients for all structures simultaneously,
+
+the dataset is divided into smaller batches,
+
+for example,
+
+```text
+Batch 1
+
+32 structures
+
+↓
+
+Batch 2
+
+32 structures
+
+↓
+
+Batch 3
+
+32 structures
+```
+
+Mini-batch training
+
+* reduces memory usage,
+* accelerates optimization,
+* introduces useful stochasticity into gradient descent.
+
+---
+
+# Variable Number of Atoms
+
+Unlike images,
+
+two molecules may contain different numbers of atoms.
+
+Example:
+
+```text
+Water
+
+3 atoms
+```
+
+```text
+Methane
+
+5 atoms
+```
+
+```text
+Ethanol
+
+9 atoms
+```
+
+PyTorch Geometric solves this problem by concatenating graphs into a larger disconnected graph while maintaining bookkeeping information that identifies which atoms belong to each structure.
+
+---
+
+# 16.12.5 Forward Pass
+
+During the forward pass,
+
+each batch undergoes the following computations.
+
+```text
+Atomic Numbers
+
+↓
+
+Embedding Layer
+
+↓
+
+Interaction Block 1
+
+↓
+
+Interaction Block 2
+
+↓
+
+...
+
+↓
+
+Interaction Block T
+
+↓
+
+Atom-wise Network
+
+↓
+
+Atomic Energies
+
+↓
+
+Summation
+
+↓
+
+Total Energy
+```
+
+If force prediction is enabled,
+
+automatic differentiation computes
+
+```text
+Total Energy
+
+↓
+
+Gradient
+
+↓
+
+Atomic Forces
+```
+
+---
+
+# Mathematical Representation
+
+Suppose
+
+$$
+\Theta
+$$
+
+represents all learnable parameters.
+
+The forward pass computes
+
+$$
+E^{\text{pred}}
+===============
+
+f_{\Theta}
+(
+Z,
+R
+),
+$$
+
+where
+
+* $Z$ denotes atomic numbers,
+* $R$ denotes atomic coordinates.
+
+If forces are included,
+
+$$
+F^{\text{pred}}
+===============
+
+*
+
+\frac{\partial E^{\text{pred}}}
+{\partial R}.
+$$
+
+---
+
+# 16.12.6 Loss Function
+
+Training requires measuring the difference between predictions and reference values.
+
+For energy prediction,
+
+the Mean Squared Error (MSE) loss is commonly used.
+
+$$
+L_E
+===
+
+\frac{1}{M}
+\sum_{k=1}^{M}
+(
+E_k^{\text{pred}}
+-----------------
+
+E_k^{\text{true}}
+)^2,
+$$
+
+where
+
+* $M$ is the batch size.
+
+---
+
+# Force Loss
+
+When forces are available,
+
+the force loss becomes
+
+$$
+L_F
+===
+
+\frac{1}{3N}
+\sum_{i=1}^{N}
+||
+F_i^{\text{pred}}
+-----------------
+
+F_i^{\text{true}}
+||^2.
+$$
+
+Here,
+
+the factor
+
+$$
+3N
+$$
+
+accounts for
+
+* x,
+* y,
+* z
+
+components of every atom.
+
+---
+
+# Combined Loss
+
+Most practical SchNet models minimize
+
+$$
+L
+=
+
+\lambda_E
+L_E
++
+\lambda_F
+L_F.
+$$
+
+The coefficients
+
+$$
+\lambda_E
+$$
+
+and
+
+$$
+\lambda_F
+$$
+
+balance the importance of energy and force prediction.
+
+---
+
+# Why Include Force Loss?
+
+Consider one molecule containing
+
+20 atoms.
+
+Energy provides
+
+only
+
+1
+
+training target.
+
+Forces provide
+
+$$
+20\times3=60
+$$
+
+additional targets.
+
+Consequently,
+
+force information greatly enriches the training signal.
+
+---
+
+# 16.12.7 Backpropagation
+
+After computing the loss,
+
+the gradients of every learnable parameter are obtained using backpropagation.
+
+Mathematically,
+
+for every parameter
+
+$$
+\theta,
+$$
+
+the gradient is
+
+$$
+\frac{\partial L}
+{\partial\theta}.
+$$
+
+These gradients indicate
+
+* which parameters should increase,
+* which should decrease,
+* and by how much.
+
+PyTorch computes these derivatives automatically.
+
+```python
+loss.backward()
+```
+
+This single command performs differentiation through
+
+* embeddings,
+* interaction blocks,
+* filter-generating networks,
+* atom-wise prediction layers,
+* radial basis functions.
+
+---
+
+# 16.12.8 Parameter Update
+
+Once gradients are available,
+
+the optimizer updates the parameters.
+
+For standard gradient descent,
+
+$$
+\theta
+======
+
+## \theta
+
+\eta
+\frac{\partial L}
+{\partial\theta},
+$$
+
+where
+
+$$
+\eta
+$$
+
+is the learning rate.
+
+Modern implementations generally use the Adam optimizer,
+
+which adaptively adjusts the learning rate for every parameter.
+
+---
+
+# Adam Optimizer
+
+Creating the optimizer is straightforward.
+
+```python
+optimizer = torch.optim.Adam(
+    model.parameters(),
+    lr=1e-4
+)
+```
+
+Adam usually converges significantly faster than ordinary gradient descent.
+
+---
+
+# 16.12.9 Complete Training Loop
+
+A simplified training loop is shown below.
+
+```python
+for batch in train_loader:
+
+    optimizer.zero_grad()
+
+    pred_energy = model(batch)
+
+    loss = criterion(
+        pred_energy,
+        batch.energy
+    )
+
+    loss.backward()
+
+    optimizer.step()
+```
+
+When force prediction is included,
+
+the loss combines both energy and force errors before backpropagation.
+
+---
+
+# 16.12.10 Learning Rate Scheduling
+
+A fixed learning rate is rarely optimal throughout training.
+
+Initially,
+
+large updates help rapid learning.
+
+Later,
+
+smaller updates improve convergence.
+
+Learning rate scheduling gradually reduces
+
+$$
+\eta.
+$$
+
+For example,
+
+```python
+scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+    optimizer,
+    factor=0.5,
+    patience=10
+)
+```
+
+When validation loss stops improving,
+
+the learning rate decreases automatically.
+
+---
+
+# 16.12.11 Early Stopping
+
+Training indefinitely often leads to overfitting.
+
+Instead,
+
+training is stopped when validation performance no longer improves.
+
+Conceptually,
+
+```text
+Validation Loss
+
+↓
+
+Improves
+
+↓
+
+Continue Training
+
+↓
+
+Stops Improving
+
+↓
+
+Terminate Training
+```
+
+Early stopping usually produces models that generalize better.
+
+---
+
+# 16.12.12 Monitoring Training
+
+During training,
+
+several quantities should be monitored.
+
+* Training loss
+* Validation loss
+* Energy MAE
+* Force MAE
+* Learning rate
+* Gradient norm
+
+Plotting these metrics helps identify
+
+* underfitting,
+* overfitting,
+* unstable optimization,
+* poor hyperparameter choices.
+
+---
+
+# 16.12.13 Practical Training Tips
+
+Successful SchNet training often depends on practical considerations beyond the mathematical formulation.
+
+Some useful recommendations include:
+
+* Normalize target energies when appropriate.
+* Shuffle the training dataset at every epoch.
+* Use sufficiently large cutoff radii.
+* Monitor validation error instead of training error alone.
+* Train with force labels whenever they are available.
+* Save the best-performing model rather than the final model.
+* Use mixed-precision training for large datasets to reduce memory consumption.
+* Carefully choose the number of interaction blocks and embedding dimensions to balance accuracy and computational cost.
+
+---
+
+# 16.12.14 Training Workflow Summary
+
+The complete training procedure can be summarized as
+
+```text
+Load Dataset
+
+↓
+
+Construct Neighbor Graph
+
+↓
+
+Generate RBF Features
+
+↓
+
+Forward Pass
+
+↓
+
+Predict Energy
+
+↓
+
+(Optional Force Prediction)
+
+↓
+
+Compute Loss
+
+↓
+
+Backpropagation
+
+↓
+
+Update Parameters
+
+↓
+
+Validation
+
+↓
+
+Repeat Until Convergence
+```
+
+Each iteration improves the model parameters, gradually enabling SchNet to approximate the underlying quantum mechanical energy surface.
+
+---
+
+# Summary
+
+Training SchNet involves much more than simply fitting a neural network. The model must process graph-structured atomic systems, generate geometry-dependent interaction filters, propagate information through multiple interaction blocks, predict atomic energies, optionally compute forces via automatic differentiation, and optimize millions of parameters through gradient-based learning.
+
+A typical training pipeline consists of dataset preparation, mini-batch formation, forward propagation, energy and force prediction, loss computation, backpropagation, optimizer updates, learning rate scheduling, and validation. When trained carefully on high-quality quantum mechanical datasets, SchNet learns accurate and transferable representations of atomic interactions that can be applied to a wide range of problems in molecular and materials science.
+
+In the next section, **16.13 Applications of SchNet**, we will explore how SchNet is used in real-world research, including molecular property prediction, crystal property prediction, molecular dynamics, catalyst discovery, battery materials, defect engineering, drug discovery, and large-scale materials screening.
+
+# 16.13 Applications of SchNet
+
+The true value of a machine learning model is determined not only by its mathematical elegance but also by its usefulness in solving real scientific problems. Since its introduction in 2017, SchNet has become one of the most influential neural network architectures in atomistic machine learning. It demonstrated that deep learning models could learn directly from atomic structures without relying on handcrafted descriptors while achieving quantum mechanical accuracy for many prediction tasks.
+
+Today, SchNet and its descendants are widely used across computational chemistry, condensed matter physics, materials science, catalysis, battery research, and drug discovery.
+
+In this section, we examine the major applications of SchNet, understand why it performs well for these tasks, discuss its limitations, and review representative research examples.
+
+---
+
+# 16.13.1 Molecular Property Prediction
+
+One of the earliest and most successful applications of SchNet is the prediction of molecular properties.
+
+Traditional computational chemistry methods such as Density Functional Theory (DFT) can accurately compute molecular properties, but they are computationally expensive.
+
+For example, evaluating thousands or millions of candidate molecules using DFT may require weeks or months of computation.
+
+SchNet provides an alternative approach.
+
+Instead of solving the Schrödinger equation for every new molecule, it learns the relationship between molecular structure and molecular properties from previously computed quantum mechanical data.
+
+Once trained, predictions require only milliseconds.
+
+---
+
+## Typical Molecular Properties
+
+SchNet has been successfully applied to predict
+
+* total energy,
+* atomization energy,
+* HOMO energy,
+* LUMO energy,
+* HOMO–LUMO gap,
+* dipole moment,
+* polarizability,
+* vibrational energy,
+* zero-point energy,
+* heat capacity,
+* enthalpy,
+* free energy.
+
+Many of these targets are included in benchmark datasets such as QM9.
+
+---
+
+## Workflow
+
+The prediction pipeline is
+
+```text id="0f4kqg"
+Molecular Structure
+
+↓
+
+Atomic Graph
+
+↓
+
+SchNet
+
+↓
+
+Predicted Molecular Property
+```
+
+Instead of manually designing molecular descriptors,
+
+SchNet learns useful structural representations automatically.
+
+---
+
+# 16.13.2 Molecular Dynamics Simulations
+
+One of SchNet's most important applications is molecular dynamics (MD).
+
+In classical MD,
+
+atoms move according to Newton's second law,
+
+$$
+m_i
+\frac{d^2\mathbf{R}_i}{dt^2}
+============================
+
+\mathbf{F}_i.
+$$
+
+The forces are traditionally computed using empirical force fields such as
+
+* Lennard-Jones,
+* CHARMM,
+* AMBER,
+* OPLS.
+
+Although computationally efficient,
+
+these force fields often lack quantum mechanical accuracy.
+
+SchNet replaces empirical force fields with neural network potentials trained on DFT data.
+
+---
+
+## MD Workflow
+
+```text id="8l6kzl"
+Atomic Coordinates
+
+↓
+
+SchNet
+
+↓
+
+Energy
+
+↓
+
+Automatic Differentiation
+
+↓
+
+Forces
+
+↓
+
+Newton's Equations
+
+↓
+
+Updated Coordinates
+```
+
+This approach produces trajectories that are significantly more accurate while remaining much faster than direct quantum mechanical simulations.
+
+---
+
+# 16.13.3 Crystal Property Prediction
+
+SchNet naturally extends from molecules to periodic crystalline materials.
+
+Typical crystal properties include
+
+* formation energy,
+* band gap,
+* bulk modulus,
+* shear modulus,
+* elastic constants,
+* magnetic moment,
+* density,
+* lattice energy.
+
+Instead of computing these properties using expensive DFT calculations,
+
+SchNet predicts them directly from the crystal structure.
+
+---
+
+## Crystal Workflow
+
+```text id="hpry4m"
+Crystal Structure
+
+↓
+
+Neighbor Graph
+
+↓
+
+SchNet
+
+↓
+
+Material Property
+```
+
+Large databases such as the Materials Project have enabled training SchNet models for thousands of inorganic compounds.
+
+---
+
+# 16.13.4 High-Throughput Materials Screening
+
+Modern materials discovery often involves screening millions of candidate compounds.
+
+For example,
+
+suppose researchers wish to discover a new thermoelectric material.
+
+Performing DFT calculations for
+
+1 million structures
+
+is computationally prohibitive.
+
+Instead,
+
+the workflow becomes
+
+```text id="d31eb0"
+Millions of Candidate Structures
+
+↓
+
+SchNet
+
+↓
+
+Property Prediction
+
+↓
+
+Top Candidates
+
+↓
+
+DFT Verification
+
+↓
+
+Experimental Validation
+```
+
+SchNet filters the enormous search space,
+
+allowing DFT calculations to focus only on the most promising candidates.
+
+This significantly accelerates materials discovery.
+
+---
+
+# 16.13.5 Battery Materials
+
+Rechargeable batteries rely on complex atomic-scale processes.
+
+Examples include
+
+* lithium diffusion,
+* sodium diffusion,
+* defect formation,
+* intercalation,
+* structural stability.
+
+Many of these properties require expensive atomistic simulations.
+
+SchNet has been applied to
+
+* predict formation energies,
+* estimate migration barriers,
+* model lithium-ion diffusion,
+* accelerate molecular dynamics simulations,
+* identify stable electrode materials.
+
+Battery databases combined with SchNet enable rapid screening of candidate cathodes, anodes, and solid electrolytes.
+
+---
+
+# 16.13.6 Catalysis
+
+Catalytic reactions occur on surfaces where atoms rearrange continuously.
+
+Examples include
+
+* hydrogen evolution,
+* oxygen reduction,
+* ammonia synthesis,
+* CO oxidation,
+* methane activation.
+
+Modeling these reactions requires repeated energy and force evaluations.
+
+SchNet provides efficient neural network potentials for catalyst simulations.
+
+---
+
+## Catalysis Workflow
+
+```text id="0r6lh3"
+Surface Structure
+
+↓
+
+Adsorbate
+
+↓
+
+SchNet
+
+↓
+
+Adsorption Energy
+
+↓
+
+Reaction Pathway Analysis
+```
+
+This significantly reduces the computational cost of catalyst discovery.
+
+---
+
+# 16.13.7 Defect Engineering
+
+Real materials are never perfectly crystalline.
+
+Common defects include
+
+* vacancies,
+* interstitial atoms,
+* substitutional impurities,
+* grain boundaries,
+* dislocations.
+
+Defects strongly influence
+
+* conductivity,
+* diffusion,
+* strength,
+* optical behavior,
+* corrosion resistance.
+
+SchNet learns how local atomic environments change around defects and predicts their energetic stability much faster than conventional quantum calculations.
+
+---
+
+# 16.13.8 Drug Discovery
+
+Drug molecules often contain dozens or even hundreds of atoms.
+
+Important molecular properties include
+
+* conformational energy,
+* binding affinity,
+* molecular stability,
+* charge distribution,
+* molecular geometry.
+
+SchNet can rapidly estimate these properties,
+
+allowing pharmaceutical researchers to evaluate large chemical libraries before performing more expensive simulations or laboratory experiments.
+
+---
+
+# 16.13.9 Potential Energy Surface Modeling
+
+One of SchNet's greatest strengths is learning complex potential energy surfaces.
+
+Consider a simple reaction.
+
+```text id="rjlwmq"
+Reactants
+
+↓
+
+Transition State
+
+↓
+
+Products
+```
+
+The energy changes continuously during the reaction.
+
+SchNet approximates this multidimensional energy surface,
+
+allowing
+
+* geometry optimization,
+* transition-state searches,
+* reaction pathway analysis,
+* molecular dynamics simulations.
+
+Because the predicted forces are obtained directly from the energy gradient,
+
+the resulting simulations remain physically consistent.
+
+---
+
+# 16.13.10 Quantum Machine Learning
+
+SchNet belongs to the broader field of **Quantum Machine Learning (QML)**.
+
+Instead of replacing quantum mechanics,
+
+it learns from quantum mechanical calculations.
+
+The typical workflow is
+
+```text id="wkm85m"
+DFT Calculations
+
+↓
+
+Training Dataset
+
+↓
+
+SchNet
+
+↓
+
+Fast Predictions
+```
+
+Thus,
+
+SchNet acts as a surrogate model that approximates expensive quantum calculations while reducing computational time by several orders of magnitude.
+
+---
+
+# 16.13.11 Integration with Materials Informatics
+
+SchNet is frequently combined with modern materials informatics workflows.
+
+For example,
+
+```text id="0ghlsk"
+Crystal Database
+
+↓
+
+Feature Generation
+
+↓
+
+SchNet
+
+↓
+
+Property Prediction
+
+↓
+
+Candidate Ranking
+
+↓
+
+Experimental Testing
+```
+
+Such workflows enable
+
+* inverse materials design,
+* autonomous laboratories,
+* active learning,
+* closed-loop optimization.
+
+---
+
+# 16.13.12 Research Impact
+
+SchNet has had a profound impact on atomistic machine learning.
+
+Its major contributions include
+
+* demonstrating end-to-end learning directly from atomic coordinates,
+* introducing continuous-filter convolutions,
+* eliminating handcrafted descriptors,
+* enabling accurate force prediction through automatic differentiation,
+* inspiring many later architectures.
+
+Several state-of-the-art models build directly upon ideas introduced by SchNet.
+
+These include
+
+* PhysNet,
+* DimeNet,
+* DimeNet++,
+* PaiNN,
+* GemNet,
+* NequIP,
+* Allegro,
+* MACE,
+* Equiformer,
+* e3nn-based architectures.
+
+Although many newer models achieve higher benchmark accuracy, SchNet remains one of the foundational architectures in the field and continues to serve as a baseline for many research studies.
+
+---
+
+# 16.13.13 Advantages and Limitations
+
+## Advantages
+
+SchNet offers several important advantages.
+
+* End-to-end learning directly from atomic coordinates.
+* No handcrafted descriptors are required.
+* Naturally incorporates three-dimensional geometry.
+* Predicts both energies and forces.
+* Extensible to molecules and crystalline materials.
+* Scales efficiently to large systems.
+* Fully differentiable.
+* Physically motivated architecture.
+
+---
+
+## Limitations
+
+Despite its success, SchNet also has limitations.
+
+* It uses only pairwise distance information and does not explicitly model bond angles.
+* Long-range electrostatic interactions are handled only implicitly.
+* Very large systems require substantial computational resources.
+* Later equivariant architectures often achieve higher accuracy by explicitly modeling rotational symmetries.
+* Angular information is not represented as effectively as in DimeNet or GemNet.
+
+These limitations motivated the development of more advanced graph neural network architectures.
+
+---
+
+# 16.13.14 Real-World Workflow
+
+A typical industrial workflow using SchNet may look like
+
+```text id="kpw4kl"
+Generate Candidate Materials
+
+↓
+
+SchNet Screening
+
+↓
+
+Top 1%
+
+↓
+
+Density Functional Theory
+
+↓
+
+Experimental Synthesis
+
+↓
+
+Device Fabrication
+```
+
+Instead of performing expensive quantum calculations for every candidate,
+
+only the most promising materials undergo detailed computational and experimental investigation.
+
+This dramatically reduces research time and computational cost.
+
+---
+
+# Chapter Summary
+
+SchNet has become one of the most influential architectures in atomistic machine learning because it combines physical principles with deep learning to predict molecular and materials properties directly from atomic structures. Its applications span molecular property prediction, molecular dynamics, crystal property prediction, catalyst discovery, battery materials, defect engineering, drug discovery, and high-throughput materials screening.
+
+Beyond its practical success, SchNet introduced several key ideas—including continuous-filter convolutions, differentiable energy models, and force prediction via automatic differentiation—that laid the foundation for an entire generation of modern atomistic neural networks. Although newer architectures such as DimeNet++, PaiNN, GemNet, NequIP, Allegro, and MACE have extended these ideas with angular features and equivariant representations, understanding SchNet remains essential for anyone studying graph neural networks in computational chemistry and materials science.
+
+With this chapter, you now have a complete understanding of SchNet—from its motivation and mathematical formulation to implementation, training, force prediction, and real-world applications. In the next chapter, we will build upon these concepts by studying **PhysNet**, an architecture that extends SchNet by incorporating explicit electrostatic interactions, long-range effects, and charge-aware energy modeling for even more accurate molecular simulations.
+
+
+# 16.14 Strengths, Limitations, and Future Directions of SchNet
+
+SchNet represented a major milestone in the development of atomistic graph neural networks. Before SchNet, most machine learning models for molecules and materials relied heavily on handcrafted descriptors, manually engineered fingerprints, or fixed structural representations. SchNet demonstrated that a neural network could learn directly from atomic numbers and Cartesian coordinates while achieving quantum mechanical accuracy on a wide range of prediction tasks.
+
+Although numerous architectures have been proposed after SchNet, many of their core concepts—including continuous message passing, differentiable energy prediction, and atom-wise learning—can be traced back to SchNet. Consequently, understanding both the strengths and the limitations of SchNet is essential before studying more advanced models such as PhysNet, DimeNet++, PaiNN, GemNet, MACE, and NequIP.
+
+In this final section of the chapter, we critically analyze SchNet from both theoretical and practical perspectives.
+
+---
+
+# 16.14.1 Major Strengths of SchNet
+
+SchNet became highly successful because it solved several long-standing problems in atomistic machine learning simultaneously.
+
+Its major strengths include
+
+* end-to-end learning,
+* continuous geometric modeling,
+* physically motivated architecture,
+* differentiable energy prediction,
+* excellent transferability,
+* flexibility across different atomistic systems.
+
+Each of these advantages contributed significantly to its widespread adoption.
+
+---
+
+# End-to-End Learning
+
+One of SchNet's greatest innovations is its end-to-end learning capability.
+
+Traditional machine learning workflows typically follow
+
+```text
+Crystal Structure
+
+↓
+
+Handcrafted Features
+
+↓
+
+Machine Learning Model
+
+↓
+
+Prediction
+```
+
+The quality of the prediction depends heavily on the quality of the handcrafted descriptors.
+
+Designing these descriptors often requires years of domain expertise.
+
+SchNet removes this manual feature engineering step.
+
+Instead,
+
+the workflow becomes
+
+```text
+Atomic Coordinates
+
+↓
+
+SchNet
+
+↓
+
+Prediction
+```
+
+The neural network automatically discovers useful structural representations directly from the data.
+
+This significantly reduces human bias and often leads to better generalization.
+
+---
+
+# Continuous Geometric Representation
+
+Many earlier graph neural networks represented molecules using only graph connectivity.
+
+For example,
+
+```text
+Carbon — Carbon
+
+Carbon — Oxygen
+```
+
+Such representations ignore actual bond lengths.
+
+SchNet instead models continuous geometry.
+
+Every interaction depends on
+
+$$
+r_{ij},
+$$
+
+the distance between atoms.
+
+Consequently,
+
+small structural distortions produce smooth changes in the learned representation.
+
+This behavior closely resembles real physical systems.
+
+---
+
+# Rotational and Translational Invariance
+
+Physical properties should not change simply because a molecule is moved or rotated.
+
+For example,
+
+rotating a methane molecule by
+
+90°
+
+does not alter its energy.
+
+SchNet naturally satisfies
+
+* translational invariance,
+* rotational invariance,
+* permutation invariance.
+
+These symmetry properties emerge because the network depends on interatomic distances rather than absolute coordinates.
+
+Maintaining these symmetries is essential for physically meaningful predictions.
+
+---
+
+# Differentiable Energy Model
+
+Since every component of SchNet is differentiable,
+
+the total energy is also differentiable.
+
+Therefore,
+
+forces are obtained naturally through
+
+$$
+\mathbf{F}
+==========
+
+*
+
+\frac{\partial E}
+{\partial \mathbf{R}}.
+$$
+
+No separate force prediction model is required.
+
+This provides
+
+* physically consistent forces,
+* conservative force fields,
+* stable molecular dynamics simulations.
+
+---
+
+# Excellent Transferability
+
+SchNet does not require a fixed number of atoms.
+
+The same trained model can be applied to
+
+* small molecules,
+* large molecules,
+* crystals,
+* amorphous structures.
+
+This flexibility makes SchNet useful across many scientific domains.
+
+---
+
+# General-Purpose Architecture
+
+Unlike models designed specifically for one application,
+
+SchNet can predict
+
+* energies,
+* forces,
+* dipole moments,
+* band gaps,
+* adsorption energies,
+* formation energies,
+* elastic properties.
+
+Only the output layer needs modification.
+
+The interaction blocks remain unchanged.
+
+---
+
+# 16.14.2 Limitations of SchNet
+
+Despite its many strengths,
+
+SchNet is not a perfect model.
+
+Several limitations became apparent as researchers applied it to increasingly complex atomistic problems.
+
+These limitations directly inspired the development of later graph neural network architectures.
+
+---
+
+# Limitation 1 — Only Pairwise Distances
+
+The largest limitation of SchNet is that it relies primarily on pairwise distances.
+
+The interaction between two atoms depends only on
+
+$$
+r_{ij}.
+$$
+
+However,
+
+many chemical phenomena depend on bond angles.
+
+Consider water.
+
+```text
+H
+
+ \
+
+  O
+
+ /
+
+H
+```
+
+Its properties depend not only on
+
+* O–H bond lengths,
+
+but also on
+
+* H–O–H bond angle.
+
+Similarly,
+
+materials such as
+
+* graphene,
+* diamond,
+* silicon,
+
+derive many of their properties from angular relationships.
+
+SchNet does not explicitly encode this information.
+
+---
+
+# Consequence
+
+Two structures may have identical bond lengths but different bond angles.
+
+SchNet may produce similar representations,
+
+even though the physical properties differ significantly.
+
+This limitation motivated angle-aware models such as
+
+* DimeNet,
+* DimeNet++,
+* GemNet.
+
+---
+
+# Limitation 2 — Implicit Long-Range Interactions
+
+SchNet computes interactions only within a cutoff radius.
+
+Typically,
+
+$$
+r_c
+===
+
+5\text{ Å}.
+$$
+
+Atoms farther apart do not communicate directly.
+
+Long-range electrostatic interactions therefore must be learned indirectly.
+
+For systems dominated by
+
+* ionic bonding,
+* electrostatics,
+* polarization,
+
+this approximation may reduce accuracy.
+
+Later architectures such as PhysNet explicitly incorporate long-range interactions.
+
+---
+
+# Limitation 3 — No Directional Information
+
+Distances contain magnitude but not direction.
+
+For example,
+
+the vectors
+
+```text
+(1,0,0)
+```
+
+and
+
+```text
+(0,1,0)
+```
+
+have identical lengths.
+
+Consequently,
+
+SchNet cannot distinguish directional relationships using distances alone.
+
+Directional interactions are particularly important for
+
+* transition-metal complexes,
+* catalysts,
+* layered materials,
+* anisotropic crystals.
+
+---
+
+# Limitation 4 — Computational Cost
+
+Compared with classical machine learning,
+
+SchNet is computationally demanding.
+
+Each interaction block requires
+
+* neighbor search,
+* radial basis expansion,
+* filter generation,
+* continuous convolutions.
+
+As system size increases,
+
+memory consumption and training time also increase.
+
+Although still much faster than DFT,
+
+SchNet is considerably more expensive than descriptor-based machine learning models.
+
+---
+
+# Limitation 5 — Not Rotation Equivariant
+
+SchNet is invariant to rotations,
+
+but it is **not equivariant**.
+
+Understanding this distinction is important.
+
+An invariant model predicts the same energy after rotating a molecule.
+
+An equivariant model additionally updates vector quantities correctly under rotation.
+
+For example,
+
+force vectors should rotate together with the molecule.
+
+Modern architectures such as
+
+* PaiNN,
+* NequIP,
+* Allegro,
+* MACE
+
+explicitly model rotational equivariance,
+
+leading to significantly improved force prediction.
+
+---
+
+# 16.14.3 Comparison with Later Architectures
+
+The development of atomistic graph neural networks can be viewed as a sequence of improvements over SchNet.
+
+| Model     | Main Improvement Over SchNet                                       |
+| --------- | ------------------------------------------------------------------ |
+| PhysNet   | Long-range electrostatics and charge prediction                    |
+| DimeNet   | Angular message passing                                            |
+| DimeNet++ | Faster and more accurate angular interactions                      |
+| PaiNN     | Rotation-equivariant message passing                               |
+| GemNet    | Higher-order geometric interactions                                |
+| NequIP    | E(3)-equivariant neural network                                    |
+| Allegro   | Local equivariant interactions for large systems                   |
+| MACE      | Higher-order equivariant message passing with exceptional accuracy |
+
+Rather than replacing SchNet,
+
+these architectures extend its fundamental ideas.
+
+---
+
+# 16.14.4 When Should You Use SchNet?
+
+SchNet remains an excellent choice in many situations.
+
+It is particularly suitable when
+
+* learning atomistic machine learning for the first time,
+* building baseline models,
+* predicting molecular energies,
+* predicting crystal formation energies,
+* constructing neural network potentials,
+* computational resources are limited,
+* interpretability and simplicity are important.
+
+For highly accurate force fields involving complex directional chemistry,
+
+newer equivariant models generally provide superior performance.
+
+---
+
+# 16.14.5 Scientific Impact
+
+SchNet changed how researchers think about atomistic machine learning.
+
+Before SchNet,
+
+feature engineering dominated the field.
+
+After SchNet,
+
+representation learning became the standard approach.
+
+Many research directions—including
+
+* message passing neural networks,
+* neural interatomic potentials,
+* geometric deep learning,
+* equivariant graph neural networks,
+
+were accelerated by the success of SchNet.
+
+Its influence extends far beyond its benchmark performance.
+
+---
+
+# 16.14.6 Lessons Learned from SchNet
+
+Studying SchNet teaches several important principles that apply to nearly all modern atomistic neural networks.
+
+1. **Physical symmetries should be incorporated into the model.**
+
+2. **Continuous geometry is more informative than discrete graph connectivity alone.**
+
+3. **Learning representations directly from atomic structures often outperforms handcrafted descriptors.**
+
+4. **Energy-based learning naturally enables force prediction through automatic differentiation.**
+
+5. **Combining machine learning with physical principles leads to models that are both accurate and scientifically meaningful.**
+
+These ideas continue to guide the development of state-of-the-art atomistic machine learning methods.
+
+---
+
+# 16.14.7 Looking Ahead
+
+Although SchNet remains a landmark architecture, the field has progressed rapidly.
+
+The next generation of models addresses several of SchNet's limitations by incorporating
+
+* explicit electrostatic interactions,
+* angular message passing,
+* higher-order geometric features,
+* rotational equivariance,
+* more efficient scaling to large systems.
+
+Understanding SchNet provides the conceptual foundation needed to appreciate these advances.
+
+As you study later architectures, you will repeatedly encounter concepts first introduced in SchNet, such as atom-wise energy decomposition, continuous message passing, differentiable energy models, and geometry-aware neural networks.
+
+---
+
+# Chapter Summary
+
+This chapter presented a comprehensive study of **SchNet**, one of the foundational architectures in atomistic deep learning. We began by motivating the need for continuous-filter convolutions and learned why traditional graph neural networks struggle with continuous three-dimensional atomic structures. We then developed the complete SchNet architecture step by step, covering atomic embeddings, radial basis function expansions, filter-generating networks, continuous-filter convolutions, interaction blocks, atom-wise energy prediction, force prediction through automatic differentiation, and practical training procedures.
+
+Finally, we examined SchNet's applications, strengths, limitations, and scientific impact. While newer architectures such as PhysNet, DimeNet++, PaiNN, GemNet, NequIP, Allegro, and MACE have extended its capabilities, SchNet remains the conceptual starting point for modern atomistic graph neural networks. A solid understanding of SchNet provides the mathematical, computational, and physical foundation required to study the more advanced models presented in the following chapters of this book.
+
+
+# 16.15 Exercises
+
+The purpose of these exercises is not merely to test your memory but to strengthen your understanding of SchNet by connecting theory, mathematics, implementation, and practical applications. The problems range from conceptual questions to derivations, coding exercises, and research-oriented tasks similar to those encountered in graduate-level courses and research projects.
+
+Try to solve each problem without immediately referring to the chapter. Many of these exercises are designed to encourage deeper thinking rather than straightforward calculation.
+
+---
+
+# 16.15.1 Conceptual Questions
+
+### Question 1
+
+Explain why traditional graph neural networks are not well suited for atomistic systems.
+
+In your answer, discuss
+
+* discrete edge representations,
+* continuous atomic geometry,
+* changing bond lengths,
+* rotational invariance.
+
+---
+
+### Question 2
+
+Why are handcrafted descriptors unnecessary in SchNet?
+
+Compare SchNet with descriptor-based machine learning methods.
+
+---
+
+### Question 3
+
+Describe the purpose of the atomic embedding layer.
+
+Why is the atomic number converted into a continuous vector instead of being used directly?
+
+---
+
+### Question 4
+
+Explain the difference between
+
+* atomic coordinates,
+* atomic embeddings,
+* atomic feature vectors.
+
+---
+
+### Question 5
+
+What is Continuous-Filter Convolution?
+
+How does it differ from conventional convolution?
+
+---
+
+### Question 6
+
+Explain the role of
+
+* radial basis functions,
+* filter-generating networks,
+* interaction blocks
+
+within the SchNet architecture.
+
+---
+
+### Question 7
+
+Why does SchNet use residual connections?
+
+Discuss their importance for
+
+* optimization,
+* gradient flow,
+* deep architectures.
+
+---
+
+### Question 8
+
+Why does SchNet predict atomic energies instead of directly predicting the total energy?
+
+Explain the concept of extensivity.
+
+---
+
+### Question 9
+
+Derive the relationship
+
+$$
+\mathbf{F}
+==========
+
+*
+
+\nabla E.
+$$
+
+Why is this formulation important for molecular dynamics?
+
+---
+
+### Question 10
+
+Discuss the main advantages and limitations of SchNet.
+
+How do newer architectures such as PaiNN and NequIP overcome some of these limitations?
+
+---
+
+# 16.15.2 Mathematical Exercises
+
+### Question 11
+
+Suppose two atoms have coordinates
+
+$$
+\mathbf{R}_1=(0,0,0)
+$$
+
+and
+
+$$
+\mathbf{R}_2=(2,3,6).
+$$
+
+Compute the interatomic distance
+
+$$
+r_{12}.
+$$
+
+---
+
+### Question 12
+
+Assume
+
+$$
+\gamma=8
+$$
+
+and
+
+$$
+\mu=2.
+$$
+
+Compute the Gaussian radial basis function
+
+$$
+e(r)
+====
+
+\exp
+\left(
+------
+
+\gamma(r-\mu)^2
+\right)
+$$
+
+for
+
+$$
+r=2.1.
+$$
+
+---
+
+### Question 13
+
+Suppose one interaction block predicts
+
+$$
+\Delta\mathbf{x}
+================
+
+(0.3,-0.2,0.4).
+$$
+
+If
+
+$$
+\mathbf{x}
+==========
+
+(1.2,0.7,-0.5),
+$$
+
+compute the updated feature vector after the residual connection.
+
+---
+
+### Question 14
+
+Suppose the predicted atomic energies are
+
+| Atom | Energy (eV) |
+| ---- | ----------: |
+| 1    |       −4.25 |
+| 2    |       −4.18 |
+| 3    |       −4.20 |
+| 4    |       −4.23 |
+| 5    |       −4.27 |
+
+Compute the total energy of the system.
+
+---
+
+### Question 15
+
+Given
+
+$$
+E(x)
+====
+
+x^2+3x,
+$$
+
+compute the force acting on the atom located at
+
+$$
+x=2.
+$$
+
+Use
+
+$$
+F
+=
+
+*
+
+\frac{dE}{dx}.
+$$
+
+---
+
+### Question 16
+
+Suppose one atom has four neighbors.
+
+Each neighbor contributes
+
+$$
+0.5,
+0.2,
+0.8,
+0.1.
+$$
+
+Compute the aggregated message.
+
+---
+
+### Question 17
+
+Suppose SchNet uses
+
+* embedding dimension = 128,
+* 64 radial basis functions,
+* 200 atoms.
+
+Determine the dimensions of
+
+* atomic embedding matrix,
+* RBF tensor,
+* output atomic features.
+
+---
+
+# 16.15.3 Programming Exercises
+
+### Question 18
+
+Implement a PyTorch class that performs atomic embedding using `nn.Embedding`.
+
+Test your implementation using
+
+```python
+atomic_numbers = torch.tensor([1,6,8])
+```
+
+Print the output tensor shape.
+
+---
+
+### Question 19
+
+Implement Gaussian radial basis function expansion.
+
+Your implementation should
+
+* accept arbitrary distances,
+* allow configurable cutoff radius,
+* support arbitrary numbers of basis functions.
+
+---
+
+### Question 20
+
+Implement the Filter-Generating Network described in this chapter.
+
+Test it using randomly generated RBF features.
+
+---
+
+### Question 21
+
+Implement a simplified Continuous-Filter Convolution layer.
+
+Verify that
+
+* tensor dimensions are correct,
+* gradients propagate correctly.
+
+---
+
+### Question 22
+
+Implement a complete SchNet interaction block.
+
+Include
+
+* linear projection,
+* continuous-filter convolution,
+* output projection,
+* residual connection.
+
+---
+
+### Question 23
+
+Build a complete SchNet model capable of predicting molecular energy.
+
+Use randomly generated atomic coordinates for testing.
+
+---
+
+### Question 24
+
+Extend your implementation so that atomic forces are computed automatically using
+
+```python
+torch.autograd.grad()
+```
+
+Verify that the output force tensor has shape
+
+```text
+(number_of_atoms,3)
+```
+
+---
+
+### Question 25
+
+Implement a complete training loop using
+
+* Adam optimizer,
+* mini-batch training,
+* learning-rate scheduling,
+* model checkpointing.
+
+---
+
+# 16.15.4 Research-Oriented Exercises
+
+### Question 26
+
+Read the original SchNet paper.
+
+Summarize
+
+* the motivation,
+* the main architectural contributions,
+* the experimental results,
+* the limitations.
+
+---
+
+### Question 27
+
+Compare SchNet with CGCNN.
+
+Discuss differences in
+
+* graph construction,
+* message passing,
+* continuous geometry,
+* feature representation.
+
+---
+
+### Question 28
+
+Compare SchNet and DimeNet.
+
+Why does incorporating angular information improve prediction accuracy?
+
+---
+
+### Question 29
+
+Investigate PaiNN.
+
+Explain how rotational equivariance improves force prediction.
+
+---
+
+### Question 30
+
+Study MACE or NequIP.
+
+Write a report describing
+
+* higher-order message passing,
+* equivariant features,
+* computational efficiency,
+* benchmark performance compared with SchNet.
+
+---
+
+# 16.15.5 Mini Projects
+
+### Project 1
+
+Train SchNet on the QM9 dataset to predict molecular atomization energy.
+
+Evaluate the model using
+
+* MAE,
+* RMSE,
+* inference time.
+
+---
+
+### Project 2
+
+Train SchNet using both energy and force labels from the MD17 dataset.
+
+Compare
+
+* energy-only training,
+* joint energy-force training.
+
+Discuss differences in prediction accuracy.
+
+---
+
+### Project 3
+
+Download crystal structures from the Materials Project.
+
+Train SchNet to predict
+
+* formation energy,
+* band gap,
+* bulk modulus.
+
+Analyze the effect of
+
+* embedding dimension,
+* number of interaction blocks,
+* cutoff radius.
+
+---
+
+### Project 4
+
+Replace the Gaussian radial basis functions with Bessel basis functions.
+
+Compare
+
+* convergence speed,
+* validation loss,
+* final prediction accuracy.
+
+---
+
+### Project 5
+
+Modify SchNet by replacing the interaction block with an attention mechanism.
+
+Compare your implementation with the original SchNet architecture.
+
+---
+
+# 16.15.6 Open Research Questions
+
+The following questions remain active areas of research in atomistic machine learning.
+
+1. How can long-range electrostatic interactions be modeled more efficiently?
+
+2. Can SchNet be extended to accurately predict excited-state properties?
+
+3. How should uncertainty estimation be incorporated into atomistic neural networks?
+
+4. What are the most effective strategies for combining DFT calculations with active learning?
+
+5. How can SchNet-scale architectures be adapted to simulate systems containing millions of atoms?
+
+6. Can atomistic graph neural networks be integrated with large language models to accelerate autonomous materials discovery?
+
+These questions highlight the rapidly evolving nature of the field and provide opportunities for future research.
+
+---
+
+# Chapter Conclusion
+
+This chapter has developed SchNet from first principles to practical implementation. Beginning with the motivation for continuous-filter convolutions, we examined atomic embeddings, radial basis function expansions, interaction blocks, energy and force prediction, training strategies, and real-world applications. By completing the exercises and projects presented here, you should now be able to understand the original SchNet paper, implement the architecture from scratch in PyTorch, train it on molecular and materials datasets, and critically evaluate its strengths and limitations.
+
+With this foundation established, the next chapter introduces **PhysNet**, which extends SchNet by incorporating explicit electrostatic interactions, long-range physics, and improved energy modeling, bringing us one step closer to state-of-the-art neural network potentials for atomistic systems.
+
+
