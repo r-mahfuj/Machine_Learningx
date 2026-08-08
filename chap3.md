@@ -936,9 +936,9 @@ $$
 
 where:
 
-- \(y_i\) is the actual target value,
-- \(\bar{y}\) is the average target value,
-- \(n\) is the number of samples.
+- $(y_i)$ is the actual target value,
+- $(\bar{y})$ is the average target value,
+- $(n)$ is the number of samples.
 
 The tree calculates this value before and after a possible split.
 
@@ -1545,9 +1545,9 @@ $$
 
 where:
 
-- \(n_L\) = number of samples in left child,
-- \(n_R\) = number of samples in right child,
-- \(n\) = total samples.
+- $(n_L)$ = number of samples in left child,
+- $(n_R)$ = number of samples in right child,
+- $(n)$ = total samples.
 
 The tree chooses the split that minimizes this value.
 
@@ -2971,8 +2971,8 @@ $$
 
 where:
 
-- \(N\) = number of trees,
-- \(T_i(x)\) = prediction from tree \(i\).
+- $(N)$ = number of trees,
+- $(T_i(x))$ = prediction from tree $(i)$.
 
 ---
 
@@ -3287,7 +3287,7 @@ The important idea is:
 
 # 3.92 Mathematical View of Averaging
 
-Suppose we have \(N\) trees.
+Suppose we have $(N)$ trees.
 
 Each tree produces a prediction:
 
@@ -3406,8 +3406,8 @@ $$
 
 where:
 
-- \(\sigma^2\) is the variance of individual models,
-- \(N\) is the number of models.
+- $(\sigma^2)$ is the variance of individual models,
+- $(N)$ is the number of models.
 
 This means:
 
@@ -3439,9 +3439,9 @@ $$
 
 where:
 
-- \(\rho\) = correlation between trees,
-- \(\sigma^2\) = variance of individual trees,
-- \(N\) = number of trees.
+- $(\rho)$ = correlation between trees,
+- $(\sigma^2)$ = variance of individual trees,
+- $(N)$ = number of trees.
 
 ---
 
@@ -3544,7 +3544,7 @@ $$
 \left(1-\frac{1}{n}\right)^n
 $$
 
-As \(n\) becomes large:
+As $(n)$ becomes large:
 
 $$
 \left(1-\frac{1}{n}\right)^n
@@ -4802,7 +4802,7 @@ that feature receives high importance.
 
 # 3.138 Mathematical Idea Behind MDI
 
-For a feature \(j\),
+For a feature $(j)$,
 
 importance is calculated from the reduction in impurity:
 

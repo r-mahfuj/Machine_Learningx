@@ -1,6 +1,6 @@
 # Chapter 20 — Equivariant Graph Neural Networks
 
-# 20.1 Introduction
+## 20.1 Introduction
 
 The development of machine learning models for materials science has progressed remarkably over the past decade.
 
@@ -40,7 +40,7 @@ Understanding this principle marks the transition from conventional graph neural
 
 ---
 
-# 20.2 The Next Evolution of Graph Neural Networks
+## 20.2 The Next Evolution of Graph Neural Networks
 
 Imagine holding a crystal of silicon in your hand.
 
@@ -72,7 +72,7 @@ Unfortunately, many conventional neural networks do.
 
 ---
 
-# 20.3 Why Conventional Neural Networks Struggle
+## 20.3 Why Conventional Neural Networks Struggle
 
 A traditional neural network treats coordinates simply as numbers.
 
@@ -112,7 +112,7 @@ Learning these relationships purely from data is inefficient.
 
 ---
 
-# 20.4 Learning Symmetry from Data Is Difficult
+## 20.4 Learning Symmetry from Data Is Difficult
 
 Suppose we wish to teach a conventional neural network that rotating a crystal does not change its energy.
 
@@ -172,7 +172,7 @@ it merely approximates it statistically.
 
 ---
 
-# 20.5 Physics Already Knows the Answer
+## 20.5 Physics Already Knows the Answer
 
 Physics tells us something that machine learning should not need to rediscover.
 
@@ -196,7 +196,7 @@ This idea is the foundation of **equivariant neural networks**.
 
 ---
 
-# 20.6 From Data-Driven Learning to Physics-Informed Learning
+## 20.6 From Data-Driven Learning to Physics-Informed Learning
 
 The evolution of machine learning for materials science can be viewed as a gradual incorporation of physical knowledge.
 
@@ -240,7 +240,7 @@ the model becomes both more accurate and more efficient.
 
 ---
 
-# 20.7 The Importance of Geometry
+## 20.7 The Importance of Geometry
 
 Many material properties depend strongly on the three-dimensional arrangement of atoms.
 
@@ -275,7 +275,7 @@ Equivariant neural networks accomplish this by treating geometry as a fundamenta
 
 ---
 
-# 20.8 Why Coordinates Alone Are Not Enough
+## 20.8 Why Coordinates Alone Are Not Enough
 
 Coordinates describe the positions of atoms,
 
@@ -294,7 +294,7 @@ Equivariant architectures achieve this automatically.
 
 ---
 
-# 20.9 The Role of Symmetry in Materials Science
+## 20.9 The Role of Symmetry in Materials Science
 
 Symmetry plays a central role throughout materials science.
 
@@ -317,7 +317,7 @@ machine learning models that respect these symmetries naturally produce more phy
 
 ---
 
-# 20.10 Equivariant Graph Neural Networks
+## 20.10 Equivariant Graph Neural Networks
 
 Equivariant Graph Neural Networks (EGNNs) are graph neural networks whose internal operations obey the symmetry transformations of three-dimensional space.
 
@@ -335,7 +335,7 @@ These properties dramatically improve predictive performance for atomistic syste
 
 ---
 
-# 20.11 Advantages Over Conventional Graph Neural Networks
+## 20.11 Advantages Over Conventional Graph Neural Networks
 
 Compared with earlier graph neural networks,
 
@@ -360,7 +360,7 @@ it can devote more of its learning capacity to modeling chemistry rather than re
 
 ---
 
-# 20.12 Modern Equivariant Models
+## 20.12 Modern Equivariant Models
 
 Several state-of-the-art machine learning force fields are built upon equivariant neural networks.
 
@@ -379,7 +379,7 @@ Many of today's most advanced atomistic machine learning methods are based on th
 
 ---
 
-# 20.13 Applications in Materials Science
+## 20.13 Applications in Materials Science
 
 Equivariant graph neural networks are now being applied to numerous research areas, including
 
@@ -401,7 +401,7 @@ Their ability to accurately model three-dimensional atomic interactions has made
 
 ---
 
-# 20.14 Roadmap of This Chapter
+## 20.14 Roadmap of This Chapter
 
 This chapter develops equivariant graph neural networks from first principles.
 
@@ -418,7 +418,7 @@ By the end of this chapter, you will understand both the mathematical principles
 Before introducing concepts such as **SO(3)** or **tensor representations**, we must first understand **why rotational symmetry matters**. The next section examines how physical quantities respond to rotations, why conventional neural networks struggle with these transformations, and how respecting symmetry fundamentally changes the way machine learning models represent materials.
 
 
-# 20.15 Motivation
+## 20.15 Motivation
 
 Machine learning has transformed the way researchers discover and understand materials. Instead of performing expensive quantum mechanical calculations for every candidate material, modern machine learning models can predict important properties in a fraction of the time.
 
@@ -430,7 +430,7 @@ This realization motivates the development of **Equivariant Graph Neural Network
 
 ---
 
-# 20.16 Machine Learning Should Respect Physics
+## 20.16 Machine Learning Should Respect Physics
 
 Traditional machine learning focuses primarily on finding statistical patterns.
 
@@ -463,7 +463,7 @@ While this approach is powerful, it is also inefficient because many physical re
 
 ---
 
-# 20.17 The Role of Prior Knowledge
+## 20.17 The Role of Prior Knowledge
 
 Humans rarely learn from raw observations alone.
 
@@ -479,7 +479,7 @@ This approach is known as **physics-informed machine learning**.
 
 ---
 
-# 20.18 A Simple Thought Experiment
+## 20.18 A Simple Thought Experiment
 
 Imagine two researchers studying the same crystal.
 
@@ -528,7 +528,7 @@ A physically correct machine learning model should therefore produce identical p
 
 ---
 
-# 20.19 Why This Is Difficult for Ordinary Neural Networks
+## 20.19 Why This Is Difficult for Ordinary Neural Networks
 
 A conventional neural network receives numerical coordinates.
 
@@ -558,7 +558,7 @@ The neural network cannot automatically recognize that both coordinate sets desc
 
 ---
 
-# 20.20 Learning Every Possible Rotation
+## 20.20 Learning Every Possible Rotation
 
 One possible solution is to include many rotated copies of every crystal in the training dataset.
 
@@ -601,7 +601,7 @@ it has significant disadvantages.
 
 ---
 
-# 20.21 A Better Solution
+## 20.21 A Better Solution
 
 Instead of teaching the neural network every possible rotation,
 
@@ -629,7 +629,7 @@ This dramatically improves learning efficiency.
 
 ---
 
-# 20.22 Symmetry Reduces Learning Complexity
+## 20.22 Symmetry Reduces Learning Complexity
 
 Suppose a conventional neural network must learn
 
@@ -679,7 +679,7 @@ The learning problem becomes much simpler.
 
 ---
 
-# 20.23 Physical Laws Are Coordinate Independent
+## 20.23 Physical Laws Are Coordinate Independent
 
 One of the central ideas in theoretical physics is that physical laws should not depend on the observer's coordinate system.
 
@@ -699,7 +699,7 @@ a machine learning model should produce predictions that are independent of arbi
 
 ---
 
-# 20.24 Example: Energy
+## 20.24 Example: Energy
 
 Suppose the energy of a crystal is
 
@@ -721,7 +721,7 @@ Its value does not depend on orientation.
 
 ---
 
-# 20.25 Example: Force
+## 20.25 Example: Force
 
 Now consider the force acting on one atom.
 
@@ -749,7 +749,7 @@ force should **rotate together with the crystal**.
 
 ---
 
-# 20.26 Example: Stress
+## 20.26 Example: Stress
 
 The stress tensor behaves differently.
 
@@ -761,7 +761,7 @@ Equivariant neural networks are specifically designed to handle these different 
 
 ---
 
-# 20.27 Data Efficiency
+## 20.27 Data Efficiency
 
 One of the greatest practical advantages of equivariant neural networks is improved data efficiency.
 
@@ -799,7 +799,7 @@ it requires fewer examples to learn the underlying physics.
 
 ---
 
-# 20.28 Better Generalization
+## 20.28 Better Generalization
 
 Generalization refers to the ability of a machine learning model to make accurate predictions on previously unseen data.
 
@@ -811,7 +811,7 @@ they are more robust when applied to new crystal structures.
 
 ---
 
-# 20.29 Improved Molecular Dynamics
+## 20.29 Improved Molecular Dynamics
 
 Accurate molecular dynamics requires precise force predictions.
 
@@ -829,7 +829,7 @@ This makes them particularly attractive for machine-learning interatomic potenti
 
 ---
 
-# 20.30 Why Modern Force Fields Are Equivariant
+## 20.30 Why Modern Force Fields Are Equivariant
 
 Nearly every state-of-the-art machine-learning force field developed in recent years uses equivariant neural networks.
 
@@ -849,7 +849,7 @@ The widespread adoption of equivariance reflects its ability to combine
 
 ---
 
-# 20.31 Motivation Summary
+## 20.31 Motivation Summary
 
 The motivation for equivariant graph neural networks can be summarized as
 
@@ -885,7 +885,7 @@ Rather than forcing a neural network to rediscover the geometric laws of nature 
 
 The central idea behind equivariant neural networks is that **rotations matter**. Before defining concepts such as invariance or equivariance mathematically, we must first understand **why rotation symmetry is one of the most fundamental principles in physics**. In the next section, we will examine how rotating a crystal affects different physical quantities and why respecting rotational symmetry dramatically improves machine learning models for atomistic systems.
 
-# 20.32 Why Rotation Symmetry Matters
+## 20.32 Why Rotation Symmetry Matters
 
 Among all geometric transformations encountered in physics,
 
@@ -909,7 +909,7 @@ This simple observation has profound consequences for machine learning.
 
 ---
 
-# 20.33 Rotating an Object Does Not Change the Object
+## 20.33 Rotating an Object Does Not Change the Object
 
 Consider a sodium chloride crystal.
 
@@ -949,7 +949,7 @@ The crystal has merely been viewed from a different direction.
 
 ---
 
-# 20.34 A Coordinate System Is Human-Made
+## 20.34 A Coordinate System Is Human-Made
 
 Coordinates are not physical objects.
 
@@ -979,7 +979,7 @@ A physically meaningful machine learning model should recognize that these two c
 
 ---
 
-# 20.35 Physical Properties Should Behave Correctly
+## 20.35 Physical Properties Should Behave Correctly
 
 Different physical quantities respond differently to rotation.
 
@@ -993,7 +993,7 @@ Understanding these behaviors is the foundation of equivariant learning.
 
 ---
 
-# 20.36 Scalar Quantities
+## 20.36 Scalar Quantities
 
 A **scalar** has magnitude but no direction.
 
@@ -1033,7 +1033,7 @@ Nothing changes.
 
 ---
 
-# 20.37 Why Energy Cannot Depend on Orientation
+## 20.37 Why Energy Cannot Depend on Orientation
 
 Suppose a neural network predicts
 
@@ -1067,7 +1067,7 @@ Such a model would violate a fundamental principle of physics.
 
 ---
 
-# 20.38 Vector Quantities
+## 20.38 Vector Quantities
 
 Vectors possess both
 
@@ -1087,7 +1087,7 @@ vectors **must rotate together with the crystal**.
 
 ---
 
-# 20.39 Example: Atomic Force
+## 20.39 Example: Atomic Force
 
 Suppose an atom experiences the force
 
@@ -1115,7 +1115,7 @@ but the physical interaction remains identical.
 
 ---
 
-# 20.40 Mathematical Example
+## 20.40 Mathematical Example
 
 Assume the force acting on an atom is
 
@@ -1148,7 +1148,7 @@ This is the correct physical behavior.
 
 ---
 
-# 20.41 Tensor Quantities
+## 20.41 Tensor Quantities
 
 Some physical quantities are neither scalars nor vectors.
 
@@ -1169,7 +1169,7 @@ Modern equivariant neural networks are specifically designed to handle these tra
 
 ---
 
-# 20.42 Crystal Orientation in Materials Science
+## 20.42 Crystal Orientation in Materials Science
 
 In crystallography,
 
@@ -1197,7 +1197,7 @@ although the observed geometry appears different.
 
 ---
 
-# 20.43 Rotation in Molecular Dynamics
+## 20.43 Rotation in Molecular Dynamics
 
 During molecular dynamics,
 
@@ -1229,7 +1229,7 @@ A machine learning force field must therefore produce physically consistent pred
 
 ---
 
-# 20.44 Why Conventional Networks Fail
+## 20.44 Why Conventional Networks Fail
 
 Suppose we train a conventional neural network only on crystals aligned along one orientation.
 
@@ -1245,7 +1245,7 @@ This lack of rotational awareness limits generalization.
 
 ---
 
-# 20.45 Rotational Data Augmentation
+## 20.45 Rotational Data Augmentation
 
 One possible solution is to augment the dataset.
 
@@ -1283,7 +1283,7 @@ perfect rotational consistency is still not guaranteed.
 
 ---
 
-# 20.46 Equivariant Networks Solve the Problem
+## 20.46 Equivariant Networks Solve the Problem
 
 Equivariant neural networks do not require the network to learn rotational behavior from examples.
 
@@ -1313,7 +1313,7 @@ The network automatically transforms its internal features according to the rota
 
 ---
 
-# 20.47 Learning Physics Instead of Coordinates
+## 20.47 Learning Physics Instead of Coordinates
 
 Traditional neural networks often learn
 
@@ -1339,7 +1339,7 @@ This distinction is one of the major reasons why equivariant architectures outpe
 
 ---
 
-# 20.48 Rotation Symmetry Improves Generalization
+## 20.48 Rotation Symmetry Improves Generalization
 
 Suppose the training data contains crystals rotated only between
 
@@ -1365,7 +1365,7 @@ it can generalize naturally to arbitrary orientations.
 
 ---
 
-# 20.49 Why Rotation Symmetry Improves Data Efficiency
+## 20.49 Why Rotation Symmetry Improves Data Efficiency
 
 Because rotational behavior is built into the architecture,
 
@@ -1384,7 +1384,7 @@ This improves learning efficiency while reducing the amount of required training
 
 ---
 
-# 20.50 Real-World Importance
+## 20.50 Real-World Importance
 
 Rotation symmetry is essential for
 
@@ -1401,7 +1401,7 @@ Virtually every modern atomistic machine learning model benefits from respecting
 
 ---
 
-# 20.51 Key Insight
+## 20.51 Key Insight
 
 The most important idea of this section can be summarized as
 
@@ -1431,7 +1431,7 @@ This insight motivates the concepts of **invariance** and **equivariance**, whic
 
 We have established that different physical quantities respond differently to rotations. **Energy remains unchanged**, **forces rotate**, and **stress transforms as a tensor**. To formalize these behaviors, we now introduce two fundamental concepts in geometric deep learning: **invariance** and **equivariance**. These concepts define exactly how a neural network's outputs should respond when its inputs undergo symmetry transformations, and they form the mathematical foundation of every modern equivariant graph neural network.
 
-# 20.52 Invariance vs. Equivariance
+## 20.52 Invariance vs. Equivariance
 
 The concepts of **invariance** and **equivariance** are the mathematical foundation of modern geometric deep learning.
 
@@ -1443,7 +1443,7 @@ Understanding this distinction is essential before studying equivariant message 
 
 ---
 
-# 20.53 Why We Need New Mathematical Concepts
+## 20.53 Why We Need New Mathematical Concepts
 
 Suppose we rotate an entire crystal.
 
@@ -1472,7 +1472,7 @@ This observation leads naturally to the concepts of **invariance** and **equivar
 
 ---
 
-# 20.54 What Is Invariance?
+## 20.54 What Is Invariance?
 
 A function is called **invariant** if its output does **not change** after applying a transformation to the input.
 
@@ -1504,7 +1504,7 @@ the prediction remains identical.
 
 ---
 
-# 20.55 Mathematical Definition of Invariance
+## 20.55 Mathematical Definition of Invariance
 
 Suppose
 
@@ -1524,7 +1524,7 @@ This simple equation states
 
 ---
 
-# 20.56 Physical Interpretation
+## 20.56 Physical Interpretation
 
 Imagine rotating a crystal.
 
@@ -1566,7 +1566,7 @@ Energy is therefore an **invariant quantity**.
 
 ---
 
-# 20.57 Examples of Invariant Quantities
+## 20.57 Examples of Invariant Quantities
 
 Many important material properties are invariant.
 
@@ -1585,7 +1585,7 @@ These quantities do not depend on the orientation of the coordinate system.
 
 ---
 
-# 20.58 Example: Formation Energy
+## 20.58 Example: Formation Energy
 
 Suppose the formation energy of a crystal is
 
@@ -1605,7 +1605,7 @@ Nothing changes because formation energy is a scalar.
 
 ---
 
-# 20.59 What Is Equivariance?
+## 20.59 What Is Equivariance?
 
 Equivariance is different.
 
@@ -1637,7 +1637,7 @@ but it changes correctly.
 
 ---
 
-# 20.60 Mathematical Definition of Equivariance
+## 20.60 Mathematical Definition of Equivariance
 
 A function is equivariant if
 
@@ -1661,7 +1661,7 @@ This equation means
 
 ---
 
-# 20.61 Physical Interpretation
+## 20.61 Physical Interpretation
 
 Suppose an atom experiences a force pointing toward the right.
 
@@ -1691,7 +1691,7 @@ This is equivariance.
 
 ---
 
-# 20.62 Example Using Coordinates
+## 20.62 Example Using Coordinates
 
 Suppose an atom is located at
 
@@ -1713,7 +1713,7 @@ Coordinates are therefore **equivariant**.
 
 ---
 
-# 20.63 Example Using Force
+## 20.63 Example Using Force
 
 Suppose
 
@@ -1742,7 +1742,7 @@ The neural network should produce this transformed vector automatically.
 
 ---
 
-# 20.64 Example Using Velocity
+## 20.64 Example Using Velocity
 
 Velocity behaves exactly like force.
 
@@ -1764,7 +1764,7 @@ Velocity is therefore another equivariant quantity.
 
 ---
 
-# 20.65 Example Using Stress
+## 20.65 Example Using Stress
 
 Stress is more complicated.
 
@@ -1784,7 +1784,7 @@ Equivariant neural networks are capable of learning these tensor transformations
 
 ---
 
-# 20.66 Comparing Invariance and Equivariance
+## 20.66 Comparing Invariance and Equivariance
 
 The difference between the two concepts can be summarized visually.
 
@@ -1814,7 +1814,7 @@ but the outputs behave differently.
 
 ---
 
-# 20.67 Everyday Analogy
+## 20.67 Everyday Analogy
 
 Imagine taking a photograph of a coffee mug.
 
@@ -1838,7 +1838,7 @@ only its orientation.
 
 ---
 
-# 20.68 Why Machine Learning Needs Both
+## 20.68 Why Machine Learning Needs Both
 
 Different prediction tasks require different symmetry behavior.
 
@@ -1860,7 +1860,7 @@ modern atomistic neural networks often contain both invariant and equivariant fe
 
 ---
 
-# 20.69 Internal Feature Transformations
+## 20.69 Internal Feature Transformations
 
 Interestingly,
 
@@ -1884,7 +1884,7 @@ This strategy allows the model to fully exploit geometric information while prod
 
 ---
 
-# 20.70 Why Equivariance Improves Learning
+## 20.70 Why Equivariance Improves Learning
 
 Without equivariance,
 
@@ -1906,7 +1906,7 @@ This is one reason why modern equivariant architectures outperform earlier graph
 
 ---
 
-# 20.71 Examples in Materials Science
+## 20.71 Examples in Materials Science
 
 The concepts of invariance and equivariance appear throughout computational materials science.
 
@@ -1925,7 +1925,7 @@ Understanding these transformation rules is essential when designing physically 
 
 ---
 
-# 20.72 Why This Matters for Modern GNNs
+## 20.72 Why This Matters for Modern GNNs
 
 Architectures such as
 
@@ -1945,7 +1945,7 @@ This capability is one of the primary reasons they have achieved state-of-the-ar
 
 ---
 
-# 20.73 Key Takeaways
+## 20.73 Key Takeaways
 
 The distinction between invariance and equivariance can be summarized as
 
@@ -1985,7 +1985,7 @@ Together, they form the mathematical language that allows modern graph neural ne
 
 So far, we have discussed symmetry conceptually using rotations of crystals and vectors. The next step is to formalize these ideas within the broader framework of **Euclidean symmetry**, which encompasses **translations, rotations, and reflections**. Understanding Euclidean symmetry provides the bridge from intuitive geometric transformations to the mathematical groups **SO(3)**, **O(3)**, and **E(3)** that underpin modern equivariant graph neural networks.
 
-# 20.74 Euclidean Symmetry
+## 20.74 Euclidean Symmetry
 
 The concepts of invariance and equivariance describe **how** physical quantities should respond to transformations.
 
@@ -2001,7 +2001,7 @@ Nearly every modern equivariant graph neural network is designed around these sy
 
 ---
 
-# 20.75 What Is Euclidean Space?
+## 20.75 What Is Euclidean Space?
 
 Euclidean space is the familiar three-dimensional space in which we live.
 
@@ -2031,7 +2031,7 @@ Together, these coordinates describe the geometry of the crystal.
 
 ---
 
-# 20.76 Geometry Is More Than Coordinates
+## 20.76 Geometry Is More Than Coordinates
 
 Coordinates themselves are not physically important.
 
@@ -2049,7 +2049,7 @@ A physically meaningful transformation should preserve these relationships.
 
 ---
 
-# 20.77 Distance Preservation
+## 20.77 Distance Preservation
 
 Consider two atoms.
 
@@ -2085,7 +2085,7 @@ Transformations that preserve distances are called **isometries**.
 
 ---
 
-# 20.78 Euclidean Transformations
+## 20.78 Euclidean Transformations
 
 There are three fundamental Euclidean transformations.
 
@@ -2099,7 +2099,7 @@ Each transformation changes the coordinate description while preserving the phys
 
 ---
 
-# 20.79 Translation
+## 20.79 Translation
 
 A translation shifts every atom by the same displacement.
 
@@ -2129,7 +2129,7 @@ Only its position has changed.
 
 ---
 
-# 20.80 Mathematical Representation of Translation
+## 20.80 Mathematical Representation of Translation
 
 Suppose an atom has coordinates
 
@@ -2158,7 +2158,7 @@ Every atom receives exactly the same displacement.
 
 ---
 
-# 20.81 Why Translation Should Not Affect Predictions
+## 20.81 Why Translation Should Not Affect Predictions
 
 Suppose the total energy of a crystal is
 
@@ -2180,7 +2180,7 @@ Energy is therefore **translation invariant**.
 
 ---
 
-# 20.82 Rotation
+## 20.82 Rotation
 
 A rotation changes the orientation of an object while preserving
 
@@ -2210,7 +2210,7 @@ only its orientation changes.
 
 ---
 
-# 20.83 Reflection
+## 20.83 Reflection
 
 Reflection creates a mirror image.
 
@@ -2232,7 +2232,7 @@ although some quantities—such as molecular chirality—can distinguish between
 
 ---
 
-# 20.84 Euclidean Symmetry Preserves Geometry
+## 20.84 Euclidean Symmetry Preserves Geometry
 
 All Euclidean transformations preserve
 
@@ -2249,7 +2249,7 @@ Only the coordinate description changes.
 
 ---
 
-# 20.85 What Does Not Preserve Euclidean Geometry?
+## 20.85 What Does Not Preserve Euclidean Geometry?
 
 Suppose we stretch a crystal.
 
@@ -2283,7 +2283,7 @@ not merely changes of viewpoint.
 
 ---
 
-# 20.86 Why Machine Learning Should Respect Euclidean Symmetry
+## 20.86 Why Machine Learning Should Respect Euclidean Symmetry
 
 Imagine two identical crystals.
 
@@ -2307,7 +2307,7 @@ This greatly improves learning efficiency.
 
 ---
 
-# 20.87 Euclidean Symmetry in Crystal Structures
+## 20.87 Euclidean Symmetry in Crystal Structures
 
 Crystal structures are naturally described in Euclidean space.
 
@@ -2325,7 +2325,7 @@ equivariant graph neural networks operate directly within Euclidean space rather
 
 ---
 
-# 20.88 Euclidean Symmetry in Molecular Dynamics
+## 20.88 Euclidean Symmetry in Molecular Dynamics
 
 During molecular dynamics,
 
@@ -2361,7 +2361,7 @@ Equivariant neural networks naturally respect these transformations throughout t
 
 ---
 
-# 20.89 Local Atomic Environments
+## 20.89 Local Atomic Environments
 
 Most interatomic interactions depend on the **relative positions** of neighboring atoms rather than their absolute coordinates.
 
@@ -2393,7 +2393,7 @@ This observation motivates the use of **relative coordinates** in modern atomist
 
 ---
 
-# 20.90 Euclidean Symmetry and Graph Neural Networks
+## 20.90 Euclidean Symmetry and Graph Neural Networks
 
 Modern graph neural networks represent atoms as graph nodes.
 
@@ -2412,7 +2412,7 @@ while ensuring that every operation respects Euclidean symmetry.
 
 ---
 
-# 20.91 From Euclidean Symmetry to Symmetry Groups
+## 20.91 From Euclidean Symmetry to Symmetry Groups
 
 Mathematicians describe Euclidean transformations using **groups**.
 
@@ -2428,7 +2428,7 @@ The next sections of this chapter examine each of these groups in detail.
 
 ---
 
-# 20.92 Why Euclidean Symmetry Matters
+## 20.92 Why Euclidean Symmetry Matters
 
 The importance of Euclidean symmetry can be summarized as
 
@@ -2458,7 +2458,7 @@ Instead of memorizing coordinate systems, it learns the underlying physical rela
 
 ---
 
-# 20.93 Key Takeaways
+## 20.93 Key Takeaways
 
 Euclidean symmetry is the geometric foundation of modern atomistic machine learning.
 
@@ -2472,7 +2472,7 @@ This principle forms the bridge between intuitive geometric reasoning and the ma
 
 We have seen that Euclidean symmetry consists of translations, rotations, and reflections. To describe these transformations rigorously, mathematicians use **group theory**. Before studying the specific symmetry groups **SO(3)**, **O(3)**, and **E(3)**, we must first understand what a **group** is, why symmetry operations form groups, and how group theory provides the mathematical language for equivariant neural networks.
 
-# 20.94 Group Theory Basics
+## 20.94 Group Theory Basics
 
 Group theory is one of the most important mathematical tools in modern physics, chemistry, crystallography, and machine learning.
 
@@ -2486,7 +2486,7 @@ Understanding group theory allows us to describe symmetry precisely rather than 
 
 ---
 
-# 20.95 Why Do We Need Group Theory?
+## 20.95 Why Do We Need Group Theory?
 
 Suppose we rotate a crystal.
 
@@ -2516,7 +2516,7 @@ That system is called a **group**.
 
 ---
 
-# 20.96 What Is a Mathematical Group?
+## 20.96 What Is a Mathematical Group?
 
 A **group** is a set of elements together with an operation that satisfies four fundamental properties.
 
@@ -2531,7 +2531,7 @@ Every symmetry group used in physics satisfies these four requirements.
 
 ---
 
-# 20.97 Property 1: Closure
+## 20.97 Property 1: Closure
 
 Closure means that combining any two elements of the group always produces another element belonging to the same group.
 
@@ -2557,7 +2557,7 @@ rotations satisfy closure.
 
 ---
 
-# 20.98 Why Closure Matters
+## 20.98 Why Closure Matters
 
 Imagine a neural network processing multiple geometric transformations.
 
@@ -2569,7 +2569,7 @@ Closure guarantees consistency regardless of how many transformations are combin
 
 ---
 
-# 20.99 Property 2: Identity
+## 20.99 Property 2: Identity
 
 Every group contains an **identity element**.
 
@@ -2599,7 +2599,7 @@ Same Crystal
 
 ---
 
-# 20.100 Identity in Neural Networks
+## 20.100 Identity in Neural Networks
 
 Suppose no transformation is applied.
 
@@ -2609,7 +2609,7 @@ The existence of an identity transformation ensures that the original configurat
 
 ---
 
-# 20.101 Property 3: Inverse
+## 20.101 Property 3: Inverse
 
 Every transformation must have another transformation that reverses its effect.
 
@@ -2633,7 +2633,7 @@ The two operations are inverses of one another.
 
 ---
 
-# 20.102 Physical Meaning of Inverses
+## 20.102 Physical Meaning of Inverses
 
 Suppose we rotate a crystal.
 
@@ -2645,7 +2645,7 @@ This simple idea is guaranteed by the inverse property.
 
 ---
 
-# 20.103 Property 4: Associativity
+## 20.103 Property 4: Associativity
 
 Associativity means that the order of grouping operations does not affect the final result.
 
@@ -2684,7 +2684,7 @@ but the overall transformation does not.
 
 ---
 
-# 20.104 Summary of the Four Properties
+## 20.104 Summary of the Four Properties
 
 A mathematical group must satisfy all four properties simultaneously.
 
@@ -2701,7 +2701,7 @@ the set of transformations cannot be considered a group.
 
 ---
 
-# 20.105 Symmetry Operations Form Groups
+## 20.105 Symmetry Operations Form Groups
 
 Many symmetry operations naturally satisfy these properties.
 
@@ -2718,7 +2718,7 @@ they can all be studied using group theory.
 
 ---
 
-# 20.106 Example: Rotations Around a Circle
+## 20.106 Example: Rotations Around a Circle
 
 Imagine rotating an object around a fixed axis.
 
@@ -2754,7 +2754,7 @@ the identity transformation naturally appears within the rotation group.
 
 ---
 
-# 20.107 Continuous and Discrete Groups
+## 20.107 Continuous and Discrete Groups
 
 Groups can be divided into two major categories.
 
@@ -2783,7 +2783,7 @@ Continuous groups play the central role in equivariant neural networks.
 
 ---
 
-# 20.108 Why Continuous Groups Matter
+## 20.108 Why Continuous Groups Matter
 
 Suppose a crystal is rotated by
 
@@ -2811,7 +2811,7 @@ it learns the mathematical rules governing the continuous rotation group.
 
 ---
 
-# 20.109 Groups in Physics
+## 20.109 Groups in Physics
 
 Group theory appears throughout modern physics.
 
@@ -2829,7 +2829,7 @@ Many of the most fundamental equations in physics are written using group-theore
 
 ---
 
-# 20.110 Groups in Crystallography
+## 20.110 Groups in Crystallography
 
 Crystallography relies heavily on symmetry groups.
 
@@ -2847,7 +2847,7 @@ Machine learning models for crystals inherit many of these ideas.
 
 ---
 
-# 20.111 Groups in Machine Learning
+## 20.111 Groups in Machine Learning
 
 Modern geometric deep learning extends these concepts into neural networks.
 
@@ -2875,7 +2875,7 @@ Physically Consistent Prediction
 
 ---
 
-# 20.112 Why Group Theory Improves Learning
+## 20.112 Why Group Theory Improves Learning
 
 Without symmetry,
 
@@ -2905,7 +2905,7 @@ This dramatically improves
 
 ---
 
-# 20.113 From Groups to Rotation Groups
+## 20.113 From Groups to Rotation Groups
 
 Not every group is equally important for atomistic machine learning.
 
@@ -2921,7 +2921,7 @@ Understanding these groups is essential for modern equivariant neural networks.
 
 ---
 
-# 20.114 Key Insight
+## 20.114 Key Insight
 
 The central idea of this section is
 
@@ -2955,7 +2955,7 @@ This mathematical framework allows equivariant graph neural networks to encode p
 
 Now that we understand what a mathematical group is, we can study one of the most important symmetry groups in physics: **SO(3)**, the **Special Orthogonal Group in three dimensions**. SO(3) describes every possible rotation in three-dimensional space and forms the mathematical foundation of nearly all modern equivariant neural networks used in atomistic machine learning.
 
-# 20.115 The Special Orthogonal Group SO(3)
+## 20.115 The Special Orthogonal Group SO(3)
 
 Among all symmetry groups encountered in physics, **SO(3)** is arguably the most important for atomistic machine learning.
 
@@ -2975,7 +2975,7 @@ Understanding SO(3) is therefore essential for understanding how these models wo
 
 ---
 
-# 20.116 What Does SO(3) Mean?
+## 20.116 What Does SO(3) Mean?
 
 The notation **SO(3)** has a precise mathematical meaning.
 
@@ -2989,7 +2989,7 @@ SO(3) represents the set of all proper rotations in three-dimensional Euclidean 
 
 ---
 
-# 20.117 Why "Orthogonal"?
+## 20.117 Why "Orthogonal"?
 
 Consider a rotation matrix
 
@@ -3022,7 +3022,7 @@ This property guarantees that rotating a crystal does not stretch or compress it
 
 ---
 
-# 20.118 Why "Special"?
+## 20.118 Why "Special"?
 
 Not every orthogonal matrix represents a proper rotation.
 
@@ -3042,7 +3042,7 @@ This excludes reflections, whose determinant is **−1**.
 
 ---
 
-# 20.119 Defining SO(3)
+## 20.119 Defining SO(3)
 
 Combining both conditions,
 
@@ -3066,7 +3066,7 @@ its physical interpretation is simple:
 
 ---
 
-# 20.120 Examples of SO(3) Rotations
+## 20.120 Examples of SO(3) Rotations
 
 Every rotation belongs to SO(3).
 
@@ -3090,7 +3090,7 @@ are all members of SO(3).
 
 ---
 
-# 20.121 Infinite Number of Rotations
+## 20.121 Infinite Number of Rotations
 
 Unlike crystal point groups,
 
@@ -3126,7 +3126,7 @@ Every one of these rotations belongs to SO(3).
 
 ---
 
-# 20.122 Rotation Around the x-Axis
+## 20.122 Rotation Around the x-Axis
 
 A rotation about the x-axis leaves the x-coordinate unchanged while rotating the y–z plane.
 
@@ -3150,7 +3150,7 @@ This is one of the three fundamental rotation axes.
 
 ---
 
-# 20.123 Rotation Around the y-Axis
+## 20.123 Rotation Around the y-Axis
 
 Similarly,
 
@@ -3174,7 +3174,7 @@ y ↑
 
 ---
 
-# 20.124 Rotation Around the z-Axis
+## 20.124 Rotation Around the z-Axis
 
 Rotation around the z-axis changes the x–y plane.
 
@@ -3194,7 +3194,7 @@ This is the most commonly illustrated rotation in introductory examples.
 
 ---
 
-# 20.125 Rotation Matrices
+## 20.125 Rotation Matrices
 
 Each rotation in SO(3) can be represented by a **3×3 rotation matrix**.
 
@@ -3215,7 +3215,7 @@ Applying this matrix rotates every point in the crystal.
 
 ---
 
-# 20.126 Rotating Coordinates
+## 20.126 Rotating Coordinates
 
 Suppose an atom has position
 
@@ -3246,7 +3246,7 @@ Only its coordinate description has changed.
 
 ---
 
-# 20.127 Rotating Vectors
+## 20.127 Rotating Vectors
 
 Vectors transform exactly like coordinates.
 
@@ -3275,7 +3275,7 @@ This is precisely the behavior that equivariant neural networks must reproduce.
 
 ---
 
-# 20.128 Rotating Entire Crystals
+## 20.128 Rotating Entire Crystals
 
 Imagine rotating an entire crystal.
 
@@ -3306,7 +3306,7 @@ remain unchanged.
 
 ---
 
-# 20.129 Why SO(3) Matters for Machine Learning
+## 20.129 Why SO(3) Matters for Machine Learning
 
 Suppose a neural network predicts the energy of a crystal.
 
@@ -3334,7 +3334,7 @@ force predictions should rotate exactly with the crystal.
 
 ---
 
-# 20.130 SO(3) and Neural Network Features
+## 20.130 SO(3) and Neural Network Features
 
 Modern equivariant neural networks do not treat hidden features as arbitrary numbers.
 
@@ -3352,7 +3352,7 @@ This allows every intermediate layer to remain mathematically consistent with ro
 
 ---
 
-# 20.131 Why Learning SO(3) Is Difficult
+## 20.131 Why Learning SO(3) Is Difficult
 
 Without built-in symmetry,
 
@@ -3366,7 +3366,7 @@ Equivariant neural networks overcome this challenge by embedding SO(3) symmetry 
 
 ---
 
-# 20.132 SO(3) in Modern Architectures
+## 20.132 SO(3) in Modern Architectures
 
 Several state-of-the-art models explicitly enforce SO(3) symmetry.
 
@@ -3384,7 +3384,7 @@ these models mathematically guarantee correct rotational behavior.
 
 ---
 
-# 20.133 Relationship Between SO(3) and Quantum Mechanics
+## 20.133 Relationship Between SO(3) and Quantum Mechanics
 
 SO(3) is also fundamental in quantum mechanics.
 
@@ -3400,7 +3400,7 @@ The mathematical tools developed for quantum mechanics have become essential com
 
 ---
 
-# 20.134 Key Takeaways
+## 20.134 Key Takeaways
 
 The key properties of SO(3) are summarized below.
 
@@ -3422,7 +3422,7 @@ SO(3) provides the mathematical description of every proper rotation in three-di
 
 SO(3) describes **proper rotations**, but not every symmetry operation is a proper rotation. Mirror reflections and inversion operations also play important roles in crystallography and materials science. To incorporate these transformations, we must extend SO(3) to the **Orthogonal Group O(3)**, which includes both rotations and reflections. Understanding the distinction between these two groups is essential before introducing the full Euclidean symmetry group **E(3)**.
 
-# 20.135 The Orthogonal Group O(3)
+## 20.135 The Orthogonal Group O(3)
 
 In the previous section, we introduced **SO(3)**, the group of all proper rotations in three-dimensional space.
 
@@ -3442,7 +3442,7 @@ O(3) contains **every distance-preserving linear transformation in three-dimensi
 
 ---
 
-# 20.136 What Does O(3) Mean?
+## 20.136 What Does O(3) Mean?
 
 The notation **O(3)** stands for
 
@@ -3468,7 +3468,7 @@ SO(3) is a subset of O(3).
 
 ---
 
-# 20.137 Mathematical Definition
+## 20.137 Mathematical Definition
 
 An orthogonal matrix satisfies
 
@@ -3494,7 +3494,7 @@ whether they represent rotations or reflections.
 
 ---
 
-# 20.138 Comparing SO(3) and O(3)
+## 20.138 Comparing SO(3) and O(3)
 
 The relationship between the two groups is summarized below.
 
@@ -3509,7 +3509,7 @@ but not every element of O(3) belongs to SO(3).
 
 ---
 
-# 20.139 Proper Rotations
+## 20.139 Proper Rotations
 
 A **proper rotation** preserves the orientation of an object.
 
@@ -3531,7 +3531,7 @@ Proper rotations therefore belong to SO(3).
 
 ---
 
-# 20.140 Reflections
+## 20.140 Reflections
 
 A reflection produces a mirror image.
 
@@ -3559,7 +3559,7 @@ not SO(3).
 
 ---
 
-# 20.141 Mirror Symmetry
+## 20.141 Mirror Symmetry
 
 Consider a mirror placed beside a crystal.
 
@@ -3585,7 +3585,7 @@ reflection belongs to O(3).
 
 ---
 
-# 20.142 Inversion Symmetry
+## 20.142 Inversion Symmetry
 
 Another important transformation is **inversion**.
 
@@ -3613,7 +3613,7 @@ every point is reflected through the origin.
 
 ---
 
-# 20.143 Improper Rotations
+## 20.143 Improper Rotations
 
 An **improper rotation** combines
 
@@ -3638,7 +3638,7 @@ Improper rotations appear frequently in crystallography and molecular symmetry.
 
 ---
 
-# 20.144 Orientation and Handedness
+## 20.144 Orientation and Handedness
 
 One of the key differences between rotations and reflections is **handedness**.
 
@@ -3654,7 +3654,7 @@ This change in handedness distinguishes O(3) from SO(3).
 
 ---
 
-# 20.145 Chirality
+## 20.145 Chirality
 
 Many molecules are **chiral**.
 
@@ -3676,7 +3676,7 @@ handling O(3) symmetry correctly becomes important.
 
 ---
 
-# 20.146 Why Reflections Matter in Materials Science
+## 20.146 Why Reflections Matter in Materials Science
 
 Reflection symmetry appears throughout materials science.
 
@@ -3693,7 +3693,7 @@ Many crystalline materials possess reflection or inversion symmetries that stron
 
 ---
 
-# 20.147 O(3) and Neural Networks
+## 20.147 O(3) and Neural Networks
 
 Not every machine-learning model needs full O(3) symmetry.
 
@@ -3719,7 +3719,7 @@ may require the broader O(3) framework.
 
 ---
 
-# 20.148 Determinant as a Symmetry Test
+## 20.148 Determinant as a Symmetry Test
 
 A convenient way to distinguish the two groups is by examining the determinant.
 
@@ -3745,7 +3745,7 @@ the determinant immediately reveals whether orientation has been preserved.
 
 ---
 
-# 20.149 Visualizing the Difference
+## 20.149 Visualizing the Difference
 
 The distinction can be summarized conceptually.
 
@@ -3777,7 +3777,7 @@ SO(3) is therefore the orientation-preserving part of O(3).
 
 ---
 
-# 20.150 O(3) in Equivariant Deep Learning
+## 20.150 O(3) in Equivariant Deep Learning
 
 Modern equivariant neural networks often describe features according to how they transform under O(3).
 
@@ -3798,7 +3798,7 @@ Such distinctions are essential for accurately modeling physical systems.
 
 ---
 
-# 20.151 O(3) and Spherical Harmonics
+## 20.151 O(3) and Spherical Harmonics
 
 The spherical harmonics introduced later in this chapter naturally transform according to representations of O(3).
 
@@ -3816,7 +3816,7 @@ understanding O(3) provides the mathematical foundation for the architectures us
 
 ---
 
-# 20.152 Key Takeaways
+## 20.152 Key Takeaways
 
 The essential differences between SO(3) and O(3) are summarized below.
 
@@ -3837,7 +3837,7 @@ SO(3) describes only orientation-preserving rotations, whereas O(3) extends this
 
 We have now examined the two most important rotational symmetry groups: **SO(3)** and **O(3)**. However, real materials are not only rotated—they can also be **translated** through space without changing their physical identity. To describe rotations, reflections, and translations within a single mathematical framework, we introduce the **Euclidean Group E(3)**. This group provides the complete symmetry description used by many state-of-the-art equivariant graph neural networks for atomistic modeling.
 
-# 20.153 The Euclidean Group E(3)
+## 20.153 The Euclidean Group E(3)
 
 In the previous sections, we studied two important symmetry groups:
 
@@ -3860,7 +3860,7 @@ E(3) is the complete symmetry group of ordinary three-dimensional space and form
 
 ---
 
-# 20.154 Why Translation Matters
+## 20.154 Why Translation Matters
 
 Imagine a silicon crystal placed at the origin.
 
@@ -3902,7 +3902,7 @@ Only its position in space has changed.
 
 ---
 
-# 20.155 Translation Is Not a Physical Change
+## 20.155 Translation Is Not a Physical Change
 
 Translation changes the coordinates,
 
@@ -3934,7 +3934,7 @@ the relative positions between atoms remain identical.
 
 ---
 
-# 20.156 Relative Position Is What Matters
+## 20.156 Relative Position Is What Matters
 
 Suppose two atoms have coordinates
 
@@ -3978,7 +3978,7 @@ Physical interactions depend on these **relative positions**, not on absolute co
 
 ---
 
-# 20.157 Definition of E(3)
+## 20.157 Definition of E(3)
 
 The Euclidean Group consists of all transformations that preserve Euclidean geometry.
 
@@ -4014,7 +4014,7 @@ Every transformation belonging to E(3) preserves
 
 ---
 
-# 20.158 Mathematical Representation
+## 20.158 Mathematical Representation
 
 An E(3) transformation consists of two components:
 
@@ -4053,7 +4053,7 @@ This single equation describes every Euclidean transformation.
 
 ---
 
-# 20.159 Components of E(3)
+## 20.159 Components of E(3)
 
 The Euclidean group combines several simpler symmetry operations.
 
@@ -4079,7 +4079,7 @@ E(3) contains every transformation that leaves the physical geometry unchanged.
 
 ---
 
-# 20.160 Relationship Between SO(3), O(3), and E(3)
+## 20.160 Relationship Between SO(3), O(3), and E(3)
 
 The three symmetry groups are closely related.
 
@@ -4105,7 +4105,7 @@ Each group extends the previous one.
 
 ---
 
-# 20.161 Why E(3) Matters for Materials
+## 20.161 Why E(3) Matters for Materials
 
 Atoms inside a crystal do not possess an absolute position in the universe.
 
@@ -4122,7 +4122,7 @@ machine learning models should ignore arbitrary translations while preserving re
 
 ---
 
-# 20.162 Translation Invariance
+## 20.162 Translation Invariance
 
 Suppose the total energy of a crystal is
 
@@ -4144,7 +4144,7 @@ This property is called **translation invariance**.
 
 ---
 
-# 20.163 Translation Equivariance
+## 20.163 Translation Equivariance
 
 Coordinates themselves behave differently.
 
@@ -4164,7 +4164,7 @@ Coordinates are therefore **translation equivariant**.
 
 ---
 
-# 20.164 Physical Quantities Under E(3)
+## 20.164 Physical Quantities Under E(3)
 
 Different quantities transform differently under the Euclidean group.
 
@@ -4179,7 +4179,7 @@ These transformation rules determine how neural networks should process differen
 
 ---
 
-# 20.165 Why Conventional Neural Networks Fail
+## 20.165 Why Conventional Neural Networks Fail
 
 Suppose a neural network receives the coordinates
 
@@ -4203,7 +4203,7 @@ it wastes capacity learning translation invariance from data.
 
 ---
 
-# 20.166 Relative Coordinates Solve the Problem
+## 20.166 Relative Coordinates Solve the Problem
 
 Modern atomistic neural networks often replace absolute coordinates with
 
@@ -4238,7 +4238,7 @@ This naturally provides translation invariance.
 
 ---
 
-# 20.167 E(3)-Equivariant Neural Networks
+## 20.167 E(3)-Equivariant Neural Networks
 
 A neural network is called **E(3)-equivariant** if its outputs transform correctly under every Euclidean transformation.
 
@@ -4268,7 +4268,7 @@ Such networks automatically respect the geometry of three-dimensional space.
 
 ---
 
-# 20.168 Why Modern Architectures Use E(3)
+## 20.168 Why Modern Architectures Use E(3)
 
 State-of-the-art atomistic neural networks generally target E(3) symmetry because it captures the complete set of physically meaningful rigid-body transformations.
 
@@ -4283,7 +4283,7 @@ These models guarantee that predictions remain physically consistent regardless 
 
 ---
 
-# 20.169 E(3) in Molecular Dynamics
+## 20.169 E(3) in Molecular Dynamics
 
 During molecular dynamics,
 
@@ -4306,7 +4306,7 @@ throughout long simulations.
 
 ---
 
-# 20.170 E(3) and Materials Informatics
+## 20.170 E(3) and Materials Informatics
 
 Many tasks in materials informatics require respecting Euclidean symmetry.
 
@@ -4325,7 +4325,7 @@ Ignoring E(3) symmetry often leads to reduced accuracy and poorer generalization
 
 ---
 
-# 20.171 Summary of Symmetry Groups
+## 20.171 Summary of Symmetry Groups
 
 The hierarchy of symmetry groups can be summarized as follows.
 
@@ -4339,7 +4339,7 @@ Each successive group incorporates additional physically meaningful transformati
 
 ---
 
-# 20.172 Key Takeaways
+## 20.172 Key Takeaways
 
 The Euclidean Group **E(3)** represents the full symmetry of three-dimensional Euclidean space. By combining translations, rotations, and reflections into a single mathematical framework, E(3) provides the natural symmetry language for atomistic systems.
 
@@ -4352,7 +4352,7 @@ Modern equivariant graph neural networks are designed to respect E(3) because re
 Having established the symmetry groups **SO(3)**, **O(3)**, and **E(3)**, we are now ready to examine the objects that transform under these groups. The next section introduces **tensor features**, explaining why scalars and vectors are insufficient for describing complex physical interactions and how higher-order tensors provide the expressive mathematical language required by modern equivariant graph neural networks such as **NequIP**, **MACE**, and **e3nn**.
 
 
-# 20.173 Tensor Features
+## 20.173 Tensor Features
 
 In the previous sections, we introduced the symmetry groups **SO(3)**, **O(3)**, and **E(3)**. These groups describe how geometric transformations such as rotations, reflections, and translations act on physical systems.
 
@@ -4376,7 +4376,7 @@ Modern equivariant graph neural networks do not simply process numbers; they pro
 
 ---
 
-# 20.174 Why Scalars Are Not Enough
+## 20.174 Why Scalars Are Not Enough
 
 Traditional machine learning models often represent each feature as a single scalar value.
 
@@ -4414,7 +4414,7 @@ Representing it as a single number would discard essential physical information.
 
 ---
 
-# 20.175 Direction Matters
+## 20.175 Direction Matters
 
 Consider an atom experiencing a force.
 
@@ -4440,7 +4440,7 @@ This motivates the introduction of vectors.
 
 ---
 
-# 20.176 Scalars
+## 20.176 Scalars
 
 A scalar is the simplest type of tensor.
 
@@ -4463,7 +4463,7 @@ scalars are called **rank-0 tensors**.
 
 ---
 
-# 20.177 Vectors
+## 20.177 Vectors
 
 A vector contains both
 
@@ -4485,7 +4485,7 @@ vectors are **rank-1 tensors**.
 
 ---
 
-# 20.178 Higher-Order Tensors
+## 20.178 Higher-Order Tensors
 
 Some physical quantities require more than one direction.
 
@@ -4504,7 +4504,7 @@ they require **higher-order tensors**.
 
 ---
 
-# 20.179 What Is a Tensor?
+## 20.179 What Is a Tensor?
 
 A tensor is a mathematical object that transforms according to specific rules under coordinate transformations.
 
@@ -4516,7 +4516,7 @@ This transformation behavior is what makes tensors fundamental in physics and eq
 
 ---
 
-# 20.180 Tensor Rank
+## 20.180 Tensor Rank
 
 The **rank** (or order) of a tensor indicates the number of indices required to describe it.
 
@@ -4534,7 +4534,7 @@ the tensor can describe increasingly complex directional relationships.
 
 ---
 
-# 20.181 Rank-0 Tensor
+## 20.181 Rank-0 Tensor
 
 A scalar requires no direction.
 
@@ -4560,7 +4560,7 @@ No transformation occurs.
 
 ---
 
-# 20.182 Rank-1 Tensor
+## 20.182 Rank-1 Tensor
 
 A vector changes direction under rotation.
 
@@ -4590,7 +4590,7 @@ but the direction rotates.
 
 ---
 
-# 20.183 Rank-2 Tensor
+## 20.183 Rank-2 Tensor
 
 Stress is a classic example of a rank-2 tensor.
 
@@ -4615,7 +4615,7 @@ all nine components transform together according to tensor transformation rules.
 
 ---
 
-# 20.184 Why Higher-Order Tensors Matter
+## 20.184 Why Higher-Order Tensors Matter
 
 Many materials properties involve interactions between multiple spatial directions.
 
@@ -4632,7 +4632,7 @@ Higher-order tensors provide the necessary mathematical framework.
 
 ---
 
-# 20.185 Tensor Features in Neural Networks
+## 20.185 Tensor Features in Neural Networks
 
 In ordinary neural networks,
 
@@ -4654,7 +4654,7 @@ Each feature knows how it should transform under rotation.
 
 ---
 
-# 20.186 Example of Tensor Features
+## 20.186 Example of Tensor Features
 
 Suppose a hidden layer contains
 
@@ -4686,7 +4686,7 @@ allowing the network to model increasingly rich geometric information.
 
 ---
 
-# 20.187 Why Tensor Features Improve Learning
+## 20.187 Why Tensor Features Improve Learning
 
 Imagine predicting atomic forces.
 
@@ -4705,7 +4705,7 @@ This dramatically increases expressive power.
 
 ---
 
-# 20.188 Tensor Features and Atomic Environments
+## 20.188 Tensor Features and Atomic Environments
 
 Consider a central atom surrounded by neighbors.
 
@@ -4731,7 +4731,7 @@ Tensor features encode this geometric information in a form that transforms corr
 
 ---
 
-# 20.189 Tensor Features During Rotation
+## 20.189 Tensor Features During Rotation
 
 Suppose the entire crystal rotates.
 
@@ -4755,7 +4755,7 @@ the network remains physically consistent throughout all layers.
 
 ---
 
-# 20.190 Internal Representations
+## 20.190 Internal Representations
 
 One remarkable aspect of modern equivariant neural networks is that they maintain tensor-valued hidden representations throughout the network.
 
@@ -4767,7 +4767,7 @@ This enables the network to preserve rotational information from the input all t
 
 ---
 
-# 20.191 Tensor Products
+## 20.191 Tensor Products
 
 Tensor features can be combined using **tensor products**.
 
@@ -4787,7 +4787,7 @@ This operation forms the computational backbone of many equivariant neural netwo
 
 ---
 
-# 20.192 Tensor Features in Modern Models
+## 20.192 Tensor Features in Modern Models
 
 State-of-the-art architectures such as
 
@@ -4802,7 +4802,7 @@ These tensor features enable the models to achieve remarkable accuracy while res
 
 ---
 
-# 20.193 Key Takeaways
+## 20.193 Key Takeaways
 
 Tensor features extend the concept of neural network representations beyond ordinary numerical vectors.
 
@@ -4820,7 +4820,7 @@ Excellent. This is the most important mathematical section of the book. From her
 
 ---
 
-# 20.11 Irreducible Representations (Irreps)
+## 20.11 Irreducible Representations (Irreps)
 
 ## 20.11.1 Introduction
 
@@ -4861,7 +4861,7 @@ modern equivariant neural networks would not exist.
 
 ---
 
-# 20.11.2 Why Representation Theory?
+## 20.11.2 Why Representation Theory?
 
 Recall that a symmetry group is simply a collection of transformations.
 
@@ -4891,7 +4891,7 @@ This is the key idea.
 
 ---
 
-# 20.11.3 From Abstract Mathematics to Linear Algebra
+## 20.11.3 From Abstract Mathematics to Linear Algebra
 
 Suppose we have an element
 
@@ -4932,7 +4932,7 @@ this formulation is perfectly suited for deep learning.
 
 ---
 
-# 20.11.4 A Simple Analogy
+## 20.11.4 A Simple Analogy
 
 Imagine a translator.
 
@@ -4964,7 +4964,7 @@ It translates the language of symmetry into the language of linear algebra.
 
 ---
 
-# 20.11.5 What Is a Representation?
+## 20.11.5 What Is a Representation?
 
 A **representation** of a group is a mapping that assigns every group element to a matrix while preserving the group structure.
 
@@ -4997,7 +4997,7 @@ representation theory preserves the algebraic structure of the symmetry group.
 
 ---
 
-# 20.11.6 Why This Property Matters
+## 20.11.6 Why This Property Matters
 
 Suppose we rotate a crystal twice.
 
@@ -5033,7 +5033,7 @@ The neural network therefore behaves exactly like the underlying physics.
 
 ---
 
-# 20.11.7 Example: Scalar Representation
+## 20.11.7 Example: Scalar Representation
 
 Consider a scalar quantity,
 
@@ -5057,7 +5057,7 @@ This is called the **trivial representation**.
 
 ---
 
-# 20.11.8 Example: Vector Representation
+## 20.11.8 Example: Vector Representation
 
 Now consider a force vector.
 
@@ -5106,7 +5106,7 @@ the vector changes according to the rotation matrix.
 
 ---
 
-# 20.11.9 Every Physical Quantity Has a Representation
+## 20.11.9 Every Physical Quantity Has a Representation
 
 Different physical quantities transform differently.
 
@@ -5126,7 +5126,7 @@ Representation theory provides the transformation rule for every one of these qu
 
 ---
 
-# 20.11.10 Hidden Features Also Need Representations
+## 20.11.10 Hidden Features Also Need Representations
 
 A remarkable idea behind equivariant neural networks is that
 
@@ -5154,7 +5154,7 @@ This ensures that every hidden layer remains physically consistent.
 
 ---
 
-# 20.11.11 Many Possible Representations
+## 20.11.11 Many Possible Representations
 
 A group can possess many different representations.
 
@@ -5175,7 +5175,7 @@ Each describes a different way in which an object may transform under rotation.
 
 ---
 
-# 20.11.12 Why Not Use One Giant Matrix?
+## 20.11.12 Why Not Use One Giant Matrix?
 
 Suppose we describe a complicated tensor using a huge transformation matrix.
 
@@ -5197,7 +5197,7 @@ This leads to the concept of **irreducible representations**, or **irreps**.
 
 ---
 
-# 20.11.13 Reducible vs. Irreducible Representations
+## 20.11.13 Reducible vs. Irreducible Representations
 
 Imagine a machine made from several detachable modules.
 
@@ -5235,7 +5235,7 @@ it is called **irreducible**.
 
 ---
 
-# 20.11.14 Why Irreps Matter
+## 20.11.14 Why Irreps Matter
 
 Irreducible representations are analogous to atoms in chemistry.
 
@@ -5249,7 +5249,7 @@ Modern equivariant neural networks operate almost entirely in terms of irreps ra
 
 ---
 
-# 20.11.15 Roadmap
+## 20.11.15 Roadmap
 
 In the next subsections, we will develop irreducible representations step by step. We will first understand **reducible representations**, then learn how they can be decomposed into simpler components, and finally introduce the irreducible representations of **SO(3)** labeled by the angular momentum quantum number (l). These irreps will become the mathematical foundation for **spherical harmonics**, **tensor products**, and the equivariant message-passing layers used by **e3nn**, **NequIP**, **Allegro**, and **MACE**.
 
@@ -5257,7 +5257,7 @@ In the next subsections, we will develop irreducible representations step by ste
 
 This is only the **introduction** to Section 20.11. The full treatment of irreducible representations will span multiple subsections (roughly 25–35 textbook pages), including reducible representations, direct sums, basis changes, angular momentum, (l=0,1,2,\ldots), parity, and their implementation in modern equivariant GNNs.
 
-# 20.11.16 Reducible Representations
+## 20.11.16 Reducible Representations
 
 In the previous section, we introduced the idea of a **representation**—a way of expressing abstract symmetry operations as concrete matrices.
 
@@ -5273,7 +5273,7 @@ Understanding reducibility is essential because modern equivariant neural networ
 
 ---
 
-# 20.11.17 An Everyday Analogy
+## 20.11.17 An Everyday Analogy
 
 Imagine a computer.
 
@@ -5311,7 +5311,7 @@ while actually being composed of several smaller representations.
 
 ---
 
-# 20.11.18 A Matrix That Contains Two Independent Parts
+## 20.11.18 A Matrix That Contains Two Independent Parts
 
 Consider the matrix
 
@@ -5338,7 +5338,7 @@ the representation is **reducible**.
 
 ---
 
-# 20.11.19 Block-Diagonal Structure
+## 20.11.19 Block-Diagonal Structure
 
 A reducible representation often has a **block-diagonal** form.
 
@@ -5364,7 +5364,7 @@ they can be studied separately.
 
 ---
 
-# 20.11.20 Independent Subspaces
+## 20.11.20 Independent Subspaces
 
 Suppose our feature vector is
 
@@ -5399,7 +5399,7 @@ The representation naturally separates into two independent subspaces.
 
 ---
 
-# 20.11.21 Physical Interpretation
+## 20.11.21 Physical Interpretation
 
 Imagine two completely independent physical systems.
 
@@ -5431,7 +5431,7 @@ Each subsystem can be analyzed independently.
 
 ---
 
-# 20.11.22 Example: Scalars and Vectors
+## 20.11.22 Example: Scalars and Vectors
 
 Suppose a neural network stores
 
@@ -5462,7 +5462,7 @@ the combined representation is reducible.
 
 ---
 
-# 20.11.23 Why Reducible Representations Are Inefficient
+## 20.11.23 Why Reducible Representations Are Inefficient
 
 Working directly with a large reducible representation is often wasteful.
 
@@ -5482,7 +5482,7 @@ This simplification improves
 
 ---
 
-# 20.11.24 Decomposition
+## 20.11.24 Decomposition
 
 The process of splitting a reducible representation into independent pieces is called **decomposition**.
 
@@ -5512,7 +5512,7 @@ Each smaller piece transforms independently.
 
 ---
 
-# 20.11.25 Why Decomposition Matters
+## 20.11.25 Why Decomposition Matters
 
 Imagine solving a very large system of equations.
 
@@ -5526,7 +5526,7 @@ Representation theory applies the same principle.
 
 ---
 
-# 20.11.26 Example from Linear Algebra
+## 20.11.26 Example from Linear Algebra
 
 Suppose a matrix has the form
 
@@ -5548,7 +5548,7 @@ block-diagonal representations contain independent symmetry sectors.
 
 ---
 
-# 20.11.27 Representation Decomposition
+## 20.11.27 Representation Decomposition
 
 Mathematically,
 
@@ -5583,7 +5583,7 @@ we will study the direct sum operation in detail.
 
 ---
 
-# 20.11.28 Analogy with Chemistry
+## 20.11.28 Analogy with Chemistry
 
 Chemists rarely study an entire protein atom by atom without first identifying
 
@@ -5601,7 +5601,7 @@ while the irreducible representations are analogous to its basic building blocks
 
 ---
 
-# 20.11.29 Hidden Features in Equivariant Networks
+## 20.11.29 Hidden Features in Equivariant Networks
 
 Modern equivariant neural networks continuously decompose hidden features into irreducible components.
 
@@ -5631,7 +5631,7 @@ This greatly simplifies learning.
 
 ---
 
-# 20.11.30 Why Neural Networks Prefer Small Pieces
+## 20.11.30 Why Neural Networks Prefer Small Pieces
 
 Smaller representations provide several advantages.
 
@@ -5648,7 +5648,7 @@ they correspond directly to fundamental symmetry objects.
 
 ---
 
-# 20.11.31 From Reducible to Irreducible
+## 20.11.31 From Reducible to Irreducible
 
 Not every representation can be decomposed forever.
 
@@ -5664,7 +5664,7 @@ Every larger representation can be constructed from these elementary building bl
 
 ---
 
-# 20.11.32 Key Takeaways
+## 20.11.32 Key Takeaways
 
 A **reducible representation** is one that can be separated into smaller independent representations.
 
@@ -5678,7 +5678,7 @@ Modern equivariant neural networks exploit this property by decomposing complex 
 
 Having seen that many representations can be decomposed into independent pieces, we now arrive at the fundamental building blocks of representation theory: **irreducible representations**. These irreps cannot be decomposed any further and form the mathematical foundation of **SO(3)** symmetry, **spherical harmonics**, **e3nn**, **NequIP**, **Allegro**, and **MACE**. Understanding irreps is one of the most important steps toward mastering modern equivariant graph neural networks.
 
-# 20.11.17 Irreducible Representations (Irreps)
+## 20.11.17 Irreducible Representations (Irreps)
 
 After studying reducible representations, we now arrive at one of the most important concepts in modern mathematics, theoretical physics, and geometric deep learning:
 
@@ -5690,7 +5690,7 @@ Understanding irreps is therefore essential for understanding how these models a
 
 ---
 
-# 20.11.18 What Is an Irreducible Representation?
+## 20.11.18 What Is an Irreducible Representation?
 
 An **irreducible representation** is a representation that **cannot be decomposed into smaller independent representations**.
 
@@ -5706,7 +5706,7 @@ an irrep is the smallest non-divisible building block of representation theory.
 
 ---
 
-# 20.11.19 A Chemistry Analogy
+## 20.11.19 A Chemistry Analogy
 
 An excellent analogy comes from chemistry.
 
@@ -5753,7 +5753,7 @@ while an irrep is like an atom.
 
 ---
 
-# 20.11.20 Prime Number Analogy
+## 20.11.20 Prime Number Analogy
 
 Another useful analogy comes from number theory.
 
@@ -5798,7 +5798,7 @@ Irreps are therefore the **prime factors of symmetry**.
 
 ---
 
-# 20.11.21 Why Irreps Matter
+## 20.11.21 Why Irreps Matter
 
 Suppose we wish to understand a complicated crystal.
 
@@ -5816,7 +5816,7 @@ Each irrep represents one elementary mode of rotational behavior.
 
 ---
 
-# 20.11.22 Building Blocks of SO(3)
+## 20.11.22 Building Blocks of SO(3)
 
 Every finite-dimensional representation of SO(3) can be expressed as a combination of irreducible representations.
 
@@ -5844,7 +5844,7 @@ These irreps are the elementary objects used by modern equivariant neural networ
 
 ---
 
-# 20.11.23 Why Neural Networks Love Irreps
+## 20.11.23 Why Neural Networks Love Irreps
 
 Suppose a hidden feature transforms under rotation.
 
@@ -5872,7 +5872,7 @@ the network naturally preserves rotational symmetry.
 
 ---
 
-# 20.11.24 Irreps of SO(3)
+## 20.11.24 Irreps of SO(3)
 
 One remarkable property of SO(3) is that its irreducible representations are completely classified.
 
@@ -5899,7 +5899,7 @@ defines a different representation.
 
 ---
 
-# 20.11.25 The Meaning of (l)
+## 20.11.25 The Meaning of (l)
 
 The value of
 
@@ -5925,7 +5925,7 @@ the representation can describe increasingly complex angular patterns.
 
 ---
 
-# 20.11.26 The First Few Irreps
+## 20.11.26 The First Few Irreps
 
 The first few irreducible representations are
 
@@ -5953,7 +5953,7 @@ and equivariant deep learning.
 
 ---
 
-# 20.11.27 The Dimension Formula
+## 20.11.27 The Dimension Formula
 
 For every irreducible representation of SO(3),
 
@@ -5979,7 +5979,7 @@ the representation contains more independent components.
 
 ---
 
-# 20.11.28 Why the Dimension Grows
+## 20.11.28 Why the Dimension Grows
 
 Higher-order geometric patterns require more information.
 
@@ -6001,7 +6001,7 @@ The increasing dimensionality reflects the increasing complexity of rotational b
 
 ---
 
-# 20.11.29 Visual Intuition
+## 20.11.29 Visual Intuition
 
 The hierarchy of irreps can be visualized conceptually.
 
@@ -6045,7 +6045,7 @@ Each successive irrep captures richer angular information.
 
 ---
 
-# 20.11.30 Hidden Features as Irreps
+## 20.11.30 Hidden Features as Irreps
 
 Modern equivariant neural networks do not represent hidden features as arbitrary vectors.
 
@@ -6075,7 +6075,7 @@ Each channel follows the correct SO(3) transformation rules.
 
 ---
 
-# 20.11.31 Why This Is Powerful
+## 20.11.31 Why This Is Powerful
 
 Suppose the crystal rotates.
 
@@ -6095,7 +6095,7 @@ This dramatically improves
 
 ---
 
-# 20.11.32 Irreps in Quantum Mechanics
+## 20.11.32 Irreps in Quantum Mechanics
 
 Irreducible representations are not unique to machine learning.
 
@@ -6113,7 +6113,7 @@ Modern equivariant deep learning borrows these mathematical tools directly from 
 
 ---
 
-# 20.11.33 Irreps in Materials Science
+## 20.11.33 Irreps in Materials Science
 
 Many physical phenomena naturally decompose into irreducible representations.
 
@@ -6132,7 +6132,7 @@ using irreps inside neural networks closely mirrors the mathematical structure o
 
 ---
 
-# 20.11.34 Why Irreps Are the Language of e3nn
+## 20.11.34 Why Irreps Are the Language of e3nn
 
 The **e3nn** framework represents nearly every hidden feature using irreps.
 
@@ -6148,7 +6148,7 @@ This structured representation allows every neural-network layer to remain exact
 
 ---
 
-# 20.11.35 Key Takeaways
+## 20.11.35 Key Takeaways
 
 Irreducible representations are the **elementary building blocks of rotational symmetry**.
 
@@ -6162,7 +6162,7 @@ Modern equivariant graph neural networks operate almost entirely in terms of the
 
 The labels (l = 0, 1, 2, 3, \ldots) introduced in this section are not arbitrary. They originate from **angular momentum theory** in quantum mechanics and determine the dimensionality and transformation behavior of each irrep. In the next section, we will explore the physical meaning of these quantum numbers and explain why angular momentum provides the natural language for describing rotations in both quantum physics and equivariant graph neural networks.
 
-# 20.11.18 Angular Momentum Interpretation of Irreducible Representations
+## 20.11.18 Angular Momentum Interpretation of Irreducible Representations
 
 One of the most fascinating aspects of representation theory is that the irreducible representations of **SO(3)** are **exactly the same mathematical objects** that describe **angular momentum in quantum mechanics**.
 
@@ -6178,7 +6178,7 @@ Modern equivariant graph neural networks inherit this same mathematical framewor
 
 ---
 
-# 20.11.19 Why Angular Momentum Appears
+## 20.11.19 Why Angular Momentum Appears
 
 Imagine rotating an isolated atom.
 
@@ -6196,7 +6196,7 @@ Exactly the same classification is used in equivariant neural networks.
 
 ---
 
-# 20.11.20 What Is Angular Momentum?
+## 20.11.20 What Is Angular Momentum?
 
 In classical mechanics,
 
@@ -6228,7 +6228,7 @@ Angular momentum tells us
 
 ---
 
-# 20.11.21 Angular Momentum in Quantum Mechanics
+## 20.11.21 Angular Momentum in Quantum Mechanics
 
 Quantum mechanics introduces an important difference.
 
@@ -6251,7 +6251,7 @@ These are exactly the same integers that label the irreducible representations o
 
 ---
 
-# 20.11.22 The Quantum Number (l)
+## 20.11.22 The Quantum Number (l)
 
 The integer
 
@@ -6280,7 +6280,7 @@ Higher values correspond to increasingly complex angular patterns.
 
 ---
 
-# 20.11.23 The (2l+1) Rule
+## 20.11.23 The (2l+1) Rule
 
 One of the most famous results in quantum mechanics is that each angular momentum state contains
 
@@ -6304,7 +6304,7 @@ This is precisely the dimension of the corresponding SO(3) irrep.
 
 ---
 
-# 20.11.24 Physical Meaning of (l=0)
+## 20.11.24 Physical Meaning of (l=0)
 
 The simplest irrep is
 
@@ -6337,7 +6337,7 @@ This is the geometric intuition behind the scalar representation.
 
 ---
 
-# 20.11.25 Physical Meaning of (l=1)
+## 20.11.25 Physical Meaning of (l=1)
 
 The next irrep is
 
@@ -6368,7 +6368,7 @@ Rotating the coordinate system rotates the vector.
 
 ---
 
-# 20.11.26 Physical Meaning of (l=2)
+## 20.11.26 Physical Meaning of (l=2)
 
 The next representation has
 
@@ -6395,7 +6395,7 @@ quadrupole patterns possess more complicated angular structure.
 
 ---
 
-# 20.11.27 Physical Meaning of Higher (l)
+## 20.11.27 Physical Meaning of Higher (l)
 
 As
 
@@ -6417,7 +6417,7 @@ These higher-order representations become increasingly important when describing
 
 ---
 
-# 20.11.28 Atomic Orbitals
+## 20.11.28 Atomic Orbitals
 
 One of the most familiar examples comes from atomic orbitals.
 
@@ -6440,7 +6440,7 @@ Atomic orbitals are solutions of the Schrödinger equation in a rotationally sym
 
 ---
 
-# 20.11.29 Orbital Shapes
+## 20.11.29 Orbital Shapes
 
 The increasing value of
 
@@ -6486,7 +6486,7 @@ These familiar orbital shapes arise directly from SO(3) representation theory.
 
 ---
 
-# 20.11.30 Why This Matters for Machine Learning
+## 20.11.30 Why This Matters for Machine Learning
 
 Modern equivariant neural networks borrow this exact mathematical structure.
 
@@ -6503,7 +6503,7 @@ Each hidden feature therefore behaves like a generalized orbital under rotation.
 
 ---
 
-# 20.11.31 Hidden Channels in e3nn
+## 20.11.31 Hidden Channels in e3nn
 
 For example,
 
@@ -6527,7 +6527,7 @@ Every channel transforms according to its assigned angular momentum.
 
 ---
 
-# 20.11.32 Why Higher (l) Helps
+## 20.11.32 Why Higher (l) Helps
 
 Suppose two neighboring atoms interact.
 
@@ -6557,7 +6557,7 @@ allow the network to represent increasingly sophisticated geometric information.
 
 ---
 
-# 20.11.33 Angular Momentum and Local Geometry
+## 20.11.33 Angular Momentum and Local Geometry
 
 Consider a central atom surrounded by neighbors.
 
@@ -6581,7 +6581,7 @@ Higher-order irreps naturally encode these angular relationships.
 
 ---
 
-# 20.11.34 Why Physics and Deep Learning Agree
+## 20.11.34 Why Physics and Deep Learning Agree
 
 The appearance of angular momentum in equivariant neural networks is not merely a convenient mathematical trick.
 
@@ -6595,7 +6595,7 @@ This deep connection explains why concepts developed for quantum physics now pla
 
 ---
 
-# 20.11.35 Key Takeaways
+## 20.11.35 Key Takeaways
 
 The irreducible representations of SO(3) are naturally labeled by the angular momentum quantum number (l). Each value of (l) describes a distinct type of rotational behavior, with dimensionality given by (2l+1).
 
@@ -6609,7 +6609,7 @@ Understanding this connection provides the conceptual bridge between quantum mec
 
 Real physical systems rarely consist of a single irrep. Instead, they combine multiple irreducible representations—for example, scalars, vectors, and higher-order tensors—into a single feature space. The mathematical operation that combines independent irreps is called the **direct sum**. In the next section, we will study direct sums and show how modern equivariant neural networks construct rich hidden representations by combining multiple irreducible components while preserving rotational symmetry.
 
-# 20.11.19 Direct Sums of Irreducible Representations
+## 20.11.19 Direct Sums of Irreducible Representations
 
 In the previous sections, we learned that **irreducible representations (irreps)** are the fundamental building blocks of rotational symmetry.
 
@@ -6635,7 +6635,7 @@ The mathematical operation that performs this combination is called the **direct
 
 ---
 
-# 20.11.20 Why Do We Need Direct Sums?
+## 20.11.20 Why Do We Need Direct Sums?
 
 Suppose we wish to describe an atom.
 
@@ -6661,7 +6661,7 @@ This combination is called a **direct sum**.
 
 ---
 
-# 20.11.21 An Everyday Analogy
+## 20.11.21 An Everyday Analogy
 
 Imagine a university student.
 
@@ -6709,7 +6709,7 @@ A direct sum works in exactly the same way.
 
 ---
 
-# 20.11.22 Mathematical Definition
+## 20.11.22 Mathematical Definition
 
 Suppose we have two irreducible representations,
 
@@ -6747,7 +6747,7 @@ It means
 
 ---
 
-# 20.11.23 Matrix Form of a Direct Sum
+## 20.11.23 Matrix Form of a Direct Sum
 
 If
 
@@ -6789,7 +6789,7 @@ There is no interaction between them.
 
 ---
 
-# 20.11.24 Visual Interpretation
+## 20.11.24 Visual Interpretation
 
 Conceptually,
 
@@ -6819,7 +6819,7 @@ they form a richer feature representation.
 
 ---
 
-# 20.11.25 Example: Scalar + Vector
+## 20.11.25 Example: Scalar + Vector
 
 Suppose we combine
 
@@ -6860,7 +6860,7 @@ The combined feature contains
 
 ---
 
-# 20.11.26 Example: Multiple Irreps
+## 20.11.26 Example: Multiple Irreps
 
 Suppose a neural network stores
 
@@ -6884,7 +6884,7 @@ This notation is commonly used in e3nn.
 
 ---
 
-# 20.11.27 Dimension of the Combined Representation
+## 20.11.27 Dimension of the Combined Representation
 
 Recall
 
@@ -6934,7 +6934,7 @@ they belong to different irreps.
 
 ---
 
-# 20.11.28 Independent Transformations
+## 20.11.28 Independent Transformations
 
 Suppose the crystal rotates.
 
@@ -6974,7 +6974,7 @@ Each part behaves independently.
 
 ---
 
-# 20.11.29 Why Independence Is Important
+## 20.11.29 Why Independence Is Important
 
 Imagine storing every feature inside one enormous tensor.
 
@@ -6994,7 +6994,7 @@ This makes the network
 
 ---
 
-# 20.11.30 Direct Sums in e3nn
+## 20.11.30 Direct Sums in e3nn
 
 The e3nn library represents feature spaces almost entirely using direct sums.
 
@@ -7022,7 +7022,7 @@ e3nn stores these as one large direct-sum representation.
 
 ---
 
-# 20.11.31 Hidden Features in Modern Networks
+## 20.11.31 Hidden Features in Modern Networks
 
 A hidden layer may therefore look like
 
@@ -7050,7 +7050,7 @@ each transforms correctly under SO(3).
 
 ---
 
-# 20.11.32 Why Direct Sums Improve Learning
+## 20.11.32 Why Direct Sums Improve Learning
 
 Different physical quantities require different symmetry behaviors.
 
@@ -7072,7 +7072,7 @@ This preserves the correct physics automatically.
 
 ---
 
-# 20.11.33 Example from Materials Science
+## 20.11.33 Example from Materials Science
 
 Consider predicting
 
@@ -7110,7 +7110,7 @@ A direct sum allows all three types of information to coexist within the same ne
 
 ---
 
-# 20.11.34 Why Direct Sums Are Everywhere
+## 20.11.34 Why Direct Sums Are Everywhere
 
 Direct sums appear throughout
 
@@ -7126,7 +7126,7 @@ the direct sum provides the natural mathematical framework.
 
 ---
 
-# 20.11.35 Key Takeaways
+## 20.11.35 Key Takeaways
 
 A **direct sum** combines multiple irreducible representations into a larger representation while preserving the independence of each component. Rather than mixing scalars, vectors, and higher-order tensors into a single undifferentiated feature, modern equivariant neural networks organize them as a direct sum of irreps.
 
@@ -7138,7 +7138,7 @@ This structure allows every feature to transform according to its own symmetry r
 
 Although direct sums tell us **which irreps** are present in a representation, the numerical values of these representations still depend on the **choice of basis**. Different coordinate systems or feature bases can describe the same physical object. In the next section, we will study **basis transformations**, showing why changing the basis does not alter the underlying physics and why equivariant neural networks can freely change feature bases while preserving symmetry.
 
-# 20.11.20 Basis Transformations
+## 20.11.20 Basis Transformations
 
 In the previous section, we learned that complex representations can be constructed by combining irreducible representations using **direct sums**.
 
@@ -7156,7 +7156,7 @@ Understanding basis transformations is essential because modern equivariant neur
 
 ---
 
-# 20.11.21 What Is a Basis?
+## 20.11.21 What Is a Basis?
 
 A **basis** is a set of vectors that allows us to describe every vector in a space.
 
@@ -7189,7 +7189,7 @@ These three vectors define the familiar Cartesian coordinate system.
 
 ---
 
-# 20.11.22 Describing a Vector
+## 20.11.22 Describing a Vector
 
 Suppose we have a vector
 
@@ -7229,7 +7229,7 @@ depend entirely on the chosen basis.
 
 ---
 
-# 20.11.23 A Simple Analogy
+## 20.11.23 A Simple Analogy
 
 Imagine describing the location of a city.
 
@@ -7255,7 +7255,7 @@ not the object.
 
 ---
 
-# 20.11.24 Rotating the Coordinate Axes
+## 20.11.24 Rotating the Coordinate Axes
 
 Suppose we rotate our coordinate axes by
 
@@ -7283,7 +7283,7 @@ Only the coordinate system has changed.
 
 ---
 
-# 20.11.25 Physical Objects vs. Coordinates
+## 20.11.25 Physical Objects vs. Coordinates
 
 This distinction is fundamental.
 
@@ -7297,7 +7297,7 @@ Modern equivariant neural networks exploit this fact by learning representations
 
 ---
 
-# 20.11.26 Mathematical Basis Transformation
+## 20.11.26 Mathematical Basis Transformation
 
 Suppose
 
@@ -7330,7 +7330,7 @@ Only its numerical representation changes.
 
 ---
 
-# 20.11.27 Transforming Representation Matrices
+## 20.11.27 Transforming Representation Matrices
 
 Changing the basis also changes the representation matrix.
 
@@ -7359,7 +7359,7 @@ It is one of the central equations of representation theory.
 
 ---
 
-# 20.11.28 Similarity Transformations Preserve Physics
+## 20.11.28 Similarity Transformations Preserve Physics
 
 Although
 
@@ -7387,7 +7387,7 @@ but the physical temperature is identical.
 
 ---
 
-# 20.11.29 Why Basis Choice Matters
+## 20.11.29 Why Basis Choice Matters
 
 Some bases make mathematical calculations much easier than others.
 
@@ -7413,7 +7413,7 @@ This simplification allows us to identify irreducible representations.
 
 ---
 
-# 20.11.30 Diagonalization Analogy
+## 20.11.30 Diagonalization Analogy
 
 You may recall from linear algebra that matrices are often diagonalized.
 
@@ -7427,7 +7427,7 @@ it searches for bases that expose the irreducible structure of the representatio
 
 ---
 
-# 20.11.31 Basis Transformations in Quantum Mechanics
+## 20.11.31 Basis Transformations in Quantum Mechanics
 
 Quantum mechanics routinely changes bases.
 
@@ -7446,7 +7446,7 @@ yet they all describe the same underlying state.
 
 ---
 
-# 20.11.32 Basis Transformations in e3nn
+## 20.11.32 Basis Transformations in e3nn
 
 The **e3nn** framework also performs basis transformations internally.
 
@@ -7462,7 +7462,7 @@ but they occur continuously inside the network.
 
 ---
 
-# 20.11.33 Why Neural Networks Change Basis
+## 20.11.33 Why Neural Networks Change Basis
 
 Changing basis can
 
@@ -7477,7 +7477,7 @@ provided the transformation rules remain mathematically consistent.
 
 ---
 
-# 20.11.34 Physical Interpretation
+## 20.11.34 Physical Interpretation
 
 Imagine looking at a crystal from different directions.
 
@@ -7501,7 +7501,7 @@ A basis transformation is the mathematical equivalent of changing the viewing di
 
 ---
 
-# 20.11.35 Basis Independence
+## 20.11.35 Basis Independence
 
 A physically meaningful neural network should never depend on an arbitrary choice of basis.
 
@@ -7513,7 +7513,7 @@ Equivariant neural networks achieve this by ensuring that every layer transforms
 
 ---
 
-# 20.11.36 From Basis Changes to Spherical Harmonics
+## 20.11.36 From Basis Changes to Spherical Harmonics
 
 One particularly useful basis for describing rotations is the **spherical harmonic basis**.
 
@@ -7532,7 +7532,7 @@ They provide one of the most natural coordinate systems for rotational symmetry.
 
 ---
 
-# 20.11.37 Key Takeaways
+## 20.11.37 Key Takeaways
 
 A **basis transformation** changes the numerical description of a mathematical object without changing the object itself. Representation matrices expressed in different bases are related by similarity transformations, ensuring that the underlying symmetry remains unchanged.
 
@@ -7544,7 +7544,7 @@ Modern equivariant neural networks take advantage of basis transformations to si
 
 We have now introduced representations, irreducible representations, direct sums, and basis transformations. The next step is to identify the concrete mathematical functions that realize the irreducible representations of **SO(3)**. These functions are known as **spherical harmonics**. They provide the angular basis used throughout quantum mechanics and form the mathematical foundation of message passing in modern equivariant graph neural networks such as **e3nn**, **NequIP**, **Allegro**, and **MACE**.
 
-# 20.11.21 Irreducible Representations in Modern Equivariant Neural Networks
+## 20.11.21 Irreducible Representations in Modern Equivariant Neural Networks
 
 Up to this point, we have studied irreducible representations from a mathematical perspective.
 
@@ -7566,7 +7566,7 @@ Instead of treating hidden features as ordinary vectors of numbers, these networ
 
 ---
 
-# 20.11.22 Traditional Neural Networks
+## 20.11.22 Traditional Neural Networks
 
 Consider an ordinary multilayer perceptron.
 
@@ -7605,7 +7605,7 @@ They are simply numerical values optimized during training.
 
 ---
 
-# 20.11.23 Hidden Features Have No Geometry
+## 20.11.23 Hidden Features Have No Geometry
 
 Suppose we rotate a crystal by
 
@@ -7627,7 +7627,7 @@ it may still fail to generalize to unseen orientations.
 
 ---
 
-# 20.11.24 The Equivariant Approach
+## 20.11.24 The Equivariant Approach
 
 Modern equivariant neural networks take a completely different approach.
 
@@ -7663,7 +7663,7 @@ how it should rotate.
 
 ---
 
-# 20.11.25 Features Become Physical Objects
+## 20.11.25 Features Become Physical Objects
 
 Inside an equivariant neural network,
 
@@ -7685,7 +7685,7 @@ This makes the hidden representation resemble a physical description of the atom
 
 ---
 
-# 20.11.26 The Language of e3nn
+## 20.11.26 The Language of e3nn
 
 The **e3nn** library describes feature spaces using a concise notation.
 
@@ -7723,7 +7723,7 @@ Each feature belongs to a specific symmetry class.
 
 ---
 
-# 20.11.27 Meaning of the Notation
+## 20.11.27 Meaning of the Notation
 
 The notation
 
@@ -7747,7 +7747,7 @@ the important point is that every hidden feature is explicitly labeled by its sy
 
 ---
 
-# 20.11.28 Hidden Layer Example
+## 20.11.28 Hidden Layer Example
 
 Suppose an equivariant hidden layer is written as
 
@@ -7769,7 +7769,7 @@ Each group transforms independently under rotations.
 
 ---
 
-# 20.11.29 Rotation of Hidden Features
+## 20.11.29 Rotation of Hidden Features
 
 Imagine rotating the crystal.
 
@@ -7803,7 +7803,7 @@ Every transformation follows the mathematical rules of SO(3).
 
 ---
 
-# 20.11.30 Why This Is Better
+## 20.11.30 Why This Is Better
 
 Consider predicting atomic forces.
 
@@ -7825,7 +7825,7 @@ the network requires
 
 ---
 
-# 20.11.31 Information Flow During Message Passing
+## 20.11.31 Information Flow During Message Passing
 
 During message passing,
 
@@ -7849,7 +7849,7 @@ These tensor features retain their symmetry properties throughout every layer.
 
 ---
 
-# 20.11.32 Why Irreps Remain Separate
+## 20.11.32 Why Irreps Remain Separate
 
 One important design principle is that different irreps are never mixed arbitrarily.
 
@@ -7867,7 +7867,7 @@ We will study these operations later in this chapter.
 
 ---
 
-# 20.11.33 Example from Materials Science
+## 20.11.33 Example from Materials Science
 
 Suppose we wish to predict
 
@@ -7905,7 +7905,7 @@ Using irreps allows the network to represent all three quantities naturally with
 
 ---
 
-# 20.11.34 Why Hidden Features Become More Expressive
+## 20.11.34 Why Hidden Features Become More Expressive
 
 As information propagates through the network,
 
@@ -7931,7 +7931,7 @@ the hidden representation becomes progressively more informative.
 
 ---
 
-# 20.11.35 Connection to Quantum Mechanics
+## 20.11.35 Connection to Quantum Mechanics
 
 The use of irreps inside neural networks is strongly inspired by quantum mechanics.
 
@@ -7951,7 +7951,7 @@ they expand hidden features into irreducible representations of SO(3).
 
 ---
 
-# 20.11.36 Modern Architectures
+## 20.11.36 Modern Architectures
 
 Nearly every state-of-the-art equivariant architecture follows this philosophy.
 
@@ -7969,7 +7969,7 @@ they all use irreducible representations as their fundamental feature type.
 
 ---
 
-# 20.11.37 Key Takeaways
+## 20.11.37 Key Takeaways
 
 Modern equivariant neural networks replace ordinary hidden vectors with **irreducible representations of SO(3)**. Each hidden channel is assigned a specific symmetry behavior—such as scalar, vector, or higher-order tensor—and transforms according to well-defined mathematical rules under rotation.
 
@@ -8023,7 +8023,7 @@ Every modern equivariant graph neural network—including **e3nn**, **NequIP**, 
 
 ---
 
-# 20.12.2 Why Do We Need Spherical Harmonics?
+## 20.12.2 Why Do We Need Spherical Harmonics?
 
 Consider two neighboring atoms.
 
@@ -8068,7 +8068,7 @@ Spherical harmonics provide this angular description.
 
 ---
 
-# 20.12.3 Radial vs Angular Information
+## 20.12.3 Radial vs Angular Information
 
 Every neighbor position can be separated into two independent parts.
 
@@ -8101,7 +8101,7 @@ The angular part tells us **where** it is.
 
 ---
 
-# 20.12.4 An Everyday Analogy
+## 20.12.4 An Everyday Analogy
 
 Imagine describing the location of a city.
 
@@ -8125,7 +8125,7 @@ atomic environments require both radial and angular information.
 
 ---
 
-# 20.12.5 Cartesian Coordinates
+## 20.12.5 Cartesian Coordinates
 
 Most machine learning datasets use Cartesian coordinates.
 
@@ -8147,7 +8147,7 @@ but they do not naturally separate distance from direction.
 
 ---
 
-# 20.12.6 Spherical Coordinates
+## 20.12.6 Spherical Coordinates
 
 Instead,
 
@@ -8184,7 +8184,7 @@ This representation naturally separates
 
 ---
 
-# 20.12.7 Why Spherical Coordinates Are Better
+## 20.12.7 Why Spherical Coordinates Are Better
 
 Rotations primarily affect
 
@@ -8207,7 +8207,7 @@ This is one reason why spherical harmonics are built upon spherical coordinates 
 
 ---
 
-# 20.12.8 Separating Geometry
+## 20.12.8 Separating Geometry
 
 Many physical equations become dramatically simpler after separating radial and angular components.
 
@@ -8231,7 +8231,7 @@ The angular information can be handled using spherical harmonics.
 
 ---
 
-# 20.12.9 What Are Spherical Harmonics?
+## 20.12.9 What Are Spherical Harmonics?
 
 Spherical harmonics are a family of mathematical functions defined on the surface of a sphere.
 
@@ -8255,7 +8255,7 @@ Each spherical harmonic corresponds to one irreducible representation of SO(3).
 
 ---
 
-# 20.12.10 Mathematical Notation
+## 20.12.10 Mathematical Notation
 
 Spherical harmonics are written as
 
@@ -8272,7 +8272,7 @@ These indices determine the angular pattern of the function.
 
 ---
 
-# 20.12.11 Meaning of (l)
+## 20.12.11 Meaning of (l)
 
 The integer
 
@@ -8293,7 +8293,7 @@ It determines
 
 ---
 
-# 20.12.12 Meaning of (m)
+## 20.12.12 Meaning of (m)
 
 For each value of
 
@@ -8331,7 +8331,7 @@ This matches the dimension of the SO(3) irreducible representation.
 
 ---
 
-# 20.12.13 The First Few Harmonics
+## 20.12.13 The First Few Harmonics
 
 The first few families are
 
@@ -8355,7 +8355,7 @@ rule appears.
 
 ---
 
-# 20.12.14 Why This Is Important
+## 20.12.14 Why This Is Important
 
 Notice the remarkable correspondence.
 
@@ -8370,7 +8370,7 @@ Spherical harmonics provide the concrete mathematical realization of the irreduc
 
 ---
 
-# 20.12.15 Physical Interpretation
+## 20.12.15 Physical Interpretation
 
 Each spherical harmonic describes a different angular pattern on the surface of a sphere.
 
@@ -8385,7 +8385,7 @@ These patterns are exactly the angular structures needed to describe atomic envi
 
 ---
 
-# 20.12.16 Connection to Atomic Orbitals
+## 20.12.16 Connection to Atomic Orbitals
 
 Chemistry students have already encountered spherical harmonics without realizing it.
 
@@ -8404,7 +8404,7 @@ The familiar orbital shapes arise because the angular part of the Schrödinger e
 
 ---
 
-# 20.12.17 Why Machine Learning Uses Them
+## 20.12.17 Why Machine Learning Uses Them
 
 Modern equivariant neural networks also need to describe angular geometry.
 
@@ -8424,7 +8424,7 @@ the same spherical harmonics used in quantum mechanics naturally appear in geome
 
 ---
 
-# 20.12.18 Key Takeaways
+## 20.12.18 Key Takeaways
 
 Spherical harmonics are mathematical functions that describe **angular information** on the surface of a sphere. They provide the concrete realization of the irreducible representations of **SO(3)** and naturally separate directional information from radial distance.
 
@@ -8436,7 +8436,7 @@ This makes them indispensable for modeling atomic environments, where both dista
 
 In this introductory section, we developed an intuitive understanding of why spherical harmonics are needed. In the next section, we will derive their mathematical definition, explain the roles of the degree (l) and order (m), introduce the associated Legendre polynomials, and show how the complete family of spherical harmonics is constructed. This mathematical foundation will be essential before using spherical harmonics in equivariant message passing and neural network implementations later in the chapter.
 
-# 20.12.2 Mathematical Definition of Spherical Harmonics
+## 20.12.2 Mathematical Definition of Spherical Harmonics
 
 In the previous section, we developed an intuitive understanding of spherical harmonics.
 
@@ -8452,7 +8452,7 @@ Although the equations may initially appear complicated, every component has a c
 
 ---
 
-# 20.12.3 Coordinates on a Sphere
+## 20.12.3 Coordinates on a Sphere
 
 Spherical harmonics are defined on the surface of a sphere.
 
@@ -8518,7 +8518,7 @@ This is because they describe **direction**, not distance.
 
 ---
 
-# 20.12.4 Separation of Variables
+## 20.12.4 Separation of Variables
 
 Many physical equations become easier to solve after separating variables.
 
@@ -8559,7 +8559,7 @@ The angular function is precisely the spherical harmonic.
 
 ---
 
-# 20.12.5 General Definition
+## 20.12.5 General Definition
 
 The complex spherical harmonic is written as
 
@@ -8588,7 +8588,7 @@ Although this expression may look intimidating, each factor plays a distinct rol
 
 ---
 
-# 20.12.6 Understanding Each Term
+## 20.12.6 Understanding Each Term
 
 The equation consists of three pieces.
 
@@ -8642,7 +8642,7 @@ It introduces the rotational behavior about the (z)-axis.
 
 ---
 
-# 20.12.7 Degree (l)
+## 20.12.7 Degree (l)
 
 The degree
 
@@ -8667,7 +8667,7 @@ Higher values correspond to increasingly detailed angular structures.
 
 ---
 
-# 20.12.8 Order (m)
+## 20.12.8 Order (m)
 
 For each
 
@@ -8708,7 +8708,7 @@ This again matches the dimension of the SO(3) irrep.
 
 ---
 
-# 20.12.9 Example: (l=0)
+## 20.12.9 Example: (l=0)
 
 For
 
@@ -8740,7 +8740,7 @@ This corresponds to a scalar.
 
 ---
 
-# 20.12.10 Example: (l=1)
+## 20.12.10 Example: (l=1)
 
 For
 
@@ -8770,7 +8770,7 @@ These harmonics correspond to vector-like behavior.
 
 ---
 
-# 20.12.11 Example: (l=2)
+## 20.12.11 Example: (l=2)
 
 For
 
@@ -8790,7 +8790,7 @@ the angular structure becomes more intricate.
 
 ---
 
-# 20.12.12 Increasing Angular Complexity
+## 20.12.12 Increasing Angular Complexity
 
 As
 
@@ -8838,7 +8838,7 @@ Each higher degree captures finer directional information.
 
 ---
 
-# 20.12.13 Orthogonality
+## 20.12.13 Orthogonality
 
 One of the most important properties of spherical harmonics is **orthogonality**.
 
@@ -8863,7 +8863,7 @@ Each harmonic carries unique angular information.
 
 ---
 
-# 20.12.14 Why Orthogonality Matters
+## 20.12.14 Why Orthogonality Matters
 
 Orthogonality allows complicated angular functions to be expanded uniquely as sums of spherical harmonics.
 
@@ -8875,7 +8875,7 @@ Spherical harmonics perform the same role for functions defined on the sphere.
 
 ---
 
-# 20.12.15 Spherical Harmonics as a Basis
+## 20.12.15 Spherical Harmonics as a Basis
 
 Because of orthogonality,
 
@@ -8913,7 +8913,7 @@ Any sufficiently smooth angular function can be represented by an appropriate co
 
 ---
 
-# 20.12.16 Why Neural Networks Use This Basis
+## 20.12.16 Why Neural Networks Use This Basis
 
 Atomic environments are fundamentally angular.
 
@@ -8927,7 +8927,7 @@ This converts geometric information into symmetry-adapted features.
 
 ---
 
-# 20.12.17 Connection to Irreducible Representations
+## 20.12.17 Connection to Irreducible Representations
 
 Recall that
 
@@ -8947,7 +8947,7 @@ This is why spherical harmonics and irreps always appear together.
 
 ---
 
-# 20.12.18 Key Takeaways
+## 20.12.18 Key Takeaways
 
 Spherical harmonics are mathematical functions defined on the surface of a sphere. Each harmonic is indexed by a degree (l) and an order (m), with (2l+1) functions for every value of (l). Their orthogonality allows them to serve as a complete basis for angular functions, making them the natural language for describing rotational symmetry.
 
@@ -8959,7 +8959,7 @@ In equivariant graph neural networks, spherical harmonics transform atomic direc
 
 Although the mathematical definition explains how spherical harmonics are constructed, their true significance becomes much clearer when viewed geometrically. In the next section, we will visualize the first few spherical harmonics ((l=0,1,2,3)), interpret their positive and negative lobes, connect them to familiar atomic orbitals, and develop an intuitive understanding of how increasing (l) captures increasingly complex angular structure.
 
-# 20.12.3 Visualizing Spherical Harmonics
+## 20.12.3 Visualizing Spherical Harmonics
 
 The mathematical definition of spherical harmonics provides a rigorous description of angular functions.
 
@@ -8971,7 +8971,7 @@ In this section, we will build an intuitive understanding of these functions by 
 
 ---
 
-# 20.12.4 A Sphere as an Angular Canvas
+## 20.12.4 A Sphere as an Angular Canvas
 
 Imagine a perfectly smooth sphere centered at the origin.
 
@@ -9003,7 +9003,7 @@ The sphere becomes a map of angular information.
 
 ---
 
-# 20.12.5 Positive and Negative Regions
+## 20.12.5 Positive and Negative Regions
 
 A spherical harmonic assigns either positive or negative values to different directions.
 
@@ -9025,7 +9025,7 @@ Across a nodal surface, the value of the spherical harmonic changes sign.
 
 ---
 
-# 20.12.6 The Simplest Harmonic: (l = 0)
+## 20.12.6 The Simplest Harmonic: (l = 0)
 
 The first spherical harmonic is
 
@@ -9057,7 +9057,7 @@ This represents perfect rotational symmetry.
 
 ---
 
-# 20.12.7 Physical Meaning of (l = 0)
+## 20.12.7 Physical Meaning of (l = 0)
 
 Since every direction is identical,
 
@@ -9074,7 +9074,7 @@ Rotating the sphere does not change anything because every direction already loo
 
 ---
 
-# 20.12.8 The First Directional Pattern: (l = 1)
+## 20.12.8 The First Directional Pattern: (l = 1)
 
 The next family corresponds to
 
@@ -9110,7 +9110,7 @@ Half is negative.
 
 ---
 
-# 20.12.9 Why It Looks Like a Vector
+## 20.12.9 Why It Looks Like a Vector
 
 Suppose we rotate this pattern.
 
@@ -9128,7 +9128,7 @@ corresponds to vector quantities.
 
 ---
 
-# 20.12.10 Connection to p Orbitals
+## 20.12.10 Connection to p Orbitals
 
 Chemistry students have already seen this shape.
 
@@ -9166,7 +9166,7 @@ The familiar dumbbell shape comes directly from the angular variation of the sph
 
 ---
 
-# 20.12.11 The Quadrupole Pattern: (l = 2)
+## 20.12.11 The Quadrupole Pattern: (l = 2)
 
 The next family has
 
@@ -9195,7 +9195,7 @@ These more intricate patterns describe quadrupole symmetry.
 
 ---
 
-# 20.12.12 Connection to d Orbitals
+## 20.12.12 Connection to d Orbitals
 
 The familiar
 
@@ -9217,7 +9217,7 @@ Their characteristic four-lobed and donut-shaped geometries are direct visualiza
 
 ---
 
-# 20.12.13 Higher Degrees
+## 20.12.13 Higher Degrees
 
 As the degree
 
@@ -9271,7 +9271,7 @@ adds angular complexity.
 
 ---
 
-# 20.12.14 Increasing Number of Nodes
+## 20.12.14 Increasing Number of Nodes
 
 The complexity of a spherical harmonic is closely related to its nodal structure.
 
@@ -9289,7 +9289,7 @@ can describe increasingly fine angular details.
 
 ---
 
-# 20.12.15 Frequency Analogy
+## 20.12.15 Frequency Analogy
 
 An excellent analogy comes from sound.
 
@@ -9310,7 +9310,7 @@ plays a role analogous to frequency.
 
 ---
 
-# 20.12.16 Fourier Series Analogy
+## 20.12.16 Fourier Series Analogy
 
 Most students are familiar with Fourier series.
 
@@ -9340,7 +9340,7 @@ they use angular basis functions.
 
 ---
 
-# 20.12.17 Expanding Angular Functions
+## 20.12.17 Expanding Angular Functions
 
 Suppose we have a complicated angular distribution around an atom.
 
@@ -9374,7 +9374,7 @@ This is one of the most powerful properties of the spherical harmonic basis.
 
 ---
 
-# 20.12.18 Why Materials Need Higher (l)
+## 20.12.18 Why Materials Need Higher (l)
 
 Simple crystal environments can often be described using
 
@@ -9404,7 +9404,7 @@ Higher-degree harmonics capture these subtle angular differences.
 
 ---
 
-# 20.12.19 Why Equivariant GNNs Use Multiple Degrees
+## 20.12.19 Why Equivariant GNNs Use Multiple Degrees
 
 Modern architectures rarely use only one value of
 
@@ -9440,7 +9440,7 @@ while higher degrees capture increasingly detailed angular structure.
 
 ---
 
-# 20.12.20 Visual Summary
+## 20.12.20 Visual Summary
 
 The progression of spherical harmonics can be summarized as follows.
 
@@ -9456,7 +9456,7 @@ This hierarchy mirrors the increasing complexity of atomic environments.
 
 ---
 
-# 20.12.21 Why This Matters for Deep Learning
+## 20.12.21 Why This Matters for Deep Learning
 
 An equivariant neural network processes local atomic neighborhoods.
 
@@ -9472,7 +9472,7 @@ the network can distinguish between different local environments while remaining
 
 ---
 
-# 20.12.22 Key Takeaways
+## 20.12.22 Key Takeaways
 
 Visualizing spherical harmonics reveals that they are not abstract mathematical objects but structured angular patterns on the surface of a sphere. As the degree (l) increases, these patterns become progressively more intricate, allowing increasingly detailed directional information to be represented.
 
@@ -9484,7 +9484,7 @@ This hierarchy is analogous to the role of sine and cosine functions in Fourier 
 
 The mathematical definition introduced earlier uses **complex-valued spherical harmonics**, which are natural in quantum mechanics because wavefunctions are generally complex. However, most machine learning models operate with **real-valued tensors**. In the next section, we will explain the difference between **complex** and **real spherical harmonics**, show how real spherical harmonics are constructed, and discuss why nearly all modern equivariant graph neural networks—including **e3nn**, **NequIP**, **Allegro**, and **MACE**—use the real form in practice.
 
-# 20.12.4 Real vs. Complex Spherical Harmonics
+## 20.12.4 Real vs. Complex Spherical Harmonics
 
 In the previous sections, we introduced spherical harmonics using their standard mathematical definition
 
@@ -9506,7 +9506,7 @@ In this section, we answer this question by comparing complex and real spherical
 
 ---
 
-# 20.12.5 Why Complex Numbers Appear
+## 20.12.5 Why Complex Numbers Appear
 
 Recall that the mathematical definition of a spherical harmonic contains
 
@@ -9546,7 +9546,7 @@ the spherical harmonic is generally complex.
 
 ---
 
-# 20.12.6 Complex-Valued Functions
+## 20.12.6 Complex-Valued Functions
 
 A complex spherical harmonic has both
 
@@ -9575,7 +9575,7 @@ they completely describe the angular function.
 
 ---
 
-# 20.12.7 Why Physics Uses Complex Functions
+## 20.12.7 Why Physics Uses Complex Functions
 
 Quantum mechanics naturally uses complex numbers.
 
@@ -9597,7 +9597,7 @@ the angular part of the hydrogen atom wavefunction is expressed using complex sp
 
 ---
 
-# 20.12.8 Machine Learning Is Different
+## 20.12.8 Machine Learning Is Different
 
 Neural networks usually operate on
 
@@ -9617,7 +9617,7 @@ modern equivariant GNNs prefer real-valued representations.
 
 ---
 
-# 20.12.9 Constructing Real Spherical Harmonics
+## 20.12.9 Constructing Real Spherical Harmonics
 
 Fortunately,
 
@@ -9647,7 +9647,7 @@ Only the basis changes.
 
 ---
 
-# 20.12.10 Same Information, Different Basis
+## 20.12.10 Same Information, Different Basis
 
 This transformation is another example of a **basis transformation**, which we studied earlier.
 
@@ -9661,7 +9661,7 @@ complex and real spherical harmonics contain identical information.
 
 ---
 
-# 20.12.11 Complex Basis
+## 20.12.11 Complex Basis
 
 The complex basis consists of
 
@@ -9685,7 +9685,7 @@ they contain imaginary numbers.
 
 ---
 
-# 20.12.12 Real Basis
+## 20.12.12 Real Basis
 
 The real basis is obtained by combining
 
@@ -9711,7 +9711,7 @@ they are much easier to integrate into standard deep-learning frameworks.
 
 ---
 
-# 20.12.13 Visual Appearance
+## 20.12.13 Visual Appearance
 
 Interestingly,
 
@@ -9731,7 +9731,7 @@ are almost always drawn using **real spherical harmonics** rather than the compl
 
 ---
 
-# 20.12.14 Example: p Orbitals
+## 20.12.14 Example: p Orbitals
 
 The three familiar p orbitals
 
@@ -9757,7 +9757,7 @@ Chemists almost never use the complex versions when visualizing orbitals.
 
 ---
 
-# 20.12.15 Example: d Orbitals
+## 20.12.15 Example: d Orbitals
 
 Similarly,
 
@@ -9781,7 +9781,7 @@ These shapes are much easier to interpret than their complex counterparts.
 
 ---
 
-# 20.12.16 Why Machine Learning Prefers the Real Basis
+## 20.12.16 Why Machine Learning Prefers the Real Basis
 
 There are several practical advantages.
 
@@ -9799,7 +9799,7 @@ they have become the standard choice in geometric deep learning.
 
 ---
 
-# 20.12.17 What e3nn Uses
+## 20.12.17 What e3nn Uses
 
 The **e3nn** library uses **real spherical harmonics** by default.
 
@@ -9813,7 +9813,7 @@ This greatly simplifies both training and inference.
 
 ---
 
-# 20.12.18 What NequIP Uses
+## 20.12.18 What NequIP Uses
 
 **NequIP** is built directly upon **e3nn**.
 
@@ -9825,7 +9825,7 @@ Neighbor directions are projected into the real harmonic basis before message pa
 
 ---
 
-# 20.12.19 What Allegro Uses
+## 20.12.19 What Allegro Uses
 
 **Allegro** likewise uses real spherical harmonics.
 
@@ -9835,7 +9835,7 @@ its angular encoding follows exactly the same mathematical foundation.
 
 ---
 
-# 20.12.20 What MACE Uses
+## 20.12.20 What MACE Uses
 
 **MACE** also relies on real spherical harmonics.
 
@@ -9845,7 +9845,7 @@ these harmonics enable MACE to construct highly expressive equivariant represent
 
 ---
 
-# 20.12.21 Do We Lose Information?
+## 20.12.21 Do We Lose Information?
 
 An important question is whether converting to the real basis removes information.
 
@@ -9863,7 +9863,7 @@ the expressive power of the representation remains unchanged.
 
 ---
 
-# 20.12.22 Comparison
+## 20.12.22 Comparison
 
 The differences can be summarized as follows.
 
@@ -9877,7 +9877,7 @@ The differences can be summarized as follows.
 
 ---
 
-# 20.12.23 Why Understanding Both Is Important
+## 20.12.23 Why Understanding Both Is Important
 
 Researchers working in
 
@@ -9895,7 +9895,7 @@ Understanding that these are simply two different bases for the same mathematica
 
 ---
 
-# 20.12.24 Key Takeaways
+## 20.12.24 Key Takeaways
 
 Complex and real spherical harmonics describe the same angular information but in different bases. Complex harmonics arise naturally in quantum mechanics because wavefunctions are complex-valued, whereas real harmonics are obtained through a basis transformation that removes imaginary components.
 
@@ -9907,7 +9907,7 @@ Because modern deep-learning frameworks operate primarily on real-valued tensors
 
 We have now seen how spherical harmonics are defined and why their real-valued form is preferred in modern machine learning. The next step is to understand their deeper mathematical role. In the next section, we will show that **spherical harmonics are not merely useful angular functions—they are the explicit basis functions of the irreducible representations of the rotation group SO(3)**. This connection explains why every modern equivariant graph neural network relies on spherical harmonics to achieve exact rotational equivariance.
 
-# 20.12.5 Spherical Harmonics as the Basis of SO(3) Irreducible Representations
+## 20.12.5 Spherical Harmonics as the Basis of SO(3) Irreducible Representations
 
 By now, we have studied two important concepts independently:
 
@@ -9922,7 +9922,7 @@ This is one of the most profound ideas in representation theory and forms the ma
 
 ---
 
-# 20.12.6 The Missing Connection
+## 20.12.6 The Missing Connection
 
 Recall that every irreducible representation of SO(3) is labeled by an integer
 
@@ -9971,7 +9971,7 @@ These functions **are the basis vectors of the SO(3) irreducible representation*
 
 ---
 
-# 20.12.7 Functions as Vectors
+## 20.12.7 Functions as Vectors
 
 In linear algebra,
 
@@ -10004,7 +10004,7 @@ the spherical harmonics themselves form a vector space.
 
 ---
 
-# 20.12.8 Basis Functions
+## 20.12.8 Basis Functions
 
 Consider the case
 
@@ -10044,7 +10044,7 @@ three-dimensional irreducible representation of SO(3).
 
 ---
 
-# 20.12.9 General Case
+## 20.12.9 General Case
 
 For any value of
 
@@ -10085,7 +10085,7 @@ l.
 
 ---
 
-# 20.12.10 Rotation Acts on the Basis
+## 20.12.10 Rotation Acts on the Basis
 
 Suppose we rotate the sphere.
 
@@ -10123,7 +10123,7 @@ This is exactly how an irreducible representation behaves.
 
 ---
 
-# 20.12.11 Matrix Representation of Rotation
+## 20.12.11 Matrix Representation of Rotation
 
 Suppose
 
@@ -10165,7 +10165,7 @@ This equation establishes the connection between spherical harmonics and represe
 
 ---
 
-# 20.12.12 Why This Is Remarkable
+## 20.12.12 Why This Is Remarkable
 
 Notice what has happened.
 
@@ -10179,7 +10179,7 @@ This greatly simplifies both mathematics and computation.
 
 ---
 
-# 20.12.13 Example: (l = 0)
+## 20.12.13 Example: (l = 0)
 
 For
 
@@ -10207,7 +10207,7 @@ This is the scalar representation.
 
 ---
 
-# 20.12.14 Example: (l = 1)
+## 20.12.14 Example: (l = 1)
 
 For
 
@@ -10231,7 +10231,7 @@ This is exactly the familiar vector representation.
 
 ---
 
-# 20.12.15 Example: (l = 2)
+## 20.12.15 Example: (l = 2)
 
 For
 
@@ -10259,7 +10259,7 @@ This is the defining property of an irreducible representation.
 
 ---
 
-# 20.12.16 Why Different Degrees Never Mix
+## 20.12.16 Why Different Degrees Never Mix
 
 A crucial consequence of irreducibility is that rotations never mix different values of
 
@@ -10311,7 +10311,7 @@ Each degree defines an independent symmetry space.
 
 ---
 
-# 20.12.17 Why This Matters for Neural Networks
+## 20.12.17 Why This Matters for Neural Networks
 
 Suppose a hidden feature belongs to
 
@@ -10339,7 +10339,7 @@ This constraint guarantees exact rotational equivariance.
 
 ---
 
-# 20.12.18 The Role of e3nn
+## 20.12.18 The Role of e3nn
 
 The **e3nn** library stores tensor features according to their irreducible representations.
 
@@ -10361,7 +10361,7 @@ The basis functions themselves remain unchanged.
 
 ---
 
-# 20.12.19 A Signal Processing Analogy
+## 20.12.19 A Signal Processing Analogy
 
 Imagine representing a musical sound using Fourier series.
 
@@ -10382,7 +10382,7 @@ while the coefficients describing the atomic environment change from one atom to
 
 ---
 
-# 20.12.20 Atomic Environment Expansion
+## 20.12.20 Atomic Environment Expansion
 
 Suppose a central atom has many neighbors.
 
@@ -10416,7 +10416,7 @@ This expansion forms the starting point of many equivariant message-passing algo
 
 ---
 
-# 20.12.21 Why This Is the Perfect Basis
+## 20.12.21 Why This Is the Perfect Basis
 
 The spherical harmonic basis possesses several remarkable properties.
 
@@ -10436,7 +10436,7 @@ No other basis provides these advantages simultaneously.
 
 ---
 
-# 20.12.22 From Mathematics to Deep Learning
+## 20.12.22 From Mathematics to Deep Learning
 
 The workflow inside an equivariant neural network now becomes clearer.
 
@@ -10468,7 +10468,7 @@ Every stage preserves rotational symmetry.
 
 ---
 
-# 20.12.23 Connection to Modern Architectures
+## 20.12.23 Connection to Modern Architectures
 
 All major equivariant architectures follow this principle.
 
@@ -10483,7 +10483,7 @@ their mathematical foundation is identical.
 
 ---
 
-# 20.12.24 Key Takeaways
+## 20.12.24 Key Takeaways
 
 Spherical harmonics are not merely convenient angular functions—they are the **basis functions of the irreducible representations of SO(3)**. For each degree (l), the (2l+1) spherical harmonics span the corresponding irreducible representation, and rotations act by mixing only the basis functions within that degree through the representation matrix (D^{(l)}(R)).
 
@@ -10495,7 +10495,7 @@ This relationship provides the mathematical bridge between representation theory
 
 Understanding the mathematical role of spherical harmonics is only the first step. In practical machine-learning applications, we begin with Cartesian atomic coordinates rather than angles or basis functions. The next section will show **how a pair of atomic coordinates is converted into spherical harmonic features**, following the complete pipeline used inside **e3nn**, **NequIP**, **Allegro**, and **MACE**, from neighbor vectors to real spherical harmonic values that serve as inputs to equivariant message passing.
 
-# 20.12.6 Computing Spherical Harmonics from Atomic Coordinates
+## 20.12.6 Computing Spherical Harmonics from Atomic Coordinates
 
 So far, we have treated spherical harmonics as mathematical functions defined on the surface of a sphere.
 
@@ -10521,7 +10521,7 @@ This conversion is one of the most important steps in every modern equivariant G
 
 ---
 
-# 20.12.7 The Overall Pipeline
+## 20.12.7 The Overall Pipeline
 
 Nearly all equivariant architectures follow the same sequence of operations.
 
@@ -10555,7 +10555,7 @@ the underlying mathematics is identical.
 
 ---
 
-# 20.12.8 Step 1 — Atomic Coordinates
+## 20.12.8 Step 1 — Atomic Coordinates
 
 Suppose two neighboring atoms have positions
 
@@ -10595,7 +10595,7 @@ These coordinates contain all geometric information.
 
 ---
 
-# 20.12.9 Step 2 — Neighbor Vector
+## 20.12.9 Step 2 — Neighbor Vector
 
 The first operation is computing the relative position between the two atoms.
 
@@ -10636,7 +10636,7 @@ The direction of this vector is what ultimately determines the spherical harmoni
 
 ---
 
-# 20.12.10 Why Relative Coordinates?
+## 20.12.10 Why Relative Coordinates?
 
 Notice that absolute coordinates are never used.
 
@@ -10650,7 +10650,7 @@ This immediately guarantees **translational invariance**.
 
 ---
 
-# 20.12.11 Step 3 — Compute the Distance
+## 20.12.11 Step 3 — Compute the Distance
 
 The length of the neighbor vector is
 
@@ -10669,7 +10669,7 @@ It is **not** used directly by the spherical harmonics.
 
 ---
 
-# 20.12.12 Step 4 — Normalize the Direction
+## 20.12.12 Step 4 — Normalize the Direction
 
 The direction is obtained by dividing the vector by its length.
 
@@ -10690,7 +10690,7 @@ every bond direction corresponds to one point on a sphere.
 
 ---
 
-# 20.12.13 Why Normalization Is Necessary
+## 20.12.13 Why Normalization Is Necessary
 
 Consider two bonds.
 
@@ -10716,7 +10716,7 @@ Normalization removes the influence of distance.
 
 ---
 
-# 20.12.14 Step 5 — Convert to Spherical Coordinates
+## 20.12.14 Step 5 — Convert to Spherical Coordinates
 
 The normalized direction is converted into
 
@@ -10742,7 +10742,7 @@ These two angles uniquely specify the direction of the bond.
 
 ---
 
-# 20.12.15 Step 6 — Evaluate the Spherical Harmonics
+## 20.12.15 Step 6 — Evaluate the Spherical Harmonics
 
 Once
 
@@ -10780,7 +10780,7 @@ harmonics are computed simultaneously.
 
 ---
 
-# 20.12.16 Example for (l=1)
+## 20.12.16 Example for (l=1)
 
 Suppose the model uses
 
@@ -10808,7 +10808,7 @@ these three numbers encode the bond direction.
 
 ---
 
-# 20.12.17 Example for (l=2)
+## 20.12.17 Example for (l=2)
 
 If
 
@@ -10834,7 +10834,7 @@ These five values describe more detailed angular information.
 
 ---
 
-# 20.12.18 Using Multiple Degrees
+## 20.12.18 Using Multiple Degrees
 
 Modern equivariant GNNs rarely stop at one degree.
 
@@ -10876,7 +10876,7 @@ The complete angular feature is formed by concatenating all of these outputs.
 
 ---
 
-# 20.12.19 Final Angular Feature
+## 20.12.19 Final Angular Feature
 
 Suppose we use
 
@@ -10906,7 +10906,7 @@ every neighbor direction is converted into a nine-dimensional angular feature ve
 
 ---
 
-# 20.12.20 Combining with Radial Features
+## 20.12.20 Combining with Radial Features
 
 Angular information alone is not sufficient.
 
@@ -10938,7 +10938,7 @@ they completely characterize the local geometry.
 
 ---
 
-# 20.12.21 Input to Message Passing
+## 20.12.21 Input to Message Passing
 
 The resulting edge feature is then supplied to the message-passing layer.
 
@@ -10960,7 +10960,7 @@ Every interaction between neighboring atoms is conditioned on these symmetry-awa
 
 ---
 
-# 20.12.22 Why This Guarantees Equivariance
+## 20.12.22 Why This Guarantees Equivariance
 
 Suppose the entire crystal rotates.
 
@@ -10976,7 +10976,7 @@ This property is built into the architecture rather than learned from data.
 
 ---
 
-# 20.12.23 Computational Perspective
+## 20.12.23 Computational Perspective
 
 From the programmer's point of view,
 
@@ -10995,7 +10995,7 @@ the computational pipeline is remarkably systematic.
 
 ---
 
-# 20.12.24 Example in e3nn
+## 20.12.24 Example in e3nn
 
 The **e3nn** library provides optimized routines that compute real spherical harmonics directly from Cartesian vectors.
 
@@ -11011,7 +11011,7 @@ Users therefore do not need to implement the mathematical formulas manually.
 
 ---
 
-# 20.12.25 How Other Models Use the Same Pipeline
+## 20.12.25 How Other Models Use the Same Pipeline
 
 The same basic workflow appears in every major equivariant architecture.
 
@@ -11023,7 +11023,7 @@ Although their architectures differ, the initial geometric encoding follows the 
 
 ---
 
-# 20.12.26 Key Takeaways
+## 20.12.26 Key Takeaways
 
 Modern equivariant graph neural networks begin with ordinary Cartesian atomic coordinates but transform them into symmetry-aware features through a well-defined sequence of operations. Neighbor vectors are computed, normalized to isolate direction, converted into spherical coordinates, and expanded using **real spherical harmonics**.
 
@@ -11036,7 +11036,7 @@ These spherical harmonic coefficients provide a compact and mathematically rigor
 Computing spherical harmonics is only the first stage of the process. The next question is how these angular features actually influence communication between atoms. In the following section, we will examine **how spherical harmonic features are incorporated into equivariant message passing**, how they interact with learned atomic features through tensor products, and why this mechanism allows geometric information to propagate throughout the crystal while preserving rotational symmetry.
 
 
-# 20.12.7 Spherical Harmonics in Equivariant Message Passing
+## 20.12.7 Spherical Harmonics in Equivariant Message Passing
 
 In the previous section, we learned how spherical harmonics are computed from atomic coordinates.
 
@@ -11054,7 +11054,7 @@ Unlike conventional graph neural networks, equivariant models use spherical harm
 
 ---
 
-# 20.12.8 Review of Ordinary Message Passing
+## 20.12.8 Review of Ordinary Message Passing
 
 Recall the general message-passing framework introduced earlier.
 
@@ -11097,7 +11097,7 @@ The edge feature determines how strongly neighboring atoms interact.
 
 ---
 
-# 20.12.9 Edge Features in Ordinary GNNs
+## 20.12.9 Edge Features in Ordinary GNNs
 
 Traditional graph neural networks usually construct edge features from
 
@@ -11125,7 +11125,7 @@ This makes ordinary GNNs insensitive to three-dimensional geometry.
 
 ---
 
-# 20.12.10 Edge Features in Equivariant GNNs
+## 20.12.10 Edge Features in Equivariant GNNs
 
 Equivariant models add directional information.
 
@@ -11147,7 +11147,7 @@ Now every message depends not only on **how far** atoms are separated but also o
 
 ---
 
-# 20.12.11 Why Direction Matters
+## 20.12.11 Why Direction Matters
 
 Consider carbon.
 
@@ -11171,7 +11171,7 @@ Spherical harmonics allow the network to distinguish them naturally.
 
 ---
 
-# 20.12.12 Neighbor Geometry
+## 20.12.12 Neighbor Geometry
 
 Suppose atom
 
@@ -11201,7 +11201,7 @@ every edge carries unique geometric information.
 
 ---
 
-# 20.12.13 Angular Encoding
+## 20.12.13 Angular Encoding
 
 For each neighbor,
 
@@ -11227,7 +11227,7 @@ These features become part of the message passed between atoms.
 
 ---
 
-# 20.12.14 Hidden Atomic Features
+## 20.12.14 Hidden Atomic Features
 
 Every atom also possesses hidden features.
 
@@ -11253,7 +11253,7 @@ These hidden features already transform according to irreducible representations
 
 ---
 
-# 20.12.15 Combining Features with Geometry
+## 20.12.15 Combining Features with Geometry
 
 The key operation is combining
 
@@ -11282,7 +11282,7 @@ it is performed using **tensor products**.
 
 ---
 
-# 20.12.16 Why Ordinary Multiplication Fails
+## 20.12.16 Why Ordinary Multiplication Fails
 
 Suppose we simply multiplied two vectors component by component.
 
@@ -11298,7 +11298,7 @@ ordinary multiplication is mathematically invalid for equivariant features.
 
 ---
 
-# 20.12.17 Tensor Products Preserve Symmetry
+## 20.12.17 Tensor Products Preserve Symmetry
 
 Instead,
 
@@ -11316,7 +11316,7 @@ This preserves exact equivariance.
 
 ---
 
-# 20.12.18 Conceptual Workflow
+## 20.12.18 Conceptual Workflow
 
 For every neighboring pair,
 
@@ -11342,7 +11342,7 @@ The spherical harmonics determine **how geometry influences the interaction**.
 
 ---
 
-# 20.12.19 Message Aggregation
+## 20.12.19 Message Aggregation
 
 Messages from all neighboring atoms are then summed.
 
@@ -11374,7 +11374,7 @@ Equivariance is preserved throughout the aggregation process.
 
 ---
 
-# 20.12.20 Multiple Interaction Layers
+## 20.12.20 Multiple Interaction Layers
 
 This process repeats layer after layer.
 
@@ -11406,7 +11406,7 @@ Each successive layer captures increasingly long-range geometric information.
 
 ---
 
-# 20.12.21 Learning Angular Correlations
+## 20.12.21 Learning Angular Correlations
 
 The first layer primarily learns local bond directions.
 
@@ -11421,7 +11421,7 @@ The network gradually builds an increasingly sophisticated geometric representat
 
 ---
 
-# 20.12.22 Example: Tetrahedral Environment
+## 20.12.22 Example: Tetrahedral Environment
 
 Consider silicon in diamond.
 
@@ -11447,7 +11447,7 @@ The network can therefore recognize this environment regardless of how the cryst
 
 ---
 
-# 20.12.23 Example: Octahedral Environment
+## 20.12.23 Example: Octahedral Environment
 
 Now consider an octahedral environment.
 
@@ -11471,7 +11471,7 @@ The spherical harmonic features immediately capture this difference.
 
 ---
 
-# 20.12.24 Why This Improves Learning
+## 20.12.24 Why This Improves Learning
 
 Since rotational symmetry is built directly into the architecture,
 
@@ -11490,7 +11490,7 @@ This greatly improves
 
 ---
 
-# 20.12.25 Connection to Modern Architectures
+## 20.12.25 Connection to Modern Architectures
 
 Although the implementation details differ,
 
@@ -11507,7 +11507,7 @@ spherical harmonics provide the angular information that guides message passing.
 
 ---
 
-# 20.12.26 Why Spherical Harmonics Are Indispensable
+## 20.12.26 Why Spherical Harmonics Are Indispensable
 
 Without spherical harmonics,
 
@@ -11530,7 +11530,7 @@ Spherical harmonics supply precisely the missing directional information.
 
 ---
 
-# 20.12.27 Key Takeaways
+## 20.12.27 Key Takeaways
 
 Spherical harmonics play a central role in equivariant message passing by encoding the **direction** of every interatomic bond. Combined with radial information and atomic features through symmetry-preserving tensor products, they enable messages to carry rich geometric information while remaining exactly equivariant under rotations.
 
@@ -11542,7 +11542,7 @@ This mechanism allows modern equivariant graph neural networks to learn local co
 
 We now understand the mathematical role of spherical harmonics and how they participate in equivariant message passing. The next step is practical implementation. In the following section, we will learn how **e3nn** computes real spherical harmonics directly from Cartesian neighbor vectors, explore the relevant API, explain the meaning of its parameters, and demonstrate the computation with Python code that forms the foundation of real-world equivariant graph neural network implementations.
 
-# 20.12.8 Implementing Spherical Harmonics with e3nn
+## 20.12.8 Implementing Spherical Harmonics with e3nn
 
 Up to this point, we have focused on the mathematical theory of spherical harmonics.
 
@@ -11564,7 +11564,7 @@ This section introduces the practical workflow for computing spherical harmonics
 
 ---
 
-# 20.12.9 Installing e3nn
+## 20.12.9 Installing e3nn
 
 The library can be installed using pip.
 
@@ -11582,7 +11582,7 @@ since e3nn is built directly on top of PyTorch.
 
 ---
 
-# 20.12.10 Importing Required Libraries
+## 20.12.10 Importing Required Libraries
 
 A typical program begins with
 
@@ -11608,7 +11608,7 @@ and many other SO(3)-related operations.
 
 ---
 
-# 20.12.11 Defining Neighbor Vectors
+## 20.12.11 Defining Neighbor Vectors
 
 Suppose we have three neighbor directions.
 
@@ -11628,7 +11628,7 @@ Notice that these vectors are still ordinary Cartesian coordinates.
 
 ---
 
-# 20.12.12 Why Cartesian Coordinates Are Enough
+## 20.12.12 Why Cartesian Coordinates Are Enough
 
 One remarkable feature of e3nn is that it **does not require the user to compute**
 
@@ -11646,7 +11646,7 @@ The user simply provides Cartesian vectors.
 
 ---
 
-# 20.12.13 Computing Spherical Harmonics
+## 20.12.13 Computing Spherical Harmonics
 
 The simplest computation is
 
@@ -11667,7 +11667,7 @@ l=2.
 
 ---
 
-# 20.12.14 Understanding the Arguments
+## 20.12.14 Understanding the Arguments
 
 The first argument is
 
@@ -11691,7 +11691,7 @@ Each value corresponds to one SO(3) irreducible representation.
 
 ---
 
-# 20.12.15 The Input Vectors
+## 20.12.15 The Input Vectors
 
 The argument
 
@@ -11717,7 +11717,7 @@ The function automatically interprets these as vectors in three-dimensional spac
 
 ---
 
-# 20.12.16 Normalization
+## 20.12.16 Normalization
 
 The option
 
@@ -11735,7 +11735,7 @@ This is precisely what spherical harmonics require.
 
 ---
 
-# 20.12.17 Component Normalization
+## 20.12.17 Component Normalization
 
 The argument
 
@@ -11757,7 +11757,7 @@ is widely used in equivariant neural networks because it interacts naturally wit
 
 ---
 
-# 20.12.18 Output Shape
+## 20.12.18 Output Shape
 
 Suppose
 
@@ -11791,7 +11791,7 @@ Each neighbor therefore produces five spherical harmonic coefficients.
 
 ---
 
-# 20.12.19 Example Output
+## 20.12.19 Example Output
 
 A simplified output might look like
 
@@ -11819,7 +11819,7 @@ Each column corresponds to one basis function.
 
 ---
 
-# 20.12.20 Computing Multiple Degrees
+## 20.12.20 Computing Multiple Degrees
 
 Modern equivariant GNNs usually use several degrees simultaneously.
 
@@ -11848,7 +11848,7 @@ The total feature dimension becomes
 
 ---
 
-# 20.12.21 Irreducible Representation Notation
+## 20.12.21 Irreducible Representation Notation
 
 Instead of writing
 
@@ -11874,7 +11874,7 @@ We will study irreps strings in detail later in this chapter.
 
 ---
 
-# 20.12.22 Visualizing the Output
+## 20.12.22 Visualizing the Output
 
 Conceptually,
 
@@ -11900,7 +11900,7 @@ Every neighbor direction becomes a structured set of symmetry-aware features.
 
 ---
 
-# 20.12.23 Batch Computation
+## 20.12.23 Batch Computation
 
 One major advantage of e3nn is that it processes many vectors simultaneously.
 
@@ -11925,7 +11925,7 @@ The computation remains fully vectorized and GPU-compatible.
 
 ---
 
-# 20.12.24 Using the Results in a Neural Network
+## 20.12.24 Using the Results in a Neural Network
 
 The spherical harmonic coefficients are rarely the final output.
 
@@ -11967,7 +11967,7 @@ is immediately consumed by subsequent equivariant layers.
 
 ---
 
-# 20.12.25 Why Researchers Use e3nn
+## 20.12.25 Why Researchers Use e3nn
 
 Although the mathematics of spherical harmonics is highly sophisticated,
 
@@ -11985,7 +11985,7 @@ This is one reason why e3nn has become the standard software framework for equiv
 
 ---
 
-# 20.12.26 Best Practices
+## 20.12.26 Best Practices
 
 When using spherical harmonics in practice, several guidelines are recommended:
 
@@ -11996,7 +11996,7 @@ When using spherical harmonics in practice, several guidelines are recommended:
 
 ---
 
-# 20.12.27 Complete Example
+## 20.12.27 Complete Example
 
 The following program demonstrates the complete workflow.
 
@@ -12027,7 +12027,7 @@ This code illustrates the core operation performed inside many equivariant graph
 
 ---
 
-# 20.12.28 Key Takeaways
+## 20.12.28 Key Takeaways
 
 The **e3nn** library provides an efficient and user-friendly implementation of real spherical harmonics, allowing researchers to compute symmetry-adapted angular features directly from Cartesian neighbor vectors. By handling coordinate transformations, normalization, and basis evaluation internally, e3nn removes the need to implement the underlying mathematics manually.
 
@@ -12039,7 +12039,7 @@ These computed spherical harmonic coefficients form the angular component of edg
 
 A practical design question remains: **How many spherical harmonics should a model use?** Using only low degrees may miss important angular information, while very high degrees increase computational cost and memory usage. In the next section, we will discuss the role of the maximum degree (l_{\text{max}}), its effect on model expressiveness, computational complexity, and accuracy, and examine how architectures such as **NequIP**, **Allegro**, and **MACE** choose appropriate values in practice.
 
-# 20.12.9 Choosing the Maximum Degree (l_{\text{max}})
+## 20.12.9 Choosing the Maximum Degree (l_{\text{max}})
 
 One of the first design decisions when building an equivariant graph neural network is choosing the **maximum spherical harmonic degree**, commonly written as
 
@@ -12057,7 +12057,7 @@ Choosing an appropriate value of (l_{\text{max}}) is therefore a balance between
 
 ---
 
-# 20.12.10 What is (l_{\text{max}})?
+## 20.12.10 What is (l_{\text{max}})?
 
 Recall that spherical harmonics exist for
 
@@ -12089,7 +12089,7 @@ but ignores
 
 ---
 
-# 20.12.11 Why Can We Truncate?
+## 20.12.11 Why Can We Truncate?
 
 In theory,
 
@@ -12113,7 +12113,7 @@ usually provides diminishing returns.
 
 ---
 
-# 20.12.12 Analogy with Image Resolution
+## 20.12.12 Analogy with Image Resolution
 
 Imagine looking at a photograph.
 
@@ -12147,7 +12147,7 @@ while larger values capture increasingly fine geometric details.
 
 ---
 
-# 20.12.13 Information Captured by Different Degrees
+## 20.12.13 Information Captured by Different Degrees
 
 Each value of
 
@@ -12169,7 +12169,7 @@ Higher degrees describe increasingly intricate atomic environments.
 
 ---
 
-# 20.12.14 Feature Dimension Growth
+## 20.12.14 Feature Dimension Growth
 
 Each degree contributes
 
@@ -12208,7 +12208,7 @@ Notice that the number of angular features grows quadratically.
 
 ---
 
-# 20.12.15 Computational Cost
+## 20.12.15 Computational Cost
 
 More spherical harmonic features mean
 
@@ -12247,7 +12247,7 @@ always increases computational cost.
 
 ---
 
-# 20.12.16 Accuracy vs. Efficiency
+## 20.12.16 Accuracy vs. Efficiency
 
 Choosing
 
@@ -12285,7 +12285,7 @@ The best choice depends on the complexity of the material system.
 
 ---
 
-# 20.12.17 Example: Simple Materials
+## 20.12.17 Example: Simple Materials
 
 For relatively simple materials,
 
@@ -12313,7 +12313,7 @@ These systems do not require extremely detailed angular descriptions.
 
 ---
 
-# 20.12.18 Example: Complex Materials
+## 20.12.18 Example: Complex Materials
 
 More challenging systems include
 
@@ -12342,7 +12342,7 @@ may provide measurable improvements.
 
 ---
 
-# 20.12.19 Diminishing Returns
+## 20.12.19 Diminishing Returns
 
 Increasing
 
@@ -12364,7 +12364,7 @@ This phenomenon is known as **diminishing returns**.
 
 ---
 
-# 20.12.20 Influence on Tensor Products
+## 20.12.20 Influence on Tensor Products
 
 Recall that tensor products combine irreducible representations.
 
@@ -12388,7 +12388,7 @@ the cost grows faster than the number of spherical harmonic features alone.
 
 ---
 
-# 20.12.21 Typical Values in Research
+## 20.12.21 Typical Values in Research
 
 Most published equivariant GNNs use surprisingly small values.
 
@@ -12413,7 +12413,7 @@ while the improvement often becomes marginal.
 
 ---
 
-# 20.12.22 Why Small Values Work
+## 20.12.22 Why Small Values Work
 
 At first,
 
@@ -12437,7 +12437,7 @@ the network gradually constructs highly complex geometric representations throug
 
 ---
 
-# 20.12.23 Interaction with Network Depth
+## 20.12.23 Interaction with Network Depth
 
 There are two ways to increase model capacity.
 
@@ -12481,7 +12481,7 @@ because this is computationally more efficient.
 
 ---
 
-# 20.12.24 Choosing (l_{\text{max}}) in Practice
+## 20.12.24 Choosing (l_{\text{max}}) in Practice
 
 When designing a new model,
 
@@ -12509,7 +12509,7 @@ This approach balances computational efficiency with predictive performance.
 
 ---
 
-# 20.12.25 Practical Example
+## 20.12.25 Practical Example
 
 Suppose we are predicting
 
@@ -12545,7 +12545,7 @@ may improve the description of local geometry.
 
 ---
 
-# 20.12.26 Summary of Trade-Offs
+## 20.12.26 Summary of Trade-Offs
 
 The influence of (l_{\text{max}}) can be summarized as follows.
 
@@ -12561,7 +12561,7 @@ Choosing the optimal value depends on the scientific problem, available computat
 
 ---
 
-# 20.12.27 Key Takeaways
+## 20.12.27 Key Takeaways
 
 The maximum spherical harmonic degree (l_{\text{max}}) determines the richness of angular information available to an equivariant graph neural network. Increasing (l_{\text{max}}) improves the model's ability to represent complex local geometries but also increases the number of spherical harmonic features, tensor-product operations, memory usage, and computational cost.
 
@@ -12573,7 +12573,7 @@ In practice, values between **1 and 3** are sufficient for most materials scienc
 
 Spherical harmonics provide an elegant and mathematically rigorous description of angular geometry, but they are not a complete solution on their own. They describe **direction** but not **distance**, and higher-order angular information quickly becomes computationally expensive. In the next section, we will examine the limitations of spherical harmonic representations, understand why radial basis functions and tensor products are also essential, and see how modern architectures such as **NequIP**, **Allegro**, and **MACE** overcome these challenges.
 
-# 20.12.10 Limitations of Spherical Harmonics
+## 20.12.10 Limitations of Spherical Harmonics
 
 Throughout this chapter, spherical harmonics have appeared as one of the central mathematical tools behind equivariant graph neural networks.
 
@@ -12593,7 +12593,7 @@ This section examines the major limitations of spherical harmonics and explains 
 
 ---
 
-# 20.12.11 Limitation 1 — Only Angular Information
+## 20.12.11 Limitation 1 — Only Angular Information
 
 The most important limitation is that spherical harmonics describe **direction**, not **distance**.
 
@@ -12617,7 +12617,7 @@ the spherical harmonic values remain exactly the same.
 
 ---
 
-# 20.12.12 Why Distance Matters
+## 20.12.12 Why Distance Matters
 
 Chemically,
 
@@ -12645,7 +12645,7 @@ Spherical harmonics cannot distinguish between them.
 
 ---
 
-# 20.12.13 Radial Basis Functions Solve This Problem
+## 20.12.13 Radial Basis Functions Solve This Problem
 
 Modern equivariant GNNs therefore separate geometry into two independent parts.
 
@@ -12669,7 +12669,7 @@ The final edge representation combines both.
 
 ---
 
-# 20.12.14 Complete Edge Representation
+## 20.12.14 Complete Edge Representation
 
 Conceptually,
 
@@ -12701,7 +12701,7 @@ This decomposition allows the network to model both radial and angular informati
 
 ---
 
-# 20.12.15 Limitation 2 — Local Information Only
+## 20.12.15 Limitation 2 — Local Information Only
 
 A spherical harmonic describes one bond direction.
 
@@ -12725,7 +12725,7 @@ but the complete coordination environment is not.
 
 ---
 
-# 20.12.16 Many-Body Geometry
+## 20.12.16 Many-Body Geometry
 
 Materials properties often depend on
 
@@ -12742,7 +12742,7 @@ Message passing is required to combine information from multiple neighbors.
 
 ---
 
-# 20.12.17 Limitation 3 — High Degrees Become Expensive
+## 20.12.17 Limitation 3 — High Degrees Become Expensive
 
 Recall that the number of basis functions grows as
 
@@ -12774,7 +12774,7 @@ both memory usage and computational cost grow rapidly.
 
 ---
 
-# 20.12.18 Tensor Product Complexity
+## 20.12.18 Tensor Product Complexity
 
 Higher-order spherical harmonics also increase the complexity of tensor products.
 
@@ -12796,7 +12796,7 @@ are rarely practical.
 
 ---
 
-# 20.12.19 Limitation 4 — No Learning
+## 20.12.19 Limitation 4 — No Learning
 
 Spherical harmonics are **fixed mathematical functions**.
 
@@ -12826,7 +12826,7 @@ the spherical harmonics contain no learnable parameters.
 
 ---
 
-# 20.12.20 Learning Occurs Elsewhere
+## 20.12.20 Learning Occurs Elsewhere
 
 The neural network learns through
 
@@ -12840,7 +12840,7 @@ Spherical harmonics simply provide a symmetry-preserving coordinate system.
 
 ---
 
-# 20.12.21 Limitation 5 — No Chemical Information
+## 20.12.21 Limitation 5 — No Chemical Information
 
 Suppose two bonds have identical geometry.
 
@@ -12866,7 +12866,7 @@ atomic embeddings are also necessary.
 
 ---
 
-# 20.12.22 Atomic Features
+## 20.12.22 Atomic Features
 
 Modern GNNs combine
 
@@ -12888,7 +12888,7 @@ The chemical identity of neighboring atoms contributes just as much as geometry.
 
 ---
 
-# 20.12.23 Limitation 6 — Sensitivity to Noise
+## 20.12.23 Limitation 6 — Sensitivity to Noise
 
 High-degree spherical harmonics vary rapidly with angle.
 
@@ -12910,7 +12910,7 @@ to relatively small values.
 
 ---
 
-# 20.12.24 Limitation 7 — No Long-Range Information
+## 20.12.24 Limitation 7 — No Long-Range Information
 
 Spherical harmonics describe only the immediate neighborhood.
 
@@ -12924,7 +12924,7 @@ These effects emerge only after multiple rounds of message passing or through ad
 
 ---
 
-# 20.12.25 Why Message Passing Is Essential
+## 20.12.25 Why Message Passing Is Essential
 
 Consider the following sequence.
 
@@ -12958,7 +12958,7 @@ repeated message passing gradually builds a representation of the entire crystal
 
 ---
 
-# 20.12.26 Modern Solution
+## 20.12.26 Modern Solution
 
 Current equivariant architectures combine several complementary ideas.
 
@@ -12990,7 +12990,7 @@ Each component addresses a limitation of the others.
 
 ---
 
-# 20.12.27 How Different Models Address These Limitations
+## 20.12.27 How Different Models Address These Limitations
 
 Different architectures emphasize different solutions.
 
@@ -13002,7 +13002,7 @@ Although their implementations differ, they all recognize that spherical harmoni
 
 ---
 
-# 20.12.28 Should We Increase (l_{\text{max}}) Instead?
+## 20.12.28 Should We Increase (l_{\text{max}}) Instead?
 
 A common misconception is that increasing
 
@@ -13025,7 +13025,7 @@ Most state-of-the-art models achieve their performance through a balanced combin
 
 ---
 
-# 20.12.29 Key Takeaways
+## 20.12.29 Key Takeaways
 
 Spherical harmonics provide an elegant and symmetry-preserving description of **bond directions**, but they represent only one component of the information needed for accurate materials modeling. They do not encode bond lengths, atomic identities, many-body interactions, or long-range effects, and higher-order harmonics quickly become computationally expensive.
 
@@ -13037,7 +13037,7 @@ Modern equivariant graph neural networks therefore combine spherical harmonics w
 
 We have now developed the mathematical foundation of spherical harmonics and understood both their strengths and limitations. The next step is to integrate everything we have learned into a complete equivariant neural network. In the next section, we will assemble the full pipeline—from atomic coordinates to spherical harmonics, radial basis functions, tensor products, equivariant message passing, and final property prediction—providing a unified view of how modern architectures such as **NequIP**, **Allegro**, and **MACE** operate end to end.
 
-# 20.12.11 From Mathematics to Complete Equivariant GNN Architectures
+## 20.12.11 From Mathematics to Complete Equivariant GNN Architectures
 
 At this point in the chapter, we have studied every major mathematical ingredient used in modern equivariant graph neural networks.
 
@@ -13060,7 +13060,7 @@ In this section, we assemble the complete architecture used by modern models suc
 
 ---
 
-# 20.12.12 The Big Picture
+## 20.12.12 The Big Picture
 
 Every equivariant graph neural network follows the same high-level workflow.
 
@@ -13104,7 +13104,7 @@ Although different architectures modify individual components, this overall pipe
 
 ---
 
-# 20.12.13 Step 1 — Crystal Structure
+## 20.12.13 Step 1 — Crystal Structure
 
 The input is a crystal.
 
@@ -13142,7 +13142,7 @@ The network begins only with atomic positions and atomic species.
 
 ---
 
-# 20.12.14 Step 2 — Graph Construction
+## 20.12.14 Step 2 — Graph Construction
 
 The crystal is converted into a graph.
 
@@ -13168,7 +13168,7 @@ Every atom connects only to nearby neighbors.
 
 ---
 
-# 20.12.15 Step 3 — Atomic Embeddings
+## 20.12.15 Step 3 — Atomic Embeddings
 
 Each atom is assigned an initial learnable feature vector.
 
@@ -13202,7 +13202,7 @@ These embeddings contain chemical information rather than geometric information.
 
 ---
 
-# 20.12.16 Step 4 — Neighbor Geometry
+## 20.12.16 Step 4 — Neighbor Geometry
 
 For every edge,
 
@@ -13224,7 +13224,7 @@ This separates radial and angular information.
 
 ---
 
-# 20.12.17 Step 5 — Radial Basis Functions
+## 20.12.17 Step 5 — Radial Basis Functions
 
 Distances are expanded using radial basis functions.
 
@@ -13248,7 +13248,7 @@ two atoms are.
 
 ---
 
-# 20.12.18 Step 6 — Spherical Harmonics
+## 20.12.18 Step 6 — Spherical Harmonics
 
 Directions are expanded using spherical harmonics.
 
@@ -13270,7 +13270,7 @@ where neighboring atoms are located.
 
 ---
 
-# 20.12.19 Step 7 — Edge Features
+## 20.12.19 Step 7 — Edge Features
 
 The radial and angular information are combined.
 
@@ -13292,7 +13292,7 @@ These edge features encode the complete local geometry of every bond.
 
 ---
 
-# 20.12.20 Step 8 — Equivariant Tensor Products
+## 20.12.20 Step 8 — Equivariant Tensor Products
 
 The edge features interact with atomic features through tensor products.
 
@@ -13312,7 +13312,7 @@ Tensor products ensure that every output transforms correctly under rotation.
 
 ---
 
-# 20.12.21 Step 9 — Message Passing
+## 20.12.21 Step 9 — Message Passing
 
 Neighboring atoms exchange information.
 
@@ -13332,7 +13332,7 @@ Every message respects rotational symmetry because all intermediate features are
 
 ---
 
-# 20.12.22 Step 10 — Multiple Layers
+## 20.12.22 Step 10 — Multiple Layers
 
 The message-passing process is repeated.
 
@@ -13358,7 +13358,7 @@ Atoms gradually acquire information from increasingly distant regions of the cry
 
 ---
 
-# 20.12.23 Step 11 — Global Pooling
+## 20.12.23 Step 11 — Global Pooling
 
 After the final message-passing layer,
 
@@ -13396,7 +13396,7 @@ The result is a single representation of the entire material.
 
 ---
 
-# 20.12.24 Step 12 — Property Prediction
+## 20.12.24 Step 12 — Property Prediction
 
 The pooled feature is passed through a prediction head.
 
@@ -13423,7 +13423,7 @@ Possible predictions include
 
 ---
 
-# 20.12.25 Where Equivariance Appears
+## 20.12.25 Where Equivariance Appears
 
 It is useful to identify where symmetry enters the architecture.
 
@@ -13455,7 +13455,7 @@ the entire network is exactly equivariant.
 
 ---
 
-# 20.12.26 Data Flow Through the Network
+## 20.12.26 Data Flow Through the Network
 
 The complete information flow can be summarized as
 
@@ -13503,7 +13503,7 @@ This is the computational backbone of nearly every modern equivariant graph neur
 
 ---
 
-# 20.12.27 Comparison with Ordinary GNNs
+## 20.12.27 Comparison with Ordinary GNNs
 
 The difference between conventional and equivariant GNNs becomes clear.
 
@@ -13519,7 +13519,7 @@ This built-in symmetry is the defining characteristic of equivariant models.
 
 ---
 
-# 20.12.28 Example: Predicting Formation Energy
+## 20.12.28 Example: Predicting Formation Energy
 
 Suppose we wish to predict the formation energy of silicon.
 
@@ -13561,7 +13561,7 @@ the predicted energy remains unchanged.
 
 ---
 
-# 20.12.29 Example: Predicting Atomic Forces
+## 20.12.29 Example: Predicting Atomic Forces
 
 Now consider force prediction.
 
@@ -13595,7 +13595,7 @@ No additional training is required.
 
 ---
 
-# 20.12.30 Why This Architecture Works So Well
+## 20.12.30 Why This Architecture Works So Well
 
 The remarkable success of modern equivariant GNNs comes from combining
 
@@ -13617,7 +13617,7 @@ This greatly improves
 
 ---
 
-# 20.12.31 Relationship Between Major Architectures
+## 20.12.31 Relationship Between Major Architectures
 
 Although implementations differ,
 
@@ -13636,7 +13636,7 @@ The differences lie primarily in how efficiently these components are implemente
 
 ---
 
-# 20.12.32 Key Takeaways
+## 20.12.32 Key Takeaways
 
 A modern equivariant graph neural network is much more than a collection of mathematical concepts. It is a carefully designed computational pipeline that transforms atomic coordinates into symmetry-aware representations through graph construction, radial basis functions, spherical harmonics, tensor products, and equivariant message passing before producing material property predictions.
 
@@ -13666,7 +13666,7 @@ Based on the structure you've developed, the next major section should begin the
 
 ---
 
-# 20.13.1 Introduction
+## 20.13.1 Introduction
 
 Throughout this chapter, we have repeatedly encountered the name **e3nn**.
 
@@ -13715,7 +13715,7 @@ because all of these models either directly use e3nn or implement the same under
 
 ---
 
-# 20.13.2 Why Was e3nn Created?
+## 20.13.2 Why Was e3nn Created?
 
 Before e3nn,
 
@@ -13741,7 +13741,7 @@ building an equivariant neural network from scratch required months of work.
 
 ---
 
-# 20.13.3 The Goal of e3nn
+## 20.13.3 The Goal of e3nn
 
 The creators of e3nn asked a simple question.
 
@@ -13764,7 +13764,7 @@ instead of complicated mathematics.
 
 ---
 
-# 20.13.4 PyTorch Analogy
+## 20.13.4 PyTorch Analogy
 
 Most readers are already familiar with PyTorch.
 
@@ -13796,7 +13796,7 @@ This dramatically simplifies implementation.
 
 ---
 
-# 20.13.5 Position of e3nn in the Software Stack
+## 20.13.5 Position of e3nn in the Software Stack
 
 The relationship between PyTorch and e3nn can be visualized as
 
@@ -13846,7 +13846,7 @@ and MACE build complete architectures using e3nn.
 
 ---
 
-# 20.13.6 What Does e3nn Provide?
+## 20.13.6 What Does e3nn Provide?
 
 The library contains many specialized components.
 
@@ -13870,7 +13870,7 @@ these components make it possible to construct highly expressive equivariant neu
 
 ---
 
-# 20.13.7 Core Philosophy
+## 20.13.7 Core Philosophy
 
 Unlike ordinary deep learning,
 
@@ -13906,7 +13906,7 @@ This difference explains why equivariant networks often require
 
 ---
 
-# 20.13.8 Relationship with This Book
+## 20.13.8 Relationship with This Book
 
 Everything learned in the previous chapter now becomes practical.
 
@@ -13938,7 +13938,7 @@ The correspondence is almost one-to-one.
 
 ---
 
-# 20.13.9 Learning Objectives
+## 20.13.9 Learning Objectives
 
 By the end of this chapter, you will be able to
 
@@ -13956,7 +13956,7 @@ Rather than treating e3nn as a "black box," you will understand the mathematical
 
 ---
 
-# 20.13.10 Chapter Roadmap
+## 20.13.10 Chapter Roadmap
 
 This chapter is organized as follows:
 
@@ -13981,7 +13981,7 @@ Each section builds directly on the mathematical concepts introduced in the prev
 
 Before we can build equivariant neural networks, we first need to install the required software environment. In the next section, we will install **PyTorch**, **e3nn**, and the supporting scientific Python packages, verify that the installation works correctly, and prepare a development environment suitable for research in materials informatics.
 
-# 20.13.2 Installing e3nn
+## 20.13.2 Installing e3nn
 
 Before building an equivariant neural network, we must first prepare a suitable software environment.
 
@@ -14000,7 +14000,7 @@ In this section, we will install the complete software stack required for develo
 
 ---
 
-# 20.13.3 Software Stack
+## 20.13.3 Software Stack
 
 The complete software environment consists of several layers.
 
@@ -14028,7 +14028,7 @@ Each layer depends on the one below it.
 
 ---
 
-# 20.13.4 Required Packages
+## 20.13.4 Required Packages
 
 For most research projects, the following Python packages are sufficient.
 
@@ -14045,7 +14045,7 @@ For most research projects, the following Python packages are sufficient.
 
 ---
 
-# 20.13.5 Python Version
+## 20.13.5 Python Version
 
 e3nn supports modern versions of Python.
 
@@ -14058,7 +14058,7 @@ Older versions may not support the latest releases of PyTorch or e3nn.
 
 ---
 
-# 20.13.6 Creating a Virtual Environment
+## 20.13.6 Creating a Virtual Environment
 
 It is strongly recommended to use a virtual environment.
 
@@ -14100,7 +14100,7 @@ Using isolated environments prevents dependency conflicts between projects.
 
 ---
 
-# 20.13.7 Installing PyTorch
+## 20.13.7 Installing PyTorch
 
 The first dependency is PyTorch.
 
@@ -14124,7 +14124,7 @@ The exact CUDA version depends on your graphics driver.
 
 ---
 
-# 20.13.8 Verifying PyTorch
+## 20.13.8 Verifying PyTorch
 
 Open Python.
 
@@ -14170,7 +14170,7 @@ although training will be slower.
 
 ---
 
-# 20.13.9 Installing e3nn
+## 20.13.9 Installing e3nn
 
 Installing e3nn is simple.
 
@@ -14182,7 +14182,7 @@ This automatically installs all required dependencies.
 
 ---
 
-# 20.13.10 Verifying e3nn
+## 20.13.10 Verifying e3nn
 
 Open Python.
 
@@ -14198,7 +14198,7 @@ the installation is successful.
 
 ---
 
-# 20.13.11 Importing the Main Module
+## 20.13.11 Importing the Main Module
 
 Most programs begin with
 
@@ -14224,7 +14224,7 @@ It includes
 
 ---
 
-# 20.13.12 Installing Scientific Libraries
+## 20.13.12 Installing Scientific Libraries
 
 Materials science projects usually require several additional libraries.
 
@@ -14241,7 +14241,7 @@ These libraries are used for
 
 ---
 
-# 20.13.13 Installing ASE
+## 20.13.13 Installing ASE
 
 The Atomic Simulation Environment (ASE) is widely used for handling atomic structures.
 
@@ -14258,7 +14258,7 @@ ASE supports
 
 ---
 
-# 20.13.14 Installing pymatgen
+## 20.13.14 Installing pymatgen
 
 Materials informatics almost always requires pymatgen.
 
@@ -14275,7 +14275,7 @@ This library allows us to
 
 ---
 
-# 20.13.15 Optional: Installing PyTorch Geometric
+## 20.13.15 Optional: Installing PyTorch Geometric
 
 Some equivariant architectures use PyTorch Geometric.
 
@@ -14293,7 +14293,7 @@ Consult the official PyTorch Geometric documentation if installation errors occu
 
 ---
 
-# 20.13.16 Recommended Development Environment
+## 20.13.16 Recommended Development Environment
 
 Although any Python IDE can be used,
 
@@ -14324,7 +14324,7 @@ Other popular choices include
 
 ---
 
-# 20.13.17 Checking the Complete Installation
+## 20.13.17 Checking the Complete Installation
 
 Run the following script.
 
@@ -14366,7 +14366,7 @@ This confirms that
 
 ---
 
-# 20.13.18 Common Installation Problems
+## 20.13.18 Common Installation Problems
 
 Several issues commonly arise.
 
@@ -14425,7 +14425,7 @@ pip install --upgrade torch e3nn
 
 ---
 
-# 20.13.19 Best Practices
+## 20.13.19 Best Practices
 
 For research projects,
 
@@ -14452,7 +14452,7 @@ file so that experiments can be reproduced easily.
 
 ---
 
-# 20.13.20 Software Stack for This Book
+## 20.13.20 Software Stack for This Book
 
 Throughout the remainder of this book,
 
@@ -14477,7 +14477,7 @@ will be introduced only when needed.
 
 ---
 
-# 20.13.21 Key Takeaways
+## 20.13.21 Key Takeaways
 
 Setting up the software environment for equivariant graph neural networks is relatively straightforward because **e3nn** is built directly on top of **PyTorch**. After installing PyTorch, e3nn, and the supporting scientific Python libraries, researchers gain access to efficient implementations of rotations, irreducible representations, spherical harmonics, tensor products, and other symmetry-aware operations.
 
@@ -14489,7 +14489,7 @@ Establishing a clean, reproducible development environment is an essential first
 
 With the software successfully installed, we are ready to explore the most fundamental abstraction in **e3nn**: the **Irreps** class. Almost every object in e3nn is described in terms of irreducible representations, making `Irreps` the language through which equivariant neural networks express symmetry. In the next section, we will learn how irreducible representations are encoded, interpret notation such as `0e`, `1o`, and `2e`, construct custom representation strings, and understand why these objects are central to every equivariant layer in e3nn.
 
-# 20.13.3 Understanding the `Irreps` Class
+## 20.13.3 Understanding the `Irreps` Class
 
 If there is one concept that every user of **e3nn** must understand, it is the **Irreps** class.
 
@@ -14511,7 +14511,7 @@ Understanding it thoroughly is essential before building any equivariant neural 
 
 ---
 
-# 20.13.4 What Does "Irreps" Mean?
+## 20.13.4 What Does "Irreps" Mean?
 
 The word **Irreps** is simply shorthand for
 
@@ -14537,7 +14537,7 @@ The `Irreps` class stores this information in a compact, machine-readable format
 
 ---
 
-# 20.13.5 Why Does e3nn Need Irreps?
+## 20.13.5 Why Does e3nn Need Irreps?
 
 In ordinary neural networks,
 
@@ -14569,7 +14569,7 @@ No information about symmetry is required.
 
 ---
 
-# 20.13.6 Equivariant Layers Need More Information
+## 20.13.6 Equivariant Layers Need More Information
 
 Equivariant layers must know not only
 
@@ -14607,7 +14607,7 @@ they cannot be treated identically inside an equivariant network.
 
 ---
 
-# 20.13.7 Irreps Describe Transformation Rules
+## 20.13.7 Irreps Describe Transformation Rules
 
 The purpose of `Irreps` is to describe exactly how every feature transforms.
 
@@ -14631,7 +14631,7 @@ e3nn stores the corresponding symmetry behavior.
 
 ---
 
-# 20.13.8 Creating an Irreps Object
+## 20.13.8 Creating an Irreps Object
 
 The simplest example is
 
@@ -14645,7 +14645,7 @@ This creates one scalar feature.
 
 ---
 
-# 20.13.9 Breaking Down the Notation
+## 20.13.9 Breaking Down the Notation
 
 The string
 
@@ -14669,7 +14669,7 @@ Each part has a precise meaning.
 
 ---
 
-# 20.13.10 Multiplicity
+## 20.13.10 Multiplicity
 
 The first number is the multiplicity.
 
@@ -14695,7 +14695,7 @@ five independent scalar features.
 
 ---
 
-# 20.13.11 Angular Degree
+## 20.13.11 Angular Degree
 
 The second number is
 
@@ -14731,7 +14731,7 @@ rank-2 tensor.
 
 ---
 
-# 20.13.12 Parity
+## 20.13.12 Parity
 
 The final letter indicates parity.
 
@@ -14757,7 +14757,7 @@ Parity determines how a quantity behaves under inversion.
 
 ---
 
-# 20.13.13 Even Parity
+## 20.13.13 Even Parity
 
 Suppose we invert coordinates.
 
@@ -14780,7 +14780,7 @@ Examples include
 
 ---
 
-# 20.13.14 Odd Parity
+## 20.13.14 Odd Parity
 
 An odd-parity quantity changes sign.
 
@@ -14795,7 +14795,7 @@ These vectors reverse direction after inversion.
 
 ---
 
-# 20.13.15 Examples
+## 20.13.15 Examples
 
 The following notation appears frequently.
 
@@ -14823,7 +14823,7 @@ One rank-2 tensor.
 
 ---
 
-# 20.13.16 Multiple Representations
+## 20.13.16 Multiple Representations
 
 Different irreducible representations can be combined.
 
@@ -14847,7 +14847,7 @@ The resulting feature set contains both types simultaneously.
 
 ---
 
-# 20.13.17 Larger Example
+## 20.13.17 Larger Example
 
 Consider
 
@@ -14865,7 +14865,7 @@ These become the hidden features of a neural network layer.
 
 ---
 
-# 20.13.18 Feature Dimensions
+## 20.13.18 Feature Dimensions
 
 Recall that an irrep of degree
 
@@ -14913,7 +14913,7 @@ Therefore,
 
 ---
 
-# 20.13.19 Computing Total Dimension
+## 20.13.19 Computing Total Dimension
 
 Suppose we have
 
@@ -14943,7 +14943,7 @@ Total dimension
 
 ---
 
-# 20.13.20 e3nn Can Compute This Automatically
+## 20.13.20 e3nn Can Compute This Automatically
 
 Fortunately,
 
@@ -14965,7 +14965,7 @@ The library automatically computes the total feature dimension.
 
 ---
 
-# 20.13.21 Printing an Irreps Object
+## 20.13.21 Printing an Irreps Object
 
 ```python id="irrep28"
 irreps = o3.Irreps("2x0e + 1x1o")
@@ -14983,7 +14983,7 @@ This representation appears throughout e3nn programs.
 
 ---
 
-# 20.13.22 Inspecting Individual Irreps
+## 20.13.22 Inspecting Individual Irreps
 
 Each component can also be accessed separately.
 
@@ -15004,7 +15004,7 @@ This is useful when constructing custom layers.
 
 ---
 
-# 20.13.23 Why Neural Networks Need Mixed Irreps
+## 20.13.23 Why Neural Networks Need Mixed Irreps
 
 Real materials contain
 
@@ -15036,7 +15036,7 @@ This rich feature space enables the network to model complex physical interactio
 
 ---
 
-# 20.13.24 Example from NequIP
+## 20.13.24 Example from NequIP
 
 A typical hidden representation in NequIP might look like
 
@@ -15058,7 +15058,7 @@ Such mixed representations allow the network to simultaneously learn
 
 ---
 
-# 20.13.25 Why Irreps Are Better Than Raw Tensors
+## 20.13.25 Why Irreps Are Better Than Raw Tensors
 
 Without irreducible representations,
 
@@ -15075,7 +15075,7 @@ This greatly simplifies both implementation and debugging.
 
 ---
 
-# 20.13.26 Key Takeaways
+## 20.13.26 Key Takeaways
 
 The **Irreps** class is the fundamental data structure of **e3nn**. Rather than storing only feature dimensions, it specifies **how every feature transforms under rotations and inversions**. Each representation is described by its multiplicity, angular degree (l), and parity, allowing equivariant layers to manipulate scalar, vector, and tensor features while rigorously preserving symmetry.
 
@@ -15087,7 +15087,7 @@ Understanding `Irreps` is essential because every equivariant layer, tensor prod
 
 Although we can now read an `Irreps` string, it is important to build deeper intuition for what each individual representation actually means. In the next section, we will examine the physical interpretation of **`0e`**, **`1o`**, **`2e`**, and higher-order irreducible representations, connect them to familiar quantities in physics and materials science, and understand why these representations naturally arise in equivariant neural networks.
 
-# 20.13.4 Understanding `0e`, `1o`, `2e`, and Higher-Order Irreducible Representations
+## 20.13.4 Understanding `0e`, `1o`, `2e`, and Higher-Order Irreducible Representations
 
 Although an **Irreps** string appears simple,
 
@@ -15107,7 +15107,7 @@ Understanding these representations is essential because they form the building 
 
 ---
 
-# 20.13.4.1 The Three Parts of an Irrep
+## 20.13.4.1 The Three Parts of an Irrep
 
 Every irreducible representation has the general form
 
@@ -15137,7 +15137,7 @@ The angular degree determines **how the object transforms under rotation**, whil
 
 ---
 
-# 20.13.4.2 The Simplest Representation: `0e`
+## 20.13.4.2 The Simplest Representation: `0e`
 
 The representation
 
@@ -15165,7 +15165,7 @@ a `0e` representation contains only one number.
 
 ---
 
-# 20.13.4.3 Physical Examples of `0e`
+## 20.13.4.3 Physical Examples of `0e`
 
 Many familiar material properties are scalars.
 
@@ -15201,7 +15201,7 @@ they belong to the `0e` representation.
 
 ---
 
-# 20.13.4.4 Why "e"?
+## 20.13.4.4 Why "e"?
 
 The letter
 
@@ -15241,7 +15241,7 @@ and density are all even-parity quantities.
 
 ---
 
-# 20.13.4.5 The `1o` Representation
+## 20.13.4.5 The `1o` Representation
 
 The next representation is
 
@@ -15275,7 +15275,7 @@ These three components transform together as a vector.
 
 ---
 
-# 20.13.4.6 Physical Examples of `1o`
+## 20.13.4.6 Physical Examples of `1o`
 
 Many quantities in materials science are vectors.
 
@@ -15292,7 +15292,7 @@ Each has three Cartesian components.
 
 ---
 
-# 20.13.4.7 Rotation of a `1o` Feature
+## 20.13.4.7 Rotation of a `1o` Feature
 
 Suppose a force vector points along
 
@@ -15312,7 +15312,7 @@ This behavior is exactly what the `1o` representation describes.
 
 ---
 
-# 20.13.4.8 Why "o"?
+## 20.13.4.8 Why "o"?
 
 The letter
 
@@ -15348,7 +15348,7 @@ and velocities are odd-parity quantities.
 
 ---
 
-# 20.13.4.9 The `2e` Representation
+## 20.13.4.9 The `2e` Representation
 
 The next commonly encountered representation is
 
@@ -15386,7 +15386,7 @@ they represent the independent degrees of freedom of a rank-2 tensor expressed i
 
 ---
 
-# 20.13.4.10 Physical Examples of `2e`
+## 20.13.4.10 Physical Examples of `2e`
 
 Rank-2 tensors appear frequently in materials science.
 
@@ -15402,7 +15402,7 @@ These quantities carry directional information that is richer than a simple vect
 
 ---
 
-# 20.13.4.11 Why Five Components?
+## 20.13.4.11 Why Five Components?
 
 A full (3\times3) matrix contains
 
@@ -15423,7 +15423,7 @@ These five components correspond exactly to the `2e` representation.
 
 ---
 
-# 20.13.4.12 Higher-Order Representations
+## 20.13.4.12 Higher-Order Representations
 
 The pattern continues naturally.
 
@@ -15445,7 +15445,7 @@ Each increase in (l) introduces more complex angular behavior.
 
 ---
 
-# 20.13.4.13 Physical Meaning of Higher Orders
+## 20.13.4.13 Physical Meaning of Higher Orders
 
 Higher-order irreducible representations describe increasingly complex directional structures.
 
@@ -15489,7 +15489,7 @@ the representation captures finer details of the local atomic environment.
 
 ---
 
-# 20.13.4.14 Relationship with Spherical Harmonics
+## 20.13.4.14 Relationship with Spherical Harmonics
 
 Recall that spherical harmonics satisfy
 
@@ -15526,7 +15526,7 @@ This connection explains why spherical harmonics naturally produce irreducible t
 
 ---
 
-# 20.13.4.15 Why Neural Networks Mix Different Irreps
+## 20.13.4.15 Why Neural Networks Mix Different Irreps
 
 A realistic material contains many types of information.
 
@@ -15560,7 +15560,7 @@ An equivariant neural network therefore combines several irreducible representat
 
 ---
 
-# 20.13.4.16 Example Hidden Representation
+## 20.13.4.16 Example Hidden Representation
 
 A hidden layer may use
 
@@ -15578,7 +15578,7 @@ Each type evolves according to its own transformation rules.
 
 ---
 
-# 20.13.4.17 Why Not Convert Everything to Scalars?
+## 20.13.4.17 Why Not Convert Everything to Scalars?
 
 One might ask why we do not simply convert every feature into a scalar.
 
@@ -15616,7 +15616,7 @@ Vector and tensor representations preserve this information.
 
 ---
 
-# 20.13.4.18 Summary Table
+## 20.13.4.18 Summary Table
 
 The most common irreducible representations encountered in materials science are summarized below.
 
@@ -15630,7 +15630,7 @@ The most common irreducible representations encountered in materials science are
 
 ---
 
-# 20.13.4.19 Key Takeaways
+## 20.13.4.19 Key Takeaways
 
 The symbols **`0e`**, **`1o`**, **`2e`**, and higher-order irreducible representations are compact descriptions of how different physical quantities transform under rotations and inversions. Scalars belong to `0e`, vectors to `1o`, and increasingly complex tensorial quantities correspond to higher values of (l). The dimension of each representation is always (2l+1), matching the number of spherical harmonics of the same degree.
 
@@ -15641,4 +15641,8216 @@ These irreducible representations provide the symmetry-aware feature types used 
 ## Transition to Section 20.13.5 — Constructing and Manipulating `Irreps` Objects in e3nn
 
 Now that we understand the physical meaning of the most common irreducible representations, we are ready to use them programmatically. In the next section, we will learn how to create, inspect, combine, simplify, and manipulate `Irreps` objects in **e3nn**, preparing us to define the input, hidden, and output representations of complete equivariant neural networks.
+
+## 20.13.5 Constructing and Manipulating `Irreps` Objects in e3nn
+
+Now that we understand what irreducible representations mean mathematically and physically, the next step is learning how to use them in **e3nn**.
+
+In practice, every equivariant neural network begins by defining the representations of its
+
+* input features,
+* hidden features,
+* output features.
+
+These representations are all stored as **`Irreps` objects**.
+
+This section introduces the most commonly used operations on `Irreps`, including construction, inspection, simplification, sorting, and combination.
+
+---
+
+## 20.13.5.1 Creating an `Irreps` Object
+
+The simplest way to construct an `Irreps` object is by using a string.
+
+```python
+from e3nn import o3
+
+irreps = o3.Irreps("1x0e")
+print(irreps)
+```
+
+Output
+
+```text
+1x0e
+```
+
+This object represents one scalar feature.
+
+---
+
+## 20.13.5.2 Multiple Scalars
+
+Suppose we have four independent scalar features.
+
+We write
+
+```python
+irreps = o3.Irreps("4x0e")
+print(irreps)
+```
+
+Output
+
+```text
+4x0e
+```
+
+These four scalars are independent but transform identically.
+
+---
+
+## 20.13.5.3 Creating Vector Features
+
+A vector representation is equally simple.
+
+```python
+irreps = o3.Irreps("1x1o")
+print(irreps)
+```
+
+Output
+
+```text
+1x1o
+```
+
+Since
+
+[
+l=1,
+]
+
+this representation contains three components.
+
+---
+
+## 20.13.5.4 Combining Different Representations
+
+Most neural networks contain several kinds of features.
+
+For example,
+
+```python
+irreps = o3.Irreps("2x0e + 1x1o")
+print(irreps)
+```
+
+Output
+
+```text
+2x0e+1x1o
+```
+
+This feature space contains
+
+* two scalar channels,
+* one vector channel.
+
+---
+
+## 20.13.5.5 A Larger Hidden Representation
+
+Hidden layers usually contain many representations.
+
+Example
+
+```python
+irreps = o3.Irreps(
+    "32x0e + 32x1o + 16x2e"
+)
+
+print(irreps)
+```
+
+Output
+
+```text
+32x0e+32x1o+16x2e
+```
+
+This is similar to the hidden representations used in modern equivariant GNNs.
+
+---
+
+## 20.13.5.6 Computing the Total Dimension
+
+Each representation contributes
+
+[
+2l+1
+]
+
+components.
+
+Fortunately,
+
+e3nn computes the total automatically.
+
+```python
+irreps = o3.Irreps(
+    "2x0e + 3x1o"
+)
+
+print(irreps.dim)
+```
+
+Output
+
+```text
+11
+```
+
+Calculation
+
+Scalars
+
+[
+2\times1=2
+]
+
+Vectors
+
+[
+3\times3=9
+]
+
+Total
+
+[
+2+9=11.
+]
+
+---
+
+## 20.13.5.7 Inspecting Individual Representations
+
+An `Irreps` object behaves like a collection.
+
+We can iterate through it.
+
+```python
+irreps = o3.Irreps(
+    "2x0e + 1x1o + 4x2e"
+)
+
+for mul, ir in irreps:
+    print(mul, ir)
+```
+
+Output
+
+```text
+2 0e
+1 1o
+4 2e
+```
+
+Each entry consists of
+
+* multiplicity,
+* irreducible representation.
+
+---
+
+## 20.13.5.8 Accessing Individual Elements
+
+Like a Python list,
+
+individual irreps can be accessed by index.
+
+```python
+irreps = o3.Irreps(
+    "2x0e + 1x1o + 4x2e"
+)
+
+print(irreps[0])
+print(irreps[1])
+```
+
+Output
+
+```text
+2x0e
+
+1x1o
+```
+
+---
+
+## 20.13.5.9 Length of an `Irreps` Object
+
+The number of distinct irreducible representations can be obtained using
+
+```python
+len(irreps)
+```
+
+Example
+
+```python
+irreps = o3.Irreps(
+    "2x0e + 1x1o + 4x2e"
+)
+
+print(len(irreps))
+```
+
+Output
+
+```text
+3
+```
+
+Notice that this is **not** the feature dimension.
+
+It is simply the number of different representation blocks.
+
+---
+
+## 20.13.5.10 Simplifying Representations
+
+Suppose we accidentally write
+
+```python
+irreps = o3.Irreps(
+    "1x0e + 2x0e"
+)
+```
+
+Mathematically,
+
+these can be combined.
+
+e3nn provides
+
+```python
+print(irreps.simplify())
+```
+
+Output
+
+```text
+3x0e
+```
+
+The library automatically merges identical representations.
+
+---
+
+## 20.13.5.11 Why Simplification Matters
+
+Large models often generate representation strings automatically.
+
+For example,
+
+tensor products may produce
+
+```text
+2x0e + 1x0e + 4x1o
+```
+
+instead of
+
+```text
+3x0e + 4x1o
+```
+
+Simplification makes the representation cleaner and more efficient.
+
+---
+
+## 20.13.5.12 Sorting Irreps
+
+Representations may also appear in arbitrary order.
+
+Example
+
+```python
+irreps = o3.Irreps(
+    "1x2e + 4x0e + 2x1o"
+)
+```
+
+Using
+
+```python
+print(irreps.sort())
+```
+
+orders the irreps consistently, typically by degree and parity. This produces a canonical arrangement that makes models easier to read and compare.
+
+---
+
+## 20.13.5.13 Equality Comparison
+
+Two representation objects can be compared.
+
+```python
+a = o3.Irreps("4x0e")
+b = o3.Irreps("4x0e")
+
+print(a == b)
+```
+
+Output
+
+```text
+True
+```
+
+This is useful when verifying model architectures.
+
+---
+
+## 20.13.5.14 Constructing from Individual Irreps
+
+Instead of using strings,
+
+we can also build representations programmatically.
+
+```python
+scalar = o3.Irrep("0e")
+vector = o3.Irrep("1o")
+
+print(scalar)
+print(vector)
+```
+
+Output
+
+```text
+0e
+
+1o
+```
+
+This approach is convenient when generating representations dynamically.
+
+---
+
+## 20.13.5.15 Multiplying Representations
+
+Multiplicities can be created programmatically.
+
+```python
+irreps = 16 * o3.Irrep("1o")
+
+print(irreps)
+```
+
+Output
+
+```text
+16x1o
+```
+
+This notation is frequently used when constructing large hidden layers.
+
+---
+
+## 20.13.5.16 Typical Hidden Layer
+
+A realistic equivariant layer might be defined as
+
+```python
+hidden_irreps = o3.Irreps(
+    "64x0e + 64x1o + 32x2e"
+)
+```
+
+This representation tells the network to maintain
+
+* 64 scalar channels,
+* 64 vector channels,
+* 32 second-order tensor channels.
+
+Every subsequent equivariant layer must respect this symmetry structure.
+
+---
+
+## 20.13.5.17 Why `Irreps` Replace Feature Dimensions
+
+In conventional neural networks,
+
+we specify only the number of neurons.
+
+```python
+torch.nn.Linear(128, 256)
+```
+
+In e3nn,
+
+we instead specify
+
+```python
+o3.Linear(
+    "32x0e + 32x1o",
+    "64x0e + 32x1o"
+)
+```
+
+The layer now knows both
+
+* **how many features exist**, and
+* **how every feature transforms**.
+
+This additional information is what enables exact equivariance.
+
+---
+
+## 20.13.5.18 Common Representation Patterns
+
+Many equivariant architectures repeatedly use a small set of representation layouts.
+
+| Representation                   | Interpretation                |
+| -------------------------------- | ----------------------------- |
+| `64x0e`                          | Scalar-only hidden layer      |
+| `64x0e + 64x1o`                  | Scalars and vectors           |
+| `64x0e + 64x1o + 32x2e`          | Scalars, vectors, and tensors |
+| `128x0e + 64x1o + 32x2e + 16x3o` | Rich high-order feature space |
+
+As models become more expressive, higher-order irreps are introduced.
+
+---
+
+## 20.13.5.19 Best Practices
+
+When designing equivariant neural networks,
+
+it is generally recommended to:
+
+* begin with scalar and vector features (`0e` and `1o`),
+* introduce `2e` features only when additional angular expressiveness is needed,
+* simplify representations whenever possible,
+* keep representation strings readable and well documented,
+* balance expressiveness against computational cost.
+
+Modern architectures rarely rely on extremely high-order irreps because the computational complexity grows rapidly.
+
+---
+
+## 20.13.5.20 Key Takeaways
+
+The `Irreps` class is far more than a convenient way to store feature dimensions—it is the central abstraction that defines the symmetry structure of an equivariant neural network. By constructing, inspecting, simplifying, and combining `Irreps` objects, we specify not only how many features a layer contains but also exactly how those features transform under rotations and inversions.
+
+Mastering the manipulation of `Irreps` is therefore an essential step toward building complete equivariant architectures with **e3nn**.
+
+---
+
+## Transition to Section 20.13.6 — The `Irrep` Class: Understanding Individual Representations
+
+So far, we have worked with **collections** of irreducible representations using the `Irreps` class. However, each collection is composed of individual building blocks represented by the `Irrep` class. In the next section, we will examine single irreducible representations in detail, learn how to access their mathematical properties such as angular degree, parity, and dimension, and understand how e3nn uses these objects internally when constructing equivariant layers and tensor products.
+
+## 20.13.6 The `Irrep` Class: Understanding Individual Representations
+
+In the previous section, we learned how the **`Irreps`** class represents an entire collection of irreducible representations.
+
+For example,
+
+```python
+o3.Irreps("32x0e + 32x1o + 16x2e")
+```
+
+describes a complete feature space.
+
+However, every `Irreps` object is composed of **individual irreducible representations**, each represented by the **`Irrep`** class.
+
+Understanding the `Irrep` class is important because many operations in **e3nn**—including tensor products, rotation matrices, and equivariant linear layers—operate on individual irreducible representations.
+
+---
+
+## 20.13.6.1 `Irrep` vs `Irreps`
+
+Although their names are similar, they serve different purposes.
+
+| Class    | Represents                                  |
+| -------- | ------------------------------------------- |
+| `Irrep`  | A single irreducible representation         |
+| `Irreps` | A collection of irreducible representations |
+
+For example,
+
+```python
+from e3nn import o3
+
+ir = o3.Irrep("1o")
+```
+
+creates a **single vector representation**.
+
+In contrast,
+
+```python
+irreps = o3.Irreps("2x0e + 1x1o")
+```
+
+creates a collection containing
+
+* two scalar representations,
+* one vector representation.
+
+---
+
+## 20.13.6.2 Creating an `Irrep`
+
+The constructor is very simple.
+
+```python
+from e3nn import o3
+
+scalar = o3.Irrep("0e")
+vector = o3.Irrep("1o")
+tensor = o3.Irrep("2e")
+```
+
+Printing them gives
+
+```python
+print(scalar)
+print(vector)
+print(tensor)
+```
+
+Output
+
+```text
+0e
+1o
+2e
+```
+
+---
+
+## 20.13.6.3 Angular Degree
+
+Each `Irrep` stores its angular degree.
+
+```python
+vector = o3.Irrep("1o")
+
+print(vector.l)
+```
+
+Output
+
+```text
+1
+```
+
+Similarly,
+
+```python
+tensor = o3.Irrep("2e")
+
+print(tensor.l)
+```
+
+Output
+
+```text
+2
+```
+
+This corresponds directly to the value of
+
+[
+l
+]
+
+introduced in Chapter 20.
+
+---
+
+## 20.13.6.4 Parity
+
+The parity can also be accessed.
+
+```python
+vector = o3.Irrep("1o")
+
+print(vector.p)
+```
+
+Output
+
+```text
+-1
+```
+
+Odd parity is represented internally by
+
+[
+-1.
+]
+
+For an even representation,
+
+```python
+scalar = o3.Irrep("0e")
+
+print(scalar.p)
+```
+
+Output
+
+```text
+1
+```
+
+Thus,
+
+| Symbol | Internal Value |
+| ------ | -------------- |
+| `e`    | +1             |
+| `o`    | -1             |
+
+---
+
+## 20.13.6.5 Dimension
+
+Every irreducible representation has a fixed dimension.
+
+The dimension is computed automatically.
+
+```python
+vector = o3.Irrep("1o")
+
+print(vector.dim)
+```
+
+Output
+
+```text
+3
+```
+
+For a second-order representation,
+
+```python
+tensor = o3.Irrep("2e")
+
+print(tensor.dim)
+```
+
+Output
+
+```text
+5
+```
+
+This follows the familiar formula
+
+[
+\boxed{\text{dimension}=2l+1}
+]
+
+The correspondence is
+
+| Irrep | Dimension |
+| ----- | --------: |
+| `0e`  |         1 |
+| `1o`  |         3 |
+| `2e`  |         5 |
+| `3o`  |         7 |
+| `4e`  |         9 |
+
+---
+
+## 20.13.6.6 String Representation
+
+Every `Irrep` can be converted back into its symbolic notation.
+
+```python
+ir = o3.Irrep("2e")
+
+print(str(ir))
+```
+
+Output
+
+```text
+2e
+```
+
+This makes debugging and logging much easier.
+
+---
+
+## 20.13.6.7 Equality
+
+Different irreducible representations can be compared.
+
+```python
+a = o3.Irrep("1o")
+b = o3.Irrep("1o")
+c = o3.Irrep("2e")
+
+print(a == b)
+print(a == c)
+```
+
+Output
+
+```text
+True
+False
+```
+
+This is useful when constructing custom equivariant layers.
+
+---
+
+## 20.13.6.8 Iterating Through an `Irreps` Object
+
+Recall that an `Irreps` object is simply a list of individual `Irrep` objects.
+
+For example,
+
+```python
+irreps = o3.Irreps("2x0e + 1x1o + 3x2e")
+
+for mul, ir in irreps:
+    print(mul, ir)
+```
+
+Output
+
+```text
+2 0e
+1 1o
+3 2e
+```
+
+Notice that the second value in each pair is an `Irrep`.
+
+---
+
+## 20.13.6.9 Constructing an `Irreps` Object from `Irrep`
+
+Individual representations can be assembled into a collection.
+
+```python
+scalar = o3.Irrep("0e")
+vector = o3.Irrep("1o")
+
+irreps = o3.Irreps([
+    (2, scalar),
+    (1, vector)
+])
+
+print(irreps)
+```
+
+Output
+
+```text
+2x0e+1x1o
+```
+
+This programmatic construction is often used when architectures are generated automatically.
+
+---
+
+## 20.13.6.10 Why Individual `Irrep` Objects Matter
+
+Many mathematical operations are defined **between individual irreducible representations**.
+
+For example,
+
+tensor products do **not** operate on an entire `Irreps` object at once.
+
+Instead, they combine one `Irrep` with another.
+
+Conceptually,
+
+```text
+1o
+
+×
+
+1o
+
+↓
+
+0e + 1e + 2e
+```
+
+Thus, understanding individual representations is essential before studying tensor products.
+
+---
+
+## 20.13.6.11 Connection with Physics
+
+Each `Irrep` corresponds to a familiar physical quantity.
+
+| `Irrep` | Physical Example                      |
+| ------- | ------------------------------------- |
+| `0e`    | Energy, temperature                   |
+| `1o`    | Force, velocity, position             |
+| `2e`    | Quadrupole moment, anisotropic stress |
+| `3o`    | Higher-order multipole tensors        |
+
+This direct correspondence is one reason equivariant neural networks are particularly well suited to modeling physical systems.
+
+---
+
+## 20.13.6.12 How e3nn Uses `Irrep`
+
+Internally, many components of **e3nn** accept `Irrep` objects as arguments.
+
+Examples include
+
+* tensor products,
+* rotation matrices,
+* Wigner D-matrices,
+* spherical harmonics,
+* equivariant kernels.
+
+By using `Irrep` objects rather than plain integers, e3nn can automatically enforce the correct symmetry rules.
+
+---
+
+## 20.13.6.13 Best Practices
+
+When working with e3nn:
+
+* Use `Irrep` when dealing with a **single** representation.
+* Use `Irreps` when describing the **full feature space** of a layer.
+* Access `.l`, `.p`, and `.dim` instead of computing these values manually.
+* Let e3nn handle the representation bookkeeping whenever possible.
+
+These practices reduce errors and make code easier to maintain.
+
+---
+
+## 20.13.6.14 Key Takeaways
+
+The **`Irrep`** class represents a single irreducible representation characterized by its angular degree (l), parity, and dimension. It is the fundamental building block from which `Irreps` objects are constructed. By exposing properties such as `.l`, `.p`, and `.dim`, e3nn provides a convenient and mathematically consistent interface for working with symmetry-aware features.
+
+While `Irreps` describes an entire feature space, `Irrep` captures the behavior of one individual representation. Many core operations in equivariant neural networks—including tensor products and rotation operators—are defined at this level.
+
+---
+
+## Transition to Section 20.13.7 — Rotation Matrices in e3nn
+
+Now that we understand how e3nn represents symmetry through `Irrep` and `Irreps`, we are ready to see these representations in action. In the next section, we will learn how to generate rotation matrices, apply rotations to vectors and higher-order tensors, and use e3nn's built-in rotation operators to verify the equivariance properties that form the foundation of modern equivariant graph neural networks.
+
+## 20.13.7 Rotation Matrices in e3nn
+
+The defining property of an equivariant neural network is its ability to handle **rotations** correctly.
+
+If the input crystal is rotated, the network should transform its internal features according to the mathematical rules of the rotation group.
+
+To achieve this, **e3nn** provides efficient implementations of rotation matrices for every irreducible representation.
+
+Unlike ordinary 3×3 rotation matrices, e3nn can generate rotation operators for
+
+* scalars,
+* vectors,
+* rank-2 tensors,
+* higher-order tensors.
+
+These operators form the mathematical backbone of every equivariant layer.
+
+---
+
+## 20.13.7.1 Why Do We Need Rotation Matrices?
+
+Suppose we rotate a crystal by 90°.
+
+```text id="rot1"
+Original Crystal
+
+↓
+
+Rotate
+
+↓
+
+New Crystal
+```
+
+If our neural network truly respects rotational symmetry,
+
+its internal features must rotate appropriately.
+
+Without mathematically correct rotation operators, equivariance cannot be guaranteed.
+
+---
+
+## 20.13.7.2 Ordinary Rotation Matrix
+
+In classical linear algebra, a three-dimensional rotation is represented by a
+
+[
+3\times3
+]
+
+matrix.
+
+For a vector
+
+[
+\mathbf{v},
+]
+
+the rotated vector is
+
+[
+\boxed{\mathbf{v}'=R\mathbf{v}}
+]
+
+where
+
+* (R) is the rotation matrix,
+* (\mathbf{v}) is the original vector,
+* (\mathbf{v}') is the rotated vector.
+
+This familiar equation corresponds to the **(l=1)** irreducible representation.
+
+---
+
+## 20.13.7.3 Beyond Ordinary Vectors
+
+A standard rotation matrix works only for vectors.
+
+However, equivariant neural networks also manipulate
+
+* scalars,
+* tensors,
+* spherical harmonic coefficients,
+* higher-order features.
+
+Each of these requires its own rotation operator.
+
+For example,
+
+```text id="rot2"
+Scalar
+
+↓
+
+1×1 Matrix
+```
+
+```text id="rot3"
+Vector
+
+↓
+
+3×3 Matrix
+```
+
+```text id="rot4"
+Rank-2 Tensor
+
+↓
+
+5×5 Matrix
+```
+
+The matrix size depends on the irreducible representation.
+
+---
+
+## 20.13.7.4 Rotation Operators in e3nn
+
+The `Irrep` class provides a method for constructing the appropriate rotation matrix.
+
+The general workflow is
+
+```text id="rot5"
+Rotation
+
+↓
+
+Irrep
+
+↓
+
+Rotation Matrix
+```
+
+The resulting matrix has the correct dimension for that representation.
+
+---
+
+## 20.13.7.5 Euler Angles
+
+Most rotations in e3nn are parameterized by three Euler angles.
+
+```text id="rot6"
+α
+
+β
+
+γ
+```
+
+These correspond to three successive rotations.
+
+Mathematically,
+
+[
+R(\alpha,\beta,\gamma)
+]
+
+defines a unique element of the rotation group SO(3).
+
+---
+
+## 20.13.7.6 Creating Euler Angles
+
+For example,
+
+```python id="rot7"
+import torch
+
+alpha = torch.tensor(0.2)
+beta = torch.tensor(1.0)
+gamma = torch.tensor(0.5)
+```
+
+These three angles completely define a rotation.
+
+---
+
+## 20.13.7.7 Rotation Matrix for a Vector
+
+Create a vector representation.
+
+```python id="rot8"
+from e3nn import o3
+
+ir = o3.Irrep("1o")
+```
+
+Construct its rotation matrix.
+
+```python id="rot9"
+D = ir.D_from_angles(
+    alpha,
+    beta,
+    gamma
+)
+
+print(D.shape)
+```
+
+Output
+
+```text id="rot10"
+torch.Size([3, 3])
+```
+
+This is the familiar vector rotation matrix.
+
+---
+
+## 20.13.7.8 Rotation Matrix for a Scalar
+
+Now consider
+
+```python id="rot11"
+ir = o3.Irrep("0e")
+
+D = ir.D_from_angles(
+    alpha,
+    beta,
+    gamma
+)
+
+print(D)
+```
+
+Output
+
+```text id="rot12"
+[[1.]]
+```
+
+A scalar is unchanged by rotation.
+
+Therefore,
+
+its rotation operator is simply
+
+[
+1.
+]
+
+---
+
+## 20.13.7.9 Rotation Matrix for a Rank-2 Tensor
+
+For
+
+```python id="rot13"
+ir = o3.Irrep("2e")
+```
+
+the rotation matrix becomes
+
+```python id="rot14"
+D = ir.D_from_angles(
+    alpha,
+    beta,
+    gamma
+)
+
+print(D.shape)
+```
+
+Output
+
+```text id="rot15"
+torch.Size([5, 5])
+```
+
+The five tensor components rotate together.
+
+---
+
+## 20.13.7.10 General Rule
+
+The rotation matrix dimension always equals
+
+[
+2l+1.
+]
+
+| Irrep | Matrix Size |
+| ----- | ----------- |
+| `0e`  | 1×1         |
+| `1o`  | 3×3         |
+| `2e`  | 5×5         |
+| `3o`  | 7×7         |
+| `4e`  | 9×9         |
+
+---
+
+## 20.13.7.11 Rotating Features
+
+Suppose we have a vector feature.
+
+```python id="rot16"
+x = torch.randn(3)
+```
+
+After computing the rotation matrix,
+
+we simply multiply.
+
+```python id="rot17"
+x_rot = D @ x
+```
+
+The resulting vector is the rotated version of the original feature.
+
+---
+
+## 20.13.7.12 Rotation Preserves Geometry
+
+Although the coordinates change,
+
+the physical object remains identical.
+
+Conceptually,
+
+```text id="rot18"
+Original Vector
+
+↓
+
+Rotate
+
+↓
+
+Same Physical Quantity
+```
+
+This distinction between **coordinates** and **physical meaning** is central to equivariant deep learning.
+
+---
+
+## 20.13.7.13 Wigner D-Matrices
+
+The matrices produced by
+
+```python id="rot19"
+D_from_angles()
+```
+
+are known mathematically as
+
+**Wigner D-matrices**.
+
+They are the irreducible matrix representations of the rotation group SO(3).
+
+Each angular degree
+
+[
+l
+]
+
+has its own Wigner D-matrix.
+
+These matrices satisfy
+
+[
+D^{(l)}(R_1R_2)
+===============
+
+D^{(l)}(R_1)
+D^{(l)}(R_2),
+]
+
+which ensures that successive rotations compose correctly.
+
+---
+
+## 20.13.7.14 Why Wigner D-Matrices Matter
+
+Because Wigner D-matrices obey the representation laws of SO(3),
+
+they guarantee that every feature transforms exactly as required.
+
+Without these matrices,
+
+equivariant neural networks would lose their mathematical correctness.
+
+---
+
+## 20.13.7.15 Rotating Hidden Features
+
+During training,
+
+hidden features are continuously transformed.
+
+Conceptually,
+
+```text id="rot20"
+Hidden Features
+
+↓
+
+Rotation Matrix
+
+↓
+
+Rotated Hidden Features
+```
+
+This operation occurs repeatedly throughout the network.
+
+---
+
+## 20.13.7.16 Equivariance Test
+
+Suppose a neural network is represented by
+
+[
+f.
+]
+
+A rotation
+
+[
+R
+]
+
+is applied to the input.
+
+The network should satisfy
+
+[
+\boxed{
+f(Rx)
+=====
+
+D(R),f(x)
+}
+]
+
+where
+
+* (R) rotates the input,
+* (D(R)) rotates the output representation.
+
+This equation is the defining property of equivariance.
+
+---
+
+## 20.13.7.17 Visual Interpretation
+
+Imagine a force vector attached to an atom.
+
+```text id="rot21"
+Atom
+
+→ Force
+```
+
+After rotating the crystal,
+
+both the atom and the force rotate together.
+
+The network's internal representation must reproduce exactly the same transformation.
+
+---
+
+## 20.13.7.18 Why e3nn Handles Rotations Automatically
+
+Fortunately,
+
+users rarely need to derive Wigner D-matrices manually.
+
+The library computes them internally using efficient numerical algorithms.
+
+Researchers therefore interact with simple functions such as
+
+```python id="rot22"
+D_from_angles()
+```
+
+while e3nn handles all of the underlying representation theory.
+
+---
+
+## 20.13.7.19 Practical Importance
+
+Rotation matrices are used throughout e3nn.
+
+They appear in
+
+* spherical harmonics,
+* tensor products,
+* equivariant convolutions,
+* message passing,
+* nonlinear equivariant layers.
+
+Nearly every advanced operation depends on them.
+
+---
+
+## 20.13.7.20 Key Takeaways
+
+Rotation matrices are the mathematical mechanism that allows equivariant neural networks to respect the rotational symmetry of three-dimensional space. While ordinary linear algebra uses a single 3×3 rotation matrix for vectors, e3nn generalizes this concept by generating **Wigner D-matrices** for every irreducible representation. The size of each matrix is determined by (2l+1), allowing scalars, vectors, and higher-order tensors to transform according to the correct symmetry rules.
+
+These rotation operators are used throughout e3nn and provide the foundation upon which spherical harmonics, tensor products, and equivariant message passing are built.
+
+
+
+## Transition to Section 20.13.8 — Wigner D-Matrices: The Mathematics Behind Rotations
+
+## 20.13.8.1 From Ordinary Rotations to Wigner D-Matrices
+
+Most students first encounter rotations using the familiar **3 × 3** rotation matrix.
+
+For example,
+
+[
+\mathbf{v}' = R\mathbf{v}
+]
+
+where
+
+* (R) is a rotation matrix,
+* (\mathbf{v}) is a vector.
+
+This works perfectly for vectors because vectors belong to the
+
+[
+l=1
+]
+
+representation.
+
+But what about
+
+* scalars?
+* tensors?
+* spherical harmonics?
+* higher-order features?
+
+Each of these requires its own rotation operator.
+
+This is exactly what Wigner D-matrices provide.
+
+---
+
+## 20.13.8.2 One Matrix for Every Angular Degree
+
+For every value of
+
+[
+l,
+]
+
+there exists a corresponding Wigner D-matrix
+
+[
+D^{(l)}(R).
+]
+
+Examples include
+
+| Angular Degree | Matrix    |
+| -------------- | --------- |
+| (l=0)          | (D^{(0)}) |
+| (l=1)          | (D^{(1)}) |
+| (l=2)          | (D^{(2)}) |
+| (l=3)          | (D^{(3)}) |
+
+Each matrix rotates one specific type of irreducible representation.
+
+---
+
+## 20.13.8.3 Matrix Dimensions
+
+The size of every Wigner D-matrix follows the familiar rule
+
+[
+2l+1.
+]
+
+Therefore,
+
+| (l) | Matrix Size |
+| --- | ----------- |
+| 0   | 1 × 1       |
+| 1   | 3 × 3       |
+| 2   | 5 × 5       |
+| 3   | 7 × 7       |
+| 4   | 9 × 9       |
+
+These are exactly the dimensions used by the `Irrep` class in e3nn.
+
+---
+
+## 20.13.8.4 Example: Scalar Rotation
+
+For
+
+[
+l=0,
+]
+
+the Wigner D-matrix is simply
+
+[
+D^{(0)}=[1].
+]
+
+A scalar never changes under rotation.
+
+Examples include
+
+* total energy,
+* temperature,
+* band gap.
+
+---
+
+## 20.13.8.5 Example: Vector Rotation
+
+For
+
+[
+l=1,
+]
+
+the Wigner D-matrix is the familiar
+
+[
+3\times3
+]
+
+rotation matrix.
+
+This rotates
+
+* forces,
+* velocities,
+* positions,
+* electric fields.
+
+Thus,
+
+ordinary vector rotations are simply a special case of Wigner D-matrices.
+
+---
+
+## 20.13.8.6 Example: Rank-2 Tensor Rotation
+
+For
+
+[
+l=2,
+]
+
+the Wigner D-matrix becomes
+
+[
+5\times5.
+]
+
+Instead of rotating Cartesian coordinates,
+
+this matrix rotates the five components of an irreducible rank-2 tensor.
+
+These tensors appear naturally in
+
+* quadrupole moments,
+* anisotropic charge distributions,
+* crystal field interactions,
+* higher-order geometric descriptors.
+
+---
+
+## 20.13.8.7 Why Ordinary Rotation Matrices Are Not Enough
+
+Suppose we try to rotate a rank-2 tensor using a standard
+
+[
+3\times3
+]
+
+matrix.
+
+The dimensions no longer match.
+
+The tensor contains
+
+five irreducible components,
+
+not three.
+
+A different representation is therefore required.
+
+The Wigner D-matrix provides exactly this higher-dimensional rotation operator.
+
+---
+
+## 20.13.8.8 Group Representation Property
+
+The most important mathematical property of Wigner D-matrices is that they form a **representation** of the rotation group.
+
+If two rotations
+
+[
+R_1
+]
+
+and
+
+[
+R_2
+]
+
+are applied successively,
+
+then
+
+[
+\boxed{
+D^{(l)}(R_1R_2)
+===============
+
+D^{(l)}(R_1)
+D^{(l)}(R_2)
+}
+]
+
+This means that matrix multiplication mirrors the composition of physical rotations.
+
+This property is essential for maintaining equivariance throughout a neural network.
+
+---
+
+## 20.13.8.9 Orthogonality
+
+Wigner D-matrices are orthogonal (for the real representations used in e3nn).
+
+This implies
+
+[
+D^{-1}=D^{T}.
+]
+
+Rotating a feature and then applying the inverse rotation returns the original feature.
+
+Consequently, no information is lost during rotation.
+
+---
+
+## 20.13.8.10 Connection with Spherical Harmonics
+
+One of the most beautiful results in representation theory is that spherical harmonics transform according to Wigner D-matrices.
+
+If the coordinates are rotated,
+
+the spherical harmonics satisfy
+
+[
+Y_l^m(R\mathbf{x})
+==================
+
+\sum_{m'}
+D^{(l)}_{mm'}(R)
+Y_l^{m'}(\mathbf{x}).
+]
+
+This equation explains why
+
+* spherical harmonics,
+* irreducible representations,
+* Wigner D-matrices,
+
+are inseparable in equivariant neural networks.
+
+---
+
+## 20.13.8.11 Role in e3nn
+
+Whenever e3nn rotates an equivariant feature,
+
+it internally computes the appropriate Wigner D-matrix.
+
+For example,
+
+```python
+ir = o3.Irrep("2e")
+
+D = ir.D_from_angles(
+    alpha,
+    beta,
+    gamma
+)
+```
+
+Although we simply call `D_from_angles()`, the returned matrix is the corresponding Wigner D-matrix for the (l=2) representation.
+
+---
+
+## 20.13.8.12 Relationship with Irreps
+
+Each irreducible representation has exactly one associated Wigner D-matrix.
+
+Conceptually,
+
+```text
+Irrep
+
+↓
+
+Wigner D-Matrix
+
+↓
+
+Rotation Operator
+```
+
+This one-to-one relationship is what allows e3nn to rotate arbitrary equivariant features automatically.
+
+---
+
+## 20.13.8.13 Wigner D-Matrices Inside a Neural Network
+
+During training,
+
+hidden features repeatedly undergo symmetry-preserving transformations.
+
+A simplified view is
+
+```text
+Hidden Features
+
+↓
+
+Tensor Product
+
+↓
+
+Wigner D Rotation
+
+↓
+
+Updated Features
+```
+
+Although the user rarely sees these matrices directly,
+
+they are used throughout every forward pass of an equivariant network.
+
+---
+
+## 20.13.8.14 Why They Matter for Materials Science
+
+Materials are inherently three-dimensional.
+
+Their properties often depend on orientation,
+
+local geometry,
+
+and crystal symmetry.
+
+Using Wigner D-matrices ensures that neural networks respect these physical symmetries exactly.
+
+This leads to
+
+* physically consistent predictions,
+* improved data efficiency,
+* better generalization,
+* greater robustness to arbitrary crystal orientations.
+
+---
+
+## 20.13.8.15 Example: Rotating a Crystal
+
+Imagine a silicon crystal rotated by 45°.
+
+An equivariant model processes the rotated structure by applying the appropriate Wigner D-matrices to all vector and tensor features.
+
+As a result,
+
+* scalar outputs (such as formation energy) remain unchanged,
+* vector outputs (such as forces) rotate by 45°,
+* tensor outputs transform according to their corresponding Wigner D-matrices.
+
+The network therefore produces predictions that are entirely consistent with the physical rotation.
+
+---
+
+## 20.13.8.16 Wigner D-Matrices as the Bridge Between Mathematics and Deep Learning
+
+From a mathematical perspective,
+
+Wigner D-matrices belong to the representation theory of SO(3).
+
+From a computational perspective,
+
+they are the matrices that rotate equivariant features.
+
+From a machine-learning perspective,
+
+they are the mechanism that guarantees symmetry preservation.
+
+These three viewpoints describe the same object from different angles.
+
+---
+
+## 20.13.8.17 Key Takeaways
+
+Wigner D-matrices are the irreducible matrix representations of the rotation group SO(3). Each angular degree (l) has its own matrix of size (2l+1), allowing scalars, vectors, and higher-order tensors to rotate according to the correct symmetry rules. They satisfy the representation property, preserve information under rotation, and govern the transformation of spherical harmonics.
+
+In **e3nn**, every rotation performed on an equivariant feature is implemented through these matrices, making them one of the fundamental mathematical tools underlying modern equivariant graph neural networks.
+
+---
+
+## Transition to Section 20.13.9 — Rotating Features with `Irrep.D_from_angles()`
+
+Having understood the mathematical foundations of Wigner D-matrices, we are now ready to use them directly in **e3nn**. In the next section, we will learn how to generate rotation operators with `Irrep.D_from_angles()`, apply them to scalar, vector, and tensor features, verify their dimensions and transformation behavior, and perform practical rotation experiments that demonstrate equivariance in code.
+
+
+
+Although e3nn computes rotation matrices automatically, these matrices have a rich mathematical structure known as the **Wigner D-matrices**. In the next section, we will study their origin in representation theory, understand why there is one Wigner D-matrix for each angular degree (l), examine their key mathematical properties, and see how they connect rotations, spherical harmonics, and irreducible tensor features into a unified framework for equivariant deep learning.
+
+## 20.13.9 Rotating Features with `Irrep.D_from_angles()`
+
+In the previous section, we learned that **Wigner D-matrices** are the mathematical objects that rotate irreducible representations.
+
+Fortunately, **e3nn** hides almost all of this mathematical complexity behind a single, easy-to-use function:
+
+```python
+Irrep.D_from_angles()
+```
+
+This method constructs the appropriate Wigner D-matrix for a given irreducible representation and a specified rotation.
+
+Using this function, we can rotate
+
+* scalars,
+* vectors,
+* second-order tensors,
+* higher-order tensor features,
+
+with only a few lines of code.
+
+In this section, we will explore this function in detail and verify that it performs rotations correctly.
+
+---
+
+## 20.13.9.1 The General Workflow
+
+The overall process of rotating a feature is
+
+```text
+Feature
+
+↓
+
+Choose Irrep
+
+↓
+
+Create Rotation Matrix
+
+↓
+
+Multiply Feature
+
+↓
+
+Rotated Feature
+```
+
+Regardless of the representation, the same workflow applies.
+
+---
+
+## 20.13.9.2 Creating a Rotation
+
+The first step is defining a rotation.
+
+In e3nn, rotations are commonly specified using **Euler angles**.
+
+```python
+import torch
+
+alpha = torch.tensor(0.5)
+beta = torch.tensor(1.2)
+gamma = torch.tensor(0.3)
+```
+
+These three angles uniquely define an element of the rotation group SO(3).
+
+---
+
+## 20.13.9.3 Rotating a Scalar
+
+Consider the simplest possible representation.
+
+```python
+from e3nn import o3
+
+scalar = o3.Irrep("0e")
+```
+
+Now construct its rotation matrix.
+
+```python
+D = scalar.D_from_angles(
+    alpha,
+    beta,
+    gamma
+)
+
+print(D)
+```
+
+Output
+
+```text
+tensor([[1.]])
+```
+
+Regardless of the chosen angles,
+
+the result is always
+
+[
+1.
+]
+
+This reflects the physical fact that scalars do not change under rotation.
+
+---
+
+## 20.13.9.4 Rotating a Vector
+
+Next, consider an ordinary vector.
+
+```python
+vector = o3.Irrep("1o")
+```
+
+Construct its rotation matrix.
+
+```python
+D = vector.D_from_angles(
+    alpha,
+    beta,
+    gamma
+)
+
+print(D.shape)
+```
+
+Output
+
+```text
+torch.Size([3, 3])
+```
+
+The resulting matrix is the familiar three-dimensional rotation matrix.
+
+---
+
+## 20.13.9.5 Applying the Rotation
+
+Suppose we have a vector feature.
+
+```python
+x = torch.tensor([
+    1.0,
+    0.0,
+    0.0
+])
+```
+
+Rotate it.
+
+```python
+x_rot = D @ x
+
+print(x_rot)
+```
+
+The output is another three-component vector representing the rotated feature.
+
+Although its coordinates change,
+
+it still represents the same physical quantity.
+
+---
+
+## 20.13.9.6 Visual Interpretation
+
+Imagine a force acting along the x-axis.
+
+```text
+Original
+
+→
+
+Force
+```
+
+After rotating the coordinate system,
+
+the force points in a different direction.
+
+However,
+
+the force itself has not changed.
+
+Only its coordinate representation has changed.
+
+This is exactly what the rotation matrix computes.
+
+---
+
+## 20.13.9.7 Rotating a Rank-2 Tensor
+
+Now consider
+
+```python
+tensor = o3.Irrep("2e")
+```
+
+Construct its rotation matrix.
+
+```python
+D = tensor.D_from_angles(
+    alpha,
+    beta,
+    gamma
+)
+
+print(D.shape)
+```
+
+Output
+
+```text
+torch.Size([5, 5])
+```
+
+Unlike vectors,
+
+rank-2 tensor features contain five independent components.
+
+All five components rotate together.
+
+---
+
+## 20.13.9.8 Why Five Components Rotate Together
+
+A second-order irreducible tensor is not simply five unrelated numbers.
+
+Instead,
+
+they collectively describe one physical object.
+
+Rotating only some of the components would destroy the tensor.
+
+The Wigner D-matrix ensures that the entire object rotates consistently.
+
+---
+
+## 20.13.9.9 Higher-Order Features
+
+The same code works for any angular degree.
+
+Example
+
+```python
+ir = o3.Irrep("3o")
+
+D = ir.D_from_angles(
+    alpha,
+    beta,
+    gamma
+)
+
+print(D.shape)
+```
+
+Output
+
+```text
+torch.Size([7, 7])
+```
+
+Again,
+
+the dimension follows
+
+[
+2l+1.
+]
+
+---
+
+## 20.13.9.10 Rotation Depends on the Representation
+
+Notice that the Euler angles remain exactly the same.
+
+Only the representation changes.
+
+```text
+Same Rotation
+
+↓
+
+0e
+
+↓
+
+1×1 Matrix
+```
+
+```text
+Same Rotation
+
+↓
+
+1o
+
+↓
+
+3×3 Matrix
+```
+
+```text
+Same Rotation
+
+↓
+
+2e
+
+↓
+
+5×5 Matrix
+```
+
+The physical rotation is identical,
+
+but its mathematical representation depends on the object being rotated.
+
+---
+
+## 20.13.9.11 Rotating Random Features
+
+We can generate random features for experimentation.
+
+```python
+feature = torch.randn(5)
+
+tensor = o3.Irrep("2e")
+
+D = tensor.D_from_angles(
+    alpha,
+    beta,
+    gamma
+)
+
+feature_rot = D @ feature
+```
+
+This is the same operation that occurs repeatedly inside an equivariant neural network.
+
+---
+
+## 20.13.9.12 Verifying Dimensions
+
+One useful debugging technique is checking matrix dimensions.
+
+```python
+for l in range(5):
+
+    ir = o3.Irrep(f"{l}e")
+
+    D = ir.D_from_angles(
+        alpha,
+        beta,
+        gamma
+    )
+
+    print(
+        l,
+        D.shape
+    )
+```
+
+Typical output
+
+```text
+0 torch.Size([1,1])
+
+1 torch.Size([3,3])
+
+2 torch.Size([5,5])
+
+3 torch.Size([7,7])
+
+4 torch.Size([9,9])
+```
+
+This confirms the rule
+
+[
+2l+1.
+]
+
+---
+
+## 20.13.9.13 Composition of Rotations
+
+Suppose we perform two rotations.
+
+```text
+Rotation A
+
+↓
+
+Rotation B
+```
+
+Instead of rotating twice,
+
+we could combine them into one equivalent rotation.
+
+The resulting Wigner D-matrix satisfies
+
+[
+D(R_A R_B)
+==========
+
+D(R_A)
+D(R_B).
+]
+
+This guarantees mathematically consistent behavior during repeated transformations.
+
+---
+
+## 20.13.9.14 Rotating Hidden Features in a Neural Network
+
+Every hidden layer contains features such as
+
+```text
+Scalars
+
+Vectors
+
+Rank-2 Tensors
+```
+
+Each feature type is rotated independently using the appropriate Wigner D-matrix.
+
+Conceptually,
+
+```text
+Hidden Layer
+
+↓
+
+Split into Irreps
+
+↓
+
+Rotate Each Irrep
+
+↓
+
+Combine
+
+↓
+
+Next Layer
+```
+
+This process preserves equivariance throughout the network.
+
+---
+
+## 20.13.9.15 Numerical Stability
+
+The rotation matrices generated by e3nn are numerically stable.
+
+They satisfy the mathematical properties expected of group representations,
+
+including
+
+* orthogonality,
+* invertibility,
+* smooth dependence on the rotation angles.
+
+This makes them suitable for deep neural network training.
+
+---
+
+## 20.13.9.16 Common Mistake
+
+A common misconception is to rotate every feature using a 3×3 matrix.
+
+This works only for vectors.
+
+For example,
+
+```text
+Scalar
+
+↓
+
+Not 3×3
+```
+
+```text
+Rank-2 Tensor
+
+↓
+
+Not 3×3
+```
+
+Every irreducible representation requires its own Wigner D-matrix.
+
+Fortunately,
+
+`D_from_angles()` automatically generates the correct one.
+
+---
+
+## 20.13.9.17 Relationship with Equivariance
+
+The rotation operator generated by
+
+```python
+D_from_angles()
+```
+
+is precisely the matrix
+
+[
+D(R)
+]
+
+that appears in the equivariance condition
+
+[
+f(Rx)
+=====
+
+D(R)
+f(x).
+]
+
+Thus,
+
+this function provides the mathematical link between
+
+* rotating the input,
+* rotating the output,
+* preserving equivariance.
+
+---
+
+## 20.13.9.18 Practical Importance
+
+Although researchers rarely call `D_from_angles()` directly in everyday model training, it is used extensively inside e3nn's internal implementations of
+
+* equivariant convolutions,
+* tensor products,
+* message passing,
+* nonlinear layers.
+
+Understanding this function therefore provides valuable insight into how the library enforces rotational symmetry.
+
+---
+
+## 20.13.9.19 Key Takeaways
+
+The `Irrep.D_from_angles()` method provides a practical interface for constructing Wigner D-matrices corresponding to arbitrary rotations. Given an irreducible representation and three Euler angles, it returns the correct rotation operator for that representation, allowing scalar, vector, and tensor features to be transformed consistently. The size of the resulting matrix always follows the rule (2l+1), and the same physical rotation is represented differently depending on the angular degree (l).
+
+This method is used internally throughout e3nn and serves as one of the core mechanisms by which equivariant neural networks preserve rotational symmetry.
+
+---
+
+## Transition to Section 20.13.10 — Rotation Matrices from Axis–Angle and Rotation Matrices
+
+While Euler angles provide a convenient way to specify rotations, they are not the only representation used in practice. Many scientific computing libraries, molecular simulation packages, and materials science workflows instead describe rotations using **axis–angle representations**, **rotation matrices**, or **quaternions**. In the next section, we will explore how e3nn constructs Wigner D-matrices from these alternative representations, allowing seamless integration with real-world computational materials science pipelines.
+
+## 20.13.10 Rotation Matrices from Axis–Angle, Rotation Matrices, and Quaternions
+
+In the previous section, we generated rotation operators using **Euler angles**.
+
+Although Euler angles are widely used in mathematics and physics, they are **not** the only way to describe a rotation.
+
+In computational materials science, rotations are often represented using
+
+* axis–angle pairs,
+* 3×3 rotation matrices,
+* quaternions.
+
+Different software packages adopt different conventions.
+
+For example,
+
+* **ASE** frequently uses rotation matrices,
+* **pymatgen** uses symmetry operations represented as matrices,
+* molecular dynamics software often stores orientations as quaternions,
+* robotics libraries commonly employ axis–angle representations.
+
+Fortunately, **e3nn** supports all of these representations and can construct the corresponding Wigner D-matrices from each one.
+
+---
+
+## 20.13.10.1 Multiple Ways to Describe the Same Rotation
+
+A physical rotation is unique, but it can be expressed mathematically in several equivalent ways.
+
+```text id="rotrep1"
+Physical Rotation
+
+↓
+
+Euler Angles
+
+↓
+
+Axis–Angle
+
+↓
+
+Rotation Matrix
+
+↓
+
+Quaternion
+```
+
+Regardless of the representation,
+
+the resulting rotation of the feature must always be identical.
+
+---
+
+## 20.13.10.2 Euler Angles
+
+Euler angles describe a rotation as three successive rotations.
+
+```text id="rotrep2"
+α
+
+↓
+
+β
+
+↓
+
+γ
+```
+
+This representation is intuitive but suffers from one important limitation:
+
+**gimbal lock**, where two rotational axes become aligned and one degree of rotational freedom is lost.
+
+For this reason, many applications prefer alternative representations.
+
+---
+
+## 20.13.10.3 Axis–Angle Representation
+
+The axis–angle representation describes a rotation using
+
+* a unit vector,
+* a rotation angle.
+
+Conceptually,
+
+```text id="rotrep3"
+Rotation Axis
+
++
+
+Rotation Angle
+```
+
+For example,
+
+a rotation of
+
+45°
+
+about the z-axis is represented as
+
+```text id="rotrep4"
+Axis
+
+↓
+
+(0,0,1)
+
+Angle
+
+↓
+
+45°
+```
+
+This representation is compact and geometrically intuitive.
+
+---
+
+## 20.13.10.4 Rotation Matrices
+
+A rotation can also be represented directly by a
+
+[
+3\times3
+]
+
+orthogonal matrix.
+
+For vectors,
+
+the rotated feature is
+
+[
+\mathbf{v}'=R\mathbf{v}.
+]
+
+This form is particularly convenient because it can be applied directly through matrix multiplication.
+
+Many crystallographic symmetry operations are stored in this format.
+
+---
+
+## 20.13.10.5 Quaternions
+
+Quaternions provide another representation of rotations.
+
+A quaternion consists of four numbers,
+
+typically written as
+
+[
+(q_w,q_x,q_y,q_z).
+]
+
+Unlike Euler angles,
+
+quaternions
+
+* avoid gimbal lock,
+* interpolate smoothly,
+* are numerically stable,
+* are widely used in graphics, robotics, and molecular simulations.
+
+---
+
+## 20.13.10.6 Why e3nn Supports Multiple Representations
+
+Real scientific workflows involve many external libraries.
+
+For example,
+
+```text id="rotrep5"
+DFT Code
+
+↓
+
+Rotation Matrix
+```
+
+```text id="rotrep6"
+Molecular Dynamics
+
+↓
+
+Quaternion
+```
+
+```text id="rotrep7"
+Symmetry Detection
+
+↓
+
+Axis–Angle
+```
+
+Rather than forcing users to convert everything into Euler angles,
+
+e3nn provides methods that accept different rotation formats.
+
+---
+
+## 20.13.10.7 Constructing from a Rotation Matrix
+
+Suppose we already have a
+
+[
+3\times3
+]
+
+rotation matrix.
+
+A Wigner D-matrix can be generated directly.
+
+Conceptually,
+
+```text id="rotrep8"
+Rotation Matrix
+
+↓
+
+Irrep
+
+↓
+
+Wigner D-Matrix
+```
+
+This avoids unnecessary conversions.
+
+---
+
+## 20.13.10.8 Constructing from Axis–Angle
+
+Similarly,
+
+an axis–angle representation can be converted into the appropriate Wigner D-matrix.
+
+Conceptually,
+
+```text id="rotrep9"
+Axis
+
++
+
+Angle
+
+↓
+
+Wigner D-Matrix
+```
+
+This representation is especially common in molecular simulations.
+
+---
+
+## 20.13.10.9 Constructing from Quaternions
+
+Quaternions can also generate Wigner D-matrices.
+
+Conceptually,
+
+```text id="rotrep10"
+Quaternion
+
+↓
+
+Wigner D-Matrix
+```
+
+This is often preferred when rotations are updated repeatedly during optimization because quaternions remain numerically stable.
+
+---
+
+## 20.13.10.10 All Representations Produce the Same Rotation
+
+Suppose we describe the same physical rotation using
+
+* Euler angles,
+* axis–angle,
+* quaternion,
+* rotation matrix.
+
+Although the numerical values differ,
+
+they all represent the same transformation.
+
+Consequently,
+
+the resulting Wigner D-matrices are mathematically equivalent.
+
+---
+
+## 20.13.10.11 Example Workflow
+
+Imagine a crystal read from a CIF file.
+
+```text id="rotrep11"
+Crystal
+
+↓
+
+Symmetry Operation
+
+↓
+
+Rotation Matrix
+
+↓
+
+e3nn
+
+↓
+
+Wigner D-Matrix
+
+↓
+
+Rotate Features
+```
+
+This is a common workflow in materials informatics.
+
+---
+
+## 20.13.10.12 Why Rotation Matrices Are Common in Materials Science
+
+Crystal symmetry operations are naturally represented by matrices.
+
+For example,
+
+a symmetry operation may consist of
+
+* a rotation,
+* a translation.
+
+The rotational part is already stored as a matrix.
+
+Therefore,
+
+e3nn can directly use this information without converting through Euler angles.
+
+---
+
+## 20.13.10.13 Choosing a Representation
+
+Each representation has advantages.
+
+| Representation  | Advantages                   | Typical Applications                   |
+| --------------- | ---------------------------- | -------------------------------------- |
+| Euler angles    | Simple, intuitive            | Teaching, visualization                |
+| Axis–angle      | Compact and geometric        | Molecular simulations                  |
+| Rotation matrix | Direct matrix multiplication | Crystallography, symmetry operations   |
+| Quaternion      | Stable, avoids gimbal lock   | Robotics, graphics, molecular dynamics |
+
+No representation is universally superior.
+
+The best choice depends on the application.
+
+---
+
+## 20.13.10.14 Internal Consistency
+
+Regardless of the input format,
+
+e3nn ultimately computes the same mathematical object:
+
+the Wigner D-matrix.
+
+Conceptually,
+
+```text id="rotrep12"
+Euler
+
+↓
+
+Axis–Angle
+
+↓
+
+Matrix
+
+↓
+
+Quaternion
+
+↓
+
+Wigner D
+```
+
+Thus,
+
+all rotation representations converge to a common internal form.
+
+---
+
+## 20.13.10.15 Practical Considerations
+
+When working with materials datasets,
+
+it is often unnecessary to choose a rotation representation manually.
+
+Libraries such as
+
+* ASE,
+* pymatgen,
+* spglib,
+
+already provide rotations in convenient formats.
+
+e3nn is designed to integrate seamlessly with these tools.
+
+---
+
+## 20.13.10.16 Why This Matters for Equivariant Neural Networks
+
+An equivariant network should not care how a rotation is represented.
+
+Whether a crystal is rotated using
+
+* Euler angles,
+* a quaternion,
+* or a symmetry matrix,
+
+the network should produce the same physically consistent transformation of its internal features.
+
+Supporting multiple rotation representations therefore makes equivariant models flexible and compatible with diverse scientific software ecosystems.
+
+---
+
+## 20.13.10.17 Summary of Rotation Representations
+
+The following diagram summarizes the relationships.
+
+```text id="rotrep13"
+Euler Angles
+
+        │
+
+        ▼
+
+Axis–Angle
+
+        │
+
+        ▼
+
+Rotation Matrix
+
+        │
+
+        ▼
+
+Quaternion
+
+        │
+
+        ▼
+
+Wigner D-Matrix
+
+        │
+
+        ▼
+
+Equivariant Feature Rotation
+```
+
+Although each representation differs mathematically,
+
+they all encode the same physical rotation.
+
+---
+
+## 20.13.10.18 Key Takeaways
+
+A three-dimensional rotation can be represented in several mathematically equivalent forms, including Euler angles, axis–angle pairs, rotation matrices, and quaternions. **e3nn** supports these different representations and converts them internally into the appropriate **Wigner D-matrices**, ensuring that scalar, vector, and tensor features are rotated consistently regardless of how the rotation is specified.
+
+This flexibility allows equivariant neural networks to integrate naturally with crystallographic software, molecular simulation packages, and computational materials science workflows.
+
+---
+
+## Transition to Section 20.13.11 — Verifying Equivariance Numerically
+
+Understanding the theory of rotations is important, but one of the greatest strengths of **e3nn** is that equivariance can be verified directly in code. In the next section, we will perform numerical experiments that rotate input features, apply equivariant operations, compare the results before and after rotation, and demonstrate that the equivariance condition is satisfied to numerical precision. These experiments provide practical confirmation that the mathematical framework developed throughout this chapter works exactly as expected in real implementations.
+
+## 20.13.11 Verifying Equivariance Numerically
+
+One of the greatest advantages of **e3nn** is that its mathematical claims can be **verified experimentally**.
+
+Unlike many theoretical concepts, equivariance is not merely an abstract idea—it is a property that can be tested directly with code.
+
+In this section, we will perform numerical experiments to verify that equivariant operations satisfy the defining equation
+
+[
+\boxed{
+f(Rx)=D(R)f(x)
+}
+]
+
+If this equation holds (up to numerical precision), then the operation is equivariant.
+
+---
+
+## 20.13.11.1 What Does It Mean to Verify Equivariance?
+
+Suppose we have
+
+* an input feature (x),
+* a rotation (R),
+* an equivariant function (f).
+
+There are two possible computation paths.
+
+### Path A
+
+Rotate the input first.
+
+```text id="eqtest1"
+Input
+
+↓
+
+Rotate
+
+↓
+
+Neural Layer
+```
+
+---
+
+### Path B
+
+Apply the neural layer first.
+
+```text id="eqtest2"
+Input
+
+↓
+
+Neural Layer
+
+↓
+
+Rotate Output
+```
+
+If the layer is truly equivariant,
+
+both paths should produce the same result.
+
+---
+
+## 20.13.11.2 Mathematical Statement
+
+Equivariance requires
+
+[
+f(Rx)=D(R)f(x).
+]
+
+Notice that
+
+the input is rotated using
+
+[
+R,
+]
+
+while the output is rotated using the appropriate Wigner D-matrix
+
+[
+D(R).
+]
+
+This distinction is extremely important.
+
+---
+
+## 20.13.11.3 Numerical Precision
+
+Computers use floating-point arithmetic.
+
+Therefore,
+
+two mathematically identical quantities are rarely **exactly** equal.
+
+Instead,
+
+we check whether they differ only by tiny numerical errors.
+
+Typical tolerances are
+
+[
+10^{-6}
+]
+
+or
+
+[
+10^{-8}.
+]
+
+---
+
+## 20.13.11.4 Example Workflow
+
+An equivariance test follows the sequence
+
+```text id="eqtest3"
+Original Feature
+
+↓
+
+Rotate
+
+↓
+
+Apply Layer
+
+↓
+
+Result A
+```
+
+and
+
+```text id="eqtest4"
+Original Feature
+
+↓
+
+Apply Layer
+
+↓
+
+Rotate
+
+↓
+
+Result B
+```
+
+Finally,
+
+compare
+
+```text id="eqtest5"
+Result A
+
+?
+
+Result B
+```
+
+---
+
+## 20.13.11.5 Creating a Rotation
+
+First define a rotation.
+
+```python id="eqtest6"
+import torch
+from e3nn import o3
+
+alpha = torch.tensor(0.4)
+beta = torch.tensor(1.1)
+gamma = torch.tensor(0.7)
+```
+
+---
+
+## 20.13.11.6 Constructing a Rotation Matrix
+
+Suppose our feature is a vector.
+
+```python id="eqtest7"
+ir = o3.Irrep("1o")
+
+D = ir.D_from_angles(
+    alpha,
+    beta,
+    gamma
+)
+```
+
+The matrix
+
+```python id="eqtest8"
+D
+```
+
+is the Wigner D-matrix corresponding to the chosen rotation.
+
+---
+
+## 20.13.11.7 Creating a Feature
+
+Generate a random vector.
+
+```python id="eqtest9"
+x = torch.randn(3)
+```
+
+For example,
+
+```text id="eqtest10"
+[0.42,
+-1.37,
+0.58]
+```
+
+The exact values are unimportant.
+
+---
+
+## 20.13.11.8 Rotating the Feature
+
+Apply the rotation.
+
+```python id="eqtest11"
+x_rot = D @ x
+```
+
+Now
+
+```python id="eqtest12"
+x_rot
+```
+
+represents the rotated feature.
+
+---
+
+## 20.13.11.9 Identity Function Test
+
+The simplest equivariant function is
+
+[
+f(x)=x.
+]
+
+Apply it.
+
+```python id="eqtest13"
+f_x = x
+
+f_x_rot = x_rot
+```
+
+Now rotate the output.
+
+```python id="eqtest14"
+rotated_output = D @ f_x
+```
+
+Compare
+
+```python id="eqtest15"
+f_x_rot
+```
+
+and
+
+```python id="eqtest16"
+rotated_output
+```
+
+They are identical (up to floating-point precision).
+
+Thus,
+
+the identity function is equivariant.
+
+---
+
+## 20.13.11.10 Using `torch.allclose`
+
+PyTorch provides a convenient comparison.
+
+```python id="eqtest17"
+torch.allclose(
+    f_x_rot,
+    rotated_output,
+    atol=1e-6
+)
+```
+
+Output
+
+```text id="eqtest18"
+True
+```
+
+This confirms numerical equivariance.
+
+---
+
+## 20.13.11.11 Why Small Errors Appear
+
+Floating-point arithmetic introduces tiny numerical differences.
+
+For example,
+
+instead of
+
+```text id="eqtest19"
+1.000000
+```
+
+the computer may compute
+
+```text id="eqtest20"
+0.99999994
+```
+
+These differences are expected and do not indicate a violation of equivariance.
+
+---
+
+## 20.13.11.12 Testing Scalar Features
+
+Scalars provide another simple example.
+
+```python id="eqtest21"
+scalar = o3.Irrep("0e")
+
+D = scalar.D_from_angles(
+    alpha,
+    beta,
+    gamma
+)
+```
+
+The rotation matrix becomes
+
+```text id="eqtest22"
+[[1]]
+```
+
+Therefore,
+
+rotating a scalar changes nothing.
+
+Equivariance is satisfied automatically.
+
+---
+
+## 20.13.11.13 Testing Higher-Order Features
+
+Exactly the same experiment works for
+
+```python id="eqtest23"
+o3.Irrep("2e")
+```
+
+or
+
+```python id="eqtest24"
+o3.Irrep("3o")
+```
+
+Only the feature dimension changes.
+
+The verification procedure remains identical.
+
+---
+
+## 20.13.11.14 Testing a Linear Equivariant Layer
+
+Suppose we have an equivariant linear layer.
+
+Conceptually,
+
+```text id="eqtest25"
+Input
+
+↓
+
+Linear Layer
+
+↓
+
+Output
+```
+
+The numerical experiment becomes
+
+```text id="eqtest26"
+Rotate Input
+
+↓
+
+Linear Layer
+```
+
+versus
+
+```text id="eqtest27"
+Linear Layer
+
+↓
+
+Rotate Output
+```
+
+Matching outputs indicate that the layer is equivariant.
+
+---
+
+## 20.13.11.15 Why Researchers Perform These Tests
+
+Whenever a new equivariant architecture is developed,
+
+researchers routinely verify
+
+* equivariant convolutions,
+* tensor products,
+* message-passing operations,
+* nonlinear layers,
+
+using numerical equivariance tests.
+
+These experiments ensure that no implementation mistakes violate symmetry.
+
+---
+
+## 20.13.11.16 Common Sources of Failure
+
+Equivariance tests may fail if
+
+* the wrong irreducible representation is assigned,
+* features are mixed incorrectly,
+* tensor products are implemented incorrectly,
+* ordinary nonlinearities are applied to vector features,
+* rotations are applied inconsistently.
+
+These errors often produce large discrepancies between the two computation paths.
+
+---
+
+## 20.13.11.17 Practical Interpretation
+
+Passing an equivariance test means that
+
+rotating the crystal before prediction
+
+or
+
+rotating the prediction afterward
+
+produces the same physical result.
+
+This property is essential for
+
+* force prediction,
+* molecular dynamics,
+* interatomic potentials,
+* crystal property prediction.
+
+---
+
+## 20.13.11.18 Typical Verification Workflow
+
+Researchers often use the following procedure.
+
+```text id="eqtest28"
+Generate Random Feature
+
+↓
+
+Generate Random Rotation
+
+↓
+
+Rotate Input
+
+↓
+
+Apply Layer
+
+↓
+
+Apply Layer to Original
+
+↓
+
+Rotate Output
+
+↓
+
+Compare
+```
+
+If the comparison succeeds,
+
+the implementation is considered equivariant.
+
+---
+
+## 20.13.11.19 Why This Is Important
+
+Unlike ordinary neural networks,
+
+equivariant models provide **mathematical guarantees**.
+
+Instead of merely hoping that the network learns rotational symmetry,
+
+we verify that symmetry is built directly into the architecture.
+
+This is one of the major reasons why equivariant GNNs achieve superior performance on atomistic learning tasks.
+
+---
+
+## 20.13.11.20 Key Takeaways
+
+Equivariance is a property that can be verified directly through numerical experiments. By comparing the results of **rotating the input before applying a layer** with **rotating the output after applying the same layer**, we can test whether the defining equation
+
+[
+f(Rx)=D(R)f(x)
+]
+
+holds in practice. Using tools such as `torch.allclose()`, these comparisons typically confirm equivariance to within floating-point precision, providing strong evidence that the implementation correctly preserves rotational symmetry.
+
+---
+
+## Transition to Section 20.13.12 — Tensor Products: Combining Equivariant Features
+
+So far, we have focused on rotating individual features while preserving symmetry. However, neural networks must also **combine** features to learn increasingly complex representations. In equivariant deep learning, this combination cannot be performed with ordinary multiplication or concatenation. Instead, it is governed by **tensor products**, which merge irreducible representations while preserving rotational symmetry. In the next section, we will introduce tensor products, explain their mathematical foundations, derive the Clebsch–Gordan decomposition, and see why they are one of the most important operations in modern equivariant graph neural networks.
+
+## 20.13.12 Tensor Products: Combining Equivariant Features
+
+Up to this point, we have learned how to
+
+* represent equivariant features using irreducible representations,
+* rotate these features correctly,
+* verify equivariance numerically.
+
+However, a neural network must do much more than simply rotate features.
+
+It must also **combine** information from different atoms, neighbors, and feature channels to build increasingly expressive representations.
+
+In ordinary neural networks, this is straightforward.
+
+Two feature vectors can be added, concatenated, or multiplied elementwise.
+
+In equivariant neural networks, however, such operations generally **do not preserve rotational symmetry**.
+
+Instead, equivariant models rely on a mathematically rigorous operation known as the **tensor product**.
+
+Tensor products are one of the most important concepts in equivariant deep learning because they provide the only symmetry-preserving way to combine features belonging to different irreducible representations.
+
+---
+
+## 20.13.12.1 Why Ordinary Multiplication Fails
+
+Suppose we have two vectors,
+
+[
+\mathbf{u}
+]
+
+and
+
+[
+\mathbf{v}.
+]
+
+In a conventional neural network, we might simply compute
+
+```text id="tp1"
+u * v
+```
+
+or
+
+```text id="tp2"
+u + v
+```
+
+These operations work numerically,
+
+but they ignore the transformation properties of the vectors.
+
+If the crystal is rotated,
+
+the resulting feature may no longer transform correctly.
+
+Equivariance is therefore broken.
+
+---
+
+## 20.13.12.2 The Need for a Symmetry-Preserving Operation
+
+When two equivariant features are combined,
+
+the result must also transform correctly under rotations.
+
+Conceptually,
+
+```text id="tp3"
+Feature A
+
++
+
+Feature B
+
+↓
+
+Combined Feature
+
+↓
+
+Still Equivariant
+```
+
+The tensor product guarantees this behavior.
+
+---
+
+## 20.13.12.3 What Is a Tensor Product?
+
+Mathematically,
+
+the tensor product combines two irreducible representations into a new representation.
+
+It is written as
+
+[
+\boxed{
+l_1 \otimes l_2
+}
+]
+
+where
+
+* (l_1) is the angular degree of the first feature,
+* (l_2) is the angular degree of the second feature.
+
+The result is generally **not** a single representation.
+
+Instead,
+
+it decomposes into several irreducible representations.
+
+---
+
+## 20.13.12.4 A Simple Analogy
+
+Imagine mixing two colors.
+
+```text id="tp4"
+Blue
+
++
+
+Yellow
+
+↓
+
+Green
+```
+
+The output is not identical to either input.
+
+Similarly,
+
+combining two irreducible representations produces new representations that capture richer geometric information.
+
+---
+
+## 20.13.12.5 Example: Scalar × Scalar
+
+The simplest tensor product is
+
+[
+0 \otimes 0.
+]
+
+The result is
+
+[
+\boxed{
+0
+}
+]
+
+A scalar multiplied by another scalar remains a scalar.
+
+Examples include
+
+* energy × temperature,
+* mass × density.
+
+No directional information is introduced.
+
+---
+
+## 20.13.12.6 Example: Scalar × Vector
+
+Now consider
+
+[
+0 \otimes 1.
+]
+
+The result is
+
+[
+\boxed{
+1
+}
+]
+
+Multiplying a scalar by a vector simply rescales the vector.
+
+Its direction is unchanged.
+
+Examples include
+
+* scaling a force,
+* multiplying velocity by a constant.
+
+---
+
+## 20.13.12.7 Example: Vector × Vector
+
+The first interesting example is
+
+[
+1 \otimes 1.
+]
+
+Unlike ordinary multiplication,
+
+the tensor product decomposes into multiple irreducible representations.
+
+[
+\boxed{
+1\otimes1
+=========
+
+0
+\oplus
+1
+\oplus
+2
+}
+]
+
+This means that combining two vectors produces
+
+* one scalar,
+* one vector,
+* one second-order tensor.
+
+This decomposition is fundamental to equivariant neural networks.
+
+---
+
+## 20.13.12.8 Physical Interpretation
+
+Consider two bond-direction vectors.
+
+```text id="tp5"
+Bond 1
+
+↓
+
+Vector
+```
+
+```text id="tp6"
+Bond 2
+
+↓
+
+Vector
+```
+
+Combining them can reveal
+
+* the angle between the bonds,
+* the orientation of the bond pair,
+* higher-order geometric information.
+
+These different geometric quantities correspond precisely to the
+
+[
+0,
+1,
+2
+]
+
+components of the tensor product.
+
+---
+
+## 20.13.12.9 General Tensor Product Rule
+
+For arbitrary angular degrees,
+
+the decomposition follows
+
+[
+\boxed{
+l_1\otimes l_2
+==============
+
+|l_1-l_2|
+\oplus
+\cdots
+\oplus
+(l_1+l_2)
+}
+]
+
+All intermediate angular degrees appear.
+
+---
+
+## 20.13.12.10 Examples
+
+Some important tensor products are
+
+[
+0\otimes0=0
+]
+
+[
+0\otimes1=1
+]
+
+[
+1\otimes1=0\oplus1\oplus2
+]
+
+[
+1\otimes2=1\oplus2\oplus3
+]
+
+[
+2\otimes2=0\oplus1\oplus2\oplus3\oplus4
+]
+
+Notice that higher-order angular information naturally emerges.
+
+---
+
+## 20.13.12.11 Why This Matters
+
+Suppose an atom has only vector features.
+
+Without tensor products,
+
+the network would always remain limited to vectors.
+
+Tensor products enable the network to construct
+
+* scalars,
+* tensors,
+* higher-order geometric descriptors.
+
+This dramatically increases expressive power.
+
+---
+
+## 20.13.12.12 Tensor Products in Message Passing
+
+During message passing,
+
+neighbor features are repeatedly combined.
+
+Conceptually,
+
+```text id="tp7"
+Neighbor Feature
+
+×
+
+Edge Direction
+
+↓
+
+Tensor Product
+
+↓
+
+New Message
+```
+
+This operation appears in nearly every modern equivariant GNN.
+
+---
+
+## 20.13.12.13 Tensor Products Preserve Equivariance
+
+Suppose both inputs rotate.
+
+```text id="tp8"
+Rotate Input A
+
+↓
+
+Tensor Product
+```
+
+```text id="tp9"
+Rotate Input B
+
+↓
+
+Tensor Product
+```
+
+The output rotates exactly according to its own irreducible representation.
+
+Equivariance is therefore preserved automatically.
+
+---
+
+## 20.13.12.14 Why Concatenation Is Not Enough
+
+One might ask why we cannot simply concatenate two vectors.
+
+Concatenation merely stacks features.
+
+It does **not** create new geometric relationships.
+
+Tensor products, in contrast,
+
+combine directional information in a mathematically meaningful way.
+
+They therefore allow the network to learn interactions between orientations.
+
+---
+
+## 20.13.12.15 Tensor Products in e3nn
+
+The **e3nn** library provides highly optimized implementations of tensor products.
+
+Users do not manually derive the mathematical formulas.
+
+Instead,
+
+the library automatically
+
+* computes valid output irreps,
+* applies the appropriate Clebsch–Gordan coefficients,
+* constructs the equivariant output.
+
+This greatly simplifies model development.
+
+---
+
+## 20.13.12.16 Computational Cost
+
+Tensor products are considerably more expensive than ordinary linear layers.
+
+The computational cost increases with
+
+* feature multiplicity,
+* angular degree,
+* number of neighbors.
+
+Consequently,
+
+modern architectures carefully balance expressive power against computational efficiency.
+
+---
+
+## 20.13.12.17 Why Tensor Products Are Central to Equivariant GNNs
+
+Nearly every modern equivariant architecture—including
+
+* **NequIP**,
+* **Allegro**,
+* **MACE**,
+* **eSCN**,
+* **GemNet**,
+
+uses tensor products as one of its core operations.
+
+Without them,
+
+the network could not generate higher-order geometric information while maintaining rotational symmetry.
+
+---
+
+## 20.13.12.18 Conceptual Summary
+
+The tensor product can be viewed as
+
+```text id="tp10"
+Two Equivariant Features
+
+↓
+
+Combine Geometry
+
+↓
+
+Decompose into Irreps
+
+↓
+
+New Equivariant Features
+```
+
+Unlike ordinary multiplication,
+
+the result is a structured collection of irreducible representations.
+
+---
+
+## 20.13.12.19 Key Takeaways
+
+Tensor products are the symmetry-preserving mechanism by which equivariant neural networks combine information from multiple features. Rather than producing a single output, the tensor product decomposes into a collection of irreducible representations whose angular degrees satisfy the Clebsch–Gordan rules. This allows scalar, vector, and higher-order tensor information to emerge naturally from lower-order features while guaranteeing exact rotational equivariance.
+
+Because of this property, tensor products are one of the fundamental operations underlying virtually every modern equivariant graph neural network.
+
+---
+
+## Transition to Section 20.13.13 — Clebsch–Gordan Decomposition: Why Tensor Products Split into Multiple Irreps
+
+In this section, we introduced tensor products as the correct way to combine equivariant features, but we have not yet explained **why** a tensor product such as (1 \otimes 1) decomposes into (0 \oplus 1 \oplus 2). The answer lies in the **Clebsch–Gordan decomposition**, one of the central results of the representation theory of SO(3). In the next section, we will derive the general decomposition rule, interpret it geometrically and physically, and understand how e3nn uses Clebsch–Gordan coefficients internally to construct equivariant tensor products.
+
+## 20.13.13 Clebsch–Gordan Decomposition: Why Tensor Products Split into Multiple Irreps
+
+In the previous section, we learned that combining two irreducible representations does **not** generally produce another single irreducible representation.
+
+Instead,
+
+the tensor product
+
+[
+l_1 \otimes l_2
+]
+
+splits into several smaller irreducible representations.
+
+For example,
+
+[
+1 \otimes 1
+===========
+
+0 \oplus 1 \oplus 2.
+]
+
+This decomposition is not an arbitrary rule.
+
+It is a fundamental theorem from the representation theory of the rotation group SO(3), known as the **Clebsch–Gordan decomposition**.
+
+Understanding this decomposition is essential because it explains how equivariant neural networks generate increasingly rich geometric information while preserving symmetry.
+
+---
+
+## 20.13.13.1 Why Does a Tensor Product Split?
+
+Suppose we combine two vectors.
+
+Each vector transforms according to
+
+[
+l=1.
+]
+
+One might expect that
+
+```text id="cg1"
+Vector
+
+×
+
+Vector
+
+↓
+
+Vector
+```
+
+However,
+
+this is incomplete.
+
+Two vectors can interact in several fundamentally different ways.
+
+For example,
+
+they can produce
+
+* a scalar,
+* another vector,
+* a second-order tensor.
+
+These different geometric objects transform differently under rotation.
+
+Therefore,
+
+they must belong to different irreducible representations.
+
+---
+
+## 20.13.13.2 Physical Example
+
+Imagine two arrows.
+
+```text id="cg2"
+Arrow A
+
++
+
+Arrow B
+```
+
+From these two arrows we can compute
+
+* the angle between them,
+* the cross product,
+* their directional alignment.
+
+These quantities are physically different.
+
+Consequently,
+
+they transform differently under rotation.
+
+The Clebsch–Gordan decomposition separates these different transformation behaviors.
+
+---
+
+## 20.13.13.3 The General Rule
+
+The decomposition rule is
+
+[
+\boxed{
+l_1\otimes l_2
+==============
+
+|l_1-l_2|
+\oplus
+(|l_1-l_2|+1)
+\oplus
+\cdots
+\oplus
+(l_1+l_2)
+}
+]
+
+This means that every angular degree between
+
+[
+|l_1-l_2|
+]
+
+and
+
+[
+l_1+l_2
+]
+
+appears exactly once.
+
+---
+
+## 20.13.13.4 Example: Scalar × Scalar
+
+The simplest example is
+
+[
+0\otimes0.
+]
+
+Applying the rule,
+
+Lower limit
+
+[
+|0-0|=0
+]
+
+Upper limit
+
+[
+0+0=0
+]
+
+Therefore,
+
+[
+\boxed{
+0\otimes0=0
+}
+]
+
+Nothing new appears.
+
+---
+
+## 20.13.13.5 Example: Scalar × Vector
+
+Now consider
+
+[
+0\otimes1.
+]
+
+Lower limit
+
+[
+|0-1|=1
+]
+
+Upper limit
+
+[
+0+1=1.
+]
+
+Thus,
+
+[
+\boxed{
+0\otimes1=1
+}
+]
+
+Multiplying a vector by a scalar simply rescales the vector.
+
+---
+
+## 20.13.13.6 Example: Vector × Vector
+
+The most important example is
+
+[
+1\otimes1.
+]
+
+Lower limit
+
+[
+|1-1|=0
+]
+
+Upper limit
+
+[
+1+1=2.
+]
+
+Hence,
+
+[
+\boxed{
+1\otimes1
+=========
+
+0
+\oplus
+1
+\oplus
+2
+}
+]
+
+Three different irreducible representations emerge.
+
+---
+
+## 20.13.13.7 Geometric Interpretation
+
+The three outputs correspond to familiar geometric quantities.
+
+### Scalar Component
+
+The scalar part measures alignment.
+
+It is closely related to the dot product.
+
+```text id="cg3"
+u · v
+
+↓
+
+Scalar
+```
+
+---
+
+### Vector Component
+
+The vector part represents orientation.
+
+It is closely related to the cross product.
+
+```text id="cg4"
+u × v
+
+↓
+
+Vector
+```
+
+---
+
+### Tensor Component
+
+The tensor part captures directional anisotropy.
+
+```text id="cg5"
+Directional Pattern
+
+↓
+
+Rank-2 Tensor
+```
+
+Together,
+
+these components contain all rotational information encoded by the two vectors.
+
+---
+
+## 20.13.13.8 Example: Vector × Tensor
+
+Now consider
+
+[
+1\otimes2.
+]
+
+Lower limit
+
+[
+|1-2|=1
+]
+
+Upper limit
+
+[
+1+2=3.
+]
+
+Therefore,
+
+[
+\boxed{
+1\otimes2
+=========
+
+1
+\oplus
+2
+\oplus
+3
+}
+]
+
+Notice that the scalar component no longer appears.
+
+---
+
+## 20.13.13.9 Example: Tensor × Tensor
+
+For
+
+[
+2\otimes2,
+]
+
+Lower limit
+
+[
+0
+]
+
+Upper limit
+
+[
+4.
+]
+
+Thus,
+
+[
+\boxed{
+2\otimes2
+=========
+
+0
+\oplus
+1
+\oplus
+2
+\oplus
+3
+\oplus
+4
+}
+]
+
+Higher-order tensor interactions naturally emerge.
+
+---
+
+## 20.13.13.10 Dimension Check
+
+An important consistency check is dimension counting.
+
+The tensor product dimensions must agree.
+
+Example
+
+[
+1\otimes1.
+]
+
+Input dimension
+
+[
+3\times3=9.
+]
+
+Output dimensions
+
+[
+1+3+5=9.
+]
+
+Both sides have identical dimension.
+
+This confirms that no information has been lost.
+
+---
+
+## 20.13.13.11 Another Dimension Check
+
+Consider
+
+[
+1\otimes2.
+]
+
+Input
+
+[
+3\times5=15.
+]
+
+Output
+
+[
+3+5+7=15.
+]
+
+Again,
+
+the dimensions match perfectly.
+
+This always happens.
+
+---
+
+## 20.13.13.12 Why This Matters for Neural Networks
+
+Suppose two neighboring atoms each provide vector features.
+
+If we ignored the decomposition,
+
+we would lose important geometric information.
+
+Instead,
+
+the network learns
+
+* scalar interactions,
+* vector interactions,
+* tensor interactions,
+
+simultaneously.
+
+This richer representation greatly improves predictive accuracy.
+
+---
+
+## 20.13.13.13 Clebsch–Gordan Coefficients
+
+The decomposition itself tells us **which** irreducible representations appear.
+
+However,
+
+it does not explain **how** to compute them.
+
+That role is played by the **Clebsch–Gordan coefficients**.
+
+These coefficients define the precise linear combinations that separate the tensor product into independent irreducible representations.
+
+Conceptually,
+
+```text id="cg6"
+Tensor Product
+
+↓
+
+Clebsch–Gordan Coefficients
+
+↓
+
+Independent Irreps
+```
+
+---
+
+## 20.13.13.14 How e3nn Uses Them
+
+Fortunately,
+
+users never compute Clebsch–Gordan coefficients manually.
+
+Whenever an equivariant tensor product is constructed,
+
+e3nn automatically
+
+* determines the valid output irreps,
+* applies the correct coefficients,
+* produces properly transformed outputs.
+
+This automation makes the implementation of equivariant models practical.
+
+---
+
+## 20.13.13.15 Why This Is Called "Coupling"
+
+In quantum mechanics,
+
+combining two angular momenta is called **angular momentum coupling**.
+
+Exactly the same mathematics appears here.
+
+Instead of combining two quantum particles,
+
+equivariant neural networks combine two geometric features.
+
+The underlying representation theory is identical.
+
+---
+
+## 20.13.13.16 Visual Summary
+
+The decomposition process can be summarized as
+
+```text id="cg7"
+Irrep A
+
+×
+
+Irrep B
+
+↓
+
+Tensor Product
+
+↓
+
+Clebsch–Gordan Decomposition
+
+↓
+
+Several Independent Irreps
+```
+
+Each resulting irrep evolves independently through subsequent equivariant layers.
+
+---
+
+## 20.13.13.17 Importance in Modern Architectures
+
+Clebsch–Gordan decomposition is used extensively in
+
+* e3nn,
+* NequIP,
+* Allegro,
+* MACE,
+* Tensor Field Networks,
+* SE(3)-Transformer,
+* PaiNN (through simplified coupling mechanisms).
+
+Without this decomposition,
+
+exact rotational equivariance would not be possible.
+
+---
+
+## 20.13.13.18 Key Takeaways
+
+The Clebsch–Gordan decomposition explains why tensor products of irreducible representations split into multiple output irreps rather than remaining a single representation. The decomposition rule
+
+[
+l_1\otimes l_2
+==============
+
+|l_1-l_2|
+\oplus
+\cdots
+\oplus
+(l_1+l_2)
+]
+
+ensures that all possible angular degrees generated by the interaction are represented. The accompanying Clebsch–Gordan coefficients determine the exact linear combinations that produce these independent components.
+
+This decomposition forms the mathematical foundation of equivariant tensor products and is one of the core operations implemented throughout modern equivariant graph neural networks.
+
+---
+
+## Transition to Section 20.13.14 — Clebsch–Gordan Coefficients in Practice
+
+So far, we have studied the decomposition rule itself, but not the numerical machinery that performs the decomposition. In the next section, we will examine **Clebsch–Gordan coefficients** in greater detail, understand their role as change-of-basis matrices, see how they transform tensor products into irreducible components, and explore how **e3nn** computes and applies these coefficients automatically during equivariant message passing and tensor product operations.
+
+## 20.13.14 Clebsch–Gordan Coefficients in Practice
+
+In the previous section, we learned that the tensor product of two irreducible representations decomposes into a direct sum of smaller irreducible representations.
+
+For example,
+
+[
+1 \otimes 1
+===========
+
+0 \oplus 1 \oplus 2.
+]
+
+However, this equation answers only one question:
+
+> **Which irreducible representations appear?**
+
+It does **not** answer another equally important question:
+
+> **How do we compute them?**
+
+The answer lies in the **Clebsch–Gordan (CG) coefficients**.
+
+These coefficients define the precise linear combinations that transform a tensor product into its irreducible components.
+
+Without them, tensor products would be mathematically incomplete.
+
+---
+
+## 20.13.14.1 Why Are Clebsch–Gordan Coefficients Needed?
+
+Suppose we combine two vectors.
+
+Each vector has three components.
+
+```text
+Vector A
+
+↓
+
+(ax, ay, az)
+```
+
+```text
+Vector B
+
+↓
+
+(bx, by, bz)
+```
+
+Their tensor product contains
+
+[
+3 \times 3 = 9
+]
+
+components.
+
+However,
+
+we know that
+
+[
+1 \otimes 1
+===========
+
+0 \oplus 1 \oplus 2.
+]
+
+The nine components must therefore be reorganized into
+
+* one scalar,
+* one vector,
+* one rank-2 tensor.
+
+The Clebsch–Gordan coefficients perform this reorganization.
+
+---
+
+## 20.13.14.2 An Analogy
+
+Imagine recording music with several microphones.
+
+Initially,
+
+the signals are mixed together.
+
+```text
+Raw Signals
+
+↓
+
+Mixed Recording
+```
+
+A sound engineer separates them into
+
+* vocals,
+* drums,
+* guitar.
+
+```text
+Mixed Recording
+
+↓
+
+Separate Tracks
+```
+
+The Clebsch–Gordan coefficients perform an analogous operation.
+
+They separate a mixed tensor product into independent symmetry channels.
+
+---
+
+## 20.13.14.3 A Change of Basis
+
+Mathematically,
+
+the tensor product is expressed in one basis.
+
+The irreducible representations require another basis.
+
+The Clebsch–Gordan coefficients define the transformation between these two coordinate systems.
+
+Conceptually,
+
+```text
+Tensor Product Basis
+
+↓
+
+Clebsch–Gordan Matrix
+
+↓
+
+Irrep Basis
+```
+
+This is fundamentally a **change-of-basis transformation**.
+
+---
+
+## 20.13.14.4 Mathematical Expression
+
+Suppose
+
+[
+u
+]
+
+and
+
+[
+v
+]
+
+are two feature vectors.
+
+Their tensor product is
+
+[
+u \otimes v.
+]
+
+The Clebsch–Gordan coefficients,
+
+denoted by
+
+[
+C,
+]
+
+transform this product into irreducible components:
+
+[
+\boxed{
+z = C(u \otimes v)
+}
+]
+
+where
+
+* (u \otimes v) is the raw tensor product,
+* (C) is the Clebsch–Gordan transformation,
+* (z) contains the decomposed irreducible representations.
+
+---
+
+## 20.13.14.5 Example: Vector × Vector
+
+Recall that
+
+[
+1 \otimes 1
+===========
+
+0
+\oplus
+1
+\oplus
+2.
+]
+
+The tensor product initially contains nine numbers.
+
+```text
+9 Numbers
+
+↓
+
+CG Coefficients
+
+↓
+
+1
+
++
+
+3
+
++
+
+5
+```
+
+The output consists of
+
+* one scalar component,
+* three vector components,
+* five tensor components.
+
+Nothing is discarded.
+
+Only the organization changes.
+
+---
+
+## 20.13.14.6 Dimension Preservation
+
+The Clebsch–Gordan transformation is lossless.
+
+Input dimension
+
+[
+3 \times 3 = 9.
+]
+
+Output dimension
+
+[
+1 + 3 + 5 = 9.
+]
+
+The total amount of information remains unchanged.
+
+---
+
+## 20.13.14.7 Orthogonality
+
+The Clebsch–Gordan transformation is orthogonal (or unitary in the complex formulation).
+
+Consequently,
+
+the transformation preserves inner products and norms.
+
+This means that
+
+* information is neither created nor destroyed,
+* different irreducible components remain independent.
+
+---
+
+## 20.13.14.8 Physical Interpretation
+
+Consider two bond-direction vectors.
+
+Their tensor product contains all pairwise directional information.
+
+The Clebsch–Gordan coefficients separate this information into physically meaningful parts:
+
+* scalar interactions (alignment),
+* vector interactions (orientation),
+* tensor interactions (anisotropy).
+
+Each part transforms independently under rotations.
+
+---
+
+## 20.13.14.9 Why Manual Computation Is Difficult
+
+For
+
+[
+1 \otimes 1,
+]
+
+the coefficient tables are manageable.
+
+However,
+
+consider
+
+[
+4 \otimes 5.
+]
+
+The corresponding coefficient matrices become very large.
+
+Deriving them by hand is impractical.
+
+This is why computational libraries are essential.
+
+---
+
+## 20.13.14.10 Automatic Computation in e3nn
+
+One of the major strengths of **e3nn** is that it computes Clebsch–Gordan coefficients automatically.
+
+When a tensor product layer is created,
+
+the library
+
+1. identifies the input irreps,
+2. determines all valid output irreps,
+3. generates the appropriate Clebsch–Gordan coefficients,
+4. performs the decomposition internally.
+
+The user does not need to manipulate these coefficients explicitly.
+
+---
+
+## 20.13.14.11 Conceptual Workflow
+
+The internal computation can be viewed as
+
+```text
+Input Features
+
+↓
+
+Tensor Product
+
+↓
+
+Clebsch–Gordan Transformation
+
+↓
+
+Independent Irreps
+
+↓
+
+Next Layer
+```
+
+Every equivariant tensor product follows this pipeline.
+
+---
+
+## 20.13.14.12 Relationship with Spherical Harmonics
+
+Earlier in this chapter,
+
+we learned that spherical harmonics belong to irreducible representations.
+
+When two spherical harmonics interact,
+
+their product also follows the Clebsch–Gordan decomposition.
+
+Consequently,
+
+Clebsch–Gordan coefficients connect
+
+* spherical harmonics,
+* tensor products,
+* irreducible representations,
+
+into a unified mathematical framework.
+
+---
+
+## 20.13.14.13 Relationship with Angular Momentum
+
+Historically,
+
+Clebsch–Gordan coefficients originated in quantum mechanics.
+
+When two particles possess angular momenta
+
+[
+l_1
+]
+
+and
+
+[
+l_2,
+]
+
+their combined angular momentum follows
+
+[
+l_1 \otimes l_2.
+]
+
+Exactly the same mathematics appears in equivariant neural networks.
+
+Instead of coupling quantum states,
+
+we couple geometric feature representations.
+
+---
+
+## 20.13.14.14 Why They Matter for Materials Science
+
+Atoms interact through geometry.
+
+When neighboring atomic environments exchange information,
+
+their geometric features must combine while respecting rotational symmetry.
+
+Clebsch–Gordan coefficients guarantee that these interactions remain physically meaningful.
+
+Without them,
+
+equivariant message passing would violate rotational symmetry.
+
+---
+
+## 20.13.14.15 Computational Cost
+
+Computing Clebsch–Gordan coefficients is mathematically demanding.
+
+Fortunately,
+
+the coefficients depend only on the irreducible representations,
+
+not on the data itself.
+
+Therefore,
+
+libraries such as e3nn precompute or cache these coefficients,
+
+making repeated tensor product operations highly efficient.
+
+---
+
+## 20.13.14.16 Practical Importance
+
+Researchers rarely inspect individual Clebsch–Gordan coefficients.
+
+Instead,
+
+they rely on high-level tensor product layers.
+
+Nevertheless,
+
+understanding the role of these coefficients helps explain why equivariant architectures differ fundamentally from conventional neural networks.
+
+---
+
+## 20.13.14.17 Summary Diagram
+
+The complete process is
+
+```text
+Input Irreps
+
+↓
+
+Tensor Product
+
+↓
+
+Clebsch–Gordan Coefficients
+
+↓
+
+Irreducible Components
+
+↓
+
+Equivariant Layer
+```
+
+This sequence is repeated throughout the network,
+
+allowing increasingly complex geometric information to be learned while preserving symmetry.
+
+---
+
+## 20.13.14.18 Key Takeaways
+
+Clebsch–Gordan coefficients provide the mathematical machinery that transforms a tensor product into its irreducible components. They act as a change-of-basis transformation, separating mixed geometric information into independent symmetry channels such as scalars, vectors, and higher-order tensors. Although the coefficients themselves can be mathematically complex, **e3nn** computes and applies them automatically, enabling efficient and exact equivariant tensor products.
+
+These coefficients form the computational bridge between representation theory and practical equivariant deep learning, making them indispensable in modern architectures such as NequIP, Allegro, and MACE.
+
+---
+
+## Transition to Section 20.13.15 — Tensor Products in e3nn: The `FullyConnectedTensorProduct` Layer
+
+Now that we understand the mathematical foundations of tensor products and the role of Clebsch–Gordan coefficients, we are ready to see how these ideas are implemented in practice. In the next section, we will introduce one of the most important components of **e3nn**—the `FullyConnectedTensorProduct` layer. We will learn how to define input and output irreducible representations, construct equivariant tensor product layers, inspect their learnable parameters, and understand how they form the core building block of modern equivariant graph neural networks.
+
+## 20.13.15 Tensor Products in e3nn: The `FullyConnectedTensorProduct` Layer
+
+In the previous sections, we learned the mathematical foundations of tensor products and the role of Clebsch–Gordan coefficients in preserving rotational symmetry.
+
+Fortunately, **e3nn** allows us to use tensor products without manually computing Clebsch–Gordan coefficients.
+
+Instead, the library provides several tensor product layers that automatically
+
+* determine valid output irreducible representations,
+* compute Clebsch–Gordan coefficients,
+* apply equivariant transformations,
+* maintain exact rotational equivariance.
+
+Among these layers, the most commonly used is
+
+```text
+FullyConnectedTensorProduct
+```
+
+This layer forms one of the fundamental building blocks of modern equivariant neural networks such as **NequIP**, **Allegro**, **MACE**, and many custom e3nn-based architectures.
+
+---
+
+## 20.13.15.1 What Does `FullyConnectedTensorProduct` Do?
+
+Suppose we have two equivariant feature vectors.
+
+```text id="fctp1"
+Feature A
+
++
+
+Feature B
+```
+
+Rather than simply multiplying them,
+
+the layer performs
+
+```text id="fctp2"
+Tensor Product
+
+↓
+
+Clebsch–Gordan Coupling
+
+↓
+
+Learnable Linear Combination
+
+↓
+
+Output Features
+```
+
+Thus, the layer combines **geometry** and **learnable parameters** into a single equivariant operation.
+
+---
+
+## 20.13.15.2 Why "Fully Connected"?
+
+The name "Fully Connected" refers to the fact that
+
+every valid tensor-product path between the input irreps and output irreps receives its own learnable weight.
+
+Conceptually,
+
+```text id="fctp3"
+Input Irreps
+
+↓
+
+All Valid Couplings
+
+↓
+
+Learnable Weights
+
+↓
+
+Output Irreps
+```
+
+This is analogous to a dense (fully connected) layer in ordinary neural networks,
+
+except that the connections must obey symmetry constraints.
+
+---
+
+## 20.13.15.3 Importing the Layer
+
+The layer is imported from the `o3` module.
+
+```python
+from e3nn import o3
+```
+
+---
+
+## 20.13.15.4 Defining Input Irreps
+
+Suppose the first feature contains
+
+* four scalars,
+* two vectors.
+
+```python
+irreps_in1 = o3.Irreps(
+    "4x0e + 2x1o"
+)
+```
+
+Suppose the second feature contains
+
+```python
+irreps_in2 = o3.Irreps(
+    "2x1o"
+)
+```
+
+These definitions specify the symmetry structure of the two inputs.
+
+---
+
+## 20.13.15.5 Choosing Output Irreps
+
+Next, specify the desired output representation.
+
+```python
+irreps_out = o3.Irreps(
+    "4x0e + 2x1o + 1x2e"
+)
+```
+
+The layer will automatically determine which tensor-product paths can generate these outputs.
+
+---
+
+## 20.13.15.6 Creating the Layer
+
+Construct the tensor product.
+
+```python
+tp = o3.FullyConnectedTensorProduct(
+    irreps_in1,
+    irreps_in2,
+    irreps_out
+)
+```
+
+This single line performs a surprisingly large amount of work.
+
+Internally, e3nn
+
+* checks tensor-product compatibility,
+* computes Clebsch–Gordan coefficients,
+* allocates trainable weights,
+* builds the equivariant operator.
+
+---
+
+## 20.13.15.7 Understanding the Inputs
+
+Unlike an ordinary linear layer,
+
+the tensor product requires **two** feature tensors.
+
+Conceptually,
+
+```text id="fctp4"
+Feature Set 1
+
+×
+
+Feature Set 2
+
+↓
+
+Tensor Product
+```
+
+This reflects the mathematical definition of the tensor product itself.
+
+---
+
+## 20.13.15.8 Creating Sample Features
+
+Generate two random feature tensors.
+
+```python
+import torch
+
+x = torch.randn(
+    irreps_in1.dim
+)
+
+y = torch.randn(
+    irreps_in2.dim
+)
+```
+
+The `.dim` attribute gives the total number of feature channels.
+
+---
+
+## 20.13.15.9 Forward Pass
+
+Apply the tensor product.
+
+```python
+output = tp(x, y)
+```
+
+The result is an equivariant feature vector with symmetry structure
+
+```python
+irreps_out
+```
+
+---
+
+## 20.13.15.10 Checking Output Shape
+
+The output dimension can be inspected.
+
+```python
+print(output.shape)
+```
+
+Example
+
+```text
+torch.Size([irreps_out.dim])
+```
+
+The exact dimension depends on the chosen irreducible representations.
+
+---
+
+## 20.13.15.11 What Happens Internally?
+
+The forward computation can be summarized as
+
+```text id="fctp5"
+Input Features
+
+↓
+
+Tensor Product
+
+↓
+
+Clebsch–Gordan Coupling
+
+↓
+
+Weighted Sum
+
+↓
+
+Output Features
+```
+
+Notice that tensor products alone are not enough.
+
+The learnable weights determine how strongly each coupling contributes.
+
+---
+
+## 20.13.15.12 Learnable Parameters
+
+Unlike fixed tensor products,
+
+`FullyConnectedTensorProduct` contains trainable parameters.
+
+These parameters are optimized during backpropagation,
+
+just like the weights of an ordinary neural network.
+
+However,
+
+the symmetry structure is fixed by representation theory.
+
+Training only changes the numerical values of the weights.
+
+---
+
+## 20.13.15.13 Difference from a Linear Layer
+
+An ordinary dense layer computes
+
+[
+y = Wx.
+]
+
+A tensor-product layer instead computes
+
+```text
+Tensor Product
+
+↓
+
+Symmetry Coupling
+
+↓
+
+Weighted Combination
+```
+
+The two operations are fundamentally different.
+
+Dense layers mix arbitrary numbers.
+
+Tensor-product layers mix only symmetry-compatible features.
+
+---
+
+## 20.13.15.14 Why This Preserves Equivariance
+
+Suppose both inputs are rotated.
+
+```text id="fctp6"
+Rotate Input A
+
+↓
+
+Tensor Product
+```
+
+```text id="fctp7"
+Rotate Input B
+
+↓
+
+Tensor Product
+```
+
+The output rotates exactly according to
+
+```python
+irreps_out
+```
+
+This behavior is guaranteed mathematically by the Clebsch–Gordan coefficients.
+
+---
+
+## 20.13.15.15 Tensor Product Paths
+
+Each valid coupling is called a **tensor-product path**.
+
+For example,
+
+a scalar and a vector can produce
+
+```text id="fctp8"
+0 × 1
+
+↓
+
+1
+```
+
+while two vectors can produce
+
+```text id="fctp9"
+1 × 1
+
+↓
+
+0
+
+1
+
+2
+```
+
+Each path receives its own learnable weight.
+
+---
+
+## 20.13.15.16 Why Multiple Paths Matter
+
+Suppose several different tensor products generate the same output irrep.
+
+Instead of choosing only one,
+
+the layer learns how to combine all of them.
+
+This increases the expressive power of the network while maintaining symmetry.
+
+---
+
+## 20.13.15.17 Use in Message Passing
+
+During message passing,
+
+neighbor information is typically combined using tensor products.
+
+A simplified workflow is
+
+```text id="fctp10"
+Neighbor Feature
+
+×
+
+Edge Spherical Harmonics
+
+↓
+
+Tensor Product
+
+↓
+
+Message
+```
+
+This operation appears repeatedly in
+
+* NequIP,
+* Allegro,
+* MACE,
+* Tensor Field Networks.
+
+---
+
+## 20.13.15.18 Computational Complexity
+
+Because every valid tensor-product path is considered,
+
+`FullyConnectedTensorProduct` can become computationally expensive,
+
+especially when
+
+* many irreps are used,
+* high angular degrees are included,
+* large multiplicities are present.
+
+Consequently,
+
+modern architectures often optimize or simplify these tensor products for improved efficiency.
+
+---
+
+## 20.13.15.19 Why It Is One of the Most Important Layers
+
+Nearly every sophisticated equivariant neural network relies on tensor products.
+
+Without this layer,
+
+the network would struggle to
+
+* combine directional information,
+* construct higher-order geometric features,
+* preserve rotational symmetry.
+
+For this reason,
+
+`FullyConnectedTensorProduct` is often regarded as one of the core computational primitives of e3nn.
+
+---
+
+## 20.13.15.20 Key Takeaways
+
+The `FullyConnectedTensorProduct` layer provides a practical implementation of equivariant tensor products in **e3nn**. Given two sets of input irreducible representations and a desired output representation, it automatically determines all valid tensor-product couplings, computes the required Clebsch–Gordan coefficients, and assigns learnable weights to every valid path. The resulting operation combines geometric information while preserving exact rotational equivariance, making it one of the foundational layers used throughout modern equivariant graph neural networks.
+
+---
+
+## Transition to Section 20.13.16 — Visualizing Tensor Product Paths and Learnable Couplings
+
+Although `FullyConnectedTensorProduct` can be created with only a few lines of code, a considerable amount of mathematical structure is hidden inside it. In the next section, we will visualize the tensor-product paths generated by this layer, inspect how different irreducible representations are connected, understand how learnable weights are assigned to each symmetry-allowed coupling, and develop an intuitive understanding of how equivariant information flows through tensor-product operations.
+
+## 20.13.16 Visualizing Tensor Product Paths and Learnable Couplings
+
+In the previous section, we introduced one of the most important layers in **e3nn**:
+
+```text
+FullyConnectedTensorProduct
+```
+
+Although creating the layer requires only a single line of code,
+
+```python
+tp = o3.FullyConnectedTensorProduct(...)
+```
+
+the amount of mathematics hidden inside this object is remarkable.
+
+Internally, the layer
+
+* identifies every valid tensor-product path,
+* computes the required Clebsch–Gordan coefficients,
+* allocates trainable weights,
+* constructs an equivariant computational graph.
+
+Understanding these hidden tensor-product paths provides valuable intuition for how modern equivariant neural networks process geometric information.
+
+---
+
+## 20.13.16.1 What Is a Tensor Product Path?
+
+A **tensor-product path** is one valid symmetry-preserving route that connects
+
+* an input irrep from the first feature,
+* an input irrep from the second feature,
+* an output irrep.
+
+Conceptually,
+
+```text
+Input Irrep A
+
+×
+
+Input Irrep B
+
+↓
+
+Output Irrep
+```
+
+Every allowed combination defined by representation theory becomes one computational path.
+
+---
+
+## 20.13.16.2 Example
+
+Suppose
+
+```python
+irreps_in1 = "2x0e + 1x1o"
+
+irreps_in2 = "1x1o"
+
+irreps_out = "2x0e + 2x1o + 1x2e"
+```
+
+Several valid tensor-product paths immediately appear.
+
+---
+
+### Path 1
+
+```text
+0e
+
+×
+
+1o
+
+↓
+
+1o
+```
+
+A scalar multiplied by a vector produces another vector.
+
+---
+
+### Path 2
+
+```text
+1o
+
+×
+
+1o
+
+↓
+
+0e
+```
+
+Two vectors produce a scalar.
+
+---
+
+### Path 3
+
+```text
+1o
+
+×
+
+1o
+
+↓
+
+1o
+```
+
+The vector component of
+
+[
+1\otimes1.
+]
+
+---
+
+### Path 4
+
+```text
+1o
+
+×
+
+1o
+
+↓
+
+2e
+```
+
+The tensor component of
+
+[
+1\otimes1.
+]
+
+---
+
+## 20.13.16.3 One Pair Can Produce Multiple Outputs
+
+Notice that
+
+```text
+Vector
+
+×
+
+Vector
+```
+
+does not generate only one output.
+
+Instead,
+
+it generates
+
+```text
+Scalar
+
+Vector
+
+Tensor
+```
+
+Therefore,
+
+a single pair of input irreps may create multiple tensor-product paths.
+
+---
+
+## 20.13.16.4 Multiple Copies Increase the Number of Paths
+
+Suppose we have
+
+```python
+"4x1o"
+```
+
+instead of
+
+```python
+"1x1o"
+```
+
+Each copy can couple independently.
+
+Conceptually,
+
+```text
+Vector 1
+
+↓
+
+Output
+```
+
+```text
+Vector 2
+
+↓
+
+Output
+```
+
+```text
+Vector 3
+
+↓
+
+Output
+```
+
+```text
+Vector 4
+
+↓
+
+Output
+```
+
+Consequently,
+
+the number of learnable couplings increases.
+
+---
+
+## 20.13.16.5 Every Path Receives a Weight
+
+Each valid path has an associated learnable parameter.
+
+Conceptually,
+
+```text
+Tensor Product Path
+
+↓
+
+Weight
+
+↓
+
+Contribution
+```
+
+Thus,
+
+the network learns
+
+how important each symmetry-preserving interaction should be.
+
+---
+
+## 20.13.16.6 Information Flow
+
+The entire computation can be visualized as
+
+```text
+Input Features
+
+↓
+
+Split into Irreps
+
+↓
+
+Generate Tensor Products
+
+↓
+
+Separate Paths
+
+↓
+
+Weighted Sum
+
+↓
+
+Output Features
+```
+
+Rather than mixing everything together,
+
+information flows through carefully organized symmetry channels.
+
+---
+
+## 20.13.16.7 Why Invalid Paths Are Removed
+
+Not every pair of irreps can produce every output.
+
+For example,
+
+[
+0\otimes0
+]
+
+cannot generate
+
+[
+2.
+]
+
+Therefore,
+
+the following path does **not** exist.
+
+```text
+Scalar
+
+×
+
+Scalar
+
+↓
+
+Tensor
+```
+
+e3nn automatically removes such impossible couplings.
+
+Only mathematically valid paths remain.
+
+---
+
+## 20.13.16.8 Sparse Connectivity
+
+Unlike ordinary dense layers,
+
+tensor-product layers are **sparse**.
+
+Connections exist only when allowed by representation theory.
+
+Conceptually,
+
+an ordinary dense layer looks like
+
+```text
+Everything
+
+↓
+
+Connected
+
+↓
+
+Everything
+```
+
+whereas a tensor-product layer is
+
+```text
+Only
+
+Symmetry-Allowed
+
+Connections
+```
+
+This reduces unnecessary computation while preserving physical correctness.
+
+---
+
+## 20.13.16.9 Visualizing the Paths
+
+A simplified diagram might look like
+
+```text
+0e ───────► 1o
+
+1o ─┐
+
+    ├──────► 0e
+
+    ├──────► 1o
+
+    └──────► 2e
+```
+
+Each arrow corresponds to one tensor-product path.
+
+---
+
+## 20.13.16.10 Path Multiplicity
+
+If multiple symmetry-equivalent paths exist,
+
+the layer learns a separate weight for each.
+
+Conceptually,
+
+```text
+Path A
+
+↓
+
+Weight A
+```
+
+```text
+Path B
+
+↓
+
+Weight B
+```
+
+These independent parameters increase model flexibility.
+
+---
+
+## 20.13.16.11 Inspecting the Number of Parameters
+
+The number of trainable parameters can be inspected directly.
+
+```python
+from e3nn import o3
+
+tp = o3.FullyConnectedTensorProduct(
+    irreps_in1,
+    irreps_in2,
+    irreps_out
+)
+
+print(tp.weight_numel)
+```
+
+Example output
+
+```text
+52
+```
+
+The exact value depends on
+
+* multiplicities,
+* angular degrees,
+* number of valid tensor-product paths.
+
+---
+
+## 20.13.16.12 Why the Parameter Count Is Smaller Than Expected
+
+A conventional dense layer connecting
+
+100 inputs
+
+to
+
+100 outputs
+
+contains
+
+[
+100\times100
+============
+
+10000
+]
+
+weights.
+
+An equivariant tensor-product layer often contains **far fewer** parameters because
+
+* invalid couplings are forbidden,
+* symmetry ties together many coefficients,
+* only physically meaningful interactions remain.
+
+This makes equivariant models remarkably parameter-efficient.
+
+---
+
+## 20.13.16.13 Example from Materials Science
+
+Suppose an atom stores
+
+* scalar chemical information,
+* vector bond information,
+* tensor anisotropy information.
+
+During message passing,
+
+the tensor-product layer automatically computes all symmetry-allowed interactions.
+
+Conceptually,
+
+```text
+Chemical Identity
+
+×
+
+Bond Direction
+
+↓
+
+Vector Message
+```
+
+```text
+Bond Direction
+
+×
+
+Bond Direction
+
+↓
+
+Tensor Message
+```
+
+Each interaction contributes differently to the final atomic representation.
+
+---
+
+## 20.13.16.14 Internal Computation
+
+Although hidden from the user,
+
+the forward pass resembles
+
+```text
+Input
+
+↓
+
+Enumerate Paths
+
+↓
+
+Compute Tensor Products
+
+↓
+
+Apply Clebsch–Gordan Coefficients
+
+↓
+
+Multiply by Learnable Weights
+
+↓
+
+Sum Outputs
+
+↓
+
+Next Layer
+```
+
+This sequence is executed every time the layer processes data.
+
+---
+
+## 20.13.16.15 Why This Improves Learning
+
+Each tensor-product path corresponds to one physically meaningful interaction.
+
+Instead of forcing the network to discover rotational symmetry from data,
+
+the architecture already knows
+
+* which interactions are allowed,
+* which interactions are impossible.
+
+Training therefore focuses on learning **physics**, not rediscovering symmetry.
+
+---
+
+## 20.13.16.16 Tensor Product Paths in Modern Architectures
+
+Modern equivariant models differ mainly in
+
+* how many tensor-product paths they include,
+* how they weight those paths,
+* when tensor products are applied.
+
+For example,
+
+* **NequIP** uses rich tensor-product interactions,
+* **Allegro** simplifies message passing while retaining tensor products,
+* **MACE** introduces higher-order tensor interactions through carefully designed tensor-product blocks.
+
+---
+
+## 20.13.16.17 Intuitive Summary
+
+A tensor-product layer can be imagined as a highly organized network of symmetry-preserving connections.
+
+Instead of arbitrary feature mixing,
+
+every connection follows mathematical rules imposed by representation theory.
+
+These rules determine
+
+* which paths exist,
+* which outputs are possible,
+* how information flows through the network.
+
+---
+
+## 20.13.16.18 Key Takeaways
+
+A `FullyConnectedTensorProduct` layer consists of many **tensor-product paths**, each representing a symmetry-allowed interaction between input irreducible representations. Every valid path receives its own learnable weight, while impossible couplings are excluded automatically. This structured connectivity enables the network to combine geometric information efficiently and exactly while maintaining rotational equivariance.
+
+By organizing computation into symmetry-preserving channels, tensor-product layers provide the expressive power needed for state-of-the-art equivariant graph neural networks without sacrificing physical consistency.
+
+---
+
+## Transition to Section 20.13.17 — Building a Complete Equivariant Layer
+
+So far, we have examined the individual components of equivariant computation: irreducible representations, Wigner D-matrices, tensor products, Clebsch–Gordan coefficients, and tensor-product layers. In the next section, we will assemble these building blocks into a **complete equivariant layer**, following the sequence used in modern architectures such as **NequIP**, **Allegro**, and **MACE**. We will trace the full data flow—from input features, through tensor products and nonlinearities, to equivariant outputs—and understand how a single layer transforms atomic representations while preserving rotational symmetry.
+
+## 20.13.17 Building a Complete Equivariant Layer
+
+Throughout this chapter, we have introduced the fundamental building blocks of equivariant neural networks:
+
+* irreducible representations,
+* rotation groups,
+* Wigner D-matrices,
+* tensor products,
+* Clebsch–Gordan coefficients,
+* `FullyConnectedTensorProduct`.
+
+Each of these components plays an essential role.
+
+However, modern equivariant graph neural networks do not use these components in isolation.
+
+Instead, they combine them into **equivariant layers**, which serve as the fundamental computational units of architectures such as
+
+* **NequIP**,
+* **Allegro**,
+* **MACE**,
+* **Tensor Field Networks**,
+* **SE(3)-Transformer**.
+
+In this section, we will examine how all these pieces fit together.
+
+---
+
+## 20.13.17.1 What Is an Equivariant Layer?
+
+An equivariant layer is analogous to a dense layer in a conventional neural network.
+
+A dense layer performs
+
+```text id="eqlayer1"
+Input
+
+↓
+
+Linear Layer
+
+↓
+
+Activation
+
+↓
+
+Output
+```
+
+An equivariant layer follows a more sophisticated sequence because it must preserve rotational symmetry.
+
+---
+
+## 20.13.17.2 Overall Pipeline
+
+A simplified equivariant layer looks like
+
+```text id="eqlayer2"
+Atomic Features
+
+↓
+
+Neighbor Messages
+
+↓
+
+Tensor Product
+
+↓
+
+Linear Mixing
+
+↓
+
+Equivariant Nonlinearity
+
+↓
+
+Updated Features
+```
+
+Every operation is designed to preserve equivariance.
+
+---
+
+## 20.13.17.3 Step 1 — Input Features
+
+The layer begins with atomic features.
+
+For example,
+
+```text id="eqlayer3"
+4 Scalars
+
+2 Vectors
+
+1 Tensor
+```
+
+These features are represented by irreducible representations such as
+
+```python id="bmlg9w"
+4x0e + 2x1o + 1x2e
+```
+
+---
+
+## 20.13.17.4 Step 2 — Neighbor Information
+
+Each atom receives information from neighboring atoms.
+
+Conceptually,
+
+```text id="eqlayer4"
+Neighbor Features
+
+↓
+
+Messages
+```
+
+Unlike ordinary GNNs,
+
+these messages also contain geometric information.
+
+---
+
+## 20.13.17.5 Step 3 — Edge Geometry
+
+The geometry between two atoms is encoded using
+
+* relative position vectors,
+* distances,
+* spherical harmonics.
+
+Conceptually,
+
+```text id="eqlayer5"
+Relative Position
+
+↓
+
+Spherical Harmonics
+```
+
+These spherical harmonics provide directional information for message passing.
+
+---
+
+## 20.13.17.6 Step 4 — Tensor Product
+
+Neighbor features are combined with edge geometry.
+
+```text id="eqlayer6"
+Neighbor Features
+
+×
+
+Edge Features
+
+↓
+
+Tensor Product
+```
+
+This operation generates richer geometric representations while preserving symmetry.
+
+---
+
+## 20.13.17.7 Step 5 — Linear Mixing
+
+The tensor product produces many output channels.
+
+These channels are then linearly combined.
+
+Conceptually,
+
+```text id="eqlayer7"
+Tensor Product Outputs
+
+↓
+
+Learnable Weights
+
+↓
+
+Mixed Features
+```
+
+Unlike an ordinary dense layer,
+
+only symmetry-compatible channels are mixed.
+
+---
+
+## 20.13.17.8 Step 6 — Equivariant Nonlinearity
+
+Neural networks require nonlinear activation functions.
+
+However,
+
+ordinary activations such as
+
+```text id="eqlayer8"
+ReLU
+
+Sigmoid
+
+Tanh
+```
+
+cannot generally be applied directly to vector or tensor features.
+
+Instead,
+
+equivariant architectures use specialized nonlinearities that preserve symmetry.
+
+---
+
+## 20.13.17.9 Step 7 — Updated Atomic Features
+
+The final output becomes the input for the next layer.
+
+```text id="eqlayer9"
+Updated Features
+
+↓
+
+Next Equivariant Layer
+```
+
+By stacking many such layers,
+
+the network learns increasingly complex geometric representations.
+
+---
+
+## 20.13.17.10 Complete Computational Graph
+
+The entire forward computation can be summarized as
+
+```text id="eqlayer10"
+Input Features
+
+↓
+
+Neighbor Aggregation
+
+↓
+
+Edge Geometry
+
+↓
+
+Tensor Product
+
+↓
+
+Linear Mixing
+
+↓
+
+Equivariant Activation
+
+↓
+
+Output Features
+```
+
+Every stage preserves rotational equivariance.
+
+---
+
+## 20.13.17.11 Relationship to Message Passing
+
+An equivariant message-passing layer typically follows
+
+```text id="eqlayer11"
+Neighbor Atom
+
+↓
+
+Message Construction
+
+↓
+
+Tensor Product
+
+↓
+
+Aggregation
+
+↓
+
+Update Central Atom
+```
+
+This structure is repeated for every atom in the crystal.
+
+---
+
+## 20.13.17.12 Example: Silicon Crystal
+
+Consider a silicon atom.
+
+Initially,
+
+its features contain
+
+* chemical identity,
+* local environment,
+* geometric information.
+
+Neighbor atoms send messages.
+
+Each message is combined with the bond direction through a tensor product.
+
+After aggregation,
+
+the atom possesses a richer representation of its local environment.
+
+Repeating this process through several layers allows the network to capture increasingly long-range structural information.
+
+---
+
+## 20.13.17.13 Why Tensor Products Appear Only Once Per Layer
+
+Although tensor products are computationally expensive,
+
+they are also highly expressive.
+
+Most architectures therefore perform
+
+one major tensor-product operation per layer,
+
+followed by
+
+* linear transformations,
+* normalization,
+* nonlinear activation.
+
+This balances computational efficiency with representational power.
+
+---
+
+## 20.13.17.14 Residual Connections
+
+Many modern architectures also include residual connections.
+
+Conceptually,
+
+```text id="eqlayer12"
+Input
+
+↓
+
+Equivariant Layer
+
+↓
+
+Add Original Features
+
+↓
+
+Output
+```
+
+Residual learning improves optimization and enables deeper networks.
+
+---
+
+## 20.13.17.15 Normalization
+
+To stabilize training,
+
+equivariant layers often include normalization methods that preserve symmetry.
+
+These normalization techniques operate separately on different irreducible representations,
+
+ensuring that rotational equivariance is maintained throughout training.
+
+---
+
+## 20.13.17.16 Multiple Layers
+
+A complete equivariant network consists of many stacked layers.
+
+```text id="eqlayer13"
+Equivariant Layer 1
+
+↓
+
+Equivariant Layer 2
+
+↓
+
+Equivariant Layer 3
+
+↓
+
+Equivariant Layer 4
+
+↓
+
+Prediction
+```
+
+Each layer expands the receptive field and captures increasingly complex geometric relationships.
+
+---
+
+## 20.13.17.17 Comparison with Ordinary Neural Networks
+
+| Ordinary Layer                       | Equivariant Layer                         |
+| ------------------------------------ | ----------------------------------------- |
+| Linear transformation                | Tensor product + linear mixing            |
+| Standard activation                  | Equivariant activation                    |
+| Arbitrary feature mixing             | Symmetry-constrained mixing               |
+| Learns rotational behavior from data | Rotation behavior built into architecture |
+
+The equivariant layer is therefore a principled extension of the conventional neural network layer.
+
+---
+
+## 20.13.17.18 Why This Architecture Works
+
+Each component contributes a specific function.
+
+| Component                   | Purpose                                          |
+| --------------------------- | ------------------------------------------------ |
+| Irreps                      | Organize features by symmetry                    |
+| Wigner D-matrices           | Rotate features correctly                        |
+| Tensor products             | Combine geometric information                    |
+| Clebsch–Gordan coefficients | Separate tensor products into irreps             |
+| Learnable weights           | Learn task-specific interactions                 |
+| Equivariant nonlinearities  | Introduce nonlinearity without breaking symmetry |
+
+Together,
+
+these components produce a network that is both expressive and physically consistent.
+
+---
+
+## 20.13.17.19 Big Picture
+
+The entire layer can be summarized as
+
+```text id="eqlayer14"
+Input Features
+
+↓
+
+Symmetry-Preserving Geometry Processing
+
+↓
+
+Learnable Equivariant Transformations
+
+↓
+
+Output Features
+```
+
+Rather than learning rotational symmetry from examples,
+
+the layer enforces it by construction.
+
+---
+
+## 20.13.17.20 Key Takeaways
+
+A complete equivariant layer combines multiple symmetry-preserving operations into a single computational unit. Starting from atomic features and geometric information, it constructs neighbor messages, applies tensor products, performs learnable linear mixing, uses equivariant nonlinearities, and produces updated features that remain exactly equivariant under rotations. By stacking many such layers, modern architectures such as **NequIP**, **Allegro**, and **MACE** build increasingly expressive representations of atomic environments while maintaining strict adherence to physical symmetry principles.
+
+---
+
+## Transition to Section 20.13.18 — Constructing an Equivariant Layer in e3nn
+
+Having understood the conceptual structure of an equivariant layer, we are now ready to implement one in code. In the next section, we will build a complete equivariant layer using **e3nn**, combining irreducible representations, tensor products, learnable parameters, and equivariant nonlinearities into a working PyTorch module. This implementation will closely resemble the building blocks used inside state-of-the-art equivariant graph neural networks for materials science.
+
+## 20.13.18 Constructing an Equivariant Layer in e3nn
+
+In the previous section, we examined the conceptual structure of an equivariant layer.
+
+Now it is time to translate those ideas into code.
+
+Fortunately, **e3nn** is built on top of **PyTorch**, meaning that an equivariant layer is simply another `torch.nn.Module`.
+
+The difference is that, instead of ordinary linear layers and activations, we use symmetry-aware operations such as
+
+* irreducible representations,
+* tensor products,
+* equivariant linear layers,
+* gated nonlinearities.
+
+By the end of this section, you will understand how to construct the fundamental building block that appears repeatedly inside modern architectures such as **NequIP**, **Allegro**, and **MACE**.
+
+---
+
+## 20.13.18.1 The Structure of an Equivariant Layer
+
+Conceptually, our layer will follow this sequence:
+
+```text id="eqimpl1"
+Input Features
+
+↓
+
+Tensor Product
+
+↓
+
+Linear Mixing
+
+↓
+
+Equivariant Activation
+
+↓
+
+Output Features
+```
+
+Every stage preserves rotational equivariance.
+
+---
+
+## 20.13.18.2 Importing Required Modules
+
+We begin by importing the necessary libraries.
+
+```python
+import torch
+import torch.nn as nn
+
+from e3nn import o3
+from e3nn.nn import Gate
+```
+
+Here,
+
+* `torch` provides automatic differentiation,
+* `o3` contains irreducible representations and tensor products,
+* `Gate` provides an equivariant nonlinearity.
+
+---
+
+## 20.13.18.3 Defining Input and Output Irreps
+
+Suppose our input contains
+
+* four scalar channels,
+* two vector channels.
+
+```python
+irreps_in = o3.Irreps(
+    "4x0e + 2x1o"
+)
+```
+
+Suppose we want the output to contain
+
+* eight scalars,
+* four vectors,
+* two rank-2 tensors.
+
+```python
+irreps_out = o3.Irreps(
+    "8x0e + 4x1o + 2x2e"
+)
+```
+
+These definitions completely specify the symmetry structure of the layer.
+
+---
+
+## 20.13.18.4 Creating the Tensor Product
+
+For simplicity, assume that both operands have the same irreps.
+
+```python
+tp = o3.FullyConnectedTensorProduct(
+    irreps_in,
+    irreps_in,
+    irreps_out
+)
+```
+
+This layer automatically
+
+* determines valid tensor-product paths,
+* computes Clebsch–Gordan coefficients,
+* creates trainable weights.
+
+---
+
+## 20.13.18.5 Wrapping Everything Inside a PyTorch Module
+
+A typical implementation begins as
+
+```python
+class EquivariantLayer(nn.Module):
+
+    def __init__(self):
+
+        super().__init__()
+```
+
+Just like any PyTorch module.
+
+---
+
+## 20.13.18.6 Initializing the Tensor Product
+
+Inside the constructor,
+
+store the tensor product layer.
+
+```python
+class EquivariantLayer(nn.Module):
+
+    def __init__(self):
+
+        super().__init__()
+
+        self.tp = o3.FullyConnectedTensorProduct(
+            irreps_in,
+            irreps_in,
+            irreps_out
+        )
+```
+
+---
+
+## 20.13.18.7 Writing the Forward Function
+
+The forward function receives two feature tensors.
+
+```python
+def forward(
+    self,
+    x,
+    y
+):
+```
+
+where
+
+* `x` is one equivariant feature,
+* `y` is another equivariant feature.
+
+---
+
+## 20.13.18.8 Applying the Tensor Product
+
+The core computation is remarkably simple.
+
+```python
+def forward(
+    self,
+    x,
+    y
+):
+
+    return self.tp(
+        x,
+        y
+    )
+```
+
+Although only one line appears,
+
+the layer internally performs
+
+* tensor-product coupling,
+* Clebsch–Gordan decomposition,
+* weighted summation.
+
+---
+
+## 20.13.18.9 Complete Layer
+
+The entire implementation becomes
+
+```python
+import torch
+import torch.nn as nn
+
+from e3nn import o3
+
+
+class EquivariantLayer(nn.Module):
+
+    def __init__(self):
+
+        super().__init__()
+
+        self.tp = o3.FullyConnectedTensorProduct(
+            irreps_in,
+            irreps_in,
+            irreps_out
+        )
+
+    def forward(
+        self,
+        x,
+        y
+    ):
+
+        return self.tp(
+            x,
+            y
+        )
+```
+
+This is already a valid equivariant PyTorch module.
+
+---
+
+## 20.13.18.10 Creating an Instance
+
+Instantiate the layer.
+
+```python
+layer = EquivariantLayer()
+```
+
+Nothing unusual is required.
+
+---
+
+## 20.13.18.11 Creating Random Inputs
+
+Generate random feature tensors.
+
+```python
+x = torch.randn(
+    irreps_in.dim
+)
+
+y = torch.randn(
+    irreps_in.dim
+)
+```
+
+Notice that the dimension is determined automatically from the irreducible representations.
+
+---
+
+## 20.13.18.12 Forward Pass
+
+Run the layer.
+
+```python
+output = layer(
+    x,
+    y
+)
+```
+
+The resulting tensor transforms according to
+
+```python
+irreps_out
+```
+
+---
+
+## 20.13.18.13 Checking the Output
+
+Inspect the output size.
+
+```python
+print(
+    output.shape
+)
+```
+
+Example
+
+```text
+torch.Size([irreps_out.dim])
+```
+
+---
+
+## 20.13.18.14 Adding an Equivariant Linear Layer
+
+Many architectures follow the tensor product with an equivariant linear transformation.
+
+```python
+linear = o3.Linear(
+    irreps_out,
+    irreps_out
+)
+```
+
+Now,
+
+```python
+output = linear(
+    output
+)
+```
+
+The feature representation remains equivariant.
+
+---
+
+## 20.13.18.15 Adding an Equivariant Activation
+
+Scalar channels may use ordinary nonlinearities,
+
+but vector channels require special treatment.
+
+A gated activation provides one solution.
+
+Conceptually,
+
+```text id="eqimpl2"
+Tensor Product
+
+↓
+
+Linear
+
+↓
+
+Gate
+
+↓
+
+Output
+```
+
+The gate scales vector and tensor features using learned scalar values while preserving equivariance.
+
+---
+
+## 20.13.18.16 Building Deeper Networks
+
+A realistic model stacks many equivariant layers.
+
+```text id="eqimpl3"
+Layer 1
+
+↓
+
+Layer 2
+
+↓
+
+Layer 3
+
+↓
+
+Layer 4
+
+↓
+
+Prediction
+```
+
+Each layer extracts increasingly sophisticated geometric information.
+
+---
+
+## 20.13.18.17 Relationship to Modern Models
+
+Although architectures such as
+
+* NequIP,
+* Allegro,
+* MACE,
+
+contain many additional components,
+
+their fundamental computational unit closely resembles the layer constructed here.
+
+The main differences involve
+
+* message-passing strategy,
+* edge feature construction,
+* normalization,
+* efficiency optimizations.
+
+---
+
+## 20.13.18.18 Practical Workflow
+
+A complete equivariant message-passing layer typically follows
+
+```text id="eqimpl4"
+Neighbor Features
+
+↓
+
+Tensor Product
+
+↓
+
+Linear Mixing
+
+↓
+
+Normalization
+
+↓
+
+Gate
+
+↓
+
+Residual Addition
+
+↓
+
+Output Features
+```
+
+This pattern is repeated dozens of times in deep equivariant networks.
+
+---
+
+## 20.13.18.19 Why This Design Is Powerful
+
+Unlike conventional neural networks,
+
+this architecture never has to learn rotational symmetry from data.
+
+Instead,
+
+every operation is mathematically constrained to respect the transformation rules of SO(3).
+
+As a result,
+
+the model
+
+* learns more efficiently,
+* requires fewer training examples,
+* generalizes better to rotated atomic structures,
+* produces physically consistent predictions.
+
+---
+
+## 20.13.18.20 Key Takeaways
+
+An equivariant layer in **e3nn** is implemented as an ordinary PyTorch module whose internal operations are symmetry-aware. By combining `FullyConnectedTensorProduct`, equivariant linear layers, and specialized nonlinearities, we obtain a computational block that transforms atomic features while preserving exact rotational equivariance. This layer forms the core building block from which state-of-the-art equivariant graph neural networks for atomistic modeling are constructed.
+
+---
+
+## Transition to Section 20.13.19 — How NequIP Builds an Equivariant Interaction Block
+
+The equivariant layer developed in this section captures the essential mechanics of symmetry-preserving computation, but modern architectures extend this idea into more sophisticated interaction blocks. In the next section, we will examine the **NequIP interaction block**, tracing the complete flow of information from neighboring atoms, through radial basis functions, spherical harmonics, tensor products, gated nonlinearities, and residual updates. This will reveal how all of the mathematical concepts introduced throughout this chapter come together in one of the most influential equivariant graph neural networks for materials science.
+
+## 20.13.19 How NequIP Builds an Equivariant Interaction Block
+
+Throughout this chapter, we have gradually assembled the mathematical machinery required for equivariant graph neural networks.
+
+We introduced
+
+* irreducible representations,
+* Wigner D-matrices,
+* spherical harmonics,
+* tensor products,
+* Clebsch–Gordan coefficients,
+* equivariant nonlinearities,
+* equivariant layers.
+
+Now we are ready to see how these components are combined in one of the most influential architectures in atomistic machine learning:
+
+**NequIP** (Neural Equivariant Interatomic Potentials).
+
+Rather than studying isolated operations, we will examine the complete **interaction block**, which serves as the fundamental computational unit of NequIP.
+
+---
+
+## 20.13.19.1 What Is an Interaction Block?
+
+An interaction block is responsible for updating the feature representation of each atom by incorporating information from its neighboring atoms while preserving rotational equivariance.
+
+Conceptually,
+
+```text id="nequip1"
+Neighbor Atoms
+
+↓
+
+Compute Messages
+
+↓
+
+Aggregate Information
+
+↓
+
+Update Atom Features
+```
+
+Every interaction block performs this operation once.
+
+Stacking multiple blocks enables information to propagate across increasingly larger regions of the crystal or molecule.
+
+---
+
+## 20.13.19.2 Overall Architecture
+
+A simplified NequIP interaction block can be represented as
+
+```text id="nequip2"
+Neighbor Features
+
+↓
+
+Radial Basis Functions
+
++
+
+Spherical Harmonics
+
+↓
+
+Tensor Product
+
+↓
+
+Linear Mixing
+
+↓
+
+Gate
+
+↓
+
+Residual Update
+
+↓
+
+New Atomic Features
+```
+
+Every component is equivariant.
+
+---
+
+## 20.13.19.3 Input Atomic Features
+
+Suppose atom
+
+[
+i
+]
+
+contains an equivariant feature vector
+
+[
+\mathbf{h}_i.
+]
+
+Initially,
+
+these features may contain
+
+* scalar chemical information,
+* vector geometric information,
+* higher-order tensor information.
+
+Each feature is organized according to its irreducible representation.
+
+---
+
+## 20.13.19.4 Neighbor Search
+
+For every atom,
+
+NequIP identifies neighboring atoms within a cutoff radius.
+
+Conceptually,
+
+```text id="nequip3"
+Central Atom
+
+↓
+
+Neighbor List
+```
+
+Only nearby atoms participate in message passing.
+
+This keeps computation efficient while preserving locality.
+
+---
+
+## 20.13.19.5 Relative Position Vector
+
+For each neighboring atom,
+
+compute the displacement vector
+
+[
+\mathbf{r}_{ij}
+===============
+
+## \mathbf{r}_j
+
+\mathbf{r}_i.
+]
+
+This vector contains
+
+* distance,
+* direction.
+
+These two pieces of information are treated differently.
+
+---
+
+## 20.13.19.6 Separating Distance and Direction
+
+The displacement vector is decomposed into
+
+```text id="nequip4"
+Distance
+
++
+
+Direction
+```
+
+Distance determines
+
+how strongly atoms interact.
+
+Direction determines
+
+how the interaction transforms under rotation.
+
+---
+
+## 20.13.19.7 Radial Basis Functions
+
+The distance
+
+[
+r_{ij}
+]
+
+is expanded using radial basis functions.
+
+Conceptually,
+
+```text id="nequip5"
+Distance
+
+↓
+
+Radial Basis Expansion
+
+↓
+
+Edge Embedding
+```
+
+The radial embedding contains only scalar information.
+
+It remains unchanged under rotations.
+
+---
+
+## 20.13.19.8 Spherical Harmonics
+
+The direction
+
+[
+\hat{r}_{ij}
+]
+
+is expanded using spherical harmonics.
+
+Conceptually,
+
+```text id="nequip6"
+Direction
+
+↓
+
+Spherical Harmonics
+
+↓
+
+Angular Features
+```
+
+Unlike radial basis functions,
+
+spherical harmonics transform according to irreducible representations.
+
+---
+
+## 20.13.19.9 Constructing Edge Features
+
+The complete edge representation combines
+
+```text id="nequip7"
+Radial Information
+
++
+
+Angular Information
+```
+
+Together,
+
+these describe the geometry between neighboring atoms.
+
+---
+
+## 20.13.19.10 Building Messages
+
+Each neighboring atom contributes a message.
+
+Conceptually,
+
+```text id="nequip8"
+Neighbor Features
+
+×
+
+Edge Features
+
+↓
+
+Tensor Product
+
+↓
+
+Message
+```
+
+The tensor product is the key operation that combines atomic features with bond geometry.
+
+---
+
+## 20.13.19.11 Tensor Product Coupling
+
+Inside the interaction block,
+
+the tensor product
+
+* couples atomic irreps,
+* couples spherical harmonics,
+* generates new equivariant features.
+
+Mathematically,
+
+this corresponds to repeated Clebsch–Gordan decompositions.
+
+---
+
+## 20.13.19.12 Linear Mixing
+
+The tensor product often generates many channels.
+
+A learnable equivariant linear layer combines them.
+
+Conceptually,
+
+```text id="nequip9"
+Tensor Product Outputs
+
+↓
+
+Linear Layer
+
+↓
+
+Mixed Features
+```
+
+Only symmetry-compatible channels are mixed.
+
+---
+
+## 20.13.19.13 Equivariant Gate
+
+The mixed features pass through a gated nonlinearity.
+
+```text id="nequip10"
+Scalars
+
+↓
+
+Activation
+
+↓
+
+Gate
+
+↓
+
+Vectors
+
+↓
+
+Scaled Vectors
+```
+
+The gate introduces nonlinearity while preserving rotational symmetry.
+
+---
+
+## 20.13.19.14 Aggregating Messages
+
+Messages from all neighbors are summed.
+
+Conceptually,
+
+```text id="nequip11"
+Message 1
+
++
+
+Message 2
+
++
+
+Message 3
+
+↓
+
+Aggregated Message
+```
+
+Summation preserves equivariance because addition is equivariant.
+
+---
+
+## 20.13.19.15 Residual Update
+
+The aggregated message updates the original atomic feature.
+
+Conceptually,
+
+```text id="nequip12"
+Old Feature
+
++
+
+Neighbor Message
+
+↓
+
+Updated Feature
+```
+
+Residual learning improves optimization and stabilizes deep networks.
+
+---
+
+## 20.13.19.16 Repeating the Process
+
+One interaction block captures information only from immediate neighbors.
+
+Stacking blocks expands the receptive field.
+
+```text id="nequip13"
+Interaction Block 1
+
+↓
+
+Interaction Block 2
+
+↓
+
+Interaction Block 3
+
+↓
+
+Interaction Block 4
+```
+
+After several layers,
+
+each atom contains information from a much larger portion of the crystal.
+
+---
+
+## 20.13.19.17 Why This Architecture Works
+
+Every operation has a clear physical interpretation.
+
+| Component           | Physical Meaning                      |
+| ------------------- | ------------------------------------- |
+| Neighbor search     | Local atomic interactions             |
+| Radial basis        | Distance dependence                   |
+| Spherical harmonics | Angular dependence                    |
+| Tensor product      | Combine geometry with atomic features |
+| Linear layer        | Learn interaction strengths           |
+| Gate                | Introduce nonlinearity                |
+| Residual update     | Refine atomic representation          |
+
+Rather than relying on arbitrary neural network operations,
+
+each step reflects the physics of atomic interactions.
+
+---
+
+## 20.13.19.18 Comparison with a Conventional GNN
+
+A conventional message-passing neural network typically performs
+
+```text id="nequip14"
+Neighbor Features
+
+↓
+
+MLP
+
+↓
+
+Aggregation
+
+↓
+
+Update
+```
+
+The geometry enters only through distances or simple edge features.
+
+NequIP instead performs
+
+```text id="nequip15"
+Neighbor Features
+
+↓
+
+Tensor Product
+
+↓
+
+Equivariant Mixing
+
+↓
+
+Aggregation
+
+↓
+
+Equivariant Update
+```
+
+This architecture explicitly models rotational symmetry.
+
+---
+
+## 20.13.19.19 Complete Data Flow
+
+The complete NequIP interaction block can be summarized as
+
+```text id="nequip16"
+Atomic Features
+
+↓
+
+Neighbor Search
+
+↓
+
+Relative Positions
+
+↓
+
+Radial Basis
+
++
+
+Spherical Harmonics
+
+↓
+
+Tensor Product
+
+↓
+
+Linear Layer
+
+↓
+
+Gate
+
+↓
+
+Neighbor Aggregation
+
+↓
+
+Residual Update
+
+↓
+
+Updated Atomic Features
+```
+
+This sequence is repeated throughout the network.
+
+---
+
+## 20.13.19.20 Why NequIP Achieved State-of-the-Art Performance
+
+NequIP demonstrated that incorporating exact rotational equivariance into every interaction block leads to
+
+* improved data efficiency,
+* higher prediction accuracy,
+* better force consistency,
+* physically meaningful learned representations,
+* excellent transferability across atomistic systems.
+
+Its success established equivariant graph neural networks as one of the leading approaches for machine learning interatomic potentials.
+
+---
+
+## 20.13.19.21 Key Takeaways
+
+A NequIP interaction block integrates all of the core concepts introduced in this chapter into a single symmetry-preserving computational unit. Starting from neighboring atomic features and relative positions, it constructs radial and angular edge representations, combines them through equivariant tensor products, applies learnable linear transformations and gated nonlinearities, aggregates messages from neighboring atoms, and updates the atomic representations through residual connections. By stacking many such interaction blocks, NequIP learns increasingly sophisticated geometric representations while maintaining exact rotational equivariance throughout the network.
+
+---
+
+## Transition to Section 20.13.20 — From Interaction Blocks to the Complete NequIP Architecture
+
+Having understood the internal mechanics of a single interaction block, we are now prepared to examine the **entire NequIP architecture**. In the next section, we will connect the embedding layer, multiple interaction blocks, readout network, and energy prediction head into one complete model, tracing the flow of information from raw atomic coordinates to predicted energies and forces. This will provide a holistic understanding of how NequIP performs atomistic machine learning using equivariant graph neural networks.
+
+## 20.13.20 From Interaction Blocks to the Complete NequIP Architecture
+
+In the previous section, we examined the internal structure of a **single NequIP interaction block**.
+
+Although an individual interaction block is powerful, it is only one component of the complete neural network.
+
+A full NequIP model contains
+
+* an embedding stage,
+* multiple interaction blocks,
+* output layers,
+* energy prediction,
+* force prediction.
+
+Together, these components form an end-to-end equivariant neural network capable of learning accurate interatomic potentials directly from atomic structures.
+
+In this section, we will trace the complete data flow through the NequIP architecture, from raw atomic coordinates to predicted energies and forces.
+
+---
+
+## 20.13.20.1 High-Level Architecture
+
+At the highest level, NequIP can be viewed as
+
+```text id="nequip_arch1"
+Atomic Structure
+
+↓
+
+Embedding
+
+↓
+
+Interaction Block 1
+
+↓
+
+Interaction Block 2
+
+↓
+
+Interaction Block 3
+
+↓
+
+Interaction Block N
+
+↓
+
+Atomic Energies
+
+↓
+
+Total Energy
+
+↓
+
+Forces
+```
+
+Every stage preserves rotational equivariance except the final scalar energy prediction, which is rotationally invariant.
+
+---
+
+## 20.13.20.2 Input Data
+
+The network begins with
+
+* atomic numbers,
+* atomic coordinates.
+
+For a crystal,
+
+the input consists of
+
+```text id="nequip_arch2"
+Atom Types
+
++
+
+Atomic Positions
+```
+
+No handcrafted descriptors are required.
+
+---
+
+## 20.13.20.3 Neighbor Graph Construction
+
+The atomic structure is converted into a graph.
+
+```text id="nequip_arch3"
+Atoms
+
+↓
+
+Nodes
+
+Neighbor Bonds
+
+↓
+
+Edges
+```
+
+Each node represents an atom.
+
+Each edge represents an interaction between neighboring atoms within a cutoff radius.
+
+---
+
+## 20.13.20.4 Initial Embedding
+
+Each atom type is converted into an initial feature vector.
+
+Conceptually,
+
+```text id="nequip_arch4"
+Atomic Number
+
+↓
+
+Embedding Table
+
+↓
+
+Initial Features
+```
+
+Initially,
+
+these features are almost entirely scalar.
+
+No directional information has yet been introduced.
+
+---
+
+## 20.13.20.5 Edge Feature Construction
+
+For every edge,
+
+NequIP computes
+
+* the distance,
+* the direction.
+
+These become
+
+```text id="nequip_arch5"
+Distance
+
+↓
+
+Radial Basis
+```
+
+and
+
+```text id="nequip_arch6"
+Direction
+
+↓
+
+Spherical Harmonics
+```
+
+Together they describe the local geometry.
+
+---
+
+## 20.13.20.6 First Interaction Block
+
+The embedded atomic features are combined with the edge features.
+
+Conceptually,
+
+```text id="nequip_arch7"
+Atomic Features
+
+×
+
+Edge Features
+
+↓
+
+Tensor Product
+
+↓
+
+Updated Features
+```
+
+After this step,
+
+atoms begin to encode information about their immediate neighbors.
+
+---
+
+## 20.13.20.7 Multiple Interaction Blocks
+
+One interaction block captures only local information.
+
+To capture more distant interactions,
+
+NequIP stacks multiple blocks.
+
+```text id="nequip_arch8"
+Block 1
+
+↓
+
+Block 2
+
+↓
+
+Block 3
+
+↓
+
+Block 4
+```
+
+After several layers,
+
+each atom contains information from an increasingly large neighborhood.
+
+This expansion of the receptive field is analogous to increasing the depth of a conventional graph neural network.
+
+---
+
+## 20.13.20.8 Feature Evolution
+
+As information propagates through the network,
+
+the atomic representations become progressively richer.
+
+Conceptually,
+
+```text id="nequip_arch9"
+Chemical Identity
+
+↓
+
+Local Geometry
+
+↓
+
+Neighbor Environment
+
+↓
+
+Higher-Order Geometry
+
+↓
+
+Atomic Representation
+```
+
+Each interaction block refines the representation.
+
+---
+
+## 20.13.20.9 Atomic Energy Prediction
+
+Once the interaction blocks have completed,
+
+each atom possesses a learned feature vector.
+
+A small neural network predicts the contribution of each atom to the total energy.
+
+Conceptually,
+
+```text id="nequip_arch10"
+Atomic Features
+
+↓
+
+Readout Network
+
+↓
+
+Atomic Energy
+```
+
+Importantly,
+
+atomic energies are **scalars**.
+
+Therefore,
+
+they remain invariant under rotation.
+
+---
+
+## 20.13.20.10 Summing Atomic Energies
+
+The total energy is computed by summing the atomic contributions.
+
+[
+\boxed{
+E_{\text{total}}
+================
+
+\sum_i E_i
+}
+]
+
+Conceptually,
+
+```text id="nequip_arch11"
+Atom 1 Energy
+
++
+
+Atom 2 Energy
+
++
+
+Atom 3 Energy
+
+↓
+
+Total Energy
+```
+
+This operation is naturally permutation invariant.
+
+---
+
+## 20.13.20.11 Force Prediction
+
+Unlike many earlier machine learning potentials,
+
+NequIP does not train a separate force network.
+
+Instead,
+
+forces are obtained directly from the energy.
+
+Using automatic differentiation,
+
+[
+\boxed{
+\mathbf{F}_i
+============
+
+*
+
+\nabla_i E
+}
+]
+
+PyTorch computes these gradients automatically.
+
+---
+
+## 20.13.20.12 Why This Is Important
+
+Because the forces are gradients of the energy,
+
+they automatically satisfy
+
+* energy conservation,
+* consistency between energy and force predictions,
+* smooth potential energy surfaces.
+
+This is a major advantage over architectures that predict energies and forces independently.
+
+---
+
+## 20.13.20.13 Complete Computational Pipeline
+
+The entire workflow can be summarized as
+
+```text id="nequip_arch12"
+Atomic Coordinates
+
+↓
+
+Neighbor Graph
+
+↓
+
+Embedding
+
+↓
+
+Radial Basis
+
++
+
+Spherical Harmonics
+
+↓
+
+Interaction Blocks
+
+↓
+
+Atomic Features
+
+↓
+
+Readout
+
+↓
+
+Atomic Energies
+
+↓
+
+Total Energy
+
+↓
+
+Automatic Differentiation
+
+↓
+
+Forces
+```
+
+This represents the complete NequIP model.
+
+---
+
+## 20.13.20.14 Why Only the Energy Must Be Invariant
+
+Intermediate features may rotate.
+
+For example,
+
+vector features rotate according to their irreducible representations.
+
+However,
+
+the final predicted energy must satisfy
+
+[
+E(RX)
+=====
+
+E(X).
+]
+
+Therefore,
+
+the readout network produces only scalar outputs.
+
+---
+
+## 20.13.20.15 Relationship Between Equivariance and Invariance
+
+The architecture can be viewed as
+
+```text id="nequip_arch13"
+Coordinates
+
+↓
+
+Equivariant Layers
+
+↓
+
+Equivariant Features
+
+↓
+
+Invariant Readout
+
+↓
+
+Energy
+```
+
+Equivariance is preserved throughout the hidden layers.
+
+Only the final prediction becomes invariant.
+
+---
+
+## 20.13.20.16 Computational Cost
+
+The most computationally expensive operations are
+
+* neighbor search,
+* tensor products,
+* spherical harmonic evaluation.
+
+These dominate the runtime of the network.
+
+Modern implementations therefore use optimized GPU kernels and efficient tensor-product algorithms.
+
+---
+
+## 20.13.20.17 Why NequIP Is Data Efficient
+
+NequIP requires significantly fewer training examples than many earlier neural potentials because rotational symmetry is built directly into the architecture.
+
+Instead of learning symmetry from data,
+
+the network only needs to learn the underlying physics.
+
+This dramatically improves sample efficiency.
+
+---
+
+## 20.13.20.18 Advantages of the Architecture
+
+The complete NequIP architecture provides
+
+* exact rotational equivariance,
+* exact permutation invariance,
+* energy-conserving force predictions,
+* excellent generalization,
+* high accuracy with relatively small datasets.
+
+These properties have made NequIP one of the most influential equivariant neural networks in computational materials science.
+
+---
+
+## 20.13.20.19 Summary Diagram
+
+The complete architecture can be summarized as
+
+```text id="nequip_arch14"
+Atomic Structure
+
+↓
+
+Graph Construction
+
+↓
+
+Embedding
+
+↓
+
+Interaction Blocks
+
+↓
+
+Atomic Representations
+
+↓
+
+Energy Readout
+
+↓
+
+Total Energy
+
+↓
+
+Forces
+```
+
+Each component contributes a specific role while preserving the physical symmetries of the problem.
+
+---
+
+## 20.13.20.20 Key Takeaways
+
+The complete NequIP architecture transforms raw atomic structures into accurate predictions of energies and forces through a sequence of symmetry-preserving operations. Atomic numbers are first embedded into feature vectors, geometric information is encoded using radial basis functions and spherical harmonics, and multiple equivariant interaction blocks iteratively refine atomic representations. A final invariant readout predicts atomic energies, whose sum yields the total energy of the system. Forces are then obtained directly as the negative gradient of the energy with respect to atomic positions, ensuring physically consistent and energy-conserving predictions.
+
+---
+
+# Chapter 20 Summary
+
+By the end of this chapter, you have developed a complete understanding of the theoretical foundations behind **Equivariant Graph Neural Networks (EGNNs)** for materials science. Starting from the motivation for rotational symmetry, we introduced the mathematical language of **SO(3)**, **O(3)**, and **E(3)** symmetry groups, explored irreducible representations, tensor features, spherical harmonics, Wigner D-matrices, tensor products, and Clebsch–Gordan coefficients, and then connected these concepts to practical implementations in **e3nn**. Finally, we examined how these building blocks are assembled into modern equivariant architectures such as **NequIP**, providing a complete picture of how symmetry-aware neural networks achieve state-of-the-art performance in atomistic machine learning.
+
+This foundation prepares us for the next chapter, where we will study **Allegro**, a next-generation equivariant architecture designed for highly efficient large-scale molecular dynamics while retaining the symmetry-preserving principles introduced in this chapter.
+
+
+
 
